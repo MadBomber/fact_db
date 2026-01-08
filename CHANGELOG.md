@@ -8,6 +8,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.0.2] - 2025-01-08
+
+### Fixed
+
+- Database connection now validates configuration before connecting, providing a clear `ConfigurationError: Database URL required` message instead of confusing ActiveRecord errors when `database_url` is not set
+- README Getting Started examples now work correctly when copied into IRB:
+  - Database URL uses `ENV['USER']` for the PostgreSQL role instead of defaulting to non-existent "postgres" role
+  - Added `FactDb::Database.migrate!` step to set up the schema
+  - Examples are now split into logical blocks that build on each other
+
 ## [0.0.1] - 2025-01-08
 
 ### Added
