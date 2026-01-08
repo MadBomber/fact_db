@@ -1,5 +1,8 @@
 # FactDb
 
+> [!CAUTION]
+> This gem is under active development. APIs and features may change without notice. See the [CHANGELOG](CHANGELOG.md) for details.
+
 <table>
 <tr>
 <td width="50%" align="center" valign="top">
