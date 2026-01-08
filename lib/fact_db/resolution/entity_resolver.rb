@@ -252,6 +252,10 @@ module FactDb
       def canonical_name
         entity.canonical_name
       end
+
+      def entity_type
+        entity.entity_type
+      end
     end
   end
 end

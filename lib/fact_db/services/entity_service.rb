@@ -17,7 +17,7 @@ module FactDb
           canonical_name: name,
           entity_type: type.to_s,
           description: description,
-          attributes: attributes,
+          metadata: attributes,
           resolution_status: "resolved",
           embedding: embedding
         )
@@ -43,20 +43,20 @@ module FactDb
         @resolver.resolve(name, type: type)
       end
 
-      def resolve_or_create(name, type:, aliases: [], attributes: {})
+      def resolve_or_create(name, type:, aliases: [], attributes: {}, description: nil)
         resolved = @resolver.resolve(name, type: type)
         return resolved.entity if resolved
 
-        create(name, type: type, aliases: aliases, attributes: attributes)
+        create(name, type: type, aliases: aliases, attributes: attributes, description: description)
       end
 
       def merge(keep_id, merge_id)
         @resolver.merge(keep_id, merge_id)
       end
 
-      def add_alias(entity_id, alias_text, type: nil, confidence: 1.0)
+      def add_alias(entity_id, alias_text, alias_type: nil, confidence: 1.0)
         entity = Models::Entity.find(entity_id)
-        entity.add_alias(alias_text, type: type, confidence: confidence)
+        entity.add_alias(alias_text, type: alias_type, confidence: confidence)
       end
 
       def search(query, type: nil, limit: 20)
@@ -126,8 +126,10 @@ module FactDb
 
       def stats
         {
+          total: Models::Entity.not_merged.count,
           total_count: Models::Entity.not_merged.count,
           by_type: Models::Entity.not_merged.group(:entity_type).count,
+          by_status: Models::Entity.group(:resolution_status).count,
           merged_count: Models::Entity.where(resolution_status: "merged").count,
           with_facts: Models::Entity.joins(:entity_mentions).distinct.count
         }

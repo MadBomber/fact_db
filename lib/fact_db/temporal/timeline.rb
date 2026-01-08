@@ -3,10 +3,16 @@
 module FactDb
   module Temporal
     class Timeline
+      include Enumerable
+
       attr_reader :events
 
       def initialize
         @events = []
+      end
+
+      def each(&block)
+        to_hash.each(&block)
       end
 
       def build(entity_id:, from: nil, to: nil)
@@ -111,7 +117,7 @@ module FactDb
       def to_hash
         {
           id: id,
-          fact: fact_text,
+          fact_text: fact_text,
           valid_at: valid_at,
           invalid_at: invalid_at,
           status: status,

@@ -13,9 +13,12 @@ require "bundler/setup"
 require "fact_db"
 
 FactDb.configure do |config|
-  config.database_url = ENV.fetch("DATABASE_URL", "postgres://localhost/fact_db_demo")
+  config.database_url = ENV.fetch("DATABASE_URL", "postgres://#{ENV['USER']}@localhost/fact_db_demo")
   config.default_extractor = :rule_based
 end
+
+# Ensure database tables exist
+FactDb::Database.migrate!
 
 clock = FactDb.new
 
@@ -115,16 +118,16 @@ documents.each_with_index do |doc, index|
 
   # Extract facts and entities
   context = { source_id: content.id, captured_at: content.captured_at }
-  extraction_result = extractor.extract(doc[:text], context)
+  extracted_facts = extractor.extract(doc[:text], context)
 
-  puts "\nExtracted #{extraction_result[:facts].length} facts:"
-  extraction_result[:facts].each_with_index do |fact, i|
+  puts "\nExtracted #{extracted_facts.length} facts:"
+  extracted_facts.each_with_index do |fact, i|
     puts "  #{i + 1}. #{fact[:text]}"
     puts "     Confidence: #{fact[:confidence]}"
     puts "     Valid from: #{fact[:valid_at]}" if fact[:valid_at]
     puts "     Valid until: #{fact[:invalid_at]}" if fact[:invalid_at]
     if fact[:mentions]&.any?
-      puts "     Mentions: #{fact[:mentions].map { |m| "#{m[:text]} (#{m[:role]})" }.join(', ')}"
+      puts "     Mentions: #{fact[:mentions].map { |m| "#{m[:name]} (#{m[:role]})" }.join(', ')}"
     end
   end
 
@@ -150,14 +153,14 @@ content = clock.content_service.search(sample_doc[:title]).first
 context = { source_id: content.id, captured_at: content.captured_at }
 result = extractor.extract(sample_doc[:text], context)
 
-result[:facts].each do |fact_data|
+result.each do |fact_data|
   # Resolve or create mentioned entities
   mention_records = []
 
   fact_data[:mentions]&.each do |mention|
     # Try to resolve the entity, create if not found
     entity = entity_service.resolve_or_create(
-      mention[:text],
+      mention[:name],
       type: mention[:type] || :unknown,
       description: "Auto-extracted entity"
     )
@@ -165,7 +168,7 @@ result[:facts].each do |fact_data|
     mention_records << {
       entity_id: entity.id,
       role: mention[:role],
-      text: mention[:text],
+      text: mention[:name],
       confidence: mention[:confidence] || fact_data[:confidence]
     }
   end
@@ -192,14 +195,14 @@ puts "\n--- Section 3: Querying Extracted Data ---\n"
 
 # Find all extracted entities
 puts "\nAll extracted entities:"
-Entity.where(resolution_status: :resolved).order(:canonical_name).each do |entity|
+FactDb::Models::Entity.where(resolution_status: :resolved).order(:canonical_name).each do |entity|
   fact_count = entity.facts.count
   puts "  #{entity.canonical_name} (#{entity.entity_type}) - #{fact_count} facts"
 end
 
 # Find facts by extraction method
 puts "\nFacts extracted by rule-based extractor:"
-Fact.by_extraction_method(:rule_based).limit(10).each do |fact|
+FactDb::Models::Fact.by_extraction_method(:rule_based).limit(10).each do |fact|
   puts "  [#{fact.confidence}] #{fact.fact_text}"
 end
 
@@ -219,9 +222,9 @@ test_patterns = [
 puts "Testing individual patterns:\n"
 test_patterns.each do |pattern|
   result = extractor.extract(pattern, {})
-  if result[:facts].any?
+  if result.any?
     puts "Input: \"#{pattern}\""
-    result[:facts].each do |fact|
+    result.each do |fact|
       puts "  -> #{fact[:text]} (confidence: #{fact[:confidence]})"
     end
     puts

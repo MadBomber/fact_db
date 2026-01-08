@@ -36,7 +36,13 @@ module FactDb
             end
           else
             mentions.each do |mention|
-              new_fact.add_mention(**mention)
+              entity = mention[:entity] || Models::Entity.find(mention[:entity_id])
+              new_fact.add_mention(
+                entity: entity,
+                text: mention[:text],
+                role: mention[:role],
+                confidence: mention[:confidence] || 1.0
+              )
             end
           end
 
@@ -85,7 +91,13 @@ module FactDb
             end
           else
             mentions.each do |mention|
-              synthesized.add_mention(**mention)
+              entity = mention[:entity] || Models::Entity.find(mention[:entity_id])
+              synthesized.add_mention(
+                entity: entity,
+                text: mention[:text],
+                role: mention[:role],
+                confidence: mention[:confidence] || 1.0
+              )
             end
           end
 

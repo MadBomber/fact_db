@@ -9,7 +9,7 @@ module FactDb
         @config = config
       end
 
-      def create(raw_text, type:, captured_at:, metadata: {}, title: nil, source_uri: nil)
+      def create(raw_text, type:, captured_at: Time.current, metadata: {}, title: nil, source_uri: nil)
         content_hash = Digest::SHA256.hexdigest(raw_text)
 
         # Check for duplicate content
@@ -69,6 +69,7 @@ module FactDb
 
       def stats
         {
+          total: Models::Content.count,
           total_count: Models::Content.count,
           by_type: Models::Content.group(:content_type).count,
           earliest: Models::Content.minimum(:captured_at),

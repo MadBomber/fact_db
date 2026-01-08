@@ -76,6 +76,7 @@ module FactDb
 
       # Extraction method
       scope :extracted_by, ->(method) { where(extraction_method: method) }
+      scope :by_extraction_method, ->(method) { where(extraction_method: method) }
 
       # Confidence filtering
       scope :high_confidence, -> { where("confidence >= ?", 0.9) }

@@ -15,10 +15,13 @@ require "fact_db"
 
 # Configure FactDb
 FactDb.configure do |config|
-  config.database_url = ENV.fetch("DATABASE_URL", "postgres://localhost/fact_db_demo")
+  config.database_url = ENV.fetch("DATABASE_URL", "postgres://#{ENV['USER']}@localhost/fact_db_demo")
   config.default_extractor = :manual
   config.fuzzy_match_threshold = 0.85
 end
+
+# Ensure database tables exist
+FactDb::Database.migrate!
 
 # Create a new FactDb instance (the "clock")
 clock = FactDb.new

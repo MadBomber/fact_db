@@ -15,10 +15,13 @@ require "bundler/setup"
 require "fact_db"
 
 FactDb.configure do |config|
-  config.database_url = ENV.fetch("DATABASE_URL", "postgres://localhost/fact_db_demo")
+  config.database_url = ENV.fetch("DATABASE_URL", "postgres://#{ENV['USER']}@localhost/fact_db_demo")
   config.fuzzy_match_threshold = 0.85
   config.auto_merge_threshold = 0.95
 end
+
+# Ensure database tables exist
+FactDb::Database.migrate!
 
 clock = FactDb.new
 entity_service = clock.entity_service

@@ -14,9 +14,12 @@ require "bundler/setup"
 require "fact_db"
 
 FactDb.configure do |config|
-  config.database_url = ENV.fetch("DATABASE_URL", "postgres://localhost/fact_db_demo")
+  config.database_url = ENV.fetch("DATABASE_URL", "postgres://#{ENV['USER']}@localhost/fact_db_demo")
   config.default_extractor = :manual
 end
+
+# Ensure database tables exist
+FactDb::Database.migrate!
 
 clock = FactDb.new
 entity_service = clock.entity_service
@@ -395,7 +398,7 @@ end
 # Section 10: Audit Trail
 puts "\n--- Section 10: Audit Trail for Alex Kim ---\n"
 
-alex_facts = Fact.joins(:entity_mentions)
+alex_facts = FactDb::Models::Fact.joins(:entity_mentions)
   .where(entity_mentions: { entity_id: employees[:junior_eng].id })
   .order(:created_at)
 
@@ -416,8 +419,8 @@ puts "\n--- Section 11: HR System Statistics ---\n"
 puts "Total employees tracked: #{entity_service.people.count}"
 puts "Total departments: #{entity_service.organizations.where("description LIKE ?", "%team%").count}"
 puts "Total employment facts: #{fact_service.stats[:total]}"
-puts "Current facts: #{Fact.currently_valid.count}"
-puts "Historical facts: #{Fact.historical.count}"
+puts "Current facts: #{FactDb::Models::Fact.currently_valid.count}"
+puts "Historical facts: #{FactDb::Models::Fact.historical.count}"
 puts "Documents processed: #{content_service.stats[:total]}"
 
 puts "\n" + "=" * 60

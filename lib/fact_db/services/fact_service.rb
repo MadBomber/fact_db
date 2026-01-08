@@ -152,6 +152,7 @@ module FactDb
 
       def stats
         {
+          total: Models::Fact.count,
           total_count: Models::Fact.count,
           canonical_count: Models::Fact.canonical.count,
           currently_valid_count: Models::Fact.canonical.currently_valid.count,
@@ -164,7 +165,10 @@ module FactDb
       private
 
       def resolve_or_create_entity(mention)
-        name = mention[:name]
+        # If entity_id is already provided, use that entity directly
+        return Models::Entity.find(mention[:entity_id]) if mention[:entity_id]
+
+        name = mention[:name] || mention[:text]
         type = mention[:type]&.to_sym || :concept
 
         @entity_service.resolve_or_create(name, type: type)

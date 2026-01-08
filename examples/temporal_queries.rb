@@ -14,8 +14,11 @@ require "bundler/setup"
 require "fact_db"
 
 FactDb.configure do |config|
-  config.database_url = ENV.fetch("DATABASE_URL", "postgres://localhost/fact_db_demo")
+  config.database_url = ENV.fetch("DATABASE_URL", "postgres://#{ENV['USER']}@localhost/fact_db_demo")
 end
+
+# Ensure database tables exist
+FactDb::Database.migrate!
 
 clock = FactDb.new
 entity_service = clock.entity_service
@@ -130,7 +133,7 @@ current = fact_service.current_facts(entity: company.id)
 current.each { |f| puts "  - #{f.fact_text}" }
 
 puts "\nAll historical facts:"
-Fact.historical.each do |fact|
+FactDb::Models::Fact.historical.each do |fact|
   puts "  - #{fact.fact_text} (ended: #{fact.invalid_at})"
 end
 
