@@ -3,7 +3,7 @@
 <table>
 <tr>
 <td width="50%" align="center" valign="top">
-<img src="fact_db.jpg" alt="FactDb"><br>
+<img src="docs/assets/fact_db.jpg" alt="FactDb"><br>
 <em>"Do you swear to add the facts and only the facts?"</em>
 </td>
 <td width="50%" valign="top">
