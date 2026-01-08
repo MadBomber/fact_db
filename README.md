@@ -49,37 +49,52 @@ bundle install
 ```ruby
 require 'fact_db'
 
-# Configure
+# Configure with a PostgreSQL database URL
 FactDb.configure do |config|
-  config.database_url = ENV['DATABASE_URL']
+  config.database_url = ENV.fetch("DATABASE_URL", "postgres://#{ENV['USER']}@localhost/fact_db_demo")
 end
+
+# Run migrations to create the schema (only needed once)
+FactDb::Database.migrate!
 
 # Create a facts instance
 facts = FactDb.new
+```
 
+Once configured, you can ingest content and create facts:
+
+```ruby
 # Ingest content
 content = facts.ingest(
   "Paula Chen joined Microsoft as Principal Engineer on January 10, 2024.",
   type: :email,
-  captured_at: Time.current
+  captured_at: Time.now
 )
 
 # Create entities
 paula = facts.entity_service.create("Paula Chen", type: :person)
+microsoft = facts.entity_service.create("Microsoft", type: :organization)
 
-# Create a fact
+# Create a fact with entity mentions
 facts.fact_service.create(
   "Paula Chen is Principal Engineer at Microsoft",
   valid_at: Date.new(2024, 1, 10),
-  mentions: [{ entity_id: paula.id, role: :subject, text: "Paula Chen" }]
+  mentions: [
+    { entity_id: paula.id, role: :subject, text: "Paula Chen" },
+    { entity_id: microsoft.id, role: :object, text: "Microsoft" }
+  ]
 )
+```
 
-# Query current facts
+Query facts temporally:
+
+```ruby
+# Query current facts about Paula
 facts.current_facts_for(paula.id).each do |fact|
   puts fact.fact_text
 end
 
-# Query facts at a point in time
+# Query facts at a point in time (before she joined)
 facts.facts_at(Date.new(2023, 6, 15), entity: paula.id)
 ```
 

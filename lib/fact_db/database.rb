@@ -7,6 +7,7 @@ module FactDb
   module Database
     class << self
       def establish_connection!(config = FactDb.config)
+        config.validate!
         ActiveRecord::Base.establish_connection(config.database_url)
         ActiveRecord::Base.logger = config.logger if config.logger
       end
