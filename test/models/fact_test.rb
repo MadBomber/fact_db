@@ -23,9 +23,11 @@ class FactTest < Minitest::Test
   end
 
   def test_duration_calculation
-    fact = create_fact(valid_at: 100.days.ago, invalid_at: 10.days.ago)
+    start_date = Date.new(2024, 1, 1)
+    end_date = Date.new(2024, 4, 1)  # 91 days later (Jan has 31, Feb has 29 in 2024, Mar has 31)
+    fact = create_fact(valid_at: start_date, invalid_at: end_date)
 
-    assert_equal 90, fact.duration_days
+    assert_equal 91, fact.duration_days
   end
 
   def test_duration_nil_for_current_facts

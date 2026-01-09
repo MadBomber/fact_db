@@ -2,38 +2,70 @@
 
 require "anyway_config"
 require "logger"
+require "yaml"
 
 module FactDb
+  ENVIRONMENTS = %w[development test production].freeze
+
+  def self.env
+    @env ||= ENV.fetch("FDB_ENV") { ENV.fetch("RAILS_ENV") { ENV.fetch("RACK_ENV", "development") } }
+  end
+
+  def self.env=(value)
+    @env = value.to_s
+  end
+
   class Config < Anyway::Config
     config_name :fact_db
+    env_prefix :fdb
 
-    # Database configuration
-    attr_config :database_url
-    attr_config database_pool_size: 5,
-                database_timeout: 30_000
+    DEFAULTS_PATH = File.expand_path("config/defaults.yml", __dir__).freeze
 
-    # Embedding configuration
-    attr_config :embedding_generator
-    attr_config embedding_dimensions: 1536
+    class << self
+      def load_defaults
+        yaml = YAML.load_file(DEFAULTS_PATH) || {}
+        common = yaml["common"] || {}
+        env_config = yaml[FactDb.env] || {}
+        deep_merge(common, env_config)
+      end
 
-    # LLM configuration
-    attr_config :llm_client, :llm_provider, :llm_model, :llm_api_key
+      def deep_merge(base, override)
+        base.merge(override) do |_key, base_val, override_val|
+          if base_val.is_a?(Hash) && override_val.is_a?(Hash)
+            deep_merge(base_val, override_val)
+          else
+            override_val.nil? ? base_val : override_val
+          end
+        end
+      end
 
-    # Extraction configuration
-    attr_config default_extractor: :manual
+      def flatten_hash(hash, prefix = nil)
+        hash.each_with_object({}) do |(key, value), result|
+          attr_name = prefix ? "#{prefix}_#{key}" : key.to_s
+          if value.is_a?(Hash)
+            result.merge!(flatten_hash(value, attr_name))
+          else
+            result[attr_name.to_sym] = value
+          end
+        end
+      end
 
-    # Entity resolution thresholds
-    attr_config fuzzy_match_threshold: 0.85,
-                auto_merge_threshold: 0.95
+      def define_attributes_from_defaults!
+        defaults = flatten_hash(load_defaults)
+        defaults.each do |attr_name, default_value|
+          if default_value.nil?
+            attr_config attr_name
+          else
+            attr_config attr_name => default_value
+          end
+        end
+      end
+    end
 
-    # Logging
-    attr_config :logger
-    attr_config log_level: :info
+    define_attributes_from_defaults!
 
-    # Build LLM client from configuration if not explicitly set
     def llm_client
       return super if super
-
       return nil unless llm_provider
 
       @llm_client ||= LLM::Adapter.new(
@@ -44,7 +76,7 @@ module FactDb
     end
 
     def logger
-      super || Logger.new($stdout, level: log_level)
+      super || Logger.new($stdout, level: log_level.to_sym)
     end
 
     def validate!

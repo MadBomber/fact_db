@@ -1,0 +1,62 @@
+# frozen_string_literal: true
+#
+# FactDb Configuration Defaults
+# This file is the single source of truth for configuration schema and default values.
+#
+# Structure:
+#   common:      - Shared defaults across all environments
+#   development: - Development environment overrides
+#   test:        - Test environment overrides
+#   production:  - Production environment overrides
+#
+# Environment is set via FDB_ENV (defaults to development)
+# Nested keys are flattened with underscores (e.g., database.url -> database_url)
+
+common:
+  # Database configuration
+  database:
+    url: ~                    # Required - set via environment or config file
+    pool_size: 5
+    timeout: 30000            # milliseconds
+
+  # Embedding configuration
+  embedding:
+    generator: ~              # Optional - embedding generator callable
+    dimensions: 1536
+
+  # LLM configuration
+  llm:
+    client: ~                 # Optional - can be set directly or built from provider/model/api_key
+    provider: ~               # e.g., :openai, :anthropic
+    model: ~                  # e.g., gpt-4, claude-3
+    api_key: ~                # API key for the provider
+
+  # Extraction configuration
+  default_extractor: manual
+
+  # Entity resolution thresholds
+  fuzzy_match_threshold: 0.85
+  auto_merge_threshold: 0.95
+
+  # Logging configuration
+  logger: ~                   # Optional - defaults to STDOUT logger
+  log_level: info
+
+development:
+  database:
+    url: postgres://localhost/fact_db_development
+  log_level: debug
+
+test:
+  database:
+    url: postgres://localhost/fact_db_test
+    pool_size: 2
+    timeout: 5000
+  log_level: warn
+
+production:
+  database:
+    url: ~                    # Must be set via FDB_DATABASE_URL
+    pool_size: 10
+    timeout: 60000
+  log_level: info
