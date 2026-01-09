@@ -3,6 +3,7 @@
 $LOAD_PATH.unshift File.expand_path("../lib", __dir__)
 
 require "minitest/autorun"
+require "timecop"
 require "fact_db"
 
 # Configure for testing
@@ -21,6 +22,7 @@ module FactDb
     end
 
     def teardown
+      Timecop.return
       clean_database!
       super
     end

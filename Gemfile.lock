@@ -117,6 +117,7 @@ GEM
     ruby_llm-schema (0.2.5)
     securerandom (0.4.1)
     simple_flow (0.2.0)
+    timecop (0.9.10)
     timeout (0.6.0)
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
@@ -144,6 +145,7 @@ DEPENDENCIES
   rubocop
   ruby-openai
   ruby_llm
+  timecop
   yard
 
 CHECKSUMS
@@ -199,6 +201,7 @@ CHECKSUMS
   ruby_llm-schema (0.2.5) sha256=b08cd42e8de7100325e2e868672a56f1915eb23692bb808f51f214e41392104f
   securerandom (0.4.1) sha256=cc5193d414a4341b6e225f0cb4446aceca8e50d5e1888743fac16987638ea0b1
   simple_flow (0.2.0) sha256=ec99d6ece749d014eae2afd290288b15809eff9430d0ad87a9d4cea6dd6beaf9
+  timecop (0.9.10) sha256=12ba45ce57cdcf6b1043cb6cdffa6381fd89ce10d369c28a7f6f04dc1b0cd8eb
   timeout (0.6.0) sha256=6d722ad619f96ee383a0c557ec6eb8c4ecb08af3af62098a0be5057bf00de1af
   tzinfo (2.0.6) sha256=8daf828cc77bcf7d63b0e3bdb6caa47e2272dcfaf4fbfe46f8c3a9df087a829b
   unicode-display_width (3.2.0) sha256=0cdd96b5681a5949cdbc2c55e7b420facae74c4aaf9a9815eee1087cb1853c42
