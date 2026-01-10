@@ -128,7 +128,10 @@ module FactDb
         env = current_environment
         env_overrides = raw[env.to_sym] || {}
 
-        deep_merge(defaults, env_overrides)
+        merged = deep_merge(defaults, env_overrides)
+
+        # Convert to string keys for Anyway Config compatibility
+        deep_stringify_keys(merged)
       end
 
       # Deep merge two hashes, with overlay taking precedence
@@ -143,6 +146,16 @@ module FactDb
           else
             new_val
           end
+        end
+      end
+
+      # Recursively convert all hash keys to strings
+      #
+      # @param hash [Hash] hash with symbol or string keys
+      # @return [Hash] hash with string keys
+      def deep_stringify_keys(hash)
+        hash.each_with_object({}) do |(key, value), result|
+          result[key.to_s] = value.is_a?(Hash) ? deep_stringify_keys(value) : value
         end
       end
 

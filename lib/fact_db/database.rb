@@ -8,12 +8,27 @@ module FactDb
     class << self
       def establish_connection!(config = FactDb.config)
         config.validate!
-        ActiveRecord::Base.establish_connection(config.database_url)
+        ActiveRecord::Base.establish_connection(config.database.url)
         ActiveRecord::Base.logger = config.logger if config.logger
       end
 
       def connected?
         ActiveRecord::Base.connected?
+      end
+
+      def drop!
+        db_name = FactDb.config.database.name
+        ActiveRecord::Base.connection.disconnect! if connected?
+        ActiveRecord::Base.establish_connection(maintenance_database_url)
+        ActiveRecord::Base.connection.drop_database(db_name)
+        puts "Dropped database '#{db_name}'"
+      end
+
+      def create!
+        db_name = FactDb.config.database.name
+        ActiveRecord::Base.establish_connection(maintenance_database_url)
+        ActiveRecord::Base.connection.create_database(db_name)
+        puts "Created database '#{db_name}'"
       end
 
       def migrate!
@@ -29,17 +44,23 @@ module FactDb
       end
 
       def reset!
-        establish_connection! unless connected?
-        ActiveRecord::Base.connection.tables.each do |table|
-          next if table == "schema_migrations"
-          ActiveRecord::Base.connection.drop_table(table, if_exists: true, force: :cascade)
-        end
+        drop! rescue nil
+        create!
         migrate!
       end
 
       def schema_version
         establish_connection! unless connected?
         ActiveRecord::SchemaMigration.all.map(&:version).max || 0
+      end
+
+      private
+
+      def maintenance_database_url
+        url = FactDb.config.database.url
+        uri = URI.parse(url)
+        uri.path = "/postgres"
+        uri.to_s
       end
     end
   end

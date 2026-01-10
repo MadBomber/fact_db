@@ -33,11 +33,12 @@ defaults:
   # Access: FactDb.config.database.url, FactDb.config.database.pool_size, etc.
   # ---------------------------------------------------------------------------
   database:
+    adapter: pg
     url: ~
     host: localhost
     port: 5432
     name: fact_db_demo
-    user: ~
+    user: postgres
     password: ~
     pool_size: 5
     timeout: 30000
@@ -109,4 +110,4 @@ production:
     pool_size: 10
     timeout: 60000
     name: fact_dv_production
-  log_level: info
+  log_level: warn

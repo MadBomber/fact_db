@@ -4,6 +4,9 @@ require "anyway_config"
 require "logger"
 require "yaml"
 
+# Configure Anyway Config to use FDB_ENV for environment detection
+Anyway::Settings.current_environment = ENV["FDB_ENV"] || ENV["RAILS_ENV"] || ENV["RACK_ENV"] || "development"
+
 # Define Config class first to establish superclass
 module FactDb
   class Config < Anyway::Config

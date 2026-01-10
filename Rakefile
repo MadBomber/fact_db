@@ -9,40 +9,98 @@ Rake::TestTask.new(:test) do |t|
   t.test_files = FileList["test/**/*_test.rb"]
 end
 
+task test: "db:reset:test"
+
 namespace :db do
+  desc "Drop the database"
+  task :drop do
+    require_relative "lib/fact_db"
+    puts "Environment: #{FactDb.config.environment}"
+    puts "Database: #{FactDb.config.database_name}"
+    FactDb::Database.drop!
+  end
+
+  desc "Create the database"
+  task :create do
+    require_relative "lib/fact_db"
+    puts "Environment: #{FactDb.config.environment}"
+    puts "Database: #{FactDb.config.database_name}"
+    FactDb::Database.create!
+  end
+
   desc "Run database migrations"
   task :migrate do
     require_relative "lib/fact_db"
-    FactDb.configure do |config|
-      config.database.url = ENV.fetch("DATABASE_URL")
-    end
+    puts "Environment: #{FactDb.config.environment}"
+    puts "Database: #{FactDb.config.database_name}"
     FactDb::Database.migrate!
   end
 
   desc "Rollback the last migration"
   task :rollback do
     require_relative "lib/fact_db"
-    FactDb.configure do |config|
-      config.database.url = ENV.fetch("DATABASE_URL")
-    end
+    puts "Environment: #{FactDb.config.environment}"
+    puts "Database: #{FactDb.config.database_name}"
     FactDb::Database.rollback!
   end
 
-  desc "Reset the database (drop, create, migrate)"
+  desc "Reset the database (drop, create, migrate) - honors FDB_ENV"
   task :reset do
     require_relative "lib/fact_db"
-    FactDb.configure do |config|
-      config.database.url = ENV.fetch("DATABASE_URL")
-    end
+    puts "Environment: #{FactDb.config.environment}"
+    puts "Database: #{FactDb.config.database_name}"
     FactDb::Database.reset!
+  end
+
+  namespace :reset do
+    def reset_for_environment(env_name)
+      original_env = ENV["FDB_ENV"]
+      ENV["FDB_ENV"] = env_name
+
+      require_relative "lib/fact_db"
+      Anyway::Settings.current_environment = env_name
+      FactDb.reset_configuration!
+
+      puts "Environment: #{FactDb.config.environment}"
+      puts "Database: #{FactDb.config.database_name}"
+      FactDb::Database.reset!
+    ensure
+      ENV["FDB_ENV"] = original_env
+      Anyway::Settings.current_environment = original_env || "development"
+      FactDb.reset_configuration!
+    end
+
+    desc "Reset development database"
+    task :development do
+      reset_for_environment("development")
+    end
+
+    desc "Reset test database"
+    task :test do
+      reset_for_environment("test")
+    end
+
+    desc "Reset demo database"
+    task :demo do
+      reset_for_environment("demo")
+    end
+
+    desc "Reset all databases (development, test, demo)"
+    task :all do
+      %w[development test demo].each do |env_name|
+        puts "\n#{"=" * 50}"
+        reset_for_environment(env_name)
+      end
+      puts "\n#{"=" * 50}"
+      puts "All databases reset."
+    end
   end
 
   desc "Clean up invalid aliases (pronouns, generic terms). Use EXECUTE=1 to apply changes."
   task :cleanup_aliases do
     require_relative "lib/fact_db"
-    FactDb.configure do |config|
-      config.database.url = ENV.fetch("DATABASE_URL")
-    end
+    puts "Environment: #{FactDb.config.environment}"
+    puts "Database: #{FactDb.config.database_name}"
     FactDb::Database.establish_connection!
 
     dry_run = ENV["EXECUTE"] != "1"

@@ -2,6 +2,9 @@
 
 $LOAD_PATH.unshift File.expand_path("../lib", __dir__)
 
+# Set test environment BEFORE loading fact_db
+ENV["FDB_ENV"] ||= "test"
+
 require "minitest/autorun"
 require "timecop"
 require "fact_db"

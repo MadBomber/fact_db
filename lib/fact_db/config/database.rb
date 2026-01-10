@@ -133,11 +133,15 @@ module FactDb
       def build_database_url
         return nil unless database&.name && !database.name.empty?
 
-        auth = if database.user && !database.user.empty?
+        # Default to current OS user if no user specified
+        user = database.user
+        user = ENV["USER"] if user.nil? || user.empty?
+
+        auth = if user && !user.empty?
           if database.password && !database.password.empty?
-            "#{database.user}:#{database.password}@"
+            "#{user}:#{database.password}@"
           else
-            "#{database.user}@"
+            "#{user}@"
           end
         else
           ""
