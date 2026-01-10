@@ -55,7 +55,7 @@ require 'fact_db'
 
 # Configure
 FactDb.configure do |config|
-  config.database_url = ENV['DATABASE_URL']
+  config.database.url = ENV['DATABASE_URL']
 end
 
 # Create a facts instance

@@ -12,10 +12,11 @@ class TemporalQueriesIntegrationTest < Minitest::Test
 
   def test_current_employer_query
     clock = create_clock
-    facts = clock.query_facts(entity: @paula.id, at: nil)
+    result = clock.query_facts(entity: @paula.id, at: nil)
 
-    assert_equal 1, facts.count
-    assert_includes facts.first.fact_text, "Microsoft"
+    # New format returns a Hash with :facts key
+    assert_equal 1, result[:facts].count
+    assert_includes result[:facts].first[:fact_text], "Microsoft"
   end
 
   def test_employer_in_2022
@@ -23,10 +24,11 @@ class TemporalQueriesIntegrationTest < Minitest::Test
 
     # Query for mid-2022
     query_date = Date.new(2022, 6, 15)
-    facts = clock.query_facts(entity: @paula.id, at: query_date)
+    result = clock.query_facts(entity: @paula.id, at: query_date)
 
-    assert_equal 1, facts.count
-    assert_includes facts.first.fact_text, "Google"
+    # New format returns a Hash with :facts key
+    assert_equal 1, result[:facts].count
+    assert_includes result[:facts].first[:fact_text], "Google"
   end
 
   def test_employer_in_2021
@@ -34,10 +36,11 @@ class TemporalQueriesIntegrationTest < Minitest::Test
 
     # Query for 2021 - should find Google fact
     query_date = Date.new(2021, 6, 15)
-    facts = clock.query_facts(entity: @paula.id, at: query_date)
+    result = clock.query_facts(entity: @paula.id, at: query_date)
 
-    assert facts.any?
-    assert_includes facts.first.fact_text, "Google"
+    # New format returns a Hash with :facts key
+    assert result[:facts].any?
+    assert_includes result[:facts].first[:fact_text], "Google"
   end
 
   def test_no_employer_in_2019
@@ -45,9 +48,10 @@ class TemporalQueriesIntegrationTest < Minitest::Test
 
     # Query for 2019 - before Paula joined Google
     query_date = Date.new(2019, 6, 15)
-    facts = clock.query_facts(entity: @paula.id, at: query_date)
+    result = clock.query_facts(entity: @paula.id, at: query_date)
 
-    assert facts.empty?
+    # New format returns a Hash with :facts key
+    assert result[:facts].empty?
   end
 
   def test_timeline_building

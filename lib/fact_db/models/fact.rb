@@ -19,7 +19,7 @@ module FactDb
                foreign_key: :superseded_by_id
 
       validates :fact_text, presence: true
-      validates :fact_hash, presence: true
+      validates :fact_hash, presence: true, uniqueness: { scope: :valid_at }
       validates :valid_at, presence: true
       validates :status, presence: true
 
@@ -60,13 +60,13 @@ module FactDb
 
       # Entity filtering
       scope :mentioning_entity, lambda { |entity_id|
-        joins(:entity_mentions).where(fact_db_entity_mentions: { entity_id: entity_id })
+        joins(:entity_mentions).where(fact_db_entity_mentions: { entity_id: entity_id }).distinct
       }
 
       scope :with_role, lambda { |entity_id, role|
         joins(:entity_mentions).where(
           fact_db_entity_mentions: { entity_id: entity_id, mention_role: role }
-        )
+        ).distinct
       }
 
       # Full-text search
@@ -174,6 +174,85 @@ module FactDb
 
         sources.uniq
       end
+
+      # Returns the original source lines from which this fact was derived
+      # Returns a hash with :full_section, :focused_lines, and :focused_line_numbers
+      def prove_it
+        source = fact_sources.first&.content
+        return nil unless source&.raw_text
+
+        line_start = metadata&.dig("line_start")
+        line_end = metadata&.dig("line_end")
+        return nil unless line_start && line_end
+
+        lines = source.raw_text.lines
+        start_idx = line_start.to_i - 1
+        end_idx = line_end.to_i - 1
+
+        return nil if start_idx < 0 || end_idx >= lines.length
+
+        section_lines = lines[start_idx..end_idx]
+        full_section = section_lines.join
+
+        # Find focused lines by matching key terms from fact
+        key_terms = extract_key_terms
+        scored_lines = score_lines_by_relevance(section_lines, key_terms, start_idx)
+
+        # Return lines that have at least one match, sorted by line number
+        relevant = scored_lines.select { |l| l[:score] > 0 }
+                               .sort_by { |l| l[:line_number] }
+
+        {
+          full_section: full_section,
+          focused_lines: relevant.map { |l| l[:text] }.join,
+          focused_line_numbers: relevant.map { |l| l[:line_number] },
+          key_terms: key_terms
+        }
+      end
+
+      private
+
+      def extract_key_terms
+        terms = []
+
+        # Get entity names from mentions
+        entity_mentions.includes(:entity).each do |mention|
+          terms << mention.entity&.canonical_name if mention.entity&.canonical_name
+          terms << mention.mention_text if mention.mention_text
+        end
+
+        # Extract significant words from fact text (exclude common words)
+        stop_words = %w[a an the is was were are been being have has had do does did
+                        will would could should may might must shall can to of in for
+                        on with at by from as into through during before after above
+                        below between under again further then once here there when
+                        where why how all each few more most other some such no nor
+                        not only own same so than too very just and but or if]
+
+        fact_words = fact_text.downcase
+                              .gsub(/[^a-z\s]/, " ")
+                              .split
+                              .reject { |w| w.length < 3 || stop_words.include?(w) }
+                              .uniq
+
+        terms.concat(fact_words)
+        terms.compact.uniq.reject(&:empty?)
+      end
+
+      def score_lines_by_relevance(lines, key_terms, start_idx)
+        lines.each_with_index.map do |line, idx|
+          line_lower = line.downcase
+          score = key_terms.count { |term| line_lower.include?(term.downcase) }
+
+          {
+            line_number: start_idx + idx + 1,
+            text: line,
+            score: score
+          }
+        end
+      end
+
+      public
 
       # Vector similarity search
       def self.nearest_neighbors(embedding, limit: 10)

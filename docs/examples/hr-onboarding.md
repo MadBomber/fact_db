@@ -12,9 +12,9 @@ An HR system that tracks employee facts over time, maintaining a complete audit 
 require 'fact_db'
 
 FactDb.configure do |config|
-  config.database_url = ENV['DATABASE_URL']
-  config.llm_provider = :openai
-  config.llm_api_key = ENV['OPENAI_API_KEY']
+  config.database.url = ENV['DATABASE_URL']
+  config.llm.provider = :openai
+  config.llm.api_key = ENV['OPENAI_API_KEY']
 end
 
 facts = FactDb.new

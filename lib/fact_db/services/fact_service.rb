@@ -45,6 +45,25 @@ module FactDb
         fact
       end
 
+      def find_or_create(text, valid_at:, invalid_at: nil, status: :canonical, source_content_id: nil, mentions: [], extraction_method: :manual, confidence: 1.0, metadata: {})
+        fact_hash = Digest::SHA256.hexdigest(text)
+        existing = Models::Fact.find_by(fact_hash: fact_hash, valid_at: valid_at)
+
+        return existing if existing
+
+        create(
+          text,
+          valid_at: valid_at,
+          invalid_at: invalid_at,
+          status: status,
+          source_content_id: source_content_id,
+          mentions: mentions,
+          extraction_method: extraction_method,
+          confidence: confidence,
+          metadata: metadata
+        )
+      end
+
       def find(id)
         Models::Fact.find(id)
       end
@@ -162,16 +181,54 @@ module FactDb
         }
       end
 
+      # Get fact statistics for an entity (or all facts)
+      #
+      # @param entity_id [Integer, nil] Entity ID (nil for all facts)
+      # @return [Hash] Statistics by fact status
+      def fact_stats(entity_id = nil)
+        scope = entity_id ? Models::Fact.mentioning_entity(entity_id) : Models::Fact.all
+
+        {
+          canonical: scope.where(status: "canonical").count,
+          superseded: scope.where(status: "superseded").count,
+          corroborated: scope.where.not(corroborated_by_ids: nil).where.not(corroborated_by_ids: []).count,
+          synthesized: scope.where(status: "synthesized").count
+        }
+      end
+
       private
 
       def resolve_or_create_entity(mention)
         # If entity_id is already provided, use that entity directly
-        return Models::Entity.find(mention[:entity_id]) if mention[:entity_id]
+        if mention[:entity_id]
+          entity = Models::Entity.find(mention[:entity_id])
+          # Still add any new aliases even for existing entities
+          add_aliases_to_entity(entity, mention[:aliases])
+          return entity
+        end
 
         name = mention[:name] || mention[:text]
         type = mention[:type]&.to_sym || :concept
+        aliases = mention[:aliases] || []
 
-        @entity_service.resolve_or_create(name, type: type)
+        entity = @entity_service.resolve_or_create(name, type: type, aliases: aliases)
+
+        # If entity was resolved (not created), still add any new aliases
+        add_aliases_to_entity(entity, aliases) if aliases.any?
+
+        entity
+      end
+
+      def add_aliases_to_entity(entity, aliases)
+        return unless aliases&.any?
+
+        aliases.each do |alias_text|
+          next if alias_text.to_s.strip.empty?
+          next if entity.canonical_name.downcase == alias_text.to_s.strip.downcase
+          next if entity.all_aliases.map(&:downcase).include?(alias_text.to_s.strip.downcase)
+
+          entity.add_alias(alias_text.to_s.strip)
+        end
       end
 
       def apply_filters(scope, entity: nil, status: nil)

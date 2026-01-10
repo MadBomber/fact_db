@@ -12,15 +12,18 @@
 require "bundler/setup"
 require "fact_db"
 
+log_path = File.join(__dir__, "#{File.basename(__FILE__, '.rb')}.log")
+
 FactDb.configure do |config|
-  config.database_url = ENV.fetch("DATABASE_URL", "postgres://#{ENV['USER']}@localhost/fact_db_demo")
+  config.database.url = ENV.fetch("DATABASE_URL", "postgres://#{ENV['USER']}@localhost/fact_db_demo")
   config.default_extractor = :rule_based
+  config.logger = Logger.new(log_path)
 end
 
 # Ensure database tables exist
 FactDb::Database.migrate!
 
-clock = FactDb.new
+facts = FactDb.new
 
 puts "=" * 60
 puts "FactDb Rule-Based Extraction Demo"
@@ -108,7 +111,7 @@ documents.each_with_index do |doc, index|
   puts "=" * 40
 
   # Ingest the content
-  content = clock.ingest(
+  content = facts.ingest(
     doc[:text],
     type: doc[:type],
     title: doc[:title],
@@ -144,12 +147,12 @@ end
 # Section 2: Save Extracted Facts to Database
 puts "\n\n--- Section 2: Saving Extracted Facts ---\n"
 
-entity_service = clock.entity_service
-fact_service = clock.fact_service
+entity_service = facts.entity_service
+fact_service = facts.fact_service
 
 # Process first document in detail
 sample_doc = documents.first
-content = clock.content_service.search(sample_doc[:title]).first
+content = facts.content_service.search(sample_doc[:title]).first
 context = { source_id: content.id, captured_at: content.captured_at }
 result = extractor.extract(sample_doc[:text], context)
 
@@ -238,8 +241,8 @@ end
 # Section 5: Statistics
 puts "\n--- Section 5: Extraction Statistics ---\n"
 
-content_stats = clock.content_service.stats
-fact_stats = clock.fact_service.stats
+content_stats = facts.content_service.stats
+fact_stats = facts.fact_service.stats
 entity_stats = entity_service.stats
 
 puts "Content ingested: #{content_stats[:total]}"

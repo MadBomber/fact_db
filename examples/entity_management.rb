@@ -14,18 +14,21 @@
 require "bundler/setup"
 require "fact_db"
 
+log_path = File.join(__dir__, "#{File.basename(__FILE__, '.rb')}.log")
+
 FactDb.configure do |config|
-  config.database_url = ENV.fetch("DATABASE_URL", "postgres://#{ENV['USER']}@localhost/fact_db_demo")
+  config.database.url = ENV.fetch("DATABASE_URL", "postgres://#{ENV['USER']}@localhost/fact_db_demo")
   config.fuzzy_match_threshold = 0.85
   config.auto_merge_threshold = 0.95
+  config.logger = Logger.new(log_path)
 end
 
 # Ensure database tables exist
 FactDb::Database.migrate!
 
-clock = FactDb.new
-entity_service = clock.entity_service
-fact_service = clock.fact_service
+facts = FactDb.new
+entity_service = facts.entity_service
+fact_service = facts.fact_service
 
 puts "=" * 60
 puts "FactDb Entity Management Demo"
@@ -147,12 +150,12 @@ end
 
 # Filter by type
 puts "\nPeople only:"
-entity_service.people.each do |entity|
+entity_service.by_type("person").each do |entity|
   puts "  - #{entity.canonical_name}"
 end
 
 puts "\nOrganizations only:"
-entity_service.organizations.each do |entity|
+entity_service.by_type("organization").each do |entity|
   puts "  - #{entity.canonical_name}"
 end
 

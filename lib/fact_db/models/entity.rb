@@ -20,20 +20,16 @@ module FactDb
       validates :entity_type, presence: true
       validates :resolution_status, presence: true
 
-      # Entity types
-      TYPES = %w[person organization place product event concept].freeze
       STATUSES = %w[unresolved resolved merged split].freeze
+      ENTITY_TYPES = %w[person organization place product event concept].freeze
 
-      validates :entity_type, inclusion: { in: TYPES }
       validates :resolution_status, inclusion: { in: STATUSES }
+      validates :entity_type, inclusion: { in: ENTITY_TYPES }
 
       scope :by_type, ->(type) { where(entity_type: type) }
       scope :resolved, -> { where(resolution_status: "resolved") }
       scope :unresolved, -> { where(resolution_status: "unresolved") }
       scope :not_merged, -> { where.not(resolution_status: "merged") }
-      scope :people, -> { by_type("person") }
-      scope :organizations, -> { by_type("organization") }
-      scope :places, -> { by_type("place") }
 
       def resolved?
         resolution_status == "resolved"
@@ -52,10 +48,16 @@ module FactDb
       end
 
       def add_alias(text, type: nil, confidence: 1.0)
+        # Pre-validate before attempting to create
+        return nil unless Validation::AliasFilter.valid?(text, canonical_name: canonical_name)
+
         aliases.find_or_create_by!(alias_text: text) do |a|
           a.alias_type = type
           a.confidence = confidence
         end
+      rescue ActiveRecord::RecordInvalid
+        # Alias validation failed (pronoun, generic term, etc.)
+        nil
       end
 
       def matches_name?(name)

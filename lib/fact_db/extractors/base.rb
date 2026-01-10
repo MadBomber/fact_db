@@ -95,21 +95,29 @@ module FactDb
 
       # Build a standardized entity hash
       def build_entity(name:, type:, aliases: [], attributes: {})
+        canonical_name = name.strip
+        filtered_aliases = Validation::AliasFilter.filter(aliases, canonical_name: canonical_name)
+
         {
-          name: name.strip,
+          name: canonical_name,
           type: type.to_s,
-          aliases: aliases.map(&:strip),
+          aliases: filtered_aliases,
           attributes: attributes
         }
       end
 
       # Build a standardized mention hash
-      def build_mention(name:, type:, role: nil, confidence: 1.0)
+      def build_mention(name:, type:, role: nil, confidence: 1.0, aliases: [])
+        canonical_name = name.strip
+        raw_aliases = Array(aliases).map { |a| a.to_s.strip }.reject(&:empty?)
+        filtered_aliases = Validation::AliasFilter.filter(raw_aliases, canonical_name: canonical_name)
+
         {
-          name: name.strip,
+          name: canonical_name,
           type: type.to_s,
           role: role&.to_s,
-          confidence: confidence
+          confidence: confidence,
+          aliases: filtered_aliases
         }
       end
     end

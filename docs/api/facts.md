@@ -43,7 +43,7 @@ facts = FactDb.new
 
 # Use custom configuration
 config = FactDb::Config.new
-config.database_url = "postgresql://localhost/my_db"
+config.database.url = "postgresql://localhost/my_db"
 facts = FactDb.new(config: config)
 ```
 

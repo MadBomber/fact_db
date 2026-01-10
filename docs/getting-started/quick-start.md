@@ -9,27 +9,30 @@ Create a configuration file or use environment variables:
 === "Environment Variables"
 
     ```bash
-    export EVENT_CLOCK_DATABASE_URL="postgresql://localhost/fact_db"
-    export EVENT_CLOCK_LLM_PROVIDER="openai"
-    export EVENT_CLOCK_LLM_API_KEY="sk-..."
+    export FDB_DATABASE__URL="postgresql://localhost/fact_db"
+    export FDB_LLM__PROVIDER="openai"
+    export FDB_LLM__API_KEY="sk-..."
     ```
 
 === "YAML Config"
 
     ```yaml
     # config/fact_db.yml
-    database_url: postgresql://localhost/fact_db
-    llm_provider: openai
-    llm_api_key: <%= ENV['OPENAI_API_KEY'] %>
+    database:
+      url: postgresql://localhost/fact_db
+
+    llm:
+      provider: openai
+      api_key: <%= ENV['OPENAI_API_KEY'] %>
     ```
 
 === "Ruby Block"
 
     ```ruby
     FactDb.configure do |config|
-      config.database_url = "postgresql://localhost/fact_db"
-      config.llm_provider = :openai
-      config.llm_api_key = ENV['OPENAI_API_KEY']
+      config.database.url = "postgresql://localhost/fact_db"
+      config.llm.provider = :openai
+      config.llm.api_key = ENV['OPENAI_API_KEY']
     end
     ```
 
@@ -41,7 +44,7 @@ Run the migrations:
 require 'fact_db'
 
 FactDb.configure do |config|
-  config.database_url = ENV['DATABASE_URL']
+  config.database.url = ENV['DATABASE_URL']
 end
 
 # Run migrations
@@ -155,9 +158,9 @@ require 'fact_db'
 
 # Configure
 FactDb.configure do |config|
-  config.database_url = ENV['DATABASE_URL']
-  config.llm_provider = :openai
-  config.llm_api_key = ENV['OPENAI_API_KEY']
+  config.database.url = ENV['DATABASE_URL']
+  config.llm.provider = :openai
+  config.llm.api_key = ENV['OPENAI_API_KEY']
 end
 
 # Create facts instance

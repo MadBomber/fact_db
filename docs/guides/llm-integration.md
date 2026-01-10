@@ -18,9 +18,9 @@ gem 'ruby_llm'
 
     ```ruby
     FactDb.configure do |config|
-      config.llm_provider = :openai
-      config.llm_model = "gpt-4o-mini"
-      config.llm_api_key = ENV['OPENAI_API_KEY']
+      config.llm.provider = :openai
+      config.llm.model = "gpt-4o-mini"
+      config.llm.api_key = ENV['OPENAI_API_KEY']
     end
     ```
 
@@ -28,9 +28,9 @@ gem 'ruby_llm'
 
     ```ruby
     FactDb.configure do |config|
-      config.llm_provider = :anthropic
-      config.llm_model = "claude-sonnet-4-20250514"
-      config.llm_api_key = ENV['ANTHROPIC_API_KEY']
+      config.llm.provider = :anthropic
+      config.llm.model = "claude-sonnet-4-20250514"
+      config.llm.api_key = ENV['ANTHROPIC_API_KEY']
     end
     ```
 
@@ -38,9 +38,9 @@ gem 'ruby_llm'
 
     ```ruby
     FactDb.configure do |config|
-      config.llm_provider = :gemini
-      config.llm_model = "gemini-2.0-flash"
-      config.llm_api_key = ENV['GEMINI_API_KEY']
+      config.llm.provider = :gemini
+      config.llm.model = "gemini-2.0-flash"
+      config.llm.api_key = ENV['GEMINI_API_KEY']
     end
     ```
 
@@ -48,9 +48,17 @@ gem 'ruby_llm'
 
     ```ruby
     FactDb.configure do |config|
-      config.llm_provider = :ollama
-      config.llm_model = "llama3.2"
+      config.llm.provider = :ollama
+      config.llm.model = "llama3.2"
     end
+    ```
+
+=== "Environment Variables"
+
+    ```bash
+    export FDB_LLM__PROVIDER=openai
+    export FDB_LLM__MODEL=gpt-4o-mini
+    export FDB_LLM__API_KEY=sk-...
     ```
 
 ## Supported Providers
@@ -211,10 +219,10 @@ end
 
 ```ruby
 # For simple extractions, use smaller models
-config.llm_model = "gpt-4o-mini"  # Cheaper than gpt-4o
+config.llm.model = "gpt-4o-mini"  # Cheaper than gpt-4o
 
 # For complex documents, use larger models
-config.llm_model = "gpt-4o"
+config.llm.model = "gpt-4o"
 ```
 
 ### Batch Processing
@@ -232,8 +240,8 @@ end
 ```ruby
 # Use Ollama for development/testing
 FactDb.configure do |config|
-  config.llm_provider = :ollama
-  config.llm_model = "llama3.2"
+  config.llm.provider = :ollama
+  config.llm.model = "llama3.2"
 end
 ```
 

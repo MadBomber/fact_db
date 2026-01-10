@@ -29,9 +29,9 @@ module FactDb
     #   # llm_api_key: <%= ENV["ANTHROPIC_API_KEY"] %>
     #
     # @example Configure via environment variables
-    #   # EVENT_CLOCK_LLM_PROVIDER=anthropic
-    #   # EVENT_CLOCK_LLM_MODEL=claude-sonnet-4-20250514
-    #   # EVENT_CLOCK_LLM_API_KEY=sk-...
+    #   # FACT_DB_LLM_PROVIDER=anthropic
+    #   # FACT_DB_LLM_MODEL=claude-sonnet-4-20250514
+    #   # FACT_DB_LLM_API_KEY=sk-...
     #
     class Adapter
       attr_reader :model, :provider

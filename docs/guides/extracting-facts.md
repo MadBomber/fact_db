@@ -36,8 +36,8 @@ Use AI to automatically extract facts:
 ```ruby
 # Configure LLM
 FactDb.configure do |config|
-  config.llm_provider = :openai
-  config.llm_api_key = ENV['OPENAI_API_KEY']
+  config.llm.provider = :openai
+  config.llm.api_key = ENV['OPENAI_API_KEY']
 end
 
 facts = FactDb.new

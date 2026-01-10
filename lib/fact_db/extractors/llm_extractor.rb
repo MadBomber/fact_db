@@ -6,12 +6,16 @@ module FactDb
   module Extractors
     class LLMExtractor < Base
       FACT_EXTRACTION_PROMPT = <<~PROMPT
-        Extract factual assertions from the following text. For each fact:
-        1. State the assertion clearly and concisely
-        2. Identify when it became true (valid_at) if mentioned
+        Extract ATOMIC factual assertions from the following text. Break compound
+        statements into individual, indivisible facts - one assertion per fact.
+
+        For each atomic fact:
+        1. State a single, indivisible assertion (not multiple facts combined)
+        2. Identify when it became true (valid_at) if mentioned or inferable
         3. Identify when it stopped being true (invalid_at) if mentioned
         4. Identify entities mentioned (people, organizations, places, products)
         5. Assign a confidence score (0.0 to 1.0) based on how explicitly stated the fact is
+        6. For each entity, include any aliases or alternative names used in the text
 
         Text:
         %<text>s
@@ -19,24 +23,41 @@ module FactDb
         Return as a JSON array with this structure:
         [
           {
-            "text": "Paula works at Microsoft as Principal Engineer",
+            "text": "Paula works at Microsoft",
             "valid_at": "2024-01-10",
             "invalid_at": null,
             "confidence": 0.95,
             "mentions": [
-              {"name": "Paula", "type": "person", "role": "subject"},
-              {"name": "Microsoft", "type": "organization", "role": "object"}
+              {"name": "Paula Chen", "type": "person", "role": "subject", "aliases": ["Paula", "P. Chen"]},
+              {"name": "Microsoft", "type": "organization", "role": "object", "aliases": ["MS", "Microsoft Corporation"]}
+            ]
+          },
+          {
+            "text": "Paula holds the title of Principal Engineer",
+            "valid_at": "2024-01-10",
+            "invalid_at": null,
+            "confidence": 0.95,
+            "mentions": [
+              {"name": "Paula Chen", "type": "person", "role": "subject", "aliases": ["Paula", "P. Chen"]}
             ]
           }
         ]
 
         Rules:
+        - ATOMIC FACTS: Break compound statements into smallest meaningful assertions
+          - "John and Mary married in Paris" becomes TWO facts: "John married Mary" AND "The marriage took place in Paris"
+          - "She is a doctor at City Hospital" becomes TWO facts: "She is a doctor" AND "She works at City Hospital"
         - Extract only factual assertions, not opinions or speculation
         - Use ISO 8601 date format (YYYY-MM-DD) when possible
         - Set invalid_at to null if the fact is still true or unknown
         - Set valid_at to null if the timing is not mentioned
         - Entity types: person, organization, place, product, event, concept
         - Roles: subject, object, location, temporal, instrument, beneficiary
+        - For person entities, use the most complete/formal name as "name" and shorter/alternative forms as "aliases"
+        - Common aliases include: nicknames, titles with name, name variations, abbreviations
+        - NEVER include pronouns as aliases (he, she, him, her, they, them, his, her, their, it, we, you, I, me, my, etc.)
+        - NEVER include generic terms as aliases (man, woman, person, husband, wife, the man, this person, etc.)
+        - Only include proper names, nicknames, and formal variations as aliases
 
         Return only valid JSON, no additional text.
       PROMPT
@@ -59,6 +80,11 @@ module FactDb
             "aliases": ["Paula", "P. Chen"]
           }
         ]
+
+        Important rules for aliases:
+        - NEVER include pronouns (he, she, him, her, they, them, his, her, their, it, we, you, I, me, my, etc.)
+        - NEVER include generic terms (man, woman, person, husband, wife, the man, this person, believers, disciples, etc.)
+        - Only include proper names, nicknames, titles, and formal name variations
 
         Return only valid JSON, no additional text.
       PROMPT
@@ -153,7 +179,8 @@ module FactDb
             name: mention["name"],
             type: mention["type"] || "concept",
             role: mention["role"],
-            confidence: mention["confidence"]&.to_f || 1.0
+            confidence: mention["confidence"]&.to_f || 1.0,
+            aliases: mention["aliases"] || []
           )
         end
       end

@@ -13,18 +13,21 @@
 require "bundler/setup"
 require "fact_db"
 
+log_path = File.join(__dir__, "#{File.basename(__FILE__, '.rb')}.log")
+
 FactDb.configure do |config|
-  config.database_url = ENV.fetch("DATABASE_URL", "postgres://#{ENV['USER']}@localhost/fact_db_demo")
+  config.database.url = ENV.fetch("DATABASE_URL", "postgres://#{ENV['USER']}@localhost/fact_db_demo")
   config.default_extractor = :manual
+  config.logger = Logger.new(log_path)
 end
 
 # Ensure database tables exist
 FactDb::Database.migrate!
 
-clock = FactDb.new
-entity_service = clock.entity_service
-fact_service = clock.fact_service
-content_service = clock.content_service
+facts = FactDb.new
+entity_service = facts.entity_service
+fact_service = facts.fact_service
+content_service = facts.content_service
 
 puts "=" * 60
 puts "HR Knowledge Management System Demo"
@@ -416,8 +419,8 @@ end
 # Section 11: Statistics
 puts "\n--- Section 11: HR System Statistics ---\n"
 
-puts "Total employees tracked: #{entity_service.people.count}"
-puts "Total departments: #{entity_service.organizations.where("description LIKE ?", "%team%").count}"
+puts "Total employees tracked: #{entity_service.by_type("person").count}"
+puts "Total departments: #{entity_service.by_type("organization").where("description LIKE ?", "%team%").count}"
 puts "Total employment facts: #{fact_service.stats[:total]}"
 puts "Current facts: #{FactDb::Models::Fact.currently_valid.count}"
 puts "Historical facts: #{FactDb::Models::Fact.historical.count}"

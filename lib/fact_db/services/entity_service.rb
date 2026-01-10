@@ -44,8 +44,29 @@ module FactDb
       end
 
       def resolve_or_create(name, type:, aliases: [], attributes: {}, description: nil)
+        # First, try to resolve the canonical name
         resolved = @resolver.resolve(name, type: type)
-        return resolved.entity if resolved
+        if resolved
+          # Add any new aliases to the resolved entity
+          add_new_aliases(resolved.entity, aliases)
+          return resolved.entity
+        end
+
+        # Check if any of the provided aliases match an existing entity
+        # This handles cases like: name="Lord", aliases=["Jesus"] where "Jesus" already exists
+        aliases.each do |alias_text|
+          next if alias_text.to_s.strip.empty?
+
+          resolved_by_alias = @resolver.resolve(alias_text.to_s.strip, type: type)
+          if resolved_by_alias
+            entity = resolved_by_alias.entity
+            # Add the new canonical name as an alias to the existing entity
+            entity.add_alias(name) unless entity.canonical_name.downcase == name.downcase
+            # Add all the other aliases too
+            add_new_aliases(entity, aliases)
+            return entity
+          end
+        end
 
         create(name, type: type, aliases: aliases, attributes: attributes, description: description)
       end
@@ -86,24 +107,6 @@ module FactDb
         Models::Entity.by_type(type).not_merged.order(:canonical_name)
       end
 
-      def people(limit: nil)
-        scope = Models::Entity.people.not_merged.order(:canonical_name)
-        scope = scope.limit(limit) if limit
-        scope
-      end
-
-      def organizations(limit: nil)
-        scope = Models::Entity.organizations.not_merged.order(:canonical_name)
-        scope = scope.limit(limit) if limit
-        scope
-      end
-
-      def places(limit: nil)
-        scope = Models::Entity.places.not_merged.order(:canonical_name)
-        scope = scope.limit(limit) if limit
-        scope
-      end
-
       def facts_about(entity_id, at: nil, status: :canonical)
         Temporal::Query.new.execute(
           entity_id: entity_id,
@@ -135,7 +138,55 @@ module FactDb
         }
       end
 
+      # Get all relationship types used in the database
+      #
+      # @return [Array<Symbol>] Relationship types (mention roles)
+      def relationship_types
+        Models::EntityMention.distinct.pluck(:mention_role).compact.map(&:to_sym)
+      end
+
+      # Get relationship types for a specific entity
+      #
+      # @param entity_id [Integer] Entity ID
+      # @return [Array<Symbol>] Relationship types for this entity
+      def relationship_types_for(entity_id)
+        Models::EntityMention
+          .where(entity_id: entity_id)
+          .distinct
+          .pluck(:mention_role)
+          .compact
+          .map(&:to_sym)
+      end
+
+      # Get the timespan of facts for an entity
+      #
+      # @param entity_id [Integer] Entity ID
+      # @return [Hash] Hash with :from and :to dates
+      def timespan_for(entity_id)
+        facts = Models::Fact
+          .joins(:entity_mentions)
+          .where(entity_mentions: { entity_id: entity_id })
+
+        {
+          from: facts.minimum(:valid_at),
+          to: facts.maximum(:valid_at) || Date.today
+        }
+      end
+
       private
+
+      def add_new_aliases(entity, aliases)
+        return unless aliases&.any?
+
+        # Filter out pronouns and generic terms
+        valid_aliases = Validation::AliasFilter.filter(aliases, canonical_name: entity.canonical_name)
+
+        valid_aliases.each do |alias_text|
+          next if entity.all_aliases.map(&:downcase).include?(alias_text.downcase)
+
+          entity.add_alias(alias_text)
+        end
+      end
 
       def generate_embedding(text)
         return nil unless config.embedding_generator

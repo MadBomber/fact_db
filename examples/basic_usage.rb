@@ -14,17 +14,20 @@ require "bundler/setup"
 require "fact_db"
 
 # Configure FactDb
+log_path = File.join(__dir__, "#{File.basename(__FILE__, '.rb')}.log")
+
 FactDb.configure do |config|
-  config.database_url = ENV.fetch("DATABASE_URL", "postgres://#{ENV['USER']}@localhost/fact_db_demo")
+  config.database.url = ENV.fetch("DATABASE_URL", "postgres://#{ENV['USER']}@localhost/fact_db_demo")
   config.default_extractor = :manual
   config.fuzzy_match_threshold = 0.85
+  config.logger = Logger.new(log_path)
 end
 
 # Ensure database tables exist
 FactDb::Database.migrate!
 
-# Create a new FactDb instance (the "clock")
-clock = FactDb.new
+# Create a new FactDb instance
+facts = FactDb.new
 
 puts "=" * 60
 puts "FactDb Basic Usage Demo"
@@ -49,7 +52,7 @@ email_content = <<~EMAIL
   HR Department
 EMAIL
 
-content = clock.ingest(
+content = facts.ingest(
   email_content,
   type: :email,
   title: "New Hire Announcement - Jane Smith",
@@ -63,7 +66,7 @@ puts "Word count: #{content.word_count}"
 # Step 2: Create entities
 puts "\n--- Step 2: Creating Entities ---\n"
 
-entity_service = clock.entity_service
+entity_service = facts.entity_service
 
 jane = entity_service.create(
   "Jane Smith",
@@ -92,7 +95,7 @@ puts "Created entity: #{techstartup.canonical_name} (ID: #{techstartup.id})"
 # Step 3: Create facts
 puts "\n--- Step 3: Creating Facts ---\n"
 
-fact_service = clock.fact_service
+fact_service = facts.fact_service
 
 # Fact 1: Jane works at Acme
 fact1 = fact_service.create(
@@ -146,7 +149,7 @@ end
 
 # Get all facts (including historical)
 puts "\nAll facts in the system:"
-all_facts = clock.query_facts
+all_facts = facts.query_facts
 all_facts.each do |fact|
   status = fact.invalid_at ? "(historical)" : "(current)"
   puts "  - #{fact.fact_text} #{status}"
@@ -155,7 +158,7 @@ end
 # Step 5: Get statistics
 puts "\n--- Step 5: Statistics ---\n"
 
-puts "Content stats: #{clock.content_service.stats}"
+puts "Content stats: #{facts.content_service.stats}"
 puts "Entity stats: #{entity_service.stats}"
 puts "Fact stats: #{fact_service.stats}"
 

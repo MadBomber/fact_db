@@ -17,9 +17,9 @@ extractor = FactDb::Extractors::LLMExtractor.new(config)
 
 ```ruby
 FactDb.configure do |config|
-  config.llm_provider = :openai
-  config.llm_model = "gpt-4o-mini"
-  config.llm_api_key = ENV['OPENAI_API_KEY']
+  config.llm.provider = :openai
+  config.llm.model = "gpt-4o-mini"
+  config.llm.api_key = ENV['OPENAI_API_KEY']
 end
 ```
 
@@ -94,12 +94,12 @@ Return JSON:
 
 | Provider | Models | Config |
 |----------|--------|--------|
-| OpenAI | gpt-4o, gpt-4o-mini | `llm_provider: :openai` |
-| Anthropic | claude-sonnet-4, claude-3-haiku | `llm_provider: :anthropic` |
-| Google | gemini-2.0-flash | `llm_provider: :gemini` |
-| Ollama | llama3.2, mistral | `llm_provider: :ollama` |
-| AWS Bedrock | claude-sonnet-4 | `llm_provider: :bedrock` |
-| OpenRouter | Various | `llm_provider: :openrouter` |
+| OpenAI | gpt-4o, gpt-4o-mini | `llm.provider = :openai` |
+| Anthropic | claude-sonnet-4, claude-3-haiku | `llm.provider = :anthropic` |
+| Google | gemini-2.0-flash | `llm.provider = :gemini` |
+| Ollama | llama3.2, mistral | `llm.provider = :ollama` |
+| AWS Bedrock | claude-sonnet-4 | `llm.provider = :bedrock` |
+| OpenRouter | Various | `llm.provider = :openrouter` |
 
 ## Error Handling
 

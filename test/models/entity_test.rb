@@ -18,9 +18,9 @@ class EntityTest < Minitest::Test
     org = create_entity(name: "Acme Corp", type: "organization")
     place = create_entity(name: "Seattle", type: "place")
 
-    assert_includes FactDb::Models::Entity.people, person
-    assert_includes FactDb::Models::Entity.organizations, org
-    assert_includes FactDb::Models::Entity.places, place
+    assert_includes FactDb::Models::Entity.by_type("person"), person
+    assert_includes FactDb::Models::Entity.by_type("organization"), org
+    assert_includes FactDb::Models::Entity.by_type("place"), place
   end
 
   def test_add_alias

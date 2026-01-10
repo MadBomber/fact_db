@@ -1,62 +1,111 @@
-# frozen_string_literal: true
+# FactDb Bundled Defaults
 #
-# FactDb Configuration Defaults
-# This file is the single source of truth for configuration schema and default values.
+# This file is the SINGLE SOURCE OF TRUTH for FactDb configuration schema.
+# All attributes must be declared here (even if nil) to be recognized.
+# It is bundled with the gem and loaded automatically at lowest priority.
+#
+# Loading priority (lowest to highest):
+# 1. This file (bundled defaults)
+# 2. XDG user config (~/.config/fact_db/fact_db.yml)
+# 3. Project config (./config/fact_db.yml)
+# 4. Local overrides (./config/fact_db.local.yml)
+# 5. Environment variables (FDB_*)
+# 6. Programmatic (FactDb.configure block)
 #
 # Structure:
-#   common:      - Shared defaults across all environments
-#   development: - Development environment overrides
-#   test:        - Test environment overrides
-#   production:  - Production environment overrides
+# - defaults: Base values for all environments (with nested sections)
+# - development: Overrides for development environment
+# - test: Overrides for test environment
+# - production: Overrides for production environment
 #
-# Environment is set via FDB_ENV (defaults to development)
-# Nested keys are flattened with underscores (e.g., database.url -> database_url)
+# Access pattern:
+#   FactDb.config.database.url
+#   FactDb.config.database.pool_size
+#   FactDb.config.llm.provider
+#   FactDb.config.ranking.ts_rank_weight
 
-common:
-  # Database configuration
+# =============================================================================
+# Shared Defaults (base for all environments)
+# =============================================================================
+defaults:
+  # ---------------------------------------------------------------------------
+  # Database Configuration
+  # Access: FactDb.config.database.url, FactDb.config.database.pool_size, etc.
+  # ---------------------------------------------------------------------------
   database:
-    url: ~                    # Required - set via environment or config file
+    url: ~
+    host: localhost
+    port: 5432
+    name: ~
+    user: ~
+    password: ~
     pool_size: 5
-    timeout: 30000            # milliseconds
+    timeout: 30000
 
-  # Embedding configuration
+  # ---------------------------------------------------------------------------
+  # Embedding Configuration
+  # Access: FactDb.config.embedding.generator, FactDb.config.embedding.dimensions
+  # ---------------------------------------------------------------------------
   embedding:
-    generator: ~              # Optional - embedding generator callable
+    generator: ~
     dimensions: 1536
 
-  # LLM configuration
+  # ---------------------------------------------------------------------------
+  # LLM Configuration
+  # Access: FactDb.config.llm.provider, FactDb.config.llm.model, etc.
+  # ---------------------------------------------------------------------------
   llm:
-    client: ~                 # Optional - can be set directly or built from provider/model/api_key
-    provider: ~               # e.g., :openai, :anthropic
-    model: ~                  # e.g., gpt-4, claude-3
-    api_key: ~                # API key for the provider
+    client: ~
+    provider: ~
+    model: ~
+    api_key: ~
 
-  # Extraction configuration
+  # ---------------------------------------------------------------------------
+  # Ranking Signal Weights
+  # Access: FactDb.config.ranking.ts_rank_weight, etc.
+  # Weights should sum to approximately 1.0 for normalized scores
+  # ---------------------------------------------------------------------------
+  ranking:
+    ts_rank_weight: 0.25
+    vector_similarity_weight: 0.25
+    entity_mention_weight: 0.15
+    direct_answer_weight: 0.15
+    term_overlap_weight: 0.10
+    relationship_match_weight: 0.05
+    confidence_weight: 0.05
+
+  # ---------------------------------------------------------------------------
+  # General Settings
+  # Access: FactDb.config.default_extractor, FactDb.config.log_level, etc.
+  # ---------------------------------------------------------------------------
   default_extractor: manual
-
-  # Entity resolution thresholds
   fuzzy_match_threshold: 0.85
   auto_merge_threshold: 0.95
-
-  # Logging configuration
-  logger: ~                   # Optional - defaults to STDOUT logger
   log_level: info
 
+# =============================================================================
+# Development Environment Overrides
+# =============================================================================
 development:
   database:
-    url: postgres://localhost/fact_db_development
+    name: fact_db_development
   log_level: debug
 
+# =============================================================================
+# Test Environment Overrides
+# =============================================================================
 test:
   database:
-    url: postgres://localhost/fact_db_test
+    name: fact_db_test
     pool_size: 2
     timeout: 5000
   log_level: warn
 
+# =============================================================================
+# Production Environment Overrides
+# =============================================================================
 production:
   database:
-    url: ~                    # Must be set via FDB_DATABASE_URL
     pool_size: 10
     timeout: 60000
   log_level: info

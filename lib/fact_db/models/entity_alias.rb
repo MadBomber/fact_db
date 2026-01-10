@@ -9,6 +9,7 @@ module FactDb
 
       validates :alias_text, presence: true
       validates :alias_text, uniqueness: { scope: :entity_id }
+      validate :alias_text_is_valid
 
       # Alias types
       TYPES = %w[name nickname email handle abbreviation title].freeze
@@ -20,6 +21,18 @@ module FactDb
 
       def self.find_entity_by_alias(text)
         find_by(["LOWER(alias_text) = ?", text.downcase])&.entity
+      end
+
+      private
+
+      def alias_text_is_valid
+        return if alias_text.blank?
+
+        canonical_name = entity&.canonical_name
+        unless Validation::AliasFilter.valid?(alias_text, canonical_name: canonical_name)
+          reason = Validation::AliasFilter.rejection_reason(alias_text, canonical_name: canonical_name)
+          errors.add(:alias_text, "is not a valid alias: #{reason}")
+        end
       end
     end
   end

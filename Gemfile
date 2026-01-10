@@ -5,6 +5,7 @@ source "https://rubygems.org"
 gemspec
 
 group :development, :test do
+  gem "amazing_print"
   gem "debug_me"
   gem "minitest"
   gem "rake"

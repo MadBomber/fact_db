@@ -9,9 +9,9 @@ require 'fact_db'
 
 # Configure
 FactDb.configure do |config|
-  config.database_url = ENV['DATABASE_URL']
-  config.llm_provider = :openai
-  config.llm_api_key = ENV['OPENAI_API_KEY']
+  config.database.url = ENV['DATABASE_URL']
+  config.llm.provider = :openai
+  config.llm.api_key = ENV['OPENAI_API_KEY']
 end
 
 # Create facts instance
@@ -206,7 +206,7 @@ require 'fact_db'
 
 # Setup
 FactDb.configure do |config|
-  config.database_url = ENV['DATABASE_URL'] || 'postgresql://localhost/fact_db'
+  config.database.url = ENV['DATABASE_URL'] || 'postgresql://localhost/fact_db'
 end
 
 facts = FactDb.new

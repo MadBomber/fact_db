@@ -8,6 +8,40 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.0.3] - Unreleased
+
+### Added
+
+- **Output Transformers** - Transform query results into multiple formats optimized for LLM consumption
+  - `RawTransformer` - Returns original ActiveRecord objects unchanged for direct database access
+  - `JsonTransformer` - JSON-serializable hash format (default)
+  - `TripleTransformer` - Subject-Predicate-Object triples for semantic encoding
+  - `CypherTransformer` - Cypher-like graph notation with nodes and relationships
+  - `TextTransformer` - Human-readable markdown format grouped by fact status
+- **QueryResult** - Unified container for query results that works with all transformers
+  - Normalizes facts from ActiveRecord objects or hashes
+  - Resolves and caches entities referenced in facts
+  - Provides iteration methods (`each_fact`, `each_entity`)
+- **Temporal Query Builder** - Fluent API for point-in-time queries via `facts.at(date)`
+  - Chain queries: `facts.at("2024-01-15").query("Paula's role", format: :cypher)`
+  - Get facts for entity: `facts.at("2024-01-15").facts_for(entity_id)`
+  - Compare dates: `facts.at("2024-01-15").compare_to("2024-06-15")`
+- **Temporal Diff** - Compare what changed between two dates with `facts.diff(topic, from:, to:)`
+  - Returns `:added`, `:removed`, and `:unchanged` fact arrays
+- **Introspection API** - Discover what the fact database knows about
+  - `facts.introspect` - Get schema, capabilities, entity types, and statistics
+  - `facts.introspect("Paula Chen")` - Get coverage and relationships for a topic
+  - `facts.suggest_queries(topic)` - Get suggested queries based on stored data
+  - `facts.suggest_strategies(query)` - Get recommended retrieval strategies
+- **Format Parameter** - All query methods now accept `format:` parameter
+  - Available formats: `:raw`, `:json`, `:triples`, `:cypher`, `:text`
+  - Example: `facts.query_facts(topic: "Paula", format: :cypher)`
+
+### Changed
+
+- `EntityService` now includes `relationship_types_for(entity_id)` and `timespan_for(entity_id)` methods
+- `FactService` now includes `fact_stats(entity_id)` for per-entity statistics
+
 ## [0.0.2] - 2025-01-08
 
 ### Fixed

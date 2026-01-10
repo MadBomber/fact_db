@@ -8,7 +8,7 @@ require "fact_db"
 
 # Configure for testing
 FactDb.configure do |config|
-  config.database_url = ENV.fetch("DATABASE_URL", "postgresql://dewayne@localhost/fact_db_test")
+  config.database.url = ENV.fetch("DATABASE_URL", "postgresql://dewayne@localhost/fact_db_test")
   config.logger = Logger.new(File::NULL) # Silence logs in tests
   config.fuzzy_match_threshold = 0.85
   config.auto_merge_threshold = 0.95

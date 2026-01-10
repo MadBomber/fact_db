@@ -24,7 +24,7 @@ FactDb provides migrations that create all necessary tables:
 require 'fact_db'
 
 FactDb.configure do |config|
-  config.database_url = "postgresql://localhost/fact_db"
+  config.database.url = "postgresql://localhost/fact_db"
 end
 
 FactDb::Database.migrate!
@@ -158,10 +158,18 @@ Configure the connection pool for your workload:
 
 ```ruby
 FactDb.configure do |config|
-  config.database_url = ENV['DATABASE_URL']
-  config.database_pool_size = 10  # Default: 5
-  config.database_timeout = 60_000  # Default: 30000ms
+  config.database.url = ENV['DATABASE_URL']
+  config.database.pool_size = 10  # Default: 5
+  config.database.timeout = 60_000  # Default: 30000ms
 end
+```
+
+Or via environment variables:
+
+```bash
+export FDB_DATABASE__URL="postgresql://localhost/fact_db"
+export FDB_DATABASE__POOL_SIZE=10
+export FDB_DATABASE__TIMEOUT=60000
 ```
 
 ## Next Steps
