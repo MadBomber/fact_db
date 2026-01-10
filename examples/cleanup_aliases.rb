@@ -12,7 +12,6 @@ require_relative "../lib/fact_db"
 
 # Configure the database connection
 FactDb.configure do |config|
-  config.database.url = ENV.fetch("DATABASE_URL", "postgres://#{ENV['USER']}@localhost/fact_db_demo")
   config.logger = Logger.new("/dev/null")
 end
 

@@ -52,8 +52,10 @@ bundle install
 require 'fact_db'
 
 # Configure with a PostgreSQL database URL
+# If you want to use an envar name different from the standard
+# FDB_DATABASE__URL then you must set the config.database.url in code ...
 FactDb.configure do |config|
-  config.database.url = ENV.fetch("DATABASE_URL", "postgres://#{ENV['USER']}@localhost/fact_db_demo")
+  config.database.url = ENV["YOUR_DATABASE_URL_ENVAR_NAME"]
 end
 
 # Run migrations to create the schema (only needed once)

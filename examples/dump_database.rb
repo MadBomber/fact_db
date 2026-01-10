@@ -53,7 +53,6 @@ class DatabaseDumper
 
   def setup_factdb
     FactDb.configure do |config|
-      config.database.url = ENV.fetch("DATABASE_URL", "postgres://#{ENV['USER']}@localhost/fact_db_demo")
       config.logger = Logger.new("/dev/null")
     end
 

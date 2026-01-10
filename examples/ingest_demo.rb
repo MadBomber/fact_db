@@ -82,7 +82,6 @@ class IngestDemo
     log_path = File.join(__dir__, "#{File.basename(__FILE__, '.rb')}.log")
 
     FactDb.configure do |config|
-      config.database.url = ENV.fetch("DATABASE_URL", "postgres://#{ENV['USER']}@localhost/fact_db_demo")
       config.default_extractor = :llm
       config.logger = Logger.new(log_path)
 

@@ -36,7 +36,7 @@ defaults:
     url: ~
     host: localhost
     port: 5432
-    name: ~
+    name: fact_db_demo
     user: ~
     password: ~
     pool_size: 5
@@ -108,4 +108,5 @@ production:
   database:
     pool_size: 10
     timeout: 60000
+    name: fact_dv_production
   log_level: info
