@@ -9,27 +9,16 @@
 # - Point-in-time queries with chaining
 # - Getting entity state at specific moments
 
-require "bundler/setup"
-require "fact_db"
+require_relative "utilities"
 
-log_path = File.join(__dir__, "#{File.basename(__FILE__, '.rb')}.log")
-
-FactDb.configure do |config|
-  config.logger = Logger.new(log_path)
-end
-
-FactDb::Database.migrate!
+demo_setup!("FactDb Fluent Temporal API Demo")
+demo_configure_logging(__FILE__)
 
 facts = FactDb.new
 entity_service = facts.entity_service
 fact_service = facts.fact_service
 
-puts "=" * 60
-puts "FactDb Fluent Temporal API Demo"
-puts "=" * 60
-
-# Setup: Create a career progression story
-puts "\n--- Setup: Creating Career Progression Data ---\n"
+demo_section("Setup: Creating Career Progression Data")
 
 # Create entities
 alex = entity_service.resolve_or_create(
@@ -121,10 +110,7 @@ fact_service.find_or_create(
 
 puts "Created career progression facts (2020-2024)"
 
-# Section 1: Fluent Query Builder - Basic Usage
-puts "\n" + "=" * 60
-puts "Section 1: Fluent Query Builder - facts.at(date)"
-puts "=" * 60
+demo_section("Section 1: Fluent Query Builder - Basic Usage")
 
 puts "\nQuery: What was Alex's role in 2021?"
 results_2021 = facts.at("2021-06-15").facts_for(alex.id)
@@ -147,10 +133,7 @@ results_now.each_fact do |fact|
   puts "  - #{fact[:fact_text]}"
 end
 
-# Section 2: Query Builder with Output Formats
-puts "\n" + "=" * 60
-puts "Section 2: Query Builder with Different Formats"
-puts "=" * 60
+demo_section("Section 2: Query Builder with Output Formats")
 
 puts "\nAlex's 2023 state as Cypher graph:"
 cypher_2023 = facts.at("2023-10-01").facts_for(alex.id, format: :cypher)
@@ -160,10 +143,7 @@ puts "\nAlex's 2023 state as Triples:"
 triples_2023 = facts.at("2023-10-01").facts_for(alex.id, format: :triples)
 triples_2023.each { |t| puts "  #{t.inspect}" }
 
-# Section 3: Comparing Two Points in Time
-puts "\n" + "=" * 60
-puts "Section 3: Temporal Diff - What Changed?"
-puts "=" * 60
+demo_section("Section 3: Comparing Two Points in Time")
 
 puts "\nComparing Alex's situation: 2021-06-01 vs 2024-01-01"
 diff_result = facts.diff(nil, from: "2021-06-01", to: "2024-01-01")
@@ -187,10 +167,7 @@ else
   end
 end
 
-# Section 4: Query Builder - Compare To
-puts "\n" + "=" * 60
-puts "Section 4: Query Builder - compare_to()"
-puts "=" * 60
+demo_section("Section 4: Query Builder - Compare To")
 
 puts "\nUsing fluent API to compare dates:"
 comparison = facts.at("2020-06-01").compare_to("2023-10-01")
@@ -200,10 +177,7 @@ puts "  Added: #{comparison[:added].count} facts"
 puts "  Removed: #{comparison[:removed].count} facts"
 puts "  Unchanged: #{comparison[:unchanged].count} facts"
 
-# Section 5: Career Timeline View
-puts "\n" + "=" * 60
-puts "Section 5: Career Timeline - Multiple Point-in-Time Snapshots"
-puts "=" * 60
+demo_section("Section 5: Career Timeline View")
 
 checkpoints = [
   Date.new(2020, 6, 1),
@@ -231,10 +205,7 @@ checkpoints.each do |date|
   puts
 end
 
-# Section 6: State For - Entity State at a Date
-puts "\n" + "=" * 60
-puts "Section 6: Entity State Snapshot"
-puts "=" * 60
+demo_section("Section 6: State For - Entity State at a Date")
 
 puts "\nSnapshot of Alex's state on 2022-08-01:"
 state = facts.at("2022-08-01").state_for(alex.id)
@@ -243,6 +214,4 @@ state.each_fact do |fact|
   puts "  - #{fact[:fact_text]}"
 end
 
-puts "\n" + "=" * 60
-puts "Fluent Temporal API Demo Complete!"
-puts "=" * 60
+demo_footer

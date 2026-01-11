@@ -8,27 +8,16 @@
 # - JSON, Triples, Cypher, and Text transformers
 # - How each format represents the same data differently
 
-require "bundler/setup"
-require "fact_db"
+require_relative "utilities"
 
-log_path = File.join(__dir__, "#{File.basename(__FILE__, '.rb')}.log")
-
-FactDb.configure do |config|
-  config.logger = Logger.new(log_path)
-end
-
-FactDb::Database.migrate!
+demo_setup!("FactDb Output Formats Demo")
+demo_configure_logging(__FILE__)
 
 facts = FactDb.new
 entity_service = facts.entity_service
 fact_service = facts.fact_service
 
-puts "=" * 60
-puts "FactDb Output Formats Demo"
-puts "=" * 60
-
-# Setup: Create sample data
-puts "\n--- Setup: Creating Sample Data ---\n"
+demo_section("Setup: Creating Sample Data")
 
 # Create entities
 paula = entity_service.resolve_or_create(
@@ -88,19 +77,13 @@ fact_service.create(
 
 puts "Created facts about Paula Chen"
 
-# Section 1: JSON Format (Default)
-puts "\n" + "=" * 60
-puts "Section 1: JSON Format (Default)"
-puts "=" * 60
+demo_section("Section 1: JSON Format (Default)")
 
 json_results = facts.query_facts(entity: paula.id, format: :json)
 puts "\nJSON output:"
 puts JSON.pretty_generate(json_results.to_h)
 
-# Section 2: Triples Format
-puts "\n" + "=" * 60
-puts "Section 2: Triples Format (Subject-Predicate-Object)"
-puts "=" * 60
+demo_section("Section 2: Triples Format (Subject-Predicate-Object)")
 
 triples_results = facts.query_facts(entity: paula.id, format: :triples)
 puts "\nTriples output:"
@@ -116,10 +99,7 @@ puts <<~EXPLANATION
   - LLM structured understanding
 EXPLANATION
 
-# Section 3: Cypher Format
-puts "\n" + "=" * 60
-puts "Section 3: Cypher Format (Graph Notation)"
-puts "=" * 60
+demo_section("Section 3: Cypher Format (Graph Notation)")
 
 cypher_results = facts.query_facts(entity: paula.id, format: :cypher)
 puts "\nCypher output:"
@@ -133,10 +113,7 @@ puts <<~EXPLANATION
   - Understanding connection patterns
 EXPLANATION
 
-# Section 4: Text Format
-puts "\n" + "=" * 60
-puts "Section 4: Text Format (Human-Readable)"
-puts "=" * 60
+demo_section("Section 4: Text Format (Human-Readable)")
 
 text_results = facts.query_facts(entity: paula.id, format: :text)
 puts "\nText output:"
@@ -150,10 +127,7 @@ puts <<~EXPLANATION
   - Report generation
 EXPLANATION
 
-# Section 5: Raw Format
-puts "\n" + "=" * 60
-puts "Section 5: Raw Format (ActiveRecord Objects)"
-puts "=" * 60
+demo_section("Section 5: Raw Format (ActiveRecord Objects)")
 
 raw_results = facts.query_facts(entity: paula.id, format: :raw)
 puts "\nRaw output (first result):"
@@ -167,10 +141,7 @@ else
   puts "  Results: #{raw_results.inspect}"
 end
 
-# Section 6: Format Comparison
-puts "\n" + "=" * 60
-puts "Section 6: Format Comparison - Same Query, Different Views"
-puts "=" * 60
+demo_section("Section 6: Format Comparison - Same Query, Different Views")
 
 puts "\nQuerying current facts for Paula Chen in all formats:\n"
 
@@ -197,15 +168,10 @@ formats.each do |format|
   end
 end
 
-# Section 7: Temporal Queries with Formats
-puts "\n" + "=" * 60
-puts "Section 7: Temporal Queries with Different Formats"
-puts "=" * 60
+demo_section("Section 7: Temporal Queries with Formats")
 
 puts "\nFacts at specific date (2024-06-01) in Cypher format:"
 temporal_cypher = facts.facts_at(Date.new(2024, 6, 1), entity: paula.id, format: :cypher)
 puts temporal_cypher
 
-puts "\n" + "=" * 60
-puts "Output Formats Demo Complete!"
-puts "=" * 60
+demo_footer

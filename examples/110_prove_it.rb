@@ -10,8 +10,9 @@
 #   ruby prove_it.rb --last <n>                # Show last n facts
 #   ruby prove_it.rb --search <term>           # Search facts and show evidence
 
-require "bundler/setup"
-require "fact_db"
+require_relative "utilities"
+
+# Note: CLI tool - uses cli_setup! which does NOT reset database
 
 class ProveItDemo
   def initialize
@@ -78,11 +79,14 @@ class ProveItDemo
   private
 
   def setup_factdb
+    DemoUtilities.ensure_demo_environment!
+    DemoUtilities.require_fact_db!
+
     FactDb.configure do |config|
       config.logger = Logger.new("/dev/null")
     end
 
-    FactDb::Database.migrate!
+    FactDb::Database.establish_connection!
   end
 
   def display_fact(id)
@@ -138,15 +142,15 @@ class ProveItDemo
         puts evidence[:focused_lines]
         puts "-" * 40
         puts
-        puts "Key terms matched: #{evidence[:key_terms].first(10).join(', ')}"
+        puts "Key terms matched: #{evidence[:key_terms].first(10).join(", ")}"
+      else
+        # Show full section context
+        puts
+        puts "FULL SECTION (lines #{fact.metadata["line_start"]}-#{fact.metadata["line_end"]}):"
+        puts "-" * 40
+        puts evidence[:full_section]
+        puts "-" * 40
       end
-
-      # Show full section context
-      puts
-      puts "FULL SECTION (lines #{fact.metadata['line_start']}-#{fact.metadata['line_end']}):"
-      puts "-" * 40
-      puts evidence[:full_section]
-      puts "-" * 40
     else
       puts "SOURCE EVIDENCE: Not available"
       puts "  (Missing line numbers or source content)"
@@ -161,23 +165,23 @@ end
 if __FILE__ == $PROGRAM_NAME
   if ARGV.empty? || ARGV.include?("--help") || ARGV.include?("-h")
     puts <<~HELP
-      Prove It - Source Evidence Viewer for FactDb
+           Prove It - Source Evidence Viewer for FactDb
 
-      Displays fact records along with their original source text evidence.
+           Displays fact records along with their original source text evidence.
 
-      Usage:
-        ruby prove_it.rb <fact_id> [fact_id...]    # Show specific facts
-        ruby prove_it.rb --last <n>                # Show last n facts
-        ruby prove_it.rb --search <term>           # Search facts by text
+           Usage:
+             ruby prove_it.rb <fact_id> [fact_id...]    # Show specific facts
+             ruby prove_it.rb --last <n>                # Show last n facts
+             ruby prove_it.rb --search <term>           # Search facts by text
 
-      Examples:
-        ruby prove_it.rb 123 456 789
-        ruby prove_it.rb --last 5
-        ruby prove_it.rb --search "Stephen"
+           Examples:
+             ruby prove_it.rb 123 456 789
+             ruby prove_it.rb --last 5
+             ruby prove_it.rb --search "Stephen"
 
-      Environment:
-        DATABASE_URL  # PostgreSQL connection URL
-    HELP
+           Environment:
+             DATABASE_URL  # PostgreSQL connection URL
+         HELP
     exit 0
   end
 

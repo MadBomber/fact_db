@@ -4,7 +4,7 @@ PATH
     fact_db (0.0.3)
       activerecord (>= 7.0)
       chronic (>= 0.10)
-      myway_config
+      myway_config (~> 0.1.1)
       neighbor (>= 0.3)
       pg (>= 1.5)
       simple_flow (>= 0.2)
@@ -65,7 +65,7 @@ GEM
     minitest (6.0.1)
       prism (~> 1.5)
     multipart-post (2.4.1)
-    myway_config (0.1.0)
+    myway_config (0.1.1)
       anyway_config (>= 2.0)
     neighbor (0.6.0)
       activerecord (>= 7.1)
@@ -181,7 +181,7 @@ CHECKSUMS
   marcel (1.1.0) sha256=fdcfcfa33cc52e93c4308d40e4090a5d4ea279e160a7f6af988260fa970e0bee
   minitest (6.0.1) sha256=7854c74f48e2e975969062833adc4013f249a4b212f5e7b9d5c040bf838d54bb
   multipart-post (2.4.1) sha256=9872d03a8e552020ca096adadbf5e3cb1cd1cdd6acd3c161136b8a5737cdb4a8
-  myway_config (0.1.0)
+  myway_config (0.1.1) sha256=af0ea1316ab685d669b30599728ae433db8c5b34d1a3383b68c7c90b2f3def23
   neighbor (0.6.0) sha256=e2bd0bb98e1d6403892d1d0cf3683ae9429be51d6a6a14859135dc71cf9c27d3
   net-http (0.9.1) sha256=25ba0b67c63e89df626ed8fac771d0ad24ad151a858af2cc8e6a716ca4336996
   parallel (1.27.0) sha256=4ac151e1806b755fb4e2dc2332cbf0e54f2e24ba821ff2d3dcf86bf6dc4ae130

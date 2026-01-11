@@ -10,29 +10,20 @@
 # - Creating facts manually
 # - Querying facts
 
-require "bundler/setup"
-require "fact_db"
+require_relative "utilities"
+require "amazing_print"
 
-# Configure FactDb
-log_path = File.join(__dir__, "#{File.basename(__FILE__, '.rb')}.log")
+demo_setup!("FactDb Basic Usage Demo")
+demo_configure_logging(__FILE__)
 
 FactDb.configure do |config|
   config.default_extractor = :manual
-  config.logger = Logger.new(log_path)
 end
-
-# Ensure database tables exist
-FactDb::Database.migrate!
 
 # Create a new FactDb instance
 facts = FactDb.new
 
-puts "=" * 60
-puts "FactDb Basic Usage Demo"
-puts "=" * 60
-
-# Step 1: Ingest some content
-puts "\n--- Step 1: Ingesting Content ---\n"
+demo_section("Step 1: Ingesting Content")
 
 email_content = <<~EMAIL
   From: hr@acme.com
@@ -61,42 +52,40 @@ puts "Ingested content ID: #{content.id}"
 puts "Content hash: #{content.content_hash}"
 puts "Word count: #{content.word_count}"
 
-# Step 2: Create entities
-puts "\n--- Step 2: Creating Entities ---\n"
+demo_section("Step 2: Creating/Finding Entities")
 
 entity_service = facts.entity_service
 
-jane = entity_service.create(
+jane = entity_service.resolve_or_create(
   "Jane Smith",
   type: :person,
   aliases: ["J. Smith"],
   description: "Director of Engineering at Acme Corp"
 )
-puts "Created entity: #{jane.canonical_name} (ID: #{jane.id})"
+puts "Entity: #{jane.canonical_name} (ID: #{jane.id})"
 
-acme = entity_service.create(
+acme = entity_service.resolve_or_create(
   "Acme Corp",
   type: :organization,
   aliases: ["Acme", "Acme Corporation"],
   description: "Technology company"
 )
-puts "Created entity: #{acme.canonical_name} (ID: #{acme.id})"
+puts "Entity: #{acme.canonical_name} (ID: #{acme.id})"
 
-techstartup = entity_service.create(
+techstartup = entity_service.resolve_or_create(
   "TechStartup Inc",
   type: :organization,
   aliases: ["TechStartup"],
   description: "Technology startup company"
 )
-puts "Created entity: #{techstartup.canonical_name} (ID: #{techstartup.id})"
+puts "Entity: #{techstartup.canonical_name} (ID: #{techstartup.id})"
 
-# Step 3: Create facts
-puts "\n--- Step 3: Creating Facts ---\n"
+demo_section("Step 3: Creating/Finding Facts")
 
 fact_service = facts.fact_service
 
 # Fact 1: Jane works at Acme
-fact1 = fact_service.create(
+fact1 = fact_service.find_or_create(
   "Jane Smith is Director of Engineering at Acme Corp",
   valid_at: Date.new(2026, 1, 8),
   extraction_method: :manual,
@@ -106,11 +95,11 @@ fact1 = fact_service.create(
     { entity_id: acme.id, role: :object, text: "Acme Corp" }
   ]
 )
-puts "Created fact: #{fact1.fact_text}"
+puts "Fact: #{fact1.fact_text}"
 puts "  Valid from: #{fact1.valid_at}"
 
 # Fact 2: Jane previously worked at TechStartup (now invalid)
-fact2 = fact_service.create(
+fact2 = fact_service.find_or_create(
   "Jane Smith was VP of Engineering at TechStartup Inc",
   valid_at: Date.new(2023, 1, 1),
   invalid_at: Date.new(2026, 1, 7),
@@ -121,15 +110,14 @@ fact2 = fact_service.create(
     { entity_id: techstartup.id, role: :object, text: "TechStartup Inc" }
   ]
 )
-puts "Created fact: #{fact2.fact_text}"
+puts "Fact: #{fact2.fact_text}"
 puts "  Valid from: #{fact2.valid_at} to #{fact2.invalid_at}"
 
-# Link facts to source content
-fact1.add_source(content: content, type: :primary, confidence: 1.0)
-fact2.add_source(content: content, type: :supporting, confidence: 0.8)
+# Link facts to source content (skip if already linked)
+fact1.add_source(content: content, type: :primary, confidence: 1.0) rescue nil
+fact2.add_source(content: content, type: :supporting, confidence: 0.8) rescue nil
 
-# Step 4: Query facts
-puts "\n--- Step 4: Querying Facts ---\n"
+demo_section("Step 4: Querying Facts")
 
 # Get current facts about Jane
 puts "\nCurrent facts about Jane Smith:"
@@ -148,18 +136,20 @@ end
 # Get all facts (including historical)
 puts "\nAll facts in the system:"
 all_facts = facts.query_facts
-all_facts.each do |fact|
-  status = fact.invalid_at ? "(historical)" : "(current)"
-  puts "  - #{fact.fact_text} #{status}"
+all_facts.each_fact do |fact|
+  status = fact[:invalid_at] ? "(historical)" : "(current)"
+  puts "  - #{fact[:fact_text]} #{status}"
 end
 
-# Step 5: Get statistics
-puts "\n--- Step 5: Statistics ---\n"
+demo_section("Step 5: Statistics")
 
-puts "Content stats: #{facts.content_service.stats}"
-puts "Entity stats: #{entity_service.stats}"
-puts "Fact stats: #{fact_service.stats}"
+puts "\nContent stats:"
+ap facts.content_service.stats
 
-puts "\n" + "=" * 60
-puts "Demo complete!"
-puts "=" * 60
+puts "\nEntity stats:"
+ap entity_service.stats
+
+puts "\nFact stats:"
+ap fact_service.stats
+
+demo_footer

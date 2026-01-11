@@ -11,28 +11,16 @@
 # - Searching entities
 # - Building entity timelines
 
-require "bundler/setup"
-require "fact_db"
+require_relative "utilities"
 
-log_path = File.join(__dir__, "#{File.basename(__FILE__, '.rb')}.log")
-
-FactDb.configure do |config|
-  config.logger = Logger.new(log_path)
-end
-
-# Ensure database tables exist
-FactDb::Database.migrate!
+demo_setup!("FactDb Entity Management Demo")
+demo_configure_logging(__FILE__)
 
 facts = FactDb.new
 entity_service = facts.entity_service
 fact_service = facts.fact_service
 
-puts "=" * 60
-puts "FactDb Entity Management Demo"
-puts "=" * 60
-
-# Section 1: Creating Entities
-puts "\n--- Section 1: Creating Entities ---\n"
+demo_section("Section 1: Creating Entities")
 
 # Create a person entity with aliases
 person = entity_service.create(
@@ -64,8 +52,7 @@ location = entity_service.create(
 )
 puts "Created place: #{location.canonical_name}"
 
-# Section 2: Entity Resolution
-puts "\n--- Section 2: Entity Resolution ---\n"
+demo_section("Section 2: Entity Resolution")
 
 # Try to resolve entities using fuzzy matching
 test_names = ["Bob Johnson", "R Johnson", "Robert J", "Global Ind", "GII"]
@@ -88,8 +75,7 @@ new_person = entity_service.resolve_or_create(
 )
 puts "Result: #{new_person.canonical_name} (new: #{new_person.created_at == new_person.updated_at})"
 
-# Section 3: Managing Aliases
-puts "\n--- Section 3: Managing Aliases ---\n"
+demo_section("Section 3: Managing Aliases")
 
 # Add more aliases to an existing entity
 entity_service.add_alias(person.id, "Robert J.", alias_type: :name, confidence: 0.9)
@@ -101,23 +87,27 @@ person.aliases.each do |a|
   puts "  - #{a.alias_text} (#{a.alias_type}, confidence: #{a.confidence})"
 end
 
-# Section 4: Merging Duplicate Entities
-puts "\n--- Section 4: Merging Entities ---\n"
+demo_section("Section 4: Merging Entities")
 
 # Create a duplicate entity (simulating data entry error)
+# Using "Robert Johnsen" (misspelling) to demonstrate fuzzy matching
 duplicate = entity_service.create(
-  "Bob Johnson",
+  "Robert Johnsen",
   type: :person,
-  description: "Possible duplicate of Robert Johnson"
+  description: "Possible duplicate of Robert Johnson (typo)"
 )
 puts "Created potential duplicate: #{duplicate.canonical_name} (ID: #{duplicate.id})"
 
 # Find potential duplicates
 puts "\nSearching for duplicates:"
 duplicates = entity_service.find_duplicates(threshold: 0.8)
-duplicates.each do |dup_pair|
-  puts "  Potential duplicate: #{dup_pair[:entity1].canonical_name} <-> #{dup_pair[:entity2].canonical_name}"
-  puts "    Similarity: #{dup_pair[:similarity]}"
+if duplicates.empty?
+  puts "  No duplicates found above threshold 0.8"
+else
+  duplicates.each do |dup_pair|
+    puts "  Potential duplicate: #{dup_pair[:entity1].canonical_name} (ID: #{dup_pair[:entity1].id}) <-> #{dup_pair[:entity2].canonical_name} (ID: #{dup_pair[:entity2].id})"
+    puts "    Similarity: #{dup_pair[:similarity].round(3)}"
+  end
 end
 
 # Merge the duplicate into the canonical entity
@@ -130,8 +120,7 @@ duplicate.reload
 puts "Duplicate status: #{duplicate.resolution_status}"
 puts "Merged into: #{duplicate.merged_into_id}"
 
-# Section 5: Searching Entities
-puts "\n--- Section 5: Searching Entities ---\n"
+demo_section("Section 5: Searching Entities")
 
 # Create more entities for search demo
 entity_service.create("Jennifer Wilson", type: :person, description: "Marketing Manager")
@@ -156,8 +145,7 @@ entity_service.by_type("organization").each do |entity|
   puts "  - #{entity.canonical_name}"
 end
 
-# Section 6: Entity Timeline
-puts "\n--- Section 6: Entity Timeline ---\n"
+demo_section("Section 6: Entity Timeline")
 
 # Create some facts about Bob to build a timeline
 fact_service.create(
@@ -197,8 +185,7 @@ timeline.each do |entry|
   puts "    #{entry[:fact_text]}"
 end
 
-# Section 7: Statistics
-puts "\n--- Section 7: Entity Statistics ---\n"
+demo_section("Section 7: Entity Statistics")
 
 stats = entity_service.stats
 puts "Total entities: #{stats[:total]}"
@@ -211,6 +198,4 @@ stats[:by_status].each do |status, count|
   puts "  #{status}: #{count}"
 end
 
-puts "\n" + "=" * 60
-puts "Entity Management Demo Complete!"
-puts "=" * 60
+demo_footer("Entity Management Demo Complete!")

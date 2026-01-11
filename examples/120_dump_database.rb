@@ -14,8 +14,9 @@
 #   ruby dump_database.rb --content      # Content only
 #   ruby dump_database.rb --search TERM  # Search facts/entities
 
-require "bundler/setup"
-require "fact_db"
+require_relative "utilities"
+
+# Note: CLI tool - uses cli_setup! which does NOT reset database
 
 class DatabaseDumper
   def initialize
@@ -52,11 +53,14 @@ class DatabaseDumper
   private
 
   def setup_factdb
+    DemoUtilities.ensure_demo_environment!
+    DemoUtilities.require_fact_db!
+
     FactDb.configure do |config|
       config.logger = Logger.new("/dev/null")
     end
 
-    FactDb::Database.migrate!
+    FactDb::Database.establish_connection!
   end
 
   def dump_summary

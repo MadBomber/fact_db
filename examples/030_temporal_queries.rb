@@ -10,28 +10,16 @@
 # - Detecting fact changes over time
 # - Building temporal diffs
 
-require "bundler/setup"
-require "fact_db"
+require_relative "utilities"
 
-log_path = File.join(__dir__, "#{File.basename(__FILE__, '.rb')}.log")
-
-FactDb.configure do |config|
-  config.logger = Logger.new(log_path)
-end
-
-# Ensure database tables exist
-FactDb::Database.migrate!
+demo_setup!("FactDb Temporal Queries Demo")
+demo_configure_logging(__FILE__)
 
 facts = FactDb.new
 entity_service = facts.entity_service
 fact_service = facts.fact_service
 
-puts "=" * 60
-puts "FactDb Temporal Queries Demo"
-puts "=" * 60
-
-# Setup: Create entities for our scenario
-puts "\n--- Setup: Creating Entities ---\n"
+demo_section("Setup: Creating Entities")
 
 company = entity_service.create(
   "TechCorp Ltd",
@@ -59,8 +47,7 @@ cfo = entity_service.create(
 
 puts "Created entities: #{company.canonical_name}, #{ceo.canonical_name}, #{new_ceo.canonical_name}, #{cfo.canonical_name}"
 
-# Section 1: Creating Temporal Facts
-puts "\n--- Section 1: Creating Temporal Facts ---\n"
+demo_section("Section 1: Creating Temporal Facts")
 
 # Fact with open-ended validity (still true)
 fact1 = fact_service.create(
@@ -108,8 +95,7 @@ fact4 = fact_service.create(
 puts "\nCreated: #{fact4.fact_text}"
 puts "  Valid: #{fact4.valid_at} - present"
 
-# Section 2: Point-in-Time Queries
-puts "\n--- Section 2: Point-in-Time Queries ---\n"
+demo_section("Section 2: Point-in-Time Queries")
 
 # Query facts valid at different dates
 dates_to_query = [
@@ -127,8 +113,7 @@ dates_to_query.each do |date|
   end
 end
 
-# Section 3: Current vs Historical Facts
-puts "\n--- Section 3: Current vs Historical Facts ---\n"
+demo_section("Section 3: Current vs Historical Facts")
 
 puts "Currently valid facts about TechCorp:"
 current = fact_service.current_facts(entity: company.id)
@@ -139,8 +124,7 @@ FactDb::Models::Fact.historical.each do |fact|
   puts "  - #{fact.fact_text} (ended: #{fact.invalid_at})"
 end
 
-# Section 4: Superseding Facts
-puts "\n--- Section 4: Superseding Facts ---\n"
+demo_section("Section 4: Superseding Facts")
 
 # Company valuation that changes over time
 valuation_2020 = fact_service.create(
@@ -164,8 +148,7 @@ valuation_2020.reload
 puts "\nOriginal fact status: #{valuation_2020.status}"
 puts "Original fact now invalid at: #{valuation_2020.invalid_at}"
 
-# Section 5: Temporal Timeline
-puts "\n--- Section 5: Temporal Timeline for Company ---\n"
+demo_section("Section 5: Temporal Timeline")
 
 timeline = fact_service.timeline(
   entity_id: company.id,
@@ -180,8 +163,7 @@ timeline.each do |entry|
   puts "  #{entry[:valid_at]} - #{end_date}: #{entry[:fact_text]}#{status_indicator}"
 end
 
-# Section 6: Temporal Diff
-puts "\n--- Section 6: Temporal Diff ---\n"
+demo_section("Section 6: Temporal Diff")
 
 temporal_query = FactDb::Temporal::Query.new
 
@@ -208,8 +190,7 @@ if diff[:unchanged].any?
   diff[:unchanged].each { |f| puts "    = #{f.fact_text}" }
 end
 
-# Section 7: Facts Created/Invalidated in Date Range
-puts "\n--- Section 7: Facts by Creation/Invalidation Period ---\n"
+demo_section("Section 7: Facts Created/Invalidated in Date Range")
 
 puts "Facts that became valid in 2025:"
 new_facts = temporal_query.facts_created_between(
@@ -225,8 +206,7 @@ ended_facts = temporal_query.facts_invalidated_between(
 )
 ended_facts.each { |f| puts "  - #{f.fact_text} (ended #{f.invalid_at})" }
 
-# Section 8: Entity Role Queries
-puts "\n--- Section 8: Query by Entity Role ---\n"
+demo_section("Section 8: Entity Role Queries")
 
 puts "Facts where TechCorp is the subject:"
 subject_facts = temporal_query.facts_with_entity_role(
@@ -242,6 +222,4 @@ object_facts = temporal_query.facts_with_entity_role(
 )
 object_facts.each { |f| puts "  - #{f.fact_text}" }
 
-puts "\n" + "=" * 60
-puts "Temporal Queries Demo Complete!"
-puts "=" * 60
+demo_footer

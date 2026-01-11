@@ -21,32 +21,33 @@ module FactDb
         /(?:until|through|to|ended|left)\s+(\d{4}-\d{2}-\d{2})/i
       ].freeze
 
-      # Employment patterns
+      # Employment patterns (use [ ]+ instead of \s+ to avoid matching newlines)
       EMPLOYMENT_PATTERNS = [
         # "Paula works at Microsoft"
-        /(\b[A-Z][a-z]+(?:\s+[A-Z][a-z]+)*)\s+(?:works?|worked|is working)\s+(?:at|for)\s+(\b[A-Z][A-Za-z]+(?:\s+[A-Z][A-Za-z]+)*)/,
+        /(\b[A-Z][a-z]+(?:[ ]+[A-Z][a-z]+)*)\b[ ]+(?:works?|worked|is working)[ ]+(?:at|for)[ ]+(\b[A-Z][A-Za-z]+(?:[ ]+[A-Z][A-Za-z]+)*)\b/,
         # "Paula joined Microsoft"
-        /(\b[A-Z][a-z]+(?:\s+[A-Z][a-z]+)*)\s+(?:joined|started at|was hired by)\s+(\b[A-Z][A-Za-z]+(?:\s+[A-Z][A-Za-z]+)*)/,
+        /(\b[A-Z][a-z]+(?:[ ]+[A-Z][a-z]+)*)\b[ ]+(?:joined|started at|was hired by)[ ]+(\b[A-Z][A-Za-z]+(?:[ ]+[A-Z][A-Za-z]+)*)\b/,
         # "Paula left Microsoft"
-        /(\b[A-Z][a-z]+(?:\s+[A-Z][a-z]+)*)\s+(?:left|departed|resigned from|was fired from)\s+(\b[A-Z][A-Za-z]+(?:\s+[A-Z][A-Za-z]+)*)/,
+        /(\b[A-Z][a-z]+(?:[ ]+[A-Z][a-z]+)*)\b[ ]+(?:left|departed|resigned from|was fired from)[ ]+(\b[A-Z][A-Za-z]+(?:[ ]+[A-Z][A-Za-z]+)*)\b/,
         # "Paula is a Principal Engineer at Microsoft"
-        /(\b[A-Z][a-z]+(?:\s+[A-Z][a-z]+)*)\s+(?:is|was|became)\s+(?:a\s+)?([A-Z][A-Za-z]+(?:\s+[A-Z][A-Za-z]+)*)\s+at\s+(\b[A-Z][A-Za-z]+(?:\s+[A-Z][A-Za-z]+)*)/
+        /(\b[A-Z][a-z]+(?:[ ]+[A-Z][a-z]+)*)\b[ ]+(?:is|was|became)[ ]+(?:a[ ]+)?([A-Z][A-Za-z]+(?:[ ]+[A-Z][A-Za-z]+)*)[ ]+at[ ]+(\b[A-Z][A-Za-z]+(?:[ ]+[A-Z][A-Za-z]+)*)\b/
       ].freeze
 
-      # Relationship patterns
+      # Relationship patterns (use [ ]+ instead of \s+ to avoid matching newlines)
       RELATIONSHIP_PATTERNS = [
         # "Paula is married to John"
-        /(\b[A-Z][a-z]+(?:\s+[A-Z][a-z]+)*)\s+(?:is|was)\s+(?:married to|engaged to|dating)\s+(\b[A-Z][a-z]+(?:\s+[A-Z][a-z]+)*)/,
+        /(\b[A-Z][a-z]+(?:[ ]+[A-Z][a-z]+)*)\b[ ]+(?:is|was)[ ]+(?:married to|engaged to|dating)[ ]+(\b[A-Z][a-z]+(?:[ ]+[A-Z][a-z]+)*)\b/,
         # "Paula is the CEO of Microsoft"
-        /(\b[A-Z][a-z]+(?:\s+[A-Z][a-z]+)*)\s+(?:is|was)\s+(?:the\s+)?(\w+(?:\s+\w+)*)\s+of\s+(\b[A-Z][A-Za-z]+(?:\s+[A-Z][A-Za-z]+)*)/
+        /(\b[A-Z][a-z]+(?:[ ]+[A-Z][a-z]+)*)\b[ ]+(?:is|was)[ ]+(?:the[ ]+)?(\w+(?:[ ]+\w+)*)[ ]+of[ ]+(\b[A-Z][A-Za-z]+(?:[ ]+[A-Z][A-Za-z]+)*)\b/
       ].freeze
 
-      # Location patterns
+      # Location patterns (use [ ]+ instead of \s+ to avoid matching newlines)
+      # Location capture includes multi-word cities like "New York City", "San Francisco"
       LOCATION_PATTERNS = [
-        # "Paula lives in Seattle"
-        /(\b[A-Z][a-z]+(?:\s+[A-Z][a-z]+)*)\s+(?:lives?|lived|is based|was based|relocated)\s+(?:in|to)\s+(\b[A-Z][A-Za-z]+(?:,?\s+[A-Z]{2})?)/,
-        # "Microsoft is headquartered in Redmond"
-        /(\b[A-Z][A-Za-z]+(?:\s+[A-Z][A-Za-z]+)*)\s+(?:is|was)\s+(?:headquartered|located|based)\s+in\s+(\b[A-Z][A-Za-z]+(?:,?\s+[A-Z]{2})?)/
+        # "Paula lives in Seattle" or "Bob lives in New York City"
+        /(\b[A-Z][a-z]+(?:[ ]+[A-Z][a-z]+)*)\b[ ]+(?:lives?|lived|is based|was based|relocated|moved)[ ]+(?:in|to)[ ]+(\b[A-Z][A-Za-z]+(?:[ ]+[A-Z][A-Za-z]+)*(?:,[ ]+[A-Z]{2})?)\b/,
+        # "Microsoft is headquartered in Redmond" or "in Seattle, Washington"
+        /(\b[A-Z][A-Za-z]+(?:[ ]+[A-Z][A-Za-z]+)*)\b[ ]+(?:is|was)[ ]+(?:headquartered|located|based)[ ]+in[ ]+(\b[A-Z][A-Za-z]+(?:[ ]+[A-Z][A-Za-z]+)*(?:,[ ]+[A-Z][A-Za-z]+)?)\b/
       ].freeze
 
       def extract(text, context = {})
@@ -71,9 +72,14 @@ module FactDb
 
         entities = []
 
-        # Extract person names (simple capitalized word sequences)
-        text.scan(/\b([A-Z][a-z]+(?:\s+[A-Z][a-z]+)+)\b/).flatten.uniq.each do |name|
+        # Extract person names (capitalized word sequences on same line)
+        # Use [ ]+ instead of \s+ to avoid matching across newlines
+        text.scan(/\b([A-Z][a-z]+(?:[ ]+[A-Z][a-z]+)+)\b/).flatten.uniq.each do |name|
           next if common_word?(name)
+          next if job_title?(name)
+          next if common_phrase?(name)
+          next if known_place?(name)
+          next if organization_indicator?(name)
 
           entities << build_entity(name: name, type: "person")
         end
@@ -222,6 +228,85 @@ module FactDb
           Inc Corp Ltd LLC Company Corporation
         ]
         common_words.any? { |w| w.casecmp?(word) }
+      end
+
+      def job_title?(text)
+        # Common job title words that indicate this is a role, not a person name
+        title_indicators = %w[
+          Chief Executive Officer Director Manager Engineer Developer
+          President Vice Principal Senior Junior Lead Head
+          Analyst Coordinator Administrator Assistant Specialist
+          Consultant Architect Designer Technician Supervisor
+          CTO CEO CFO COO CMO CIO CPO
+          VP SVP EVP
+        ]
+
+        words = text.split(/\s+/)
+
+        # If any word is a title indicator, it's likely a job title
+        words.any? { |word| title_indicators.any? { |t| t.casecmp?(word) } }
+      end
+
+      def common_phrase?(text)
+        # Common document phrases that are not person names
+        phrases = [
+          /Team\s+Updates?/i,
+          /Action\s+Items?/i,
+          /Meeting\s+Notes?/i,
+          /Status\s+Meeting/i,
+          /Project\s+Status/i,
+          /Human\s+Resources?/i,
+          /Best\s+Regards?/i,
+          /Immediate\s+Release/i,
+          /New\s+Leadership/i,
+          /Appoints?\s+New/i,
+          /Recent\s+\w+/i,
+          /Please\s+\w+/i
+        ]
+
+        phrases.any? { |pattern| text.match?(pattern) }
+      end
+
+      def known_place?(text)
+        # Common city/place names or location indicators
+        place_indicators = %w[
+          City County State Province District Region
+          Beach Park Heights Hills Valley Springs Lake
+          Island Harbor Port
+        ]
+
+        # Common multi-word US city names
+        known_cities = [
+          "New York", "Los Angeles", "San Francisco", "San Diego", "San Jose",
+          "San Antonio", "Las Vegas", "Salt Lake", "New Orleans", "Fort Worth",
+          "Fort Lauderdale", "St Louis", "St Paul", "El Paso", "Santa Fe",
+          "Santa Monica", "Palm Beach", "Long Beach", "Virginia Beach"
+        ]
+
+        words = text.split(/\s+/)
+
+        # Check for place indicator words
+        return true if words.any? { |word| place_indicators.any? { |p| p.casecmp?(word) } }
+
+        # Check for known city names
+        known_cities.any? { |city| text.casecmp?(city) || text.start_with?("#{city} ") }
+      end
+
+      def organization_indicator?(text)
+        # Words that indicate an organization, not a person
+        org_indicators = %w[
+          Solutions Technologies Systems Services Group
+          Partners Associates Consulting Agency
+          Industries Enterprises Holdings Ventures
+          Foundation Institute University College
+          Global International National Regional
+          Tech Corp Labs
+        ]
+
+        words = text.split(/\s+/)
+
+        # If any word is an org indicator, it's likely an organization
+        words.any? { |word| org_indicators.any? { |o| o.casecmp?(word) } }
       end
     end
   end

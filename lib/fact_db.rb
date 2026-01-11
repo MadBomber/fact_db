@@ -351,7 +351,7 @@ module FactDb
       capabilities = [:temporal_query, :entity_resolution, :introspection]
 
       capabilities << :semantic_search if @config.embedding_generator
-      capabilities << :llm_extraction if @config.llm_client || @config.llm_provider
+      capabilities << :llm_extraction if @config.llm_client || @config.llm&.provider
 
       capabilities
     end

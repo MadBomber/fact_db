@@ -16,15 +16,15 @@
 #   ruby ingest_demo.rb <path> --rebuild      # Drop and rebuild from scratch
 #   ruby ingest_demo.rb --stats               # Show statistics only
 
-require "bundler/setup"
-require "fact_db"
+require_relative "utilities"
 require "yaml"
-
 require "debug_me"
 include DebugMe
-
 require "ruby-progressbar"
 require "amazing_print"
+
+# Note: CLI tool - uses cli_setup! which does NOT reset database
+# Use --rebuild flag to explicitly reset
 
 class IngestDemo
   def initialize(path:, rebuild: false, count: nil)
@@ -79,6 +79,10 @@ class IngestDemo
   private
 
   def setup_factdb
+    # Ensure demo environment is set
+    DemoUtilities.ensure_demo_environment!
+    DemoUtilities.require_fact_db!
+
     log_path = File.join(__dir__, "#{File.basename(__FILE__, '.rb')}.log")
 
     FactDb.configure do |config|

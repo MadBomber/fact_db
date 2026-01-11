@@ -10,27 +10,16 @@
 # - Retrieval strategy recommendations
 # - New service methods for entity analysis
 
-require "bundler/setup"
-require "fact_db"
+require_relative "utilities"
 
-log_path = File.join(__dir__, "#{File.basename(__FILE__, '.rb')}.log")
-
-FactDb.configure do |config|
-  config.logger = Logger.new(log_path)
-end
-
-FactDb::Database.migrate!
+demo_setup!("FactDb Introspection Demo")
+demo_configure_logging(__FILE__)
 
 facts = FactDb.new
 entity_service = facts.entity_service
 fact_service = facts.fact_service
 
-puts "=" * 60
-puts "FactDb Introspection Demo"
-puts "=" * 60
-
-# Setup: Create sample data
-puts "\n--- Setup: Creating Sample Data ---\n"
+demo_section("Setup: Creating Sample Data")
 
 # Create entities
 maria = entity_service.resolve_or_create(
@@ -123,10 +112,7 @@ fact_service.create(
 
 puts "Created facts with various relationships and history"
 
-# Section 1: Schema Introspection
-puts "\n" + "=" * 60
-puts "Section 1: Schema Introspection - facts.introspect()"
-puts "=" * 60
+demo_section("Section 1: Schema Introspection - facts.introspect()")
 
 schema = facts.introspect
 puts "\nSystem Capabilities:"
@@ -150,10 +136,7 @@ schema[:retrieval_strategies].each { |s| puts "  - #{s}" }
 puts "\nStatistics:"
 puts JSON.pretty_generate(schema[:statistics])
 
-# Section 2: Topic Introspection
-puts "\n" + "=" * 60
-puts "Section 2: Topic Introspection - facts.introspect('Maria Santos')"
-puts "=" * 60
+demo_section("Section 2: Topic Introspection - facts.introspect('Maria Santos')")
 
 maria_info = facts.introspect("Maria Santos")
 if maria_info
@@ -181,10 +164,7 @@ else
   puts "Entity not found"
 end
 
-# Section 3: Query Suggestions
-puts "\n" + "=" * 60
-puts "Section 3: Query Suggestions - facts.suggest_queries()"
-puts "=" * 60
+demo_section("Section 3: Query Suggestions - facts.suggest_queries()")
 
 %w[Maria\ Santos Raj\ Patel TechCorp].each do |topic|
   suggestions = facts.suggest_queries(topic)
@@ -196,10 +176,7 @@ puts "=" * 60
   end
 end
 
-# Section 4: Strategy Suggestions
-puts "\n" + "=" * 60
-puts "Section 4: Retrieval Strategy Suggestions"
-puts "=" * 60
+demo_section("Section 4: Strategy Suggestions")
 
 test_queries = [
   "What happened last week?",
@@ -218,10 +195,7 @@ test_queries.each do |query|
   end
 end
 
-# Section 5: New Entity Service Methods
-puts "\n" + "=" * 60
-puts "Section 5: New Entity Service Methods"
-puts "=" * 60
+demo_section("Section 5: New Entity Service Methods")
 
 puts "\n--- relationship_types ---"
 puts "All relationship types in database:"
@@ -239,10 +213,7 @@ timespan = entity_service.timespan_for(maria.id)
 puts "  From: #{timespan[:from]}"
 puts "  To: #{timespan[:to]}"
 
-# Section 6: New Fact Service Methods
-puts "\n" + "=" * 60
-puts "Section 6: New Fact Service Methods"
-puts "=" * 60
+demo_section("Section 6: New Fact Service Methods")
 
 puts "\n--- fact_stats(entity_id) ---"
 puts "Fact statistics for Maria Santos:"
@@ -253,10 +224,7 @@ puts "\nFact statistics for all facts:"
 all_stats = fact_service.fact_stats
 all_stats.each { |status, count| puts "  #{status}: #{count}" }
 
-# Section 7: Practical Use Case - LLM Context Building
-puts "\n" + "=" * 60
-puts "Section 7: Practical Use Case - Building LLM Context"
-puts "=" * 60
+demo_section("Section 7: Practical Use Case - LLM Context Building")
 
 puts "\nBuilding context for an LLM query about Maria Santos:\n"
 
@@ -281,6 +249,4 @@ puts "   ..." if facts_triples.size > 5
 puts "\n4. Suggested follow-up queries:"
 topic_info[:suggested_queries].each { |q| puts "   - #{q}" }
 
-puts "\n" + "=" * 60
-puts "Introspection Demo Complete!"
-puts "=" * 60
+demo_footer

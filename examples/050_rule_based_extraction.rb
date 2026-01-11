@@ -9,24 +9,16 @@
 # - Processing extracted facts into the database
 # - Handling extraction results
 
-require "bundler/setup"
-require "fact_db"
+require_relative "utilities"
 
-log_path = File.join(__dir__, "#{File.basename(__FILE__, '.rb')}.log")
+demo_setup!("FactDb Rule-Based Extraction Demo")
+demo_configure_logging(__FILE__)
 
 FactDb.configure do |config|
   config.default_extractor = :rule_based
-  config.logger = Logger.new(log_path)
 end
 
-# Ensure database tables exist
-FactDb::Database.migrate!
-
 facts = FactDb.new
-
-puts "=" * 60
-puts "FactDb Rule-Based Extraction Demo"
-puts "=" * 60
 
 # Sample documents to process
 documents = [
@@ -101,8 +93,10 @@ documents = [
 # Create the rule-based extractor
 extractor = FactDb::Extractors::Base.for(:rule_based)
 
-# Section 1: Process Each Document
-puts "\n--- Section 1: Processing Documents ---\n"
+# Store ingested content for later use
+ingested_content = {}
+
+demo_section("Section 1: Process Each Document")
 
 documents.each_with_index do |doc, index|
   puts "\n#{'=' * 40}"
@@ -116,6 +110,7 @@ documents.each_with_index do |doc, index|
     title: doc[:title],
     captured_at: Time.now
   )
+  ingested_content[index] = content
   puts "Ingested content ID: #{content.id}"
 
   # Extract facts and entities
@@ -143,17 +138,19 @@ documents.each_with_index do |doc, index|
   end
 end
 
-# Section 2: Save Extracted Facts to Database
-puts "\n\n--- Section 2: Saving Extracted Facts ---\n"
+demo_section("Section 2: Saving Extracted Facts")
 
 entity_service = facts.entity_service
 fact_service = facts.fact_service
 
-# Process first document in detail
-sample_doc = documents.first
-content = facts.content_service.search(sample_doc[:title]).first
+# Process the third document (Meeting Notes) which has extractable facts
+sample_doc = documents[2]  # "Meeting Notes" extracts 2 facts
+content = ingested_content[2]
 context = { source_id: content.id, captured_at: content.captured_at }
 result = extractor.extract(sample_doc[:text], context)
+
+puts "Processing: #{sample_doc[:title]}"
+puts "Found #{result.length} facts to save"
 
 result.each do |fact_data|
   # Resolve or create mentioned entities
@@ -192,8 +189,7 @@ result.each do |fact_data|
   puts "  ID: #{fact.id}, Mentions: #{fact.entity_mentions.count}"
 end
 
-# Section 3: Query the Extracted Data
-puts "\n--- Section 3: Querying Extracted Data ---\n"
+demo_section("Section 3: Query the Extracted Data")
 
 # Find all extracted entities
 puts "\nAll extracted entities:"
@@ -208,8 +204,7 @@ FactDb::Models::Fact.by_extraction_method(:rule_based).limit(10).each do |fact|
   puts "  [#{fact.confidence}] #{fact.fact_text}"
 end
 
-# Section 4: Pattern Examples
-puts "\n--- Section 4: Extraction Pattern Examples ---\n"
+demo_section("Section 4: Pattern Examples")
 
 test_patterns = [
   "John Smith works at Acme Corp as a Senior Engineer.",
@@ -237,8 +232,7 @@ test_patterns.each do |pattern|
   end
 end
 
-# Section 5: Statistics
-puts "\n--- Section 5: Extraction Statistics ---\n"
+demo_section("Section 5: Statistics")
 
 content_stats = facts.content_service.stats
 fact_stats = facts.fact_service.stats
@@ -255,6 +249,4 @@ if fact_stats[:by_extraction_method]
   end
 end
 
-puts "\n" + "=" * 60
-puts "Rule-Based Extraction Demo Complete!"
-puts "=" * 60
+demo_footer

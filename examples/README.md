@@ -5,12 +5,12 @@ This directory contains demonstration programs showcasing the capabilities of th
 ## Prerequisites
 
 1. PostgreSQL database with pgvector extension
-2. Set the `DATABASE_URL` environment variable or use the default `postgres://localhost/fact_db_demo`
+2. Set the `FDB_DATABASE__NAME` environment variable or use the default `fact_db_demo`
 3. Run migrations to set up the schema
 
 ```bash
 bundle install
-DATABASE_URL=postgres://localhost/fact_db_demo rake db:migrate
+FDB_DATABASE__NAME=fact_db_demo rake db:migrate
 ```
 
 ## Examples

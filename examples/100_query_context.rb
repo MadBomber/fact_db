@@ -18,9 +18,10 @@
 #   --verbose          Show detailed processing steps
 #   --limit N          Maximum number of facts to return (default: 20)
 
-require "bundler/setup"
-require "fact_db"
+require_relative "utilities"
 require "optparse"
+
+# Note: CLI tool - uses cli_setup! which does NOT reset database
 
 class QueryContextGenerator
   FORMATS = %i[text json triples cypher raw].freeze
@@ -110,11 +111,14 @@ class QueryContextGenerator
   private
 
   def setup_factdb
+    DemoUtilities.ensure_demo_environment!
+    DemoUtilities.require_fact_db!
+
     FactDb.configure do |config|
       config.logger = Logger.new("/dev/null")
     end
 
-    FactDb::Database.migrate!
+    FactDb::Database.establish_connection!
 
     @facts = FactDb.new
     @entity_service = @facts.entity_service

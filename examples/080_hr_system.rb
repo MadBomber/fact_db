@@ -10,30 +10,21 @@
 # - Auditing changes with temporal queries
 # - Detecting conflicts in employee data
 
-require "bundler/setup"
-require "fact_db"
+require_relative "utilities"
 
-log_path = File.join(__dir__, "#{File.basename(__FILE__, '.rb')}.log")
+demo_setup!("HR Knowledge Management System Demo")
+demo_configure_logging(__FILE__)
 
 FactDb.configure do |config|
   config.default_extractor = :manual
-  config.logger = Logger.new(log_path)
 end
-
-# Ensure database tables exist
-FactDb::Database.migrate!
 
 facts = FactDb.new
 entity_service = facts.entity_service
 fact_service = facts.fact_service
 content_service = facts.content_service
 
-puts "=" * 60
-puts "HR Knowledge Management System Demo"
-puts "=" * 60
-
-# Section 1: Setup Company Structure
-puts "\n--- Section 1: Setting Up Organization ---\n"
+demo_section("Section 1: Setting Up Organization")
 
 # Create the company
 company = entity_service.create(
@@ -85,8 +76,7 @@ remote_office = entity_service.create(
 
 puts "Created locations: #{hq.canonical_name}, #{remote_office.canonical_name}"
 
-# Section 2: Create Employee Profiles
-puts "\n--- Section 2: Creating Employee Profiles ---\n"
+demo_section("Section 2: Create Employee Profiles")
 
 employees = {}
 
@@ -142,8 +132,7 @@ employees[:hr_mgr] = entity_service.create(
 
 puts "Created #{employees.length} employee profiles"
 
-# Section 3: Record Initial Employment Facts
-puts "\n--- Section 3: Recording Employment History ---\n"
+demo_section("Section 3: Record Initial Employment Facts")
 
 # Ingest an onboarding document
 onboarding_doc = content_service.create(
@@ -261,8 +250,7 @@ hr_current = fact_service.create(
 
 puts "Recorded employment history facts"
 
-# Section 4: Process a Promotion
-puts "\n--- Section 4: Processing a Promotion ---\n"
+demo_section("Section 4: Process a Promotion")
 
 # Ingest the promotion memo
 promotion_memo = content_service.create(
@@ -299,8 +287,7 @@ puts "Promoted Alex Kim from Junior Developer to Software Engineer"
 puts "Previous fact (#{junior_original.id}) now superseded"
 puts "New fact ID: #{promoted_fact.id}"
 
-# Section 5: Record a Transfer
-puts "\n--- Section 5: Recording a Transfer ---\n"
+demo_section("Section 5: Record a Transfer")
 
 # Jordan is transferring to Austin
 transfer_memo = content_service.create(
@@ -342,8 +329,7 @@ jordan_austin_location.add_source(content: transfer_memo, type: :primary)
 
 puts "Recorded Jordan Taylor's transfer to Austin Office"
 
-# Section 6: Query Employee Information
-puts "\n--- Section 6: HR Queries ---\n"
+demo_section("Section 6: Query Employee Information")
 
 # Current state of all employees
 puts "\nCurrent Employee Status:"
@@ -357,8 +343,7 @@ employees.each do |key, employee|
   end
 end
 
-# Section 7: Historical Query
-puts "\n--- Section 7: Historical Employee Query ---\n"
+demo_section("Section 7: Historical Query")
 
 # What was Alex Kim's role in December 2024?
 puts "\nAlex Kim's facts as of December 2024:"
@@ -370,8 +355,7 @@ puts "\nAlex Kim's facts as of today:"
 current_facts = fact_service.facts_at(Date.today, entity: employees[:junior_eng].id)
 current_facts.each { |f| puts "  - #{f.fact_text}" }
 
-# Section 8: Organization Chart Query
-puts "\n--- Section 8: Organization Chart ---\n"
+demo_section("Section 8: Organization Chart Query")
 
 puts "\nReporting relationships:"
 # Find all "reports to" facts
@@ -382,8 +366,7 @@ puts "\nEngineering Department members:"
 engineering_facts = fact_service.current_facts(entity: engineering.id)
 engineering_facts.each { |f| puts "  #{f.fact_text}" }
 
-# Section 9: Employee Timeline
-puts "\n--- Section 9: Marcus Chen Career Timeline ---\n"
+demo_section("Section 9: Employee Timeline")
 
 timeline = fact_service.timeline(
   entity_id: employees[:vp_eng].id,
@@ -397,8 +380,7 @@ timeline.each do |entry|
   puts "  #{entry[:valid_at].strftime('%Y-%m-%d')} - #{end_date}: #{entry[:fact_text]}#{status_marker}"
 end
 
-# Section 10: Audit Trail
-puts "\n--- Section 10: Audit Trail for Alex Kim ---\n"
+demo_section("Section 10: Audit Trail")
 
 alex_facts = FactDb::Models::Fact.joins(:entity_mentions)
   .where(entity_mentions: { entity_id: employees[:junior_eng].id })
@@ -415,8 +397,7 @@ alex_facts.each do |fact|
   end
 end
 
-# Section 11: Statistics
-puts "\n--- Section 11: HR System Statistics ---\n"
+demo_section("Section 11: Statistics")
 
 puts "Total employees tracked: #{entity_service.by_type("person").count}"
 puts "Total departments: #{entity_service.by_type("organization").where("description LIKE ?", "%team%").count}"
@@ -425,6 +406,4 @@ puts "Current facts: #{FactDb::Models::Fact.currently_valid.count}"
 puts "Historical facts: #{FactDb::Models::Fact.historical.count}"
 puts "Documents processed: #{content_service.stats[:total]}"
 
-puts "\n" + "=" * 60
-puts "HR System Demo Complete!"
-puts "=" * 60
+demo_footer

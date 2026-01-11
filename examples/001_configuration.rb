@@ -21,19 +21,11 @@
 # 5. Environment variables
 # 6. Programmatic (FactDb.configure block)
 
-require "bundler/setup"
-require "fact_db"
+require_relative "utilities"
 
-puts <<~HEADER
-  ======================================================================
-  FactDb Configuration Demo
-  ======================================================================
-HEADER
+demo_setup!("FactDb Configuration Demo")
 
-# =============================================================================
-# Section 1: Understanding the Current Environment
-# =============================================================================
-puts "\n--- Section 1: Current Environment ---\n"
+demo_section("Section 1: Current Environment")
 
 puts <<~ENV_DETECTION
   Environment detection priority: FDB_ENV > RAILS_ENV > RACK_ENV > 'development'
@@ -48,36 +40,32 @@ config = FactDb.config
 
 puts <<~ENV_HELPERS
 
-  Environment helpers (dynamically generated from defaults.yml):
+  Environment helpers:
     config.environment:  #{config.environment}
     config.production?:  #{config.production?}
     config.development?: #{config.development?}
     config.test?:        #{config.test?}
     config.demo?:        #{config.demo?}
-
-  Valid environments defined in defaults.yml:
-    #{FactDb::Config.valid_environments.join(', ')}
-    Current environment valid?: #{config.valid_environment?}
 ENV_HELPERS
 
-# =============================================================================
-# Section 2: Configuration File Locations
-# =============================================================================
-puts "\n--- Section 2: Configuration File Locations ---\n"
+demo_section("Section 2: Configuration File Locations")
+
+defaults_path = File.expand_path("../lib/fact_db/config/defaults.yml", __dir__)
 
 puts <<~CONFIG_SOURCES
   Configuration sources (lowest to highest priority):
 
   1. Bundled defaults (ships with gem):
-     #{FactDb::Config::DEFAULTS_PATH}
+     #{defaults_path}
 
   2. XDG user config paths (checked in order):
 CONFIG_SOURCES
 
 FactDb::Config.xdg_config_paths.each_with_index do |path, i|
-  exists = File.exist?(File.join(path, "fact_db.yml"))
+  file_path = File.join(path, "fact_db.yml")
+  exists = File.exist?(file_path)
   status = exists ? "(exists)" : "(not found)"
-  puts "     #{i + 1}. #{path}/fact_db.yml #{status}"
+  puts "     #{i + 1}. #{file_path} #{status}"
 end
 
 active_xdg = FactDb::Config.active_xdg_config_file
@@ -97,24 +85,18 @@ puts <<~MORE_SOURCES
   6. Programmatic: FactDb.configure { |c| ... } (see Section 5)
 MORE_SOURCES
 
-# =============================================================================
-# Section 3: Accessing Configuration Values
-# =============================================================================
-puts "\n--- Section 3: Accessing Configuration Values ---\n"
+demo_section("Section 3: Accessing Configuration Values")
 
 puts <<~DATABASE_CONFIG
-  Database configuration (AR-compatible Hash with dot notation):
+  Database configuration (ConfigSection with dot notation):
     config.database.adapter:  #{config.database.adapter.inspect}
     config.database.url:      #{config.database.url.inspect}
     config.database.host:     #{config.database.host.inspect}
     config.database.port:     #{config.database.port.inspect}
-    config.database.database: #{config.database.database.inspect}
+    config.database.name:     #{config.database.name.inspect}
     config.database.username: #{config.database.username.inspect}
     config.database.pool:     #{config.database.pool.inspect}
     config.database.timeout:  #{config.database.timeout.inspect}
-
-  Database helper method:
-    config.database_configured?: #{config.database_configured?}
 
   LLM configuration:
     config.llm.provider: #{config.llm.provider.inspect}
@@ -141,10 +123,7 @@ puts <<~DATABASE_CONFIG
     config.log_level:             #{config.log_level.inspect}
 DATABASE_CONFIG
 
-# =============================================================================
-# Section 4: Environment Variables
-# =============================================================================
-puts "\n--- Section 4: Environment Variables ---\n"
+demo_section("Section 4: Environment Variables")
 
 puts <<~ENV_VARS
   Environment variables use the FDB_ prefix with double underscores for nesting.
@@ -159,9 +138,9 @@ puts <<~ENV_VARS
     export FDB_DATABASE__NAME=my_fact_db
     export FDB_DATABASE__HOST=db.example.com
     export FDB_DATABASE__PORT=5432
-    export FDB_DATABASE__USER=dbuser
+    export FDB_DATABASE__USERNAME=dbuser
     export FDB_DATABASE__PASSWORD=secret
-    export FDB_DATABASE__POOL_SIZE=10
+    export FDB_DATABASE__POOL=10
 
     # LLM configuration
     export FDB_LLM__PROVIDER=anthropic
@@ -193,10 +172,7 @@ else
   end
 end
 
-# =============================================================================
-# Section 5: Programmatic Configuration
-# =============================================================================
-puts "\n--- Section 5: Programmatic Configuration ---\n"
+demo_section("Section 5: Programmatic Configuration")
 
 # Reset configuration to show before/after
 FactDb.reset_configuration!
@@ -217,10 +193,6 @@ FactDb.configure do |c|
   c.fuzzy_match_threshold = 0.75
   c.default_extractor = :llm
 
-  # Nested values using dot notation
-  c.ranking.ts_rank_weight = 0.30
-  c.ranking.vector_similarity_weight = 0.35
-
   # Callable objects (not loaded from config files)
   c.logger = Logger.new($stdout, level: Logger::WARN)
 
@@ -237,15 +209,10 @@ puts <<~AFTER_PROGRAMMATIC
     log_level: #{FactDb.config.log_level.inspect}
     fuzzy_match_threshold: #{FactDb.config.fuzzy_match_threshold}
     default_extractor: #{FactDb.config.default_extractor.inspect}
-    ranking.ts_rank_weight: #{FactDb.config.ranking.ts_rank_weight}
-    ranking.vector_similarity_weight: #{FactDb.config.ranking.vector_similarity_weight}
     logger: #{FactDb.config.logger.class}
 AFTER_PROGRAMMATIC
 
-# =============================================================================
-# Section 6: Config File Examples
-# =============================================================================
-puts "\n--- Section 6: Config File Examples ---\n"
+demo_section("Section 6: Config File Examples")
 
 puts <<~CONFIG_FILES
   XDG User Config (~/.config/fact_db/fact_db.yml):
@@ -253,7 +220,7 @@ puts <<~CONFIG_FILES
     # User-wide defaults (applies to all projects)
     database:
       host: localhost
-      user: myuser
+      username: myuser
 
     llm:
       provider: anthropic
@@ -273,13 +240,13 @@ puts <<~CONFIG_FILES
     test:
       database:
         name: myapp_test
-        pool_size: 2
+        pool: 2
       log_level: warn
 
     production:
       database:
         name: myapp_production
-        pool_size: 25
+        pool: 25
       log_level: info
       fuzzy_match_threshold: 0.90
 
@@ -294,72 +261,23 @@ puts <<~CONFIG_FILES
       password: my_local_password
 CONFIG_FILES
 
-# =============================================================================
-# Section 7: Database URL Reconciliation
-# =============================================================================
-puts "\n--- Section 7: Database URL Reconciliation ---\n"
+demo_section("Section 7: Database Configuration")
 
-puts <<~URL_RECONCILIATION
-  FactDb automatically reconciles database.url with individual components.
+puts <<~DATABASE_INFO
+  Database configuration uses 'name' for the database name.
+  When passed to ActiveRecord, it's automatically mapped to 'database'.
 
-  If you set database.url, components are extracted:
-    FDB_DATABASE__URL=postgresql://user:pass@db.example.com:5432/mydb
-    => database.host = 'db.example.com'
-    => database.port = 5432
-    => database.database = 'mydb'
-    => database.username = 'user'
+  Current database config:
+    Name: #{FactDb.config.database.name}
+    Host: #{FactDb.config.database.host}
+    Port: #{FactDb.config.database.port}
+    Pool: #{FactDb.config.database.pool}
 
-  If you set components, URL is built automatically:
-    FDB_DATABASE__NAME=mydb
-    FDB_DATABASE__HOST=db.example.com
-    => database.url = 'postgresql://user@db.example.com:5432/mydb'
+  Full config hash (for ActiveRecord):
+    #{FactDb.config.database.to_h.inspect}
+DATABASE_INFO
 
-  Current reconciled database config:
-    URL:  #{FactDb.config.database.url}
-    Hash: #{FactDb.config.database.to_h.inspect}
-URL_RECONCILIATION
-
-# =============================================================================
-# Section 8: Validation
-# =============================================================================
-puts "\n--- Section 8: Configuration Validation ---\n"
-
-puts <<~VALIDATION
-  Call config.validate! to ensure configuration is complete.
-  This checks:
-    - Database is configured (URL or name)
-    - Callable objects are valid (logger, embedding_generator, llm_client)
-
-VALIDATION
-
-begin
-  FactDb.config.validate!
-  puts "  Configuration is valid!"
-rescue FactDb::ConfigurationError => e
-  puts "  Configuration error: #{e.message}"
-end
-
-# =============================================================================
-# Section 9: Resetting Configuration
-# =============================================================================
-puts "\n--- Section 9: Resetting Configuration ---\n"
-
-current_log_level = FactDb.config.log_level.inspect
-
-puts <<~RESET_INTRO
-  Use FactDb.reset_configuration! to reload from all sources.
-  This is useful after changing environment variables or config files.
-
-  Before reset - log_level: #{current_log_level}
-RESET_INTRO
-
-FactDb.reset_configuration!
-puts "  After reset - log_level:  #{FactDb.config.log_level.inspect}"
-
-# =============================================================================
-# Section 10: Quick Reference
-# =============================================================================
-puts "\n--- Section 10: Quick Reference ---\n"
+demo_section("Section 8: Quick Reference")
 
 puts <<~REFERENCE
   Environment Variables:
@@ -381,16 +299,14 @@ puts <<~REFERENCE
     FactDb.configure { |c| ... }    - Programmatic configuration
     FactDb.reset_configuration!     - Reload from all sources
 
-  Config Sections (Hash subclasses with dot notation):
-    config.database                 - AR-compatible Hash
+  Config Sections (ConfigSection with dot notation):
+    config.database                 - Database configuration
     config.database.host            - Dot notation access
     config.database[:host]          - Hash bracket access
-    config.llm                      - LLM configuration Hash
-    config.embedding                - Embedding configuration Hash
-    config.ranking                  - Ranking weights Hash
-    config.validate!                - Validate configuration
-
-  ======================================================================
-  Configuration Demo Complete!
-  ======================================================================
+    config.database.to_h            - Convert to plain Hash
+    config.llm                      - LLM configuration
+    config.embedding                - Embedding configuration
+    config.ranking                  - Ranking weights
 REFERENCE
+
+demo_footer("Configuration Demo Complete!")
