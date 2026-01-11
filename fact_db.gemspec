@@ -39,7 +39,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency "neighbor", ">= 0.3"
 
   # Configuration
-  spec.add_dependency "anyway_config", ">= 2.0"
+  spec.add_dependency "myway_config"
 
   # Date/Time parsing
   spec.add_dependency "chronic", ">= 0.10"

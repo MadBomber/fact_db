@@ -17,6 +17,20 @@
 # - development: Overrides for development environment
 # - test: Overrides for test environment
 # - production: Overrides for production environment
+# - demo: Overrides for demo/staging environment
+#
+# Custom Environments:
+# Your application's config file (./config/fact_db.yml) can define additional
+# environments to suit your infrastructure. For example:
+#   staging:
+#     database:
+#       name: myapp_staging
+#   qa:
+#     database:
+#       name: myapp_qa
+#
+# Environment helper methods (e.g., config.staging?, config.qa?) are
+# automatically generated for any environment defined in configuration files.
 #
 # Access pattern:
 #   FactDb.config.database.url
@@ -33,15 +47,18 @@ defaults:
   # Access: FactDb.config.database.url, FactDb.config.database.pool_size, etc.
   # ---------------------------------------------------------------------------
   database:
-    adapter: pg
+    adapter: postgresql
     url: ~
     host: localhost
     port: 5432
     name: fact_db_demo
-    user: postgres
+    username: postgres
     password: ~
     pool_size: 5
     timeout: 30000
+    encoding: "unicode"
+    prepared_statements: false
+    advisory_locks: false
 
   # ---------------------------------------------------------------------------
   # Embedding Configuration
@@ -109,5 +126,20 @@ production:
   database:
     pool_size: 10
     timeout: 60000
-    name: fact_dv_production
+    name: fact_db_production
   log_level: warn
+
+# =============================================================================
+# Demo Environment Overrides
+# =============================================================================
+demo:
+  database:
+    name: fact_db_demo
+    pool_size: 3
+  log_level: info
+
+# -----------------------------------------------------------------------------
+# Add your own environments for your project's infrastructure
+# -----------------------------------------------------------------------------
+# qa:
+# staging:

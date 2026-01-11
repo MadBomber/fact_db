@@ -16,7 +16,7 @@ namespace :db do
   task :drop do
     require_relative "lib/fact_db"
     puts "Environment: #{FactDb.config.environment}"
-    puts "Database: #{FactDb.config.database_name}"
+    puts "Database: #{FactDb.config.database.name}"
     FactDb::Database.drop!
   end
 
@@ -24,7 +24,7 @@ namespace :db do
   task :create do
     require_relative "lib/fact_db"
     puts "Environment: #{FactDb.config.environment}"
-    puts "Database: #{FactDb.config.database_name}"
+    puts "Database: #{FactDb.config.database.name}"
     FactDb::Database.create!
   end
 
@@ -32,7 +32,7 @@ namespace :db do
   task :migrate do
     require_relative "lib/fact_db"
     puts "Environment: #{FactDb.config.environment}"
-    puts "Database: #{FactDb.config.database_name}"
+    puts "Database: #{FactDb.config.database.name}"
     FactDb::Database.migrate!
   end
 
@@ -40,7 +40,7 @@ namespace :db do
   task :rollback do
     require_relative "lib/fact_db"
     puts "Environment: #{FactDb.config.environment}"
-    puts "Database: #{FactDb.config.database_name}"
+    puts "Database: #{FactDb.config.database.name}"
     FactDb::Database.rollback!
   end
 
@@ -48,7 +48,7 @@ namespace :db do
   task :reset do
     require_relative "lib/fact_db"
     puts "Environment: #{FactDb.config.environment}"
-    puts "Database: #{FactDb.config.database_name}"
+    puts "Database: #{FactDb.config.database.name}"
     FactDb::Database.reset!
   end
 
@@ -62,7 +62,7 @@ namespace :db do
       FactDb.reset_configuration!
 
       puts "Environment: #{FactDb.config.environment}"
-      puts "Database: #{FactDb.config.database_name}"
+      puts "Database: #{FactDb.config.database.name}"
       FactDb::Database.reset!
     ensure
       ENV["FDB_ENV"] = original_env
@@ -100,7 +100,7 @@ namespace :db do
   task :cleanup_aliases do
     require_relative "lib/fact_db"
     puts "Environment: #{FactDb.config.environment}"
-    puts "Database: #{FactDb.config.database_name}"
+    puts "Database: #{FactDb.config.database.name}"
     FactDb::Database.establish_connection!
 
     dry_run = ENV["EXECUTE"] != "1"

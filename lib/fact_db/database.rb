@@ -8,7 +8,8 @@ module FactDb
     class << self
       def establish_connection!(config = FactDb.config)
         config.validate!
-        ActiveRecord::Base.establish_connection(config.database.url)
+        # config.database is a ConfigSection (Hash subclass) - pass directly to AR
+        ActiveRecord::Base.establish_connection(config.database)
         ActiveRecord::Base.logger = config.logger if config.logger
       end
 

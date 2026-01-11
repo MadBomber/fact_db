@@ -1,70 +1,65 @@
 # frozen_string_literal: true
 
 module FactDb
-  # ConfigSection provides method access to nested configuration hashes
+  # ConfigSection extends Hash to provide method access to configuration values.
   #
-  # @example
-  #   section = ConfigSection.new(host: 'localhost', port: 5432)
-  #   section.host  # => 'localhost'
-  #   section.port  # => 5432
+  # It's a real Hash (usable by ActiveRecord, etc.) but also supports dot notation:
   #
-  class ConfigSection
+  # @example Hash-style access (for ActiveRecord compatibility)
+  #   ActiveRecord::Base.establish_connection(FactDb.config.database)
+  #   FactDb.config.database[:host]  # => 'localhost'
+  #
+  # @example Method-style access (for convenience)
+  #   FactDb.config.database.host    # => 'localhost'
+  #   FactDb.config.database.port    # => 5432
+  #
+  # @example Setting values
+  #   FactDb.config.database.host = 'db.example.com'
+  #   FactDb.config.database[:host] = 'db.example.com'
+  #
+  class ConfigSection < Hash
     def initialize(hash = {})
-      @data = {}
+      super()
       (hash || {}).each do |key, value|
-        @data[key.to_sym] = value.is_a?(Hash) ? ConfigSection.new(value) : value
+        self[key.to_sym] = value.is_a?(Hash) ? ConfigSection.new(value) : value
       end
     end
 
     def method_missing(method, *args, &block)
       key = method.to_s
-      if key.end_with?('=')
-        @data[key.chomp('=').to_sym] = args.first
-      elsif @data.key?(method)
-        @data[method]
+      if key.end_with?("=")
+        self[key.chomp("=").to_sym] = args.first
+      elsif key?(method)
+        self[method]
       else
         nil
       end
     end
 
     def respond_to_missing?(method, include_private = false)
-      key = method.to_s.chomp('=').to_sym
-      @data.key?(key) || super
+      key = method.to_s.chomp("=").to_sym
+      key?(key) || super
     end
 
+    # Override to_h to recursively convert nested ConfigSections
     def to_h
-      @data.transform_values do |v|
+      transform_values do |v|
         v.is_a?(ConfigSection) ? v.to_h : v
       end
     end
 
-    def [](key)
-      @data[key.to_sym]
-    end
-
-    def []=(key, value)
-      @data[key.to_sym] = value
-    end
-
-    def merge(other)
-      other_hash = other.is_a?(ConfigSection) ? other.to_h : other
-      ConfigSection.new(deep_merge(to_h, other_hash || {}))
-    end
-
-    def keys
-      @data.keys
-    end
-
-    def each(&block)
-      @data.each(&block)
+    # Deep merge with another hash
+    def deep_merge(other)
+      other_hash = other.is_a?(ConfigSection) ? other.to_h : (other || {})
+      ConfigSection.new(recursive_merge(to_h, other_hash))
     end
 
     private
 
-    def deep_merge(base, overlay)
+    def recursive_merge(base, overlay)
       base.merge(overlay) do |_key, old_val, new_val|
         if old_val.is_a?(Hash) && new_val.is_a?(Hash)
-          deep_merge(old_val, new_val)
+          recursive_merge(old_val, new_val)
         else
           new_val
         end

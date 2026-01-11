@@ -6,89 +6,43 @@ module FactDb
   class Config
     module Database
       # ==========================================================================
-      # Database Component Accessors
+      # Database Configuration
       # ==========================================================================
       #
-      # These methods provide convenient access to database components.
-      # Components are automatically reconciled at config load time:
-      #   - If database.url exists: components are extracted and populated
-      #   - If database.url is missing: it's built from components
+      # FactDb.config.database returns a ConfigSection (Hash subclass) suitable
+      # for ActiveRecord, with both hash and dot notation access:
+      #
+      # @example Hash-style (for ActiveRecord)
+      #   ActiveRecord::Base.establish_connection(FactDb.config.database)
+      #
+      # @example Dot notation
+      #   FactDb.config.database.host     # => "localhost"
+      #   FactDb.config.database.database # => "fact_db_development"
+      #
+      # @example Hash bracket notation
+      #   FactDb.config.database[:host]   # => "localhost"
+      #
+      # Configuration is loaded from YAML/env vars with these keys:
+      #   - url, host, port, name, user, password, pool_size, timeout, adapter
+      #
+      # These are mapped to ActiveRecord-compatible keys:
+      #   - name      -> database
+      #   - user      -> username
+      #   - pool_size -> pool
+      #   - adapter   -> adapter (pg -> postgresql)
       #
       # ==========================================================================
-
-      # @return [String, nil] the database URL
-      def database_url
-        url = database&.url
-        return url if url && !url.empty?
-
-        build_database_url
-      end
-
-      # @return [String, nil] the database host
-      def database_host
-        database&.host
-      end
-
-      # @return [Integer, nil] the database port
-      def database_port
-        database&.port
-      end
-
-      # @return [String, nil] the database name
-      def database_name
-        database&.name
-      end
-
-      # @return [String, nil] the database user
-      def database_user
-        database&.user
-      end
-
-      # @return [String, nil] the database password
-      def database_password
-        database&.password
-      end
-
-      # @return [Integer] the database connection pool size
-      def database_pool_size
-        database&.pool_size.to_i
-      end
-
-      # @return [Integer] the database connection timeout
-      def database_timeout
-        database&.timeout.to_i
-      end
-
-      # Build a hash suitable for ActiveRecord.establish_connection
-      #
-      # @return [Hash] database configuration hash
-      def database_config
-        url = database_url
-        return {} unless url
-
-        uri = URI.parse(url)
-
-        {
-          adapter: "postgresql",
-          host: uri.host,
-          port: uri.port || 5432,
-          database: uri.path&.sub(%r{^/}, ""),
-          username: uri.user,
-          password: uri.password,
-          pool: database_pool_size,
-          timeout: database_timeout,
-          encoding: "unicode",
-          prepared_statements: false,
-          advisory_locks: false
-        }.compact
-      end
 
       # Check if database is configured
       #
       # @return [Boolean] true if database URL or name is configured
       def database_configured?
-        url = database&.url
-        (url && !url.empty?) || (database&.name && !database.name.empty?)
+        db = database
+        return false unless db
+
+        url = db[:url]
+        name = db[:database]
+        (url && !url.empty?) || (name && !name.empty?)
       end
 
       # Validate that database is configured for the current environment
@@ -104,11 +58,120 @@ module FactDb
           "or add database.name to the '#{environment}:' section in your config."
       end
 
-      # Parse database URL into component hash
+      private
+
+      # ==========================================================================
+      # Database Configuration Building
+      # ==========================================================================
+
+      # Called from on_load callback to build the AR-compatible ConfigSection
+      def build_database_section
+        raw = database_raw
+        return @_database_section = ConfigSection.new unless raw
+
+        # First reconcile URL and components
+        reconcile_database_config(raw)
+
+        # Build AR-compatible ConfigSection
+        # Include both :database (AR) and :name (FactDb internal use) for compatibility
+        @_database_section = ConfigSection.new(
+          adapter: normalize_adapter(raw.adapter),
+          url: raw.url,
+          host: raw.host,
+          port: raw.port&.to_i,
+          database: raw.name,
+          name: raw.name,
+          username: raw.user,
+          password: raw.password,
+          pool: raw.pool_size&.to_i,
+          timeout: raw.timeout&.to_i,
+          encoding: "unicode",
+          prepared_statements: false,
+          advisory_locks: false
+        )
+      end
+
+      def normalize_adapter(adapter)
+        case adapter&.to_s
+        when "pg", "postgres", "postgresql"
+          "postgresql"
+        when nil, ""
+          "postgresql"
+        else
+          adapter.to_s
+        end
+      end
+
+      # ==========================================================================
+      # Database Configuration Reconciliation
+      # ==========================================================================
       #
-      # @return [Hash, nil] parsed components or nil if no URL
-      def parse_database_url
-        url = database&.url
+      # Ensures url and components are synchronized:
+      #
+      # 1. If url exists:
+      #    - Extract all components from the URL
+      #    - Populate missing component fields from URL
+      #
+      # 2. If url is missing but components exist:
+      #    - Verify minimum required components (at least name)
+      #    - Build and set url from components
+      #
+      # ==========================================================================
+
+      def reconcile_database_config(raw)
+        url = raw.url
+        has_url = url && !url.empty?
+
+        if has_url
+          reconcile_from_url(raw)
+        else
+          reconcile_from_components(raw)
+        end
+      end
+
+      def reconcile_from_url(raw)
+        url_components = parse_database_url(raw.url)
+        return unless url_components
+
+        # URL is the source of truth - populate all components from it
+        raw.host = url_components[:host] if url_components[:host]
+        raw.port = url_components[:port] if url_components[:port]
+        raw.name = url_components[:name] if url_components[:name]
+        raw.user = url_components[:user] if url_components[:user]
+        raw.password = url_components[:password] if url_components[:password]
+      end
+
+      def reconcile_from_components(raw)
+        name = raw.name
+        has_name = name && !name.empty?
+
+        # If no database config at all, that's fine - might not need database
+        return unless has_name || has_any_database_component?(raw)
+
+        # If name is missing, use the environment-based default name
+        raw.name = "fact_db_#{environment}" unless has_name
+
+        # Use defaults for host/port if not set
+        raw.host = "localhost" if raw.host.nil? || raw.host.empty?
+        raw.port = 5432 if raw.port.nil?
+
+        # Build and set the URL
+        raw.url = build_database_url(raw)
+      end
+
+      def has_any_database_component?(raw)
+        [:host, :port, :user, :password].any? do |comp|
+          val = raw.send(comp)
+          next false if val.nil?
+          next false if val.respond_to?(:empty?) && val.empty?
+          # Skip defaults
+          next false if comp == :host && val == "localhost"
+          next false if comp == :port && val == 5432
+          true
+        end
+      end
+
+      def parse_database_url(url)
         return nil if url.nil? || url.empty?
 
         uri = URI.parse(url)
@@ -125,21 +188,16 @@ module FactDb
         nil
       end
 
-      private
-
-      # Build a database URL from components
-      #
-      # @return [String, nil] the database URL or nil if name not configured
-      def build_database_url
-        return nil unless database&.name && !database.name.empty?
+      def build_database_url(raw)
+        return nil unless raw.name && !raw.name.empty?
 
         # Default to current OS user if no user specified
-        user = database.user
+        user = raw.user
         user = ENV["USER"] if user.nil? || user.empty?
 
         auth = if user && !user.empty?
-          if database.password && !database.password.empty?
-            "#{user}:#{database.password}@"
+          if raw.password && !raw.password.empty?
+            "#{user}:#{raw.password}@"
           else
             "#{user}@"
           end
@@ -147,86 +205,10 @@ module FactDb
           ""
         end
 
-        host = database.host || "localhost"
-        port = database.port || 5432
+        host = raw.host || "localhost"
+        port = raw.port || 5432
 
-        "postgresql://#{auth}#{host}:#{port}/#{database.name}"
-      end
-
-      # ==========================================================================
-      # Database Configuration Reconciliation
-      # ==========================================================================
-      #
-      # Ensures database.url and database.* components are synchronized:
-      #
-      # 1. If database.url exists:
-      #    - Extract all components from the URL
-      #    - Populate missing component fields from URL
-      #
-      # 2. If database.url is missing but components exist:
-      #    - Verify minimum required components (at least database.name)
-      #    - Build and set database.url from components
-      #
-      # This runs automatically at config load time via on_load callback.
-      #
-      # ==========================================================================
-
-      def reconcile_database_config
-        url = database&.url
-        has_url = url && !url.empty?
-
-        if has_url
-          reconcile_from_url
-        else
-          reconcile_from_components
-        end
-      end
-
-      def reconcile_from_url
-        url_components = parse_database_url
-        return unless url_components
-
-        # URL is the source of truth - populate all components from it
-        %i[host port name user password].each do |component|
-          url_value = url_components[component]
-          next if url_value.nil?
-
-          database.send("#{component}=", url_value)
-        end
-      end
-
-      def reconcile_from_components
-        # Check what components we have
-        name = database&.name
-        has_name = name && !name.empty?
-
-        # If no database config at all, that's fine - might not need database
-        # Just return without error; validate_database! will catch if needed later
-        return unless has_name || has_any_database_component?
-
-        # If name is missing, use the environment-based default name
-        unless has_name
-          database.name = "fact_db_#{environment}"
-        end
-
-        # Use defaults for host/port if not set
-        database.host = "localhost" if database.host.nil? || database.host.empty?
-        database.port = 5432 if database.port.nil?
-
-        # Build and set the URL
-        database.url = build_database_url
-      end
-
-      def has_any_database_component?
-        %i[host port user password].any? do |comp|
-          val = database&.send(comp)
-          next false if val.nil?
-          next false if val.respond_to?(:empty?) && val.empty?
-          # Skip defaults
-          next false if comp == :host && val == "localhost"
-          next false if comp == :port && val == 5432
-          true
-        end
+        "postgresql://#{auth}#{host}:#{port}/#{raw.name}"
       end
     end
   end
