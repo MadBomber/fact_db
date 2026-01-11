@@ -34,7 +34,7 @@
 #
 # Access pattern:
 #   FactDb.config.database.url
-#   FactDb.config.database.pool_size
+#   FactDb.config.database.pool
 #   FactDb.config.llm.provider
 #   FactDb.config.ranking.ts_rank_weight
 
@@ -43,8 +43,8 @@
 # =============================================================================
 defaults:
   # ---------------------------------------------------------------------------
-  # Database Configuration
-  # Access: FactDb.config.database.url, FactDb.config.database.pool_size, etc.
+  # Database Configuration (ActiveRecord-compatible keys)
+  # Access: FactDb.config.database.url, FactDb.config.database.pool, etc.
   # ---------------------------------------------------------------------------
   database:
     adapter: postgresql
@@ -52,9 +52,9 @@ defaults:
     host: localhost
     port: 5432
     name: fact_db_demo
-    username: postgres
+    username: ~
     password: ~
-    pool_size: 5
+    pool: 5
     timeout: 30000
     encoding: "unicode"
     prepared_statements: false
@@ -115,7 +115,7 @@ development:
 test:
   database:
     name: fact_db_test
-    pool_size: 2
+    pool: 2
     timeout: 5000
   log_level: warn
 
@@ -124,9 +124,9 @@ test:
 # =============================================================================
 production:
   database:
-    pool_size: 10
-    timeout: 60000
     name: fact_db_production
+    pool: 10
+    timeout: 60000
   log_level: warn
 
 # =============================================================================
@@ -135,7 +135,7 @@ production:
 demo:
   database:
     name: fact_db_demo
-    pool_size: 3
+    pool: 3
   log_level: info
 
 # -----------------------------------------------------------------------------

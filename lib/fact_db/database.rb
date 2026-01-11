@@ -7,9 +7,8 @@ module FactDb
   module Database
     class << self
       def establish_connection!(config = FactDb.config)
-        config.validate!
-        # config.database is a ConfigSection (Hash subclass) - pass directly to AR
-        ActiveRecord::Base.establish_connection(config.database)
+        # config.database is a ConfigSection - convert to AR-compatible hash
+        ActiveRecord::Base.establish_connection(ar_connection_hash(config.database))
         ActiveRecord::Base.logger = config.logger if config.logger
       end
 
@@ -58,10 +57,28 @@ module FactDb
       private
 
       def maintenance_database_url
-        url = FactDb.config.database.url
+        db = FactDb.config.database
+        url = db.url || build_database_url(db, "postgres")
         uri = URI.parse(url)
         uri.path = "/postgres"
         uri.to_s
+      end
+
+      def build_database_url(db, database_name = nil)
+        host = db.host || "localhost"
+        port = db.port || 5432
+        name = database_name || db.name
+        user = db.username || ENV["USER"]
+
+        auth = user ? "#{user}@" : ""
+        "postgresql://#{auth}#{host}:#{port}/#{name}"
+      end
+
+      # Convert config to AR-compatible hash (name -> database)
+      def ar_connection_hash(db)
+        h = db.to_h
+        h[:database] = h.delete(:name) if h[:name] && !h[:database]
+        h
       end
     end
   end
