@@ -21,7 +21,7 @@ module FactDb
         Models::Source.create!(
           content: content,
           content_hash: content_hash,
-          content_type: type.to_s,
+          type: type.to_s,
           title: title,
           source_uri: source_uri,
           source_metadata: metadata,
@@ -71,7 +71,7 @@ module FactDb
         {
           total: Models::Source.count,
           total_count: Models::Source.count,
-          by_type: Models::Source.group(:content_type).count,
+          by_type: Models::Source.group(:type).count,
           earliest: Models::Source.minimum(:captured_at),
           latest: Models::Source.maximum(:captured_at),
           total_words: Models::Source.sum("array_length(regexp_split_to_array(content, '\\s+'), 1)")

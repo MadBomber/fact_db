@@ -67,7 +67,7 @@ extractor = RuleBasedExtractor.new(config)
 
 source = Models::Source.create!(
   content: "Paula Chen joined Microsoft on January 10, 2024 as Principal Engineer.",
-  content_type: "announcement",
+  type: "announcement",
   captured_at: Time.current
 )
 
@@ -141,7 +141,7 @@ end
 
 ```ruby
 # Use rule-based for structured content
-if content.content_type == "form"
+if content.type == "form"
   facts = rule_extractor.extract(content)
 else
   facts = llm_extractor.extract(content)

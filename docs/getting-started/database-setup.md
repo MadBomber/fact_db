@@ -42,7 +42,7 @@ Stores immutable source content.
 |--------|------|-------------|
 | id | bigint | Primary key |
 | content_hash | string | SHA256 hash for deduplication |
-| content_type | string | Type (email, document, article) |
+| type | string | Type (email, document, article) |
 | content | text | Original source content |
 | title | string | Optional title |
 | source_uri | string | Original location |

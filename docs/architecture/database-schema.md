@@ -16,7 +16,7 @@ erDiagram
     sources {
         bigint id PK
         string content_hash UK
-        string content_type
+        string type
         text content
         string title
         string source_uri
@@ -91,7 +91,7 @@ Stores immutable source content.
 CREATE TABLE sources (
     id BIGSERIAL PRIMARY KEY,
     content_hash VARCHAR(64) NOT NULL UNIQUE,
-    content_type VARCHAR(50) NOT NULL,
+    type VARCHAR(50) NOT NULL,
     content TEXT NOT NULL,
     title VARCHAR(255),
     source_uri TEXT,
@@ -101,7 +101,7 @@ CREATE TABLE sources (
     created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 
-CREATE INDEX idx_sources_type ON sources(content_type);
+CREATE INDEX idx_sources_type ON sources(type);
 CREATE INDEX idx_sources_captured ON sources(captured_at);
 CREATE INDEX idx_sources_text ON sources USING gin(to_tsvector('english', content));
 CREATE INDEX idx_sources_embedding ON sources USING hnsw(embedding vector_cosine_ops);

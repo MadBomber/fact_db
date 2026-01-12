@@ -103,7 +103,7 @@ class DatabaseDumper
 
     if source_count > 0
       puts "\nSources by type:"
-      FactDb::Models::Source.group(:content_type).count.each do |type, count|
+      FactDb::Models::Source.group(:type).count.each do |type, count|
         puts "  #{type.to_s.ljust(20)} #{count.to_s.rjust(6)}"
       end
     end
@@ -125,7 +125,7 @@ class DatabaseDumper
       puts "\n#{'-' * 60}"
       puts "ID: #{source.id}"
       puts "Title: #{source.title || '(untitled)'}"
-      puts "Type: #{source.content_type}"
+      puts "Type: #{source.type}"
       puts "Hash: #{source.content_hash[0..16]}..."
       puts "Captured: #{source.captured_at}"
       puts "Created: #{source.created_at}"
@@ -311,7 +311,7 @@ class DatabaseDumper
 
     if sources.any?
       sources.each do |source|
-        puts "  [#{source.id}] #{source.title || '(untitled)'} (#{source.content_type})"
+        puts "  [#{source.id}] #{source.title || '(untitled)'} (#{source.type})"
       end
     else
       puts "  (no matching sources)"

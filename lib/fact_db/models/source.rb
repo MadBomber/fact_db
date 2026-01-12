@@ -10,7 +10,7 @@ module FactDb
       has_many :facts, through: :fact_sources
 
       validates :content_hash, presence: true, uniqueness: true
-      validates :content_type, presence: true
+      validates :type, presence: true
       validates :content, presence: true
       validates :captured_at, presence: true
 
@@ -19,9 +19,9 @@ module FactDb
       # Content types
       TYPES = %w[email transcript document slack meeting_notes contract report].freeze
 
-      validates :content_type, inclusion: { in: TYPES }, allow_nil: false
+      validates :type, inclusion: { in: TYPES }, allow_nil: false
 
-      scope :by_type, ->(type) { where(content_type: type) }
+      scope :by_type, ->(t) { where(type: t) }
       scope :captured_between, ->(from, to) { where(captured_at: from..to) }
       scope :captured_after, ->(date) { where("captured_at >= ?", date) }
       scope :captured_before, ->(date) { where("captured_at <= ?", date) }

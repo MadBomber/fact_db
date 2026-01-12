@@ -43,7 +43,7 @@ module FactDb
       Models::Source.create!(
         content: content,
         content_hash: Digest::SHA256.hexdigest(content + rand.to_s),
-        content_type: type,
+        type: type,
         captured_at: captured_at,
         source_metadata: {},
         **attrs
