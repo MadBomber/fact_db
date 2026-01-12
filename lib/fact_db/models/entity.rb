@@ -11,10 +11,10 @@ module FactDb
                foreign_key: :entity_id, dependent: :destroy
       has_many :facts, through: :entity_mentions
 
-      belongs_to :merged_into, class_name: "FactDb::Models::Entity",
-                 foreign_key: :merged_into_id, optional: true
+      belongs_to :canonical, class_name: "FactDb::Models::Entity",
+                 foreign_key: :canonical_id, optional: true
       has_many :merged_entities, class_name: "FactDb::Models::Entity",
-               foreign_key: :merged_into_id
+               foreign_key: :canonical_id
 
       validates :name, presence: true
       validates :type, presence: true
@@ -40,7 +40,7 @@ module FactDb
       end
 
       def canonical_entity
-        merged? ? merged_into&.canonical_entity || merged_into : self
+        merged? ? canonical&.canonical_entity || canonical : self
       end
 
       def all_aliases

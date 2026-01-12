@@ -46,7 +46,7 @@ class EntityTest < Minitest::Test
   def test_merged_entity
     keep = create_entity(name: "Paula Chen")
     merged = create_entity(name: "P. Chen", resolution_status: "merged")
-    merged.update!(merged_into_id: keep.id)
+    merged.update!(canonical_id: keep.id)
 
     assert merged.merged?
     assert_equal keep, merged.canonical_entity

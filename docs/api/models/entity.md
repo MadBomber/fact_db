@@ -19,7 +19,7 @@ entity = FactDb::Models::Entity.new(
 | `name` | String | Authoritative name |
 | `type` | String | Type (person, organization, place, etc.) |
 | `resolution_status` | String | Status (unresolved, resolved, merged) |
-| `merged_into_id` | Integer | Points to canonical entity if merged |
+| `canonical_id` | Integer | Points to canonical entity if merged |
 | `metadata` | Hash | Additional attributes (JSONB) |
 | `embedding` | Vector | Semantic search vector |
 | `created_at` | DateTime | Record creation time |
@@ -192,7 +192,7 @@ similar = Entity
 # entity2 will be merged into entity1
 entity2.update!(
   resolution_status: 'merged',
-  merged_into_id: entity1.id
+  canonical_id: entity1.id
 )
 
 # Copy aliases

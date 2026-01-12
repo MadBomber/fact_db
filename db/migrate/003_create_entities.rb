@@ -10,7 +10,7 @@ class CreateEntities < ActiveRecord::Migration[7.0]
 
       t.string :resolution_status, null: false, default: "unresolved", limit: 20,
                comment: "Entity resolution state: unresolved, resolved, merged, or ambiguous"
-      t.bigint :merged_into_id,
+      t.bigint :canonical_id,
                comment: "Reference to canonical entity if this entity was merged as a duplicate"
 
       t.text :description,
@@ -28,7 +28,7 @@ class CreateEntities < ActiveRecord::Migration[7.0]
     add_index :fact_db_entities, :type
     add_index :fact_db_entities, :resolution_status
     add_foreign_key :fact_db_entities, :fact_db_entities,
-                    column: :merged_into_id, on_delete: :nullify
+                    column: :canonical_id, on_delete: :nullify
 
     # HNSW index for vector similarity search
     execute <<-SQL

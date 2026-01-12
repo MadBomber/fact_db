@@ -153,7 +153,7 @@ facts.entity_service.merge(
 
 # After merge:
 # - entity2.resolution_status => "merged"
-# - entity2.merged_into_id => entity1.id
+# - entity2.canonical_id => entity1.id
 # - All facts mentioning entity2 now also reference entity1
 ```
 

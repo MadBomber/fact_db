@@ -118,7 +118,7 @@ puts "Merged '#{duplicate.name}' into '#{person.name}'"
 # Verify the duplicate is marked as merged
 duplicate.reload
 puts "Duplicate status: #{duplicate.resolution_status}"
-puts "Merged into: #{duplicate.merged_into_id}"
+puts "Canonical ID: #{duplicate.canonical_id}"
 
 demo_section("Section 5: Searching Entities")
 

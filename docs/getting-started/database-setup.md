@@ -60,7 +60,7 @@ Stores resolved identities.
 | name | string | Authoritative name |
 | type | string | person, organization, place, etc. |
 | resolution_status | string | unresolved, resolved, merged |
-| merged_into_id | bigint | Points to canonical entity if merged |
+| canonical_id | bigint | Points to canonical entity if merged |
 | metadata | jsonb | Additional attributes |
 | embedding | vector(1536) | Semantic search vector |
 

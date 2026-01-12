@@ -68,7 +68,7 @@ module FactDb
           # Mark merged entity
           merge_entity.update!(
             resolution_status: "merged",
-            merged_into_id: keep_id
+            canonical_id: keep_id
           )
         end
 

@@ -157,13 +157,13 @@ facts.entity_service.merge(entity1.id, entity2.id)
 # After merge:
 entity2.reload
 entity2.resolution_status  # => "merged"
-entity2.merged_into_id     # => entity1.id
+entity2.canonical_id     # => entity1.id
 ```
 
 ### What Happens on Merge
 
 1. Entity2's status changes to "merged"
-2. Entity2 points to entity1 via `merged_into_id`
+2. Entity2 points to entity1 via `canonical_id`
 3. Entity2's aliases are copied to entity1
 4. All facts mentioning entity2 now also reference entity1
 
@@ -343,8 +343,8 @@ active_entities = FactDb::Models::Entity
 
 # Or follow the merge chain
 def canonical_entity(entity)
-  while entity.merged_into_id
-    entity = FactDb::Models::Entity.find(entity.merged_into_id)
+  while entity.canonical_id
+    entity = FactDb::Models::Entity.find(entity.canonical_id)
   end
   entity
 end

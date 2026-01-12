@@ -31,7 +31,7 @@ erDiagram
         string name
         string type
         string resolution_status
-        bigint merged_into_id FK
+        bigint canonical_id FK
         jsonb metadata
         vector embedding
         timestamptz created_at
@@ -117,7 +117,7 @@ CREATE TABLE entities (
     name VARCHAR(255) NOT NULL,
     type VARCHAR(50) NOT NULL,
     resolution_status VARCHAR(20) NOT NULL DEFAULT 'unresolved',
-    merged_into_id BIGINT REFERENCES entities(id),
+    canonical_id BIGINT REFERENCES entities(id),
     metadata JSONB NOT NULL DEFAULT '{}',
     embedding VECTOR(1536),
     created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
