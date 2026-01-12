@@ -15,7 +15,7 @@
         <link rel="canonical" href="https://madbomber.github.io/fact_db/api/services/entity-service/">
       
       
-        <link rel="prev" href="../">
+        <link rel="prev" href="../source-service/">
       
       
         <link rel="next" href="../fact-service/">
@@ -1335,14 +1335,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../../models/content.md" class="md-nav__link">
+      <a href="../../models/source/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Content
+    Source
   
 
     
@@ -1500,14 +1500,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../content-service.md" class="md-nav__link">
+      <a href="../source-service/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    ContentService
+    SourceService
   
 
     
@@ -1701,10 +1701,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#by_type" class="md-nav__link">
+  <a href="#by_kind" class="md-nav__link">
     <span class="md-ellipsis">
       
-        by_type
+        by_kind
       
     </span>
   </a>
@@ -2399,10 +2399,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#by_type" class="md-nav__link">
+  <a href="#by_kind" class="md-nav__link">
     <span class="md-ellipsis">
       
-        by_type
+        by_kind
       
     </span>
   </a>
@@ -2536,13 +2536,13 @@
 </span></code></pre></div>
 <h2 id="methods">Methods<a class="headerlink" href="#methods" title="Permanent link">&para;</a></h2>
 <h3 id="create">create<a class="headerlink" href="#create" title="Permanent link">&para;</a></h3>
-<div class="language-ruby highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="k">def</span><span class="w"> </span><span class="nf">create</span><span class="p">(</span><span class="nb">name</span><span class="p">,</span><span class="w"> </span><span class="ss">type</span><span class="p">:,</span><span class="w"> </span><span class="ss">aliases</span><span class="p">:</span><span class="w"> </span><span class="o">[]</span><span class="p">,</span><span class="w"> </span><span class="ss">metadata</span><span class="p">:</span><span class="w"> </span><span class="p">{})</span>
+<div class="language-ruby highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="k">def</span><span class="w"> </span><span class="nf">create</span><span class="p">(</span><span class="nb">name</span><span class="p">,</span><span class="w"> </span><span class="ss">kind</span><span class="p">:,</span><span class="w"> </span><span class="ss">aliases</span><span class="p">:</span><span class="w"> </span><span class="o">[]</span><span class="p">,</span><span class="w"> </span><span class="ss">metadata</span><span class="p">:</span><span class="w"> </span><span class="p">{})</span>
 </span></code></pre></div>
 <p>Create a new entity.</p>
 <p><strong>Parameters:</strong></p>
 <ul>
 <li><code>name</code> (String) - Authoritative name</li>
-<li><code>type</code> (Symbol) - Entity type</li>
+<li><code>kind</code> (Symbol) - Entity kind</li>
 <li><code>aliases</code> (Array) - Alternative names</li>
 <li><code>metadata</code> (Hash) - Additional attributes</li>
 </ul>
@@ -2550,7 +2550,7 @@
 <p><strong>Example:</strong></p>
 <div class="language-ruby highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="n">entity</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">service</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
 </span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="w">  </span><span class="s2">&quot;Paula Chen&quot;</span><span class="p">,</span>
-</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="w">  </span><span class="ss">type</span><span class="p">:</span><span class="w"> </span><span class="ss">:person</span><span class="p">,</span>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="w">  </span><span class="ss">kind</span><span class="p">:</span><span class="w"> </span><span class="ss">:person</span><span class="p">,</span>
 </span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="w">  </span><span class="ss">aliases</span><span class="p">:</span><span class="w"> </span><span class="o">[</span><span class="s2">&quot;Paula&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;P. Chen&quot;</span><span class="o">]</span><span class="p">,</span>
 </span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="w">  </span><span class="ss">metadata</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="ss">department</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Engineering&quot;</span><span class="w"> </span><span class="p">}</span>
 </span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="p">)</span>
@@ -2563,25 +2563,25 @@
 <p><strong>Returns:</strong> <code>Models::Entity</code></p>
 <hr />
 <h3 id="resolve">resolve<a class="headerlink" href="#resolve" title="Permanent link">&para;</a></h3>
-<div class="language-ruby highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="k">def</span><span class="w"> </span><span class="nf">resolve</span><span class="p">(</span><span class="nb">name</span><span class="p">,</span><span class="w"> </span><span class="ss">type</span><span class="p">:</span><span class="w"> </span><span class="kp">nil</span><span class="p">)</span>
+<div class="language-ruby highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="k">def</span><span class="w"> </span><span class="nf">resolve</span><span class="p">(</span><span class="nb">name</span><span class="p">,</span><span class="w"> </span><span class="ss">kind</span><span class="p">:</span><span class="w"> </span><span class="kp">nil</span><span class="p">)</span>
 </span></code></pre></div>
 <p>Resolve a name to an entity using multiple strategies.</p>
 <p><strong>Parameters:</strong></p>
 <ul>
 <li><code>name</code> (String) - Name to resolve</li>
-<li><code>type</code> (Symbol) - Optional type filter</li>
+<li><code>kind</code> (Symbol) - Optional kind filter</li>
 </ul>
 <p><strong>Returns:</strong> <code>Models::Entity</code> or <code>nil</code></p>
 <p><strong>Example:</strong></p>
-<div class="language-ruby highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="n">entity</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">service</span><span class="o">.</span><span class="n">resolve</span><span class="p">(</span><span class="s2">&quot;Paula Chen&quot;</span><span class="p">,</span><span class="w"> </span><span class="ss">type</span><span class="p">:</span><span class="w"> </span><span class="ss">:person</span><span class="p">)</span>
+<div class="language-ruby highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="n">entity</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">service</span><span class="o">.</span><span class="n">resolve</span><span class="p">(</span><span class="s2">&quot;Paula Chen&quot;</span><span class="p">,</span><span class="w"> </span><span class="ss">kind</span><span class="p">:</span><span class="w"> </span><span class="ss">:person</span><span class="p">)</span>
 </span></code></pre></div>
 <hr />
 <h3 id="add_alias">add_alias<a class="headerlink" href="#add_alias" title="Permanent link">&para;</a></h3>
-<div class="language-ruby highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="k">def</span><span class="w"> </span><span class="nf">add_alias</span><span class="p">(</span><span class="n">entity_id</span><span class="p">,</span><span class="w"> </span><span class="n">alias_name</span><span class="p">,</span><span class="w"> </span><span class="ss">type</span><span class="p">:</span><span class="w"> </span><span class="kp">nil</span><span class="p">,</span><span class="w"> </span><span class="ss">confidence</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="o">.</span><span class="mi">0</span><span class="p">)</span>
+<div class="language-ruby highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="k">def</span><span class="w"> </span><span class="nf">add_alias</span><span class="p">(</span><span class="n">entity_id</span><span class="p">,</span><span class="w"> </span><span class="n">alias_name</span><span class="p">,</span><span class="w"> </span><span class="ss">kind</span><span class="p">:</span><span class="w"> </span><span class="kp">nil</span><span class="p">,</span><span class="w"> </span><span class="ss">confidence</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="o">.</span><span class="mi">0</span><span class="p">)</span>
 </span></code></pre></div>
 <p>Add an alias to an entity.</p>
 <p><strong>Example:</strong></p>
-<div class="language-ruby highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="n">service</span><span class="o">.</span><span class="n">add_alias</span><span class="p">(</span><span class="n">entity</span><span class="o">.</span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;P. Chen&quot;</span><span class="p">,</span><span class="w"> </span><span class="ss">type</span><span class="p">:</span><span class="w"> </span><span class="ss">:abbreviation</span><span class="p">)</span>
+<div class="language-ruby highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="n">service</span><span class="o">.</span><span class="n">add_alias</span><span class="p">(</span><span class="n">entity</span><span class="o">.</span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;P. Chen&quot;</span><span class="p">,</span><span class="w"> </span><span class="ss">kind</span><span class="p">:</span><span class="w"> </span><span class="ss">:abbreviation</span><span class="p">)</span>
 </span></code></pre></div>
 <hr />
 <h3 id="remove_alias">remove_alias<a class="headerlink" href="#remove_alias" title="Permanent link">&para;</a></h3>
@@ -2610,21 +2610,21 @@
 </span></code></pre></div>
 <hr />
 <h3 id="search">search<a class="headerlink" href="#search" title="Permanent link">&para;</a></h3>
-<div class="language-ruby highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="k">def</span><span class="w"> </span><span class="nf">search</span><span class="p">(</span><span class="n">query</span><span class="p">,</span><span class="w"> </span><span class="ss">type</span><span class="p">:</span><span class="w"> </span><span class="kp">nil</span><span class="p">,</span><span class="w"> </span><span class="ss">limit</span><span class="p">:</span><span class="w"> </span><span class="mi">20</span><span class="p">)</span>
+<div class="language-ruby highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="k">def</span><span class="w"> </span><span class="nf">search</span><span class="p">(</span><span class="n">query</span><span class="p">,</span><span class="w"> </span><span class="ss">kind</span><span class="p">:</span><span class="w"> </span><span class="kp">nil</span><span class="p">,</span><span class="w"> </span><span class="ss">limit</span><span class="p">:</span><span class="w"> </span><span class="mi">20</span><span class="p">)</span>
 </span></code></pre></div>
 <p>Search entities by name.</p>
 <p><strong>Parameters:</strong></p>
 <ul>
 <li><code>query</code> (String) - Search query</li>
-<li><code>type</code> (Symbol) - Optional type filter</li>
+<li><code>kind</code> (Symbol) - Optional kind filter</li>
 <li><code>limit</code> (Integer) - Max results</li>
 </ul>
 <p><strong>Returns:</strong> <code>Array&lt;Models::Entity&gt;</code></p>
 <hr />
-<h3 id="by_type">by_type<a class="headerlink" href="#by_type" title="Permanent link">&para;</a></h3>
-<div class="language-ruby highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="k">def</span><span class="w"> </span><span class="nf">by_type</span><span class="p">(</span><span class="n">type</span><span class="p">)</span>
+<h3 id="by_kind">by_kind<a class="headerlink" href="#by_kind" title="Permanent link">&para;</a></h3>
+<div class="language-ruby highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="k">def</span><span class="w"> </span><span class="nf">by_kind</span><span class="p">(</span><span class="n">kind</span><span class="p">)</span>
 </span></code></pre></div>
-<p>Filter entities by type.</p>
+<p>Filter entities by kind.</p>
 <p><strong>Returns:</strong> <code>ActiveRecord::Relation</code></p>
 <hr />
 <h3 id="in_source">in_source<a class="headerlink" href="#in_source" title="Permanent link">&para;</a></h3>
@@ -2640,7 +2640,7 @@
 <p><strong>Returns:</strong> <code>Array&lt;Models::Entity&gt;</code></p>
 <hr />
 <h3 id="semantic_search">semantic_search<a class="headerlink" href="#semantic_search" title="Permanent link">&para;</a></h3>
-<div class="language-ruby highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="k">def</span><span class="w"> </span><span class="nf">semantic_search</span><span class="p">(</span><span class="n">query</span><span class="p">,</span><span class="w"> </span><span class="ss">type</span><span class="p">:</span><span class="w"> </span><span class="kp">nil</span><span class="p">,</span><span class="w"> </span><span class="ss">limit</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p">)</span>
+<div class="language-ruby highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="k">def</span><span class="w"> </span><span class="nf">semantic_search</span><span class="p">(</span><span class="n">query</span><span class="p">,</span><span class="w"> </span><span class="ss">kind</span><span class="p">:</span><span class="w"> </span><span class="kp">nil</span><span class="p">,</span><span class="w"> </span><span class="ss">limit</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p">)</span>
 </span></code></pre></div>
 <p>Semantic similarity search using embeddings.</p>
 <p><strong>Returns:</strong> <code>Array&lt;Models::Entity&gt;</code></p>
@@ -2733,7 +2733,7 @@
       <nav class="md-footer__inner md-grid" aria-label="Footer" >
         
           
-          <a href="../" class="md-footer__link md-footer__link--prev" aria-label="Previous: Services">
+          <a href="../source-service/" class="md-footer__link md-footer__link--prev" aria-label="Previous: SourceService">
             <div class="md-footer__button md-icon">
               
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
@@ -2743,7 +2743,7 @@
                 Previous
               </span>
               <div class="md-ellipsis">
-                Services
+                SourceService
               </div>
             </div>
           </a>

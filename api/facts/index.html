@@ -1544,14 +1544,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../models/content.md" class="md-nav__link">
+      <a href="../models/source/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Content
+    Source
   
 
     
@@ -1707,14 +1707,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../services/content-service.md" class="md-nav__link">
+      <a href="../services/source-service/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    ContentService
+    SourceService
   
 
     
@@ -2553,13 +2553,13 @@
 </span></code></pre></div>
 <hr />
 <h3 id="ingest">ingest<a class="headerlink" href="#ingest" title="Permanent link">&para;</a></h3>
-<div class="language-ruby highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="k">def</span><span class="w"> </span><span class="nf">ingest</span><span class="p">(</span><span class="n">content</span><span class="p">,</span><span class="w"> </span><span class="ss">type</span><span class="p">:,</span><span class="w"> </span><span class="ss">captured_at</span><span class="p">:</span><span class="w"> </span><span class="no">Time</span><span class="o">.</span><span class="n">current</span><span class="p">,</span><span class="w"> </span><span class="ss">metadata</span><span class="p">:</span><span class="w"> </span><span class="p">{},</span><span class="w"> </span><span class="ss">title</span><span class="p">:</span><span class="w"> </span><span class="kp">nil</span><span class="p">,</span><span class="w"> </span><span class="ss">source_uri</span><span class="p">:</span><span class="w"> </span><span class="kp">nil</span><span class="p">)</span>
+<div class="language-ruby highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="k">def</span><span class="w"> </span><span class="nf">ingest</span><span class="p">(</span><span class="n">content</span><span class="p">,</span><span class="w"> </span><span class="ss">kind</span><span class="p">:,</span><span class="w"> </span><span class="ss">captured_at</span><span class="p">:</span><span class="w"> </span><span class="no">Time</span><span class="o">.</span><span class="n">current</span><span class="p">,</span><span class="w"> </span><span class="ss">metadata</span><span class="p">:</span><span class="w"> </span><span class="p">{},</span><span class="w"> </span><span class="ss">title</span><span class="p">:</span><span class="w"> </span><span class="kp">nil</span><span class="p">,</span><span class="w"> </span><span class="ss">source_uri</span><span class="p">:</span><span class="w"> </span><span class="kp">nil</span><span class="p">)</span>
 </span></code></pre></div>
 <p>Ingest raw content into the fact database.</p>
 <p><strong>Parameters:</strong></p>
 <ul>
 <li><code>content</code> (String) - The source text content</li>
-<li><code>type</code> (Symbol) - Content type (:email, :document, :article, etc.)</li>
+<li><code>kind</code> (Symbol) - Content kind (:email, :document, :article, etc.)</li>
 <li><code>captured_at</code> (Time, optional) - When content was captured</li>
 <li><code>metadata</code> (Hash, optional) - Additional metadata</li>
 <li><code>title</code> (String, optional) - Content title</li>
@@ -2569,7 +2569,7 @@
 <p><strong>Example:</strong></p>
 <div class="language-ruby highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="n">source</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">facts</span><span class="o">.</span><span class="n">ingest</span><span class="p">(</span>
 </span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="w">  </span><span class="s2">&quot;Paula joined Microsoft on Jan 10, 2024&quot;</span><span class="p">,</span>
-</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="w">  </span><span class="ss">type</span><span class="p">:</span><span class="w"> </span><span class="ss">:announcement</span><span class="p">,</span>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="w">  </span><span class="ss">kind</span><span class="p">:</span><span class="w"> </span><span class="ss">:announcement</span><span class="p">,</span>
 </span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="w">  </span><span class="ss">title</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;New Hire&quot;</span><span class="p">,</span>
 </span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="w">  </span><span class="ss">captured_at</span><span class="p">:</span><span class="w"> </span><span class="no">Time</span><span class="o">.</span><span class="n">current</span>
 </span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="p">)</span>
@@ -2613,17 +2613,17 @@
 </span></code></pre></div>
 <hr />
 <h3 id="resolve_entity">resolve_entity<a class="headerlink" href="#resolve_entity" title="Permanent link">&para;</a></h3>
-<div class="language-ruby highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="k">def</span><span class="w"> </span><span class="nf">resolve_entity</span><span class="p">(</span><span class="nb">name</span><span class="p">,</span><span class="w"> </span><span class="ss">type</span><span class="p">:</span><span class="w"> </span><span class="kp">nil</span><span class="p">)</span>
+<div class="language-ruby highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="k">def</span><span class="w"> </span><span class="nf">resolve_entity</span><span class="p">(</span><span class="nb">name</span><span class="p">,</span><span class="w"> </span><span class="ss">kind</span><span class="p">:</span><span class="w"> </span><span class="kp">nil</span><span class="p">)</span>
 </span></code></pre></div>
 <p>Resolve a name to an entity.</p>
 <p><strong>Parameters:</strong></p>
 <ul>
 <li><code>name</code> (String) - Name to resolve</li>
-<li><code>type</code> (Symbol, optional) - Entity type filter</li>
+<li><code>kind</code> (Symbol, optional) - Entity kind filter</li>
 </ul>
 <p><strong>Returns:</strong> <code>Models::Entity</code> or <code>nil</code></p>
 <p><strong>Example:</strong></p>
-<div class="language-ruby highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="n">entity</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">facts</span><span class="o">.</span><span class="n">resolve_entity</span><span class="p">(</span><span class="s2">&quot;Paula Chen&quot;</span><span class="p">,</span><span class="w"> </span><span class="ss">type</span><span class="p">:</span><span class="w"> </span><span class="ss">:person</span><span class="p">)</span>
+<div class="language-ruby highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="n">entity</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">facts</span><span class="o">.</span><span class="n">resolve_entity</span><span class="p">(</span><span class="s2">&quot;Paula Chen&quot;</span><span class="p">,</span><span class="w"> </span><span class="ss">kind</span><span class="p">:</span><span class="w"> </span><span class="ss">:person</span><span class="p">)</span>
 </span></code></pre></div>
 <hr />
 <h3 id="timeline_for">timeline_for<a class="headerlink" href="#timeline_for" title="Permanent link">&para;</a></h3>
@@ -2688,13 +2688,13 @@
 </span></code></pre></div>
 <hr />
 <h3 id="batch_resolve_entities">batch_resolve_entities<a class="headerlink" href="#batch_resolve_entities" title="Permanent link">&para;</a></h3>
-<div class="language-ruby highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a><span class="k">def</span><span class="w"> </span><span class="nf">batch_resolve_entities</span><span class="p">(</span><span class="n">names</span><span class="p">,</span><span class="w"> </span><span class="ss">type</span><span class="p">:</span><span class="w"> </span><span class="kp">nil</span><span class="p">)</span>
+<div class="language-ruby highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a><span class="k">def</span><span class="w"> </span><span class="nf">batch_resolve_entities</span><span class="p">(</span><span class="n">names</span><span class="p">,</span><span class="w"> </span><span class="ss">kind</span><span class="p">:</span><span class="w"> </span><span class="kp">nil</span><span class="p">)</span>
 </span></code></pre></div>
 <p>Batch resolve entity names.</p>
 <p><strong>Parameters:</strong></p>
 <ul>
 <li><code>names</code> (Array<String>) - Names to resolve</li>
-<li><code>type</code> (Symbol, optional) - Entity type filter</li>
+<li><code>kind</code> (Symbol, optional) - Entity kind filter</li>
 </ul>
 <p><strong>Returns:</strong> <code>Array&lt;Hash&gt;</code> - Resolution results</p>
 <p><strong>Example:</strong></p>
