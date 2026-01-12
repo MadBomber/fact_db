@@ -265,6 +265,6 @@ end
 
 ```ruby
 fact.entity_mentions.each do |mention|
-  puts "#{mention.entity.canonical_name} (#{mention.mention_role})"
+  puts "#{mention.entity.name} (#{mention.mention_role})"
 end
 ```

@@ -62,7 +62,7 @@ jane = entity_service.resolve_or_create(
   aliases: ["J. Smith"],
   description: "Director of Engineering at Acme Corp"
 )
-puts "Entity: #{jane.canonical_name} (ID: #{jane.id})"
+puts "Entity: #{jane.name} (ID: #{jane.id})"
 
 acme = entity_service.resolve_or_create(
   "Acme Corp",
@@ -70,7 +70,7 @@ acme = entity_service.resolve_or_create(
   aliases: ["Acme", "Acme Corporation"],
   description: "Technology company"
 )
-puts "Entity: #{acme.canonical_name} (ID: #{acme.id})"
+puts "Entity: #{acme.name} (ID: #{acme.id})"
 
 techstartup = entity_service.resolve_or_create(
   "TechStartup Inc",
@@ -78,7 +78,7 @@ techstartup = entity_service.resolve_or_create(
   aliases: ["TechStartup"],
   description: "Technology startup company"
 )
-puts "Entity: #{techstartup.canonical_name} (ID: #{techstartup.id})"
+puts "Entity: #{techstartup.name} (ID: #{techstartup.id})"
 
 demo_section("Step 3: Creating/Finding Facts")
 

@@ -126,7 +126,7 @@ class ProveItDemo
     if fact.entity_mentions.any?
       puts "Entities:"
       fact.entity_mentions.includes(:entity).each do |mention|
-        entity_name = mention.entity&.canonical_name || "(unknown)"
+        entity_name = mention.entity&.name || "(unknown)"
         puts "  - #{entity_name} (#{mention.mention_role})"
       end
       puts

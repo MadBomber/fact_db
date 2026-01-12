@@ -15,7 +15,7 @@ module FactDb
     #   results = facts.query_facts(topic: "Paula Chen", format: :raw)
     #   results.each do |fact|
     #     puts fact.fact_text
-    #     fact.entity_mentions.each { |m| puts m.entity.canonical_name }
+    #     fact.entity_mentions.each { |m| puts m.entity.name }
     #   end
     #
     # @example Chaining queries

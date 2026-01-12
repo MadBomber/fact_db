@@ -52,7 +52,7 @@ module FactDb
 
     def create_entity(name: "Test Entity", type: "person", **attrs)
       Models::Entity.create!(
-        canonical_name: name,
+        name: name,
         type: type,
         resolution_status: attrs.delete(:resolution_status) || "resolved",
         metadata: attrs.delete(:metadata) || {},

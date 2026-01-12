@@ -40,7 +40,7 @@ module FactDb
       private
 
       def entity_to_cypher(entity)
-        name = get_value(entity, :canonical_name) || get_value(entity, :name)
+        name = get_value(entity, :name)
         return nil unless name
 
         var = to_variable(name)
@@ -73,7 +73,7 @@ module FactDb
         if subject_mention
           subject_id = get_value(subject_mention, :entity_id)
           subject_entity = entities[subject_id]
-          subject_name = subject_entity ? (get_value(subject_entity, :canonical_name) || get_value(subject_entity, :name)) : "Entity_#{subject_id}"
+          subject_name = subject_entity ? get_value(subject_entity, :name) : "Entity_#{subject_id}"
         else
           subject_name = extract_subject(fact_text)
         end
@@ -111,7 +111,7 @@ module FactDb
           # Relationship to another entity
           object_id = get_value(object_mention, :entity_id)
           object_entity = entities[object_id]
-          object_name = object_entity ? (get_value(object_entity, :canonical_name) || get_value(object_entity, :name)) : "Entity_#{object_id}"
+          object_name = object_entity ? get_value(object_entity, :name) : "Entity_#{object_id}"
           object_var = to_variable(object_name)
 
           # Ensure object node is defined

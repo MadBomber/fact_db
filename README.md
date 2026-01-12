@@ -119,7 +119,7 @@ Query results can be transformed into multiple formats for different use cases:
 results = facts.query_facts(topic: "Paula Chen", format: :raw)
 results.each do |fact|
   puts fact.fact_text
-  puts fact.entity_mentions.map(&:entity).map(&:canonical_name)
+  puts fact.entity_mentions.map(&:entity).map(&:name)
 end
 
 # JSON (default) - structured hash

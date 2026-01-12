@@ -367,7 +367,7 @@ module FactDb
     def entity_info(entity)
       {
         id: entity.id,
-        canonical_name: entity.canonical_name,
+        name: entity.name,
         type: entity.type,
         resolution_status: entity.resolution_status,
         aliases: entity.aliases.map { |a| { alias_text: a.alias_text, alias_type: a.alias_type } }

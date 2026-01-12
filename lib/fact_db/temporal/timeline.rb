@@ -122,7 +122,7 @@ module FactDb
           invalid_at: invalid_at,
           status: status,
           duration_days: duration_days,
-          entities: entities.map(&:canonical_name)
+          entities: entities.map(&:name)
         }
       end
 

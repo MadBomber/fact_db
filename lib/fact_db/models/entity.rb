@@ -16,7 +16,7 @@ module FactDb
       has_many :merged_entities, class_name: "FactDb::Models::Entity",
                foreign_key: :merged_into_id
 
-      validates :canonical_name, presence: true
+      validates :name, presence: true
       validates :type, presence: true
       validates :resolution_status, presence: true
 
@@ -49,7 +49,7 @@ module FactDb
 
       def add_alias(text, type: nil, confidence: 1.0)
         # Pre-validate before attempting to create
-        return nil unless Validation::AliasFilter.valid?(text, canonical_name: canonical_name)
+        return nil unless Validation::AliasFilter.valid?(text, name: name)
 
         aliases.find_or_create_by!(alias_text: text) do |a|
           a.alias_type = type
@@ -61,7 +61,7 @@ module FactDb
       end
 
       def matches_name?(name)
-        return true if canonical_name.downcase == name.downcase
+        return true if name.downcase == name.downcase
 
         aliases.exists?(["LOWER(alias_text) = ?", name.downcase])
       end

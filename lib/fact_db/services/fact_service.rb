@@ -227,7 +227,7 @@ module FactDb
 
         aliases.each do |alias_text|
           next if alias_text.to_s.strip.empty?
-          next if entity.canonical_name.downcase == alias_text.to_s.strip.downcase
+          next if entity.name.downcase == alias_text.to_s.strip.downcase
           next if entity.all_aliases.map(&:downcase).include?(alias_text.to_s.strip.downcase)
 
           entity.add_alias(alias_text.to_s.strip)

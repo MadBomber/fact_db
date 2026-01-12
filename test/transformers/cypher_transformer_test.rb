@@ -18,7 +18,7 @@ class CypherTransformerTest < Minitest::Test
   def test_transform_entities_to_nodes
     result = FactDb::QueryResult.new(query: "test")
     result.instance_variable_set(:@entities, {
-      1 => { id: 1, canonical_name: "Paula Chen", type: "person" }
+      1 => { id: 1, name: "Paula Chen", type: "person" }
     })
 
     output = @transformer.transform(result)
@@ -31,7 +31,7 @@ class CypherTransformerTest < Minitest::Test
     result.instance_variable_set(:@entities, {
       1 => {
         id: 1,
-        canonical_name: "Paula Chen",
+        name: "Paula Chen",
         type: "person",
         aliases: [{ alias_text: "PC" }, { alias_text: "Paula" }]
       }
@@ -45,8 +45,8 @@ class CypherTransformerTest < Minitest::Test
   def test_transform_facts_to_relationships
     result = FactDb::QueryResult.new(query: "test")
     result.instance_variable_set(:@entities, {
-      1 => { id: 1, canonical_name: "Paula Chen", type: "person" },
-      2 => { id: 2, canonical_name: "Microsoft", type: "organization" }
+      1 => { id: 1, name: "Paula Chen", type: "person" },
+      2 => { id: 2, name: "Microsoft", type: "organization" }
     })
     result.add_facts([{
       id: 1,
@@ -136,8 +136,8 @@ class CypherTransformerTest < Minitest::Test
   def test_relationship_includes_temporal_props
     result = FactDb::QueryResult.new(query: "test")
     result.instance_variable_set(:@entities, {
-      1 => { id: 1, canonical_name: "Paula Chen", type: "person" },
-      2 => { id: 2, canonical_name: "Microsoft", type: "organization" }
+      1 => { id: 1, name: "Paula Chen", type: "person" },
+      2 => { id: 2, name: "Microsoft", type: "organization" }
     })
     result.add_facts([{
       id: 1,

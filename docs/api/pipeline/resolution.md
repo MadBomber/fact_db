@@ -33,7 +33,7 @@ results = pipeline.resolve_entities(names)
 
 results.each do |result|
   puts "#{result[:name]}: #{result[:status]}"
-  puts "  Entity: #{result[:entity]&.canonical_name}"
+  puts "  Entity: #{result[:entity]&.name}"
 end
 ```
 
@@ -153,7 +153,7 @@ results = facts.detect_fact_conflicts([entity1.id, entity2.id])
 
 The pipeline uses the EntityResolver which tries:
 
-1. **Exact match** on canonical name
+1. **Exact match** on name
 2. **Alias match** on registered aliases
 3. **Fuzzy match** using Levenshtein distance
 

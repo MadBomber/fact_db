@@ -28,9 +28,9 @@ module FactDb
       def alias_text_is_valid
         return if alias_text.blank?
 
-        canonical_name = entity&.canonical_name
-        unless Validation::AliasFilter.valid?(alias_text, canonical_name: canonical_name)
-          reason = Validation::AliasFilter.rejection_reason(alias_text, canonical_name: canonical_name)
+        entity_name = entity&.name
+        unless Validation::AliasFilter.valid?(alias_text, canonical_name: entity_name)
+          reason = Validation::AliasFilter.rejection_reason(alias_text, canonical_name: entity_name)
           errors.add(:alias_text, "is not a valid alias: #{reason}")
         end
       end

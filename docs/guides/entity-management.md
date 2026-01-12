@@ -142,7 +142,7 @@ results = facts.batch_resolve_entities(names)
 results.each do |result|
   status = result[:status]  # :resolved, :not_found, :error
   entity = result[:entity]
-  puts "#{result[:name]}: #{status} -> #{entity&.canonical_name}"
+  puts "#{result[:name]}: #{status} -> #{entity&.name}"
 end
 ```
 
@@ -184,7 +184,7 @@ end
 ```ruby
 facts.entity_service.update(
   entity.id,
-  canonical_name: "Paula M. Chen"
+  name: "Paula M. Chen"
 )
 ```
 
@@ -327,9 +327,9 @@ unresolved = FactDb::Models::Entity
 
 unresolved.each do |entity|
   # Try to find duplicates
-  similar = facts.entity_service.search(entity.canonical_name)
+  similar = facts.entity_service.search(entity.name)
   if similar.count > 1
-    puts "Potential duplicate: #{entity.canonical_name}"
+    puts "Potential duplicate: #{entity.name}"
   end
 end
 ```

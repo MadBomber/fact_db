@@ -31,7 +31,7 @@ module FactDb
         lines = ["## Entities"]
 
         results.each_entity do |entity|
-          name = get_value(entity, :canonical_name) || get_value(entity, :name)
+          name = get_value(entity, :name)
           entity_type = get_value(entity, :type)
 
           line = "- **#{name}**"

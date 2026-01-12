@@ -36,7 +36,7 @@ module FactDb
 
       def entity_to_triples(entity)
         triples = []
-        name = get_value(entity, :canonical_name) || get_value(entity, :name)
+        name = get_value(entity, :name)
         return triples unless name
 
         # Type triple
@@ -70,7 +70,7 @@ module FactDb
         if subject_mention
           entity_id = get_value(subject_mention, :entity_id)
           entity = entities[entity_id]
-          subject = entity ? (get_value(entity, :canonical_name) || get_value(entity, :name)) : "Entity_#{entity_id}"
+          subject = entity ? get_value(entity, :name) : "Entity_#{entity_id}"
         else
           subject = extract_subject(fact_text)
         end
@@ -101,7 +101,7 @@ module FactDb
 
           entity_id = get_value(mention, :entity_id)
           entity = entities[entity_id]
-          entity_name = entity ? (get_value(entity, :canonical_name) || get_value(entity, :name)) : "Entity_#{entity_id}"
+          entity_name = entity ? get_value(entity, :name) : "Entity_#{entity_id}"
 
           triples << [subject, role, entity_name]
         end

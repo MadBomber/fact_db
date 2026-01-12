@@ -30,7 +30,7 @@ person = entity_service.create(
   attributes: { email: "rjohnson@example.com", department: "Sales" },
   description: "Senior Sales Representative"
 )
-puts "Created person: #{person.canonical_name}"
+puts "Created person: #{person.name}"
 puts "  Aliases: #{person.aliases.map(&:alias_text).join(', ')}"
 puts "  Type: #{person.type}"
 
@@ -41,7 +41,7 @@ org1 = entity_service.create(
   aliases: ["Global Industries", "GII"],
   description: "Fortune 500 manufacturing company"
 )
-puts "\nCreated organization: #{org1.canonical_name}"
+puts "\nCreated organization: #{org1.name}"
 
 # Create a location entity
 location = entity_service.create(
@@ -50,7 +50,7 @@ location = entity_service.create(
   aliases: ["SF", "San Fran"],
   attributes: { country: "USA", state: "California" }
 )
-puts "Created place: #{location.canonical_name}"
+puts "Created place: #{location.name}"
 
 demo_section("Section 2: Entity Resolution")
 
@@ -60,7 +60,7 @@ test_names = ["Bob Johnson", "R Johnson", "Robert J", "Global Ind", "GII"]
 test_names.each do |name|
   resolved = entity_service.resolve(name, type: nil)
   if resolved
-    puts "Resolved '#{name}' -> #{resolved.canonical_name} (#{resolved.type})"
+    puts "Resolved '#{name}' -> #{resolved.name} (#{resolved.type})"
   else
     puts "Could not resolve '#{name}'"
   end
@@ -73,7 +73,7 @@ new_person = entity_service.resolve_or_create(
   type: :person,
   description: "New employee"
 )
-puts "Result: #{new_person.canonical_name} (new: #{new_person.created_at == new_person.updated_at})"
+puts "Result: #{new_person.name} (new: #{new_person.created_at == new_person.updated_at})"
 
 demo_section("Section 3: Managing Aliases")
 
@@ -82,7 +82,7 @@ entity_service.add_alias(person.id, "Robert J.", alias_type: :name, confidence: 
 entity_service.add_alias(person.id, "rjohnson@example.com", alias_type: :email, confidence: 1.0)
 
 person.reload
-puts "Updated aliases for #{person.canonical_name}:"
+puts "Updated aliases for #{person.name}:"
 person.aliases.each do |a|
   puts "  - #{a.alias_text} (#{a.alias_type}, confidence: #{a.confidence})"
 end
@@ -96,7 +96,7 @@ duplicate = entity_service.create(
   type: :person,
   description: "Possible duplicate of Robert Johnson (typo)"
 )
-puts "Created potential duplicate: #{duplicate.canonical_name} (ID: #{duplicate.id})"
+puts "Created potential duplicate: #{duplicate.name} (ID: #{duplicate.id})"
 
 # Find potential duplicates
 puts "\nSearching for duplicates:"
@@ -105,7 +105,7 @@ if duplicates.empty?
   puts "  No duplicates found above threshold 0.8"
 else
   duplicates.each do |dup_pair|
-    puts "  Potential duplicate: #{dup_pair[:entity1].canonical_name} (ID: #{dup_pair[:entity1].id}) <-> #{dup_pair[:entity2].canonical_name} (ID: #{dup_pair[:entity2].id})"
+    puts "  Potential duplicate: #{dup_pair[:entity1].name} (ID: #{dup_pair[:entity1].id}) <-> #{dup_pair[:entity2].name} (ID: #{dup_pair[:entity2].id})"
     puts "    Similarity: #{dup_pair[:similarity].round(3)}"
   end
 end
@@ -113,7 +113,7 @@ end
 # Merge the duplicate into the canonical entity
 puts "\nMerging entities..."
 entity_service.merge(person.id, duplicate.id)
-puts "Merged '#{duplicate.canonical_name}' into '#{person.canonical_name}'"
+puts "Merged '#{duplicate.name}' into '#{person.name}'"
 
 # Verify the duplicate is marked as merged
 duplicate.reload
@@ -131,18 +131,18 @@ entity_service.create("Wilson & Associates", type: :organization, description: "
 puts "Search results for 'Wilson':"
 results = entity_service.search("Wilson")
 results.each do |entity|
-  puts "  - #{entity.canonical_name} (#{entity.type})"
+  puts "  - #{entity.name} (#{entity.type})"
 end
 
 # Filter by type
 puts "\nPeople only:"
 entity_service.by_type("person").each do |entity|
-  puts "  - #{entity.canonical_name}"
+  puts "  - #{entity.name}"
 end
 
 puts "\nOrganizations only:"
 entity_service.by_type("organization").each do |entity|
-  puts "  - #{entity.canonical_name}"
+  puts "  - #{entity.name}"
 end
 
 demo_section("Section 6: Entity Timeline")
@@ -177,7 +177,7 @@ fact_service.create(
 )
 
 # Build timeline for the person
-puts "Timeline for #{person.canonical_name}:"
+puts "Timeline for #{person.name}:"
 timeline = entity_service.timeline_for(person.id, from: Date.new(2017, 1, 1), to: Date.today)
 timeline.each do |entry|
   date_range = entry[:invalid_at] ? "#{entry[:valid_at]} - #{entry[:invalid_at]}" : "#{entry[:valid_at]} - present"

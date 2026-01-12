@@ -217,7 +217,7 @@ module FactDb
 
         # Get entity names from mentions
         entity_mentions.includes(:entity).each do |mention|
-          terms << mention.entity&.canonical_name if mention.entity&.canonical_name
+          terms << mention.entity&.name if mention.entity&.name
           terms << mention.mention_text if mention.mention_text
         end
 

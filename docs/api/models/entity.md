@@ -6,7 +6,7 @@ Stores resolved identities (people, organizations, places, etc.).
 
 ```ruby
 entity = FactDb::Models::Entity.new(
-  canonical_name: "Paula Chen",
+  name: "Paula Chen",
   type: "person"
 )
 ```
@@ -16,7 +16,7 @@ entity = FactDb::Models::Entity.new(
 | Attribute | Type | Description |
 |-----------|------|-------------|
 | `id` | Integer | Primary key |
-| `canonical_name` | String | Authoritative name |
+| `name` | String | Authoritative name |
 | `type` | String | Type (person, organization, place, etc.) |
 | `resolution_status` | String | Status (unresolved, resolved, merged) |
 | `merged_into_id` | Integer | Points to canonical entity if merged |
@@ -124,7 +124,7 @@ Only resolved entities.
 
 ```ruby
 scope :search_name, ->(query) {
-  where("canonical_name ILIKE ?", "%#{query}%")
+  where("name ILIKE ?", "%#{query}%")
 }
 ```
 
@@ -140,7 +140,7 @@ Entity.search_name("paula")
 
 ```ruby
 entity = Entity.create!(
-  canonical_name: "Paula Chen",
+  name: "Paula Chen",
   type: "person",
   metadata: {
     department: "Engineering",

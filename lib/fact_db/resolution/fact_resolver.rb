@@ -203,7 +203,7 @@ module FactDb
         end_date = facts.select { |f| f.invalid_at }.map(&:invalid_at).max
 
         entity = Models::Entity.find(entity_id)
-        synthesized_text = "#{entity.canonical_name}: #{topic || 'timeline'} from #{start_date.to_date}"
+        synthesized_text = "#{entity.name}: #{topic || 'timeline'} from #{start_date.to_date}"
         synthesized_text += " to #{end_date.to_date}" if end_date
 
         synthesize(

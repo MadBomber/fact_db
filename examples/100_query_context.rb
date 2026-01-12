@@ -62,7 +62,7 @@ class QueryContextGenerator
 
     # Step 2: Resolve entities from candidates
     resolved_entities = resolve_entities(candidates)
-    log_step("Resolved entities", resolved_entities.map { |e| "#{e.canonical_name} (#{e.type})" })
+    log_step("Resolved entities", resolved_entities.map { |e| "#{e.name} (#{e.type})" })
 
     # Step 3: Gather facts from multiple strategies
     all_facts = gather_facts(query, resolved_entities)
@@ -239,7 +239,7 @@ class QueryContextGenerator
 
     query_lower = query.downcase
     query_terms = extract_query_terms(query)
-    entity_names = resolved_entities.flat_map { |e| [e.canonical_name.downcase] + e.all_aliases.map(&:downcase) }
+    entity_names = resolved_entities.flat_map { |e| [e.name.downcase] + e.all_aliases.map(&:downcase) }
 
     # Pre-compute expensive scores for all facts at once
     fact_ids = facts.map(&:id)

@@ -48,7 +48,7 @@ extracted = facts.extract_facts(source.id, extractor: :llm)
 extracted.each do |fact|
   puts fact.fact_text
   puts "  Valid from: #{fact.valid_at}"
-  puts "  Entities: #{fact.entity_mentions.map(&:entity).map(&:canonical_name)}"
+  puts "  Entities: #{fact.entity_mentions.map(&:entity).map(&:name)}"
 end
 ```
 

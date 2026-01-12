@@ -106,7 +106,7 @@ extracted.each do |fact|
   puts "  Valid: #{fact.valid_at}"
   puts "  Confidence: #{fact.confidence}"
   fact.entity_mentions.each do |m|
-    puts "  Entity: #{m.entity.canonical_name} (#{m.mention_role})"
+    puts "  Entity: #{m.entity.name} (#{m.mention_role})"
   end
 end
 ```

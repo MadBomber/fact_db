@@ -56,8 +56,8 @@ hr_dept = entity_service.create(
   attributes: { parent: company.id }
 )
 
-puts "Created company: #{company.canonical_name}"
-puts "Created departments: #{engineering.canonical_name}, #{product.canonical_name}, #{hr_dept.canonical_name}"
+puts "Created company: #{company.name}"
+puts "Created departments: #{engineering.name}, #{product.name}, #{hr_dept.name}"
 
 # Create locations
 hq = entity_service.create(
@@ -74,7 +74,7 @@ remote_office = entity_service.create(
   attributes: { city: "Austin", state: "TX" }
 )
 
-puts "Created locations: #{hq.canonical_name}, #{remote_office.canonical_name}"
+puts "Created locations: #{hq.name}, #{remote_office.name}"
 
 demo_section("Section 2: Create Employee Profiles")
 
@@ -336,7 +336,7 @@ puts "\nCurrent Employee Status:"
 puts "-" * 50
 
 employees.each do |key, employee|
-  puts "\n#{employee.canonical_name}:"
+  puts "\n#{employee.name}:"
   current_facts = fact_service.current_facts(entity: employee.id)
   current_facts.each do |fact|
     puts "  - #{fact.fact_text}"

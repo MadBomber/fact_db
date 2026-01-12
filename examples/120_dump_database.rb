@@ -149,7 +149,7 @@ class DatabaseDumper
     puts "ENTITIES"
     puts "=" * 70
 
-    entities = FactDb::Models::Entity.order(:type, :canonical_name)
+    entities = FactDb::Models::Entity.order(:type, :name)
 
     if entities.empty?
       puts "  (no entity records)"
@@ -166,7 +166,7 @@ class DatabaseDumper
       mention_count = entity.entity_mentions.count
       fact_count = entity.facts.count
 
-      puts "\n  #{entity.canonical_name}"
+      puts "\n  #{entity.name}"
       puts "    ID: #{entity.id}"
       puts "    Aliases: #{entity.all_aliases.join(', ')}" if entity.all_aliases.any?
       puts "    Description: #{entity.description}" if entity.description.present?
@@ -209,7 +209,7 @@ class DatabaseDumper
       if fact.entity_mentions.any?
         puts "Mentions:"
         fact.entity_mentions.each do |mention|
-          entity_name = mention.entity&.canonical_name || "(unknown)"
+          entity_name = mention.entity&.name || "(unknown)"
           puts "  - #{entity_name} (#{mention.mention_role}): \"#{mention.mention_text}\""
         end
       end
@@ -246,7 +246,7 @@ class DatabaseDumper
       entity = entities_by_id[id]
       next unless entity
 
-      puts "  #{entity.canonical_name.to_s.ljust(30)} (#{entity.type.to_s.ljust(12)}) #{count.to_s.rjust(4)} mentions"
+      puts "  #{entity.name.to_s.ljust(30)} (#{entity.type.to_s.ljust(12)}) #{count.to_s.rjust(4)} mentions"
       if entity.all_aliases.any?
         puts "    Aliases: #{entity.all_aliases.join(', ')}"
       end
@@ -274,13 +274,13 @@ class DatabaseDumper
     # Search entities
     puts "\nMatching Entities:"
     entities = FactDb::Models::Entity.where(
-      "canonical_name ILIKE ? OR description ILIKE ?",
+      "name ILIKE ? OR description ILIKE ?",
       "%#{term}%", "%#{term}%"
-    ).order(:canonical_name)
+    ).order(:name)
 
     if entities.any?
       entities.each do |entity|
-        puts "  #{entity.canonical_name} (#{entity.type})"
+        puts "  #{entity.name} (#{entity.type})"
         puts "    #{entity.description}" if entity.description.present?
       end
     else

@@ -3,7 +3,7 @@
 class CreateEntities < ActiveRecord::Migration[7.0]
   def change
     create_table :fact_db_entities, comment: "Canonical representations of people, organizations, places, and other named entities" do |t|
-      t.string :canonical_name, null: false, limit: 500,
+      t.string :name, null: false, limit: 500,
                comment: "Authoritative name for this entity after resolution and normalization"
       t.string :type, null: false, limit: 50,
                comment: "Classification of entity (person, organization, location, product, event, etc.)"
@@ -24,7 +24,7 @@ class CreateEntities < ActiveRecord::Migration[7.0]
       t.timestamps
     end
 
-    add_index :fact_db_entities, :canonical_name
+    add_index :fact_db_entities, :name
     add_index :fact_db_entities, :type
     add_index :fact_db_entities, :resolution_status
     add_foreign_key :fact_db_entities, :fact_db_entities,
@@ -36,10 +36,10 @@ class CreateEntities < ActiveRecord::Migration[7.0]
       USING hnsw (embedding vector_cosine_ops);
     SQL
 
-    # GIN trigram index on canonical_name for fast fuzzy matching
+    # GIN trigram index on name for fast fuzzy matching
     execute <<-SQL
-      CREATE INDEX idx_entities_canonical_name_trgm ON fact_db_entities
-      USING gin (canonical_name gin_trgm_ops);
+      CREATE INDEX idx_entities_name_trgm ON fact_db_entities
+      USING gin (name gin_trgm_ops);
     SQL
 
     execute "COMMENT ON COLUMN fact_db_entities.created_at IS 'When this entity was first identified';"

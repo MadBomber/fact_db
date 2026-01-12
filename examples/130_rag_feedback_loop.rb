@@ -158,7 +158,7 @@ class RagFeedbackLoop
     # Strategy 1: Enhanced entity resolution (includes bigrams, key terms, fuzzy matching)
     @resolved_entities = resolve_entities_enhanced(prompt)
 
-    log_step("Resolved entities", @resolved_entities.map(&:canonical_name)) if @verbose
+    log_step("Resolved entities", @resolved_entities.map(&:name)) if @verbose
 
     # Get facts for resolved entities (include both canonical and synthesized)
     @resolved_entities.each do |entity|
@@ -205,7 +205,7 @@ class RagFeedbackLoop
 
     query_terms = extract_key_terms(query)
     entity_names = @resolved_entities.flat_map do |e|
-      [e.canonical_name.downcase] + e.all_aliases.map(&:downcase)
+      [e.name.downcase] + e.all_aliases.map(&:downcase)
     end
 
     # Compute ts_rank scores for full-text relevance
@@ -334,7 +334,7 @@ class RagFeedbackLoop
     entities.concat(fuzzy_results)
 
     resolved = entities.uniq(&:id)
-    log_step("Resolved entities", resolved.map(&:canonical_name)) if @verbose
+    log_step("Resolved entities", resolved.map(&:name)) if @verbose
     resolved
   end
 
@@ -399,7 +399,7 @@ class RagFeedbackLoop
     facts.each_with_index do |fact, idx|
       # Get entity mentions for context
       entities = fact.entity_mentions.map do |m|
-        "#{m.entity.canonical_name} (#{m.entity.type})"
+        "#{m.entity.name} (#{m.entity.type})"
       end.uniq
 
       lines << "#{idx + 1}. #{fact.fact_text}"
@@ -414,7 +414,7 @@ class RagFeedbackLoop
     data = facts.map do |fact|
       {
         text: fact.fact_text,
-        entities: fact.entity_mentions.map { |m| m.entity.canonical_name },
+        entities: fact.entity_mentions.map { |m| m.entity.name },
         valid_at: fact.valid_at&.to_s,
         confidence: fact.confidence
       }
@@ -653,7 +653,7 @@ class RagFeedbackLoop
       extracted_facts.each do |fact|
         puts "\n  [ID: #{fact.id}] #{fact.fact_text[0..90]}#{'...' if fact.fact_text.length > 90}"
 
-        entities = fact.entity_mentions.map { |m| m.entity.canonical_name }
+        entities = fact.entity_mentions.map { |m| m.entity.name }
         puts "     Entities: #{entities.join(', ')}" if entities.any?
         puts "     Confidence: #{(fact.confidence * 100).round(1)}%"
         puts "     Status: #{fact.status}"
@@ -680,7 +680,7 @@ class RagFeedbackLoop
                        .limit(entities_added)
 
       new_entities.each do |entity|
-        puts "  - #{entity.canonical_name} (#{entity.type})"
+        puts "  - #{entity.name} (#{entity.type})"
       end
     end
 

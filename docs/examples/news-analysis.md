@@ -109,7 +109,7 @@ end
 # List all extracted entities
 puts "\nExtracted Entities:"
 FactDb::Models::Entity.all.each do |entity|
-  puts "  #{entity.canonical_name} (#{entity.type})"
+  puts "  #{entity.name} (#{entity.type})"
 end
 ```
 
@@ -197,7 +197,7 @@ def company_report(facts, company_name)
   current_facts = facts.current_facts_for(company.id)
 
   {
-    company: company.canonical_name,
+    company: company.name,
     current_facts: current_facts.map(&:fact_text),
     leadership: extract_leadership(current_facts),
     timeline: facts.timeline_for(company.id).map { |f|
@@ -214,7 +214,7 @@ def extract_leadership(facts)
   leadership = {}
   facts.each do |fact|
     if fact.fact_text =~ /CEO/
-      leadership[:ceo] = fact.entity_mentions.find { |m| m.mention_role == "subject" }&.entity&.canonical_name
+      leadership[:ceo] = fact.entity_mentions.find { |m| m.mention_role == "subject" }&.entity&.name
     end
   end
   leadership
@@ -276,7 +276,7 @@ def monitor_topic(facts, topic, since: 1.week.ago)
         text: f.fact_text,
         date: f.valid_at,
         source: f.fact_sources.first&.source&.title,
-        entities: f.entity_mentions.map { |m| m.entity.canonical_name }
+        entities: f.entity_mentions.map { |m| m.entity.name }
       }
     }
   }

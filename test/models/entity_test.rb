@@ -8,7 +8,7 @@ class EntityTest < Minitest::Test
   def test_entity_creation
     entity = create_entity(name: "Paula Chen", type: "person")
 
-    assert_equal "Paula Chen", entity.canonical_name
+    assert_equal "Paula Chen", entity.name
     assert_equal "person", entity.type
     assert_equal "resolved", entity.resolution_status
   end
@@ -66,13 +66,13 @@ class EntityTest < Minitest::Test
     entity = FactDb::Models::Entity.new
 
     refute entity.valid?
-    assert entity.errors[:canonical_name].any?
+    assert entity.errors[:name].any?
     assert entity.errors[:type].any?
   end
 
   def test_entity_type_validation
     entity = FactDb::Models::Entity.new(
-      canonical_name: "Test",
+      name: "Test",
       type: "invalid_type",
       resolution_status: "resolved"
     )

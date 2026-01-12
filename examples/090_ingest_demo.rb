@@ -310,7 +310,7 @@ class IngestDemo
             # Add any aliases that weren't already added during creation
             (mention_data[:aliases] || []).each do |alias_text|
               next if alias_text.to_s.strip.empty?
-              next if entity.canonical_name.downcase == alias_text.to_s.strip.downcase
+              next if entity.name.downcase == alias_text.to_s.strip.downcase
               next if entity.all_aliases.map(&:downcase).include?(alias_text.to_s.strip.downcase)
 
               entity.add_alias(alias_text.to_s.strip)
@@ -450,7 +450,7 @@ class IngestDemo
     recent_entities = FactDb::Models::Entity.order(created_at: :desc).limit(10)
     recent_entities.each do |entity|
       fact_count = entity.facts.count
-      puts "  #{entity.canonical_name} (#{entity.type}) - #{fact_count} mentions"
+      puts "  #{entity.name} (#{entity.type}) - #{fact_count} mentions"
     end
 
     # Show recent facts

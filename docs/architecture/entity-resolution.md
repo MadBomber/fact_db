@@ -33,7 +33,7 @@ Direct match against canonical names:
 ```ruby
 # Looking for "Microsoft"
 entity = facts.resolve_entity("Microsoft")
-# Matches: Entity(canonical_name: "Microsoft")
+# Matches: Entity(name: "Microsoft")
 ```
 
 ### 2. Alias Match
@@ -197,7 +197,7 @@ extracted = facts.extract_facts(source.id, extractor: :llm)
 
 extracted.each do |fact|
   fact.entity_mentions.each do |mention|
-    puts "Resolved '#{mention.mention_text}' to #{mention.entity.canonical_name}"
+    puts "Resolved '#{mention.mention_text}' to #{mention.entity.name}"
     puts "  Role: #{mention.mention_role}"
     puts "  Confidence: #{mention.confidence}"
   end
@@ -240,7 +240,7 @@ results = facts.batch_resolve_entities(names)
 
 results.each do |result|
   puts "#{result[:name]}: #{result[:status]}"
-  puts "  Entity: #{result[:entity]&.canonical_name}"
+  puts "  Entity: #{result[:entity]&.name}"
 end
 ```
 

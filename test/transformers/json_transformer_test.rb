@@ -36,13 +36,13 @@ class JsonTransformerTest < Minitest::Test
   def test_transform_includes_entities
     result = FactDb::QueryResult.new(query: "test")
     result.instance_variable_set(:@entities, {
-      1 => { id: 1, canonical_name: "Paula Chen" }
+      1 => { id: 1, name: "Paula Chen" }
     })
 
     output = @transformer.transform(result)
 
     assert_equal 1, output[:entities].size
-    assert_equal "Paula Chen", output[:entities][1][:canonical_name]
+    assert_equal "Paula Chen", output[:entities][1][:name]
   end
 
   def test_transform_includes_metadata

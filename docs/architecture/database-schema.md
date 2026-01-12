@@ -28,7 +28,7 @@ erDiagram
 
     entities {
         bigint id PK
-        string canonical_name
+        string name
         string type
         string resolution_status
         bigint merged_into_id FK
@@ -114,7 +114,7 @@ Stores resolved identities.
 ```sql
 CREATE TABLE entities (
     id BIGSERIAL PRIMARY KEY,
-    canonical_name VARCHAR(255) NOT NULL,
+    name VARCHAR(255) NOT NULL,
     type VARCHAR(50) NOT NULL,
     resolution_status VARCHAR(20) NOT NULL DEFAULT 'unresolved',
     merged_into_id BIGINT REFERENCES entities(id),
@@ -123,7 +123,7 @@ CREATE TABLE entities (
     created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 
-CREATE INDEX idx_entities_name ON entities(canonical_name);
+CREATE INDEX idx_entities_name ON entities(name);
 CREATE INDEX idx_entities_type ON entities(type);
 CREATE INDEX idx_entities_status ON entities(resolution_status);
 CREATE INDEX idx_entities_embedding ON entities USING hnsw(embedding vector_cosine_ops);

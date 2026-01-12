@@ -149,11 +149,11 @@ end
 ```ruby
 # Resolve a name
 resolved = facts.resolve_entity("Paula")
-puts "\n'Paula' resolves to: #{resolved&.canonical_name}"
+puts "\n'Paula' resolves to: #{resolved&.name}"
 
 # Type-constrained resolution
 person = facts.resolve_entity("Paula", type: :person)
-puts "'Paula' as person: #{person&.canonical_name}"
+puts "'Paula' as person: #{person&.name}"
 ```
 
 ## Update Facts (Supersession)

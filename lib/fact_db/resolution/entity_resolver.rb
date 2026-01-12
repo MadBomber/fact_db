@@ -20,8 +20,8 @@ module FactDb
         return ResolvedEntity.new(exact, confidence: 1.0, match_type: :exact_alias) if exact
 
         # 2. Canonical name match
-        canonical = find_by_canonical_name(name, type: type)
-        return ResolvedEntity.new(canonical, confidence: 1.0, match_type: :canonical_name) if canonical
+        canonical = find_by_name(name, type: type)
+        return ResolvedEntity.new(canonical, confidence: 1.0, match_type: :name) if canonical
 
         # 3. Fuzzy matching
         fuzzy = find_by_fuzzy_match(name, type: type)
@@ -57,7 +57,7 @@ module FactDb
           end
 
           # Add the merged entity's canonical name as an alias
-          keep.aliases.find_or_create_by!(alias_text: merge_entity.canonical_name) do |a|
+          keep.aliases.find_or_create_by!(alias_text: merge_entity.name) do |a|
             a.alias_type = "name"
             a.confidence = 1.0
           end
@@ -104,7 +104,7 @@ module FactDb
 
         entities.each_with_index do |entity, i|
           entities[(i + 1)..].each do |other|
-            similarity = calculate_similarity(entity.canonical_name, other.canonical_name)
+            similarity = calculate_similarity(entity.name, other.name)
             if similarity >= threshold
               duplicates << {
                 entity1: entity,
@@ -145,8 +145,8 @@ module FactDb
         scope.first&.entity
       end
 
-      def find_by_canonical_name(name, type:)
-        scope = Models::Entity.where(["LOWER(canonical_name) = ?", name.downcase])
+      def find_by_name(name, type:)
+        scope = Models::Entity.where(["LOWER(name) = ?", name.downcase])
         scope = scope.where(type: type) if type
         scope.not_merged.first
       end
@@ -160,7 +160,7 @@ module FactDb
 
         candidates.find_each do |entity|
           # Check canonical name
-          similarity = calculate_similarity(name, entity.canonical_name)
+          similarity = calculate_similarity(name, entity.name)
           if similarity > best_similarity
             best_similarity = similarity
             best_match = entity
@@ -183,7 +183,7 @@ module FactDb
 
       def create_entity(name, type:, aliases: [], attributes: {})
         entity = Models::Entity.create!(
-          canonical_name: name,
+          name: name,
           type: type,
           attributes: attributes,
           resolution_status: "resolved"
@@ -249,8 +249,8 @@ module FactDb
         entity.id
       end
 
-      def canonical_name
-        entity.canonical_name
+      def name
+        entity.name
       end
 
       def type

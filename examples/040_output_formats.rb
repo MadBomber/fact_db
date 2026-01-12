@@ -40,7 +40,7 @@ seattle = entity_service.resolve_or_create(
   description: "City in Washington state"
 )
 
-puts "Created entities: #{paula.canonical_name}, #{microsoft.canonical_name}, #{seattle.canonical_name}"
+puts "Created entities: #{paula.name}, #{microsoft.name}, #{seattle.name}"
 
 # Create facts
 fact_service.create(

@@ -278,7 +278,7 @@ def employment_report(facts, employee_id)
   current = facts.current_facts_for(employee_id)
 
   report = {
-    name: employee.canonical_name,
+    name: employee.name,
     current_status: {},
     history: []
   }

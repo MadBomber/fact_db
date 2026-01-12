@@ -57,7 +57,7 @@ Stores resolved identities.
 | Column | Type | Description |
 |--------|------|-------------|
 | id | bigint | Primary key |
-| canonical_name | string | Authoritative name |
+| name | string | Authoritative name |
 | type | string | person, organization, place, etc. |
 | resolution_status | string | unresolved, resolved, merged |
 | merged_into_id | bigint | Points to canonical entity if merged |
@@ -129,7 +129,7 @@ The migrations create indexes for:
 - Content hash (unique)
 - Content type
 - Full-text search on content
-- Entity canonical name
+- Entity name
 - Entity type
 - Fact status
 - Temporal range queries (valid_at, invalid_at)

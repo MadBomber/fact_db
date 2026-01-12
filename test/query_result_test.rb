@@ -88,12 +88,12 @@ class QueryResultTest < Minitest::Test
   def test_each_entity
     result = FactDb::QueryResult.new(query: "test")
     result.instance_variable_set(:@entities, {
-      1 => { id: 1, canonical_name: "Paula Chen" },
-      2 => { id: 2, canonical_name: "Microsoft" }
+      1 => { id: 1, name: "Paula Chen" },
+      2 => { id: 2, name: "Microsoft" }
     })
 
     names = []
-    result.each_entity { |e| names << e[:canonical_name] }
+    result.each_entity { |e| names << e[:name] }
 
     assert_equal ["Paula Chen", "Microsoft"], names
   end
@@ -105,7 +105,7 @@ class QueryResultTest < Minitest::Test
     assert_equal 0, result.entity_count
 
     result.add_facts([{ id: 1, fact_text: "Test" }])
-    result.instance_variable_set(:@entities, { 1 => { id: 1, canonical_name: "Test Entity" } })
+    result.instance_variable_set(:@entities, { 1 => { id: 1, name: "Test Entity" } })
 
     assert_equal 1, result.fact_count
     assert_equal 1, result.entity_count
@@ -148,6 +148,6 @@ class QueryResultTest < Minitest::Test
     result.resolve_entities(stub_service)
 
     assert_equal 1, result.entity_count
-    assert_equal "Paula Chen", result.entities[entity.id][:canonical_name]
+    assert_equal "Paula Chen", result.entities[entity.id][:name]
   end
 end

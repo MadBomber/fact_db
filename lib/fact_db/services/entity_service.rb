@@ -14,7 +14,7 @@ module FactDb
         embedding = generate_embedding(name)
 
         entity = Models::Entity.create!(
-          canonical_name: name,
+          name: name,
           type: type.to_s,
           description: description,
           metadata: attributes,
@@ -34,7 +34,7 @@ module FactDb
       end
 
       def find_by_name(name, type: nil)
-        scope = Models::Entity.where(["LOWER(canonical_name) = ?", name.downcase])
+        scope = Models::Entity.where(["LOWER(name) = ?", name.downcase])
         scope = scope.where(type: type) if type
         scope.not_merged.first
       end
@@ -61,7 +61,7 @@ module FactDb
           if resolved_by_alias
             entity = resolved_by_alias.entity
             # Add the new canonical name as an alias to the existing entity
-            entity.add_alias(name) unless entity.canonical_name.downcase == name.downcase
+            entity.add_alias(name) unless entity.name.downcase == name.downcase
             # Add all the other aliases too
             add_new_aliases(entity, aliases)
             return entity
@@ -85,7 +85,7 @@ module FactDb
 
         # Search canonical names and aliases
         scope = scope.left_joins(:aliases).where(
-          "LOWER(fact_db_entities.canonical_name) LIKE ? OR LOWER(fact_db_entity_aliases.alias_text) LIKE ?",
+          "LOWER(fact_db_entities.name) LIKE ? OR LOWER(fact_db_entity_aliases.alias_text) LIKE ?",
           "%#{query.downcase}%",
           "%#{query.downcase}%"
         ).distinct
@@ -104,7 +104,7 @@ module FactDb
       end
 
       # Fuzzy search using PostgreSQL pg_trgm similarity
-      # Returns entities where canonical_name or aliases are similar to the query
+      # Returns entities where name or aliases are similar to the query
       # Requires pg_trgm extension and GIN trigram indexes
       #
       # @param query [String] Search term (handles misspellings)
@@ -118,14 +118,14 @@ module FactDb
         sql = <<~SQL
           SELECT DISTINCT e.id,
                  GREATEST(
-                   similarity(LOWER(e.canonical_name), LOWER(?)),
+                   similarity(LOWER(e.name), LOWER(?)),
                    COALESCE(MAX(similarity(LOWER(a.alias_text), LOWER(?))), 0)
                  ) as sim_score
           FROM fact_db_entities e
           LEFT JOIN fact_db_entity_aliases a ON a.entity_id = e.id
           WHERE e.resolution_status != 'merged'
             AND (
-              similarity(LOWER(e.canonical_name), LOWER(?)) > ?
+              similarity(LOWER(e.name), LOWER(?)) > ?
               OR similarity(LOWER(a.alias_text), LOWER(?)) > ?
             )
           GROUP BY e.id
@@ -159,7 +159,7 @@ module FactDb
       end
 
       def by_type(type)
-        Models::Entity.by_type(type).not_merged.order(:canonical_name)
+        Models::Entity.by_type(type).not_merged.order(:name)
       end
 
       def facts_about(entity_id, at: nil, status: :canonical)
@@ -234,7 +234,7 @@ module FactDb
         return unless aliases&.any?
 
         # Filter out pronouns and generic terms
-        valid_aliases = Validation::AliasFilter.filter(aliases, canonical_name: entity.canonical_name)
+        valid_aliases = Validation::AliasFilter.filter(aliases, name: entity.name)
 
         valid_aliases.each do |alias_text|
           next if entity.all_aliases.map(&:downcase).include?(alias_text.downcase)

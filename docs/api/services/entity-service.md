@@ -13,14 +13,14 @@ service = FactDb::Services::EntityService.new(config)
 ### create
 
 ```ruby
-def create(canonical_name, type:, aliases: [], metadata: {})
+def create(name, type:, aliases: [], metadata: {})
 ```
 
 Create a new entity.
 
 **Parameters:**
 
-- `canonical_name` (String) - Authoritative name
+- `name` (String) - Authoritative name
 - `type` (Symbol) - Entity type
 - `aliases` (Array) - Alternative names
 - `metadata` (Hash) - Additional attributes
@@ -130,7 +130,7 @@ Update entity attributes.
 ```ruby
 service.update(
   entity.id,
-  canonical_name: "Paula M. Chen",
+  name: "Paula M. Chen",
   metadata: { title: "Senior Engineer" }
 )
 ```

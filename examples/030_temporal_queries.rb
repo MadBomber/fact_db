@@ -45,7 +45,7 @@ cfo = entity_service.create(
   description: "Finance executive"
 )
 
-puts "Created entities: #{company.canonical_name}, #{ceo.canonical_name}, #{new_ceo.canonical_name}, #{cfo.canonical_name}"
+puts "Created entities: #{company.name}, #{ceo.name}, #{new_ceo.name}, #{cfo.name}"
 
 demo_section("Section 1: Creating Temporal Facts")
 
@@ -156,7 +156,7 @@ timeline = fact_service.timeline(
   to: Date.today
 )
 
-puts "Complete timeline for #{company.canonical_name}:"
+puts "Complete timeline for #{company.name}:"
 timeline.each do |entry|
   end_date = entry[:invalid_at] || "present"
   status_indicator = entry[:status] == "canonical" ? "" : " [#{entry[:status]}]"

@@ -75,7 +75,7 @@ results = facts.batch_resolve_entities(names, type: nil)
 results.each do |result|
   case result[:status]
   when :resolved
-    puts "#{result[:name]} -> #{result[:entity].canonical_name}"
+    puts "#{result[:name]} -> #{result[:entity].name}"
   when :not_found
     puts "#{result[:name]} -> Not found"
   when :error
