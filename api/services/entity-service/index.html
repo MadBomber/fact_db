@@ -2536,12 +2536,12 @@
 </span></code></pre></div>
 <h2 id="methods">Methods<a class="headerlink" href="#methods" title="Permanent link">&para;</a></h2>
 <h3 id="create">create<a class="headerlink" href="#create" title="Permanent link">&para;</a></h3>
-<div class="language-ruby highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="k">def</span><span class="w"> </span><span class="nf">create</span><span class="p">(</span><span class="n">canonical_name</span><span class="p">,</span><span class="w"> </span><span class="ss">type</span><span class="p">:,</span><span class="w"> </span><span class="ss">aliases</span><span class="p">:</span><span class="w"> </span><span class="o">[]</span><span class="p">,</span><span class="w"> </span><span class="ss">metadata</span><span class="p">:</span><span class="w"> </span><span class="p">{})</span>
+<div class="language-ruby highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="k">def</span><span class="w"> </span><span class="nf">create</span><span class="p">(</span><span class="nb">name</span><span class="p">,</span><span class="w"> </span><span class="ss">type</span><span class="p">:,</span><span class="w"> </span><span class="ss">aliases</span><span class="p">:</span><span class="w"> </span><span class="o">[]</span><span class="p">,</span><span class="w"> </span><span class="ss">metadata</span><span class="p">:</span><span class="w"> </span><span class="p">{})</span>
 </span></code></pre></div>
 <p>Create a new entity.</p>
 <p><strong>Parameters:</strong></p>
 <ul>
-<li><code>canonical_name</code> (String) - Authoritative name</li>
+<li><code>name</code> (String) - Authoritative name</li>
 <li><code>type</code> (Symbol) - Entity type</li>
 <li><code>aliases</code> (Array) - Alternative names</li>
 <li><code>metadata</code> (Hash) - Additional attributes</li>
@@ -2604,7 +2604,7 @@
 <p><strong>Example:</strong></p>
 <div class="language-ruby highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="n">service</span><span class="o">.</span><span class="n">update</span><span class="p">(</span>
 </span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="w">  </span><span class="n">entity</span><span class="o">.</span><span class="n">id</span><span class="p">,</span>
-</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="w">  </span><span class="ss">canonical_name</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Paula M. Chen&quot;</span><span class="p">,</span>
+</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="w">  </span><span class="nb">name</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Paula M. Chen&quot;</span><span class="p">,</span>
 </span><span id="__span-12-4"><a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a><span class="w">  </span><span class="ss">metadata</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="ss">title</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Senior Engineer&quot;</span><span class="w"> </span><span class="p">}</span>
 </span><span id="__span-12-5"><a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a><span class="p">)</span>
 </span></code></pre></div>

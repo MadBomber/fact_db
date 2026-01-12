@@ -2711,7 +2711,7 @@
 <p>Stores resolved identities (people, organizations, places, etc.).</p>
 <h2 id="class-factdbmodelsentity">Class: <code>FactDb::Models::Entity</code><a class="headerlink" href="#class-factdbmodelsentity" title="Permanent link">&para;</a></h2>
 <div class="language-ruby highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">entity</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="no">FactDb</span><span class="o">::</span><span class="no">Models</span><span class="o">::</span><span class="no">Entity</span><span class="o">.</span><span class="n">new</span><span class="p">(</span>
-</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">  </span><span class="ss">canonical_name</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Paula Chen&quot;</span><span class="p">,</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">  </span><span class="nb">name</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Paula Chen&quot;</span><span class="p">,</span>
 </span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">  </span><span class="ss">type</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;person&quot;</span>
 </span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="p">)</span>
 </span></code></pre></div>
@@ -2731,7 +2731,7 @@
 <td>Primary key</td>
 </tr>
 <tr>
-<td><code>canonical_name</code></td>
+<td><code>name</code></td>
 <td>String</td>
 <td>Authoritative name</td>
 </tr>
@@ -2826,7 +2826,7 @@
 <p>Only resolved entities.</p>
 <h3 id="search_name">search_name<a class="headerlink" href="#search_name" title="Permanent link">&para;</a></h3>
 <div class="language-ruby highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="n">scope</span><span class="w"> </span><span class="ss">:search_name</span><span class="p">,</span><span class="w"> </span><span class="o">-&gt;</span><span class="p">(</span><span class="n">query</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="w">  </span><span class="n">where</span><span class="p">(</span><span class="s2">&quot;canonical_name ILIKE ?&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;%</span><span class="si">#{</span><span class="n">query</span><span class="si">}</span><span class="s2">%&quot;</span><span class="p">)</span>
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="w">  </span><span class="n">where</span><span class="p">(</span><span class="s2">&quot;name ILIKE ?&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;%</span><span class="si">#{</span><span class="n">query</span><span class="si">}</span><span class="s2">%&quot;</span><span class="p">)</span>
 </span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="p">}</span>
 </span></code></pre></div>
 <p>Search by name.</p>
@@ -2835,7 +2835,7 @@
 <h2 id="usage-examples">Usage Examples<a class="headerlink" href="#usage-examples" title="Permanent link">&para;</a></h2>
 <h3 id="create-entity">Create Entity<a class="headerlink" href="#create-entity" title="Permanent link">&para;</a></h3>
 <div class="language-ruby highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="n">entity</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="no">Entity</span><span class="o">.</span><span class="n">create!</span><span class="p">(</span>
-</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a><span class="w">  </span><span class="ss">canonical_name</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Paula Chen&quot;</span><span class="p">,</span>
+</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a><span class="w">  </span><span class="nb">name</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Paula Chen&quot;</span><span class="p">,</span>
 </span><span id="__span-14-3"><a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a><span class="w">  </span><span class="ss">type</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;person&quot;</span><span class="p">,</span>
 </span><span id="__span-14-4"><a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a><span class="w">  </span><span class="ss">metadata</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
 </span><span id="__span-14-5"><a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a><span class="w">    </span><span class="ss">department</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Engineering&quot;</span><span class="p">,</span>

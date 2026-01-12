@@ -2631,7 +2631,7 @@
 </span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>
 </span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="n">results</span><span class="o">.</span><span class="n">each</span><span class="w"> </span><span class="k">do</span><span class="w"> </span><span class="o">|</span><span class="n">result</span><span class="o">|</span>
 </span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="w">  </span><span class="nb">puts</span><span class="w"> </span><span class="s2">&quot;</span><span class="si">#{</span><span class="n">result</span><span class="o">[</span><span class="ss">:name</span><span class="o">]</span><span class="si">}</span><span class="s2">: </span><span class="si">#{</span><span class="n">result</span><span class="o">[</span><span class="ss">:status</span><span class="o">]</span><span class="si">}</span><span class="s2">&quot;</span>
-</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="w">  </span><span class="nb">puts</span><span class="w"> </span><span class="s2">&quot;  Entity: </span><span class="si">#{</span><span class="n">result</span><span class="o">[</span><span class="ss">:entity</span><span class="o">]&amp;.</span><span class="n">canonical_name</span><span class="si">}</span><span class="s2">&quot;</span>
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="w">  </span><span class="nb">puts</span><span class="w"> </span><span class="s2">&quot;  Entity: </span><span class="si">#{</span><span class="n">result</span><span class="o">[</span><span class="ss">:entity</span><span class="o">]&amp;.</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span>
 </span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="k">end</span>
 </span></code></pre></div>
 <hr />
@@ -2721,7 +2721,7 @@
 <h2 id="resolution-strategies">Resolution Strategies<a class="headerlink" href="#resolution-strategies" title="Permanent link">&para;</a></h2>
 <p>The pipeline uses the EntityResolver which tries:</p>
 <ol>
-<li><strong>Exact match</strong> on canonical name</li>
+<li><strong>Exact match</strong> on name</li>
 <li><strong>Alias match</strong> on registered aliases</li>
 <li><strong>Fuzzy match</strong> using Levenshtein distance</li>
 </ol>
