@@ -2799,7 +2799,7 @@
 <p>Stores temporal assertions about entities.</p>
 <h2 id="class-factdbmodelsfact">Class: <code>FactDb::Models::Fact</code><a class="headerlink" href="#class-factdbmodelsfact" title="Permanent link">&para;</a></h2>
 <div class="language-ruby highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">fact</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="no">FactDb</span><span class="o">::</span><span class="no">Models</span><span class="o">::</span><span class="no">Fact</span><span class="o">.</span><span class="n">new</span><span class="p">(</span>
-</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">  </span><span class="ss">fact_text</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Paula Chen is Principal Engineer&quot;</span><span class="p">,</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">  </span><span class="ss">text</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Paula Chen is Principal Engineer&quot;</span><span class="p">,</span>
 </span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">  </span><span class="ss">valid_at</span><span class="p">:</span><span class="w"> </span><span class="no">Date</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="s2">&quot;2024-01-10&quot;</span><span class="p">),</span>
 </span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="w">  </span><span class="ss">status</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;canonical&quot;</span>
 </span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="p">)</span>
@@ -2820,14 +2820,14 @@
 <td>Primary key</td>
 </tr>
 <tr>
-<td><code>fact_text</code></td>
+<td><code>text</code></td>
 <td>Text</td>
 <td>The assertion</td>
 </tr>
 <tr>
-<td><code>fact_hash</code></td>
+<td><code>digest</code></td>
 <td>String</td>
-<td>Hash for deduplication</td>
+<td>SHA256 digest for deduplication</td>
 </tr>
 <tr>
 <td><code>valid_at</code></td>
@@ -2967,7 +2967,7 @@
 </span></code></pre></div>
 <h3 id="search_text">search_text<a class="headerlink" href="#search_text" title="Permanent link">&para;</a></h3>
 <div class="language-ruby highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="n">scope</span><span class="w"> </span><span class="ss">:search_text</span><span class="p">,</span><span class="w"> </span><span class="o">-&gt;</span><span class="p">(</span><span class="n">query</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-</span><span id="__span-16-2"><a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a><span class="w">  </span><span class="n">where</span><span class="p">(</span><span class="s2">&quot;fact_text @@ plainto_tsquery(?)&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">query</span><span class="p">)</span>
+</span><span id="__span-16-2"><a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a><span class="w">  </span><span class="n">where</span><span class="p">(</span><span class="s2">&quot;text @@ plainto_tsquery(?)&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">query</span><span class="p">)</span>
 </span><span id="__span-16-3"><a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a><span class="p">}</span>
 </span></code></pre></div>
 <p>Full-text search.</p>
@@ -2988,7 +2988,7 @@
 <h2 id="usage-examples">Usage Examples<a class="headerlink" href="#usage-examples" title="Permanent link">&para;</a></h2>
 <h3 id="create-fact">Create Fact<a class="headerlink" href="#create-fact" title="Permanent link">&para;</a></h3>
 <div class="language-ruby highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a><span class="n">fact</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="no">Fact</span><span class="o">.</span><span class="n">create!</span><span class="p">(</span>
-</span><span id="__span-21-2"><a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a><span class="w">  </span><span class="ss">fact_text</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Paula Chen joined Microsoft as Principal Engineer&quot;</span><span class="p">,</span>
+</span><span id="__span-21-2"><a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a><span class="w">  </span><span class="ss">text</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Paula Chen joined Microsoft as Principal Engineer&quot;</span><span class="p">,</span>
 </span><span id="__span-21-3"><a id="__codelineno-21-3" name="__codelineno-21-3" href="#__codelineno-21-3"></a><span class="w">  </span><span class="ss">valid_at</span><span class="p">:</span><span class="w"> </span><span class="no">Date</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="s2">&quot;2024-01-10&quot;</span><span class="p">),</span>
 </span><span id="__span-21-4"><a id="__codelineno-21-4" name="__codelineno-21-4" href="#__codelineno-21-4"></a><span class="w">  </span><span class="ss">status</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;canonical&quot;</span><span class="p">,</span>
 </span><span id="__span-21-5"><a id="__codelineno-21-5" name="__codelineno-21-5" href="#__codelineno-21-5"></a><span class="w">  </span><span class="ss">extraction_method</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;manual&quot;</span><span class="p">,</span>
@@ -3014,7 +3014,7 @@
 </span></code></pre></div>
 <h3 id="supersede-fact">Supersede Fact<a class="headerlink" href="#supersede-fact" title="Permanent link">&para;</a></h3>
 <div class="language-ruby highlight"><pre><span></span><code><span id="__span-23-1"><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a><span class="n">new_fact</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="no">Fact</span><span class="o">.</span><span class="n">create!</span><span class="p">(</span>
-</span><span id="__span-23-2"><a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a><span class="w">  </span><span class="ss">fact_text</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Paula Chen is Senior Principal Engineer&quot;</span><span class="p">,</span>
+</span><span id="__span-23-2"><a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a><span class="w">  </span><span class="ss">text</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Paula Chen is Senior Principal Engineer&quot;</span><span class="p">,</span>
 </span><span id="__span-23-3"><a id="__codelineno-23-3" name="__codelineno-23-3" href="#__codelineno-23-3"></a><span class="w">  </span><span class="ss">valid_at</span><span class="p">:</span><span class="w"> </span><span class="no">Date</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="s2">&quot;2024-06-01&quot;</span><span class="p">),</span>
 </span><span id="__span-23-4"><a id="__codelineno-23-4" name="__codelineno-23-4" href="#__codelineno-23-4"></a><span class="w">  </span><span class="ss">status</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;canonical&quot;</span>
 </span><span id="__span-23-5"><a id="__codelineno-23-5" name="__codelineno-23-5" href="#__codelineno-23-5"></a><span class="p">)</span>
