@@ -40,8 +40,8 @@ erDiagram
     entity_aliases {
         bigint id PK
         bigint entity_id FK
-        string alias_text
-        string alias_type
+        string name
+        string type
         float confidence
     }
 
@@ -137,14 +137,14 @@ Stores alternative names for entities.
 CREATE TABLE entity_aliases (
     id BIGSERIAL PRIMARY KEY,
     entity_id BIGINT NOT NULL REFERENCES entities(id) ON DELETE CASCADE,
-    alias_text VARCHAR(255) NOT NULL,
-    alias_type VARCHAR(50),
+    name VARCHAR(255) NOT NULL,
+    type VARCHAR(50),
     confidence FLOAT DEFAULT 1.0
 );
 
 CREATE INDEX idx_aliases_entity ON entity_aliases(entity_id);
-CREATE INDEX idx_aliases_text ON entity_aliases(alias_text);
-CREATE UNIQUE INDEX idx_aliases_unique ON entity_aliases(entity_id, alias_text);
+CREATE INDEX idx_aliases_text ON entity_aliases(name);
+CREATE UNIQUE INDEX idx_aliases_unique ON entity_aliases(entity_id, name);
 ```
 
 ### facts

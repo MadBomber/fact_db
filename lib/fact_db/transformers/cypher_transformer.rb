@@ -52,7 +52,7 @@ module FactDb
         # Add aliases if present
         aliases = get_value(entity, :aliases)
         if aliases && !aliases.empty?
-          alias_texts = aliases.map { |a| a.is_a?(Hash) ? a[:alias_text] : a.to_s }
+          alias_texts = aliases.map { |a| a.is_a?(Hash) ? a[:name] : a.to_s }
           props[:aliases] = alias_texts
         end
 

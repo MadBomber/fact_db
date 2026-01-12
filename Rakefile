@@ -117,10 +117,10 @@ namespace :db do
     FactDb::Models::Entity.not_merged.find_each do |entity|
       entity.aliases.each do |alias_record|
         stats[:checked] += 1
-        next if FactDb::Validation::AliasFilter.valid?(alias_record.alias_text, canonical_name: entity.name)
+        next if FactDb::Validation::AliasFilter.valid?(alias_record.name, canonical_name: entity.name)
 
-        reason = FactDb::Validation::AliasFilter.rejection_reason(alias_record.alias_text, canonical_name: entity.name)
-        puts "#{entity.name}: removing \"#{alias_record.alias_text}\" (#{reason})"
+        reason = FactDb::Validation::AliasFilter.rejection_reason(alias_record.name, canonical_name: entity.name)
+        puts "#{entity.name}: removing \"#{alias_record.name}\" (#{reason})"
         alias_record.destroy unless dry_run
         stats[:removed] += 1
       end

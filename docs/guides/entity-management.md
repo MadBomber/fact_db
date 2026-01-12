@@ -85,7 +85,7 @@ facts.entity_service.add_alias(
 
 ```ruby
 entity.entity_aliases.each do |alias_record|
-  puts "#{alias_record.alias_text} (#{alias_record.alias_type})"
+  puts "#{alias_record.name} (#{alias_record.type})"
   puts "  Confidence: #{alias_record.confidence}"
 end
 ```

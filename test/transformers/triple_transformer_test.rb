@@ -33,7 +33,7 @@ class TripleTransformerTest < Minitest::Test
         id: 1,
         name: "Paula Chen",
         type: "person",
-        aliases: [{ alias_text: "PC" }]
+        aliases: [{ name: "PC" }]
       }
     })
 

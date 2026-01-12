@@ -50,15 +50,15 @@ module FactDb
         Models::Entity.transaction do
           # Move all aliases to kept entity
           merge_entity.aliases.each do |alias_record|
-            keep.aliases.find_or_create_by!(alias_text: alias_record.alias_text) do |a|
-              a.alias_type = alias_record.alias_type
+            keep.aliases.find_or_create_by!(name: alias_record.name) do |a|
+              a.type = alias_record.type
               a.confidence = alias_record.confidence
             end
           end
 
           # Add the merged entity's canonical name as an alias
-          keep.aliases.find_or_create_by!(alias_text: merge_entity.name) do |a|
-            a.alias_type = "name"
+          keep.aliases.find_or_create_by!(name: merge_entity.name) do |a|
+            a.type = "name"
             a.confidence = 1.0
           end
 
@@ -139,7 +139,7 @@ module FactDb
       private
 
       def find_by_exact_alias(name, type:)
-        scope = Models::EntityAlias.where(["LOWER(alias_text) = ?", name.downcase])
+        scope = Models::EntityAlias.where(["LOWER(fact_db_entity_aliases.name) = ?", name.downcase])
         scope = scope.joins(:entity).where(fact_db_entities: { type: type }) if type
         scope = scope.joins(:entity).where.not(fact_db_entities: { resolution_status: "merged" })
         scope.first&.entity
@@ -168,7 +168,7 @@ module FactDb
 
           # Check aliases
           entity.aliases.each do |alias_record|
-            alias_similarity = calculate_similarity(name, alias_record.alias_text)
+            alias_similarity = calculate_similarity(name, alias_record.name)
             if alias_similarity > best_similarity
               best_similarity = alias_similarity
               best_match = entity

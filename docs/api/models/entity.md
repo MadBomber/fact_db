@@ -161,7 +161,7 @@ entity.add_alias("Chen, Paula", type: "formal")
 
 ```ruby
 entity.entity_aliases.each do |a|
-  puts "#{a.alias_text} (#{a.alias_type})"
+  puts "#{a.name} (#{a.type})"
 end
 ```
 
@@ -197,6 +197,6 @@ entity2.update!(
 
 # Copy aliases
 entity2.entity_aliases.each do |a|
-  entity1.add_alias(a.alias_text, type: a.alias_type)
+  entity1.add_alias(a.name, type: a.type)
 end
 ```

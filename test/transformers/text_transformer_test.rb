@@ -36,7 +36,7 @@ class TextTransformerTest < Minitest::Test
         id: 1,
         name: "Paula Chen",
         type: "person",
-        aliases: [{ alias_text: "PC" }, { alias_text: "Paula" }]
+        aliases: [{ name: "PC" }, { name: "Paula" }]
       }
     })
     result.add_facts([{ id: 1, fact_text: "Test", status: "canonical" }])

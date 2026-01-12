@@ -33,7 +33,7 @@ class CypherTransformerTest < Minitest::Test
         id: 1,
         name: "Paula Chen",
         type: "person",
-        aliases: [{ alias_text: "PC" }, { alias_text: "Paula" }]
+        aliases: [{ name: "PC" }, { name: "Paula" }]
       }
     })
 

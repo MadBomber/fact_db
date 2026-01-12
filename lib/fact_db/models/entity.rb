@@ -45,15 +45,15 @@ module FactDb
       end
 
       def all_aliases
-        aliases.pluck(:alias_text)
+        aliases.pluck(:name)
       end
 
       def add_alias(text, type: nil, confidence: 1.0)
         # Pre-validate before attempting to create
         return nil unless Validation::AliasFilter.valid?(text, canonical_name: name)
 
-        aliases.find_or_create_by!(alias_text: text) do |a|
-          a.alias_type = type
+        aliases.find_or_create_by!(name: text) do |a|
+          a.type = type
           a.confidence = confidence
         end
       rescue ActiveRecord::RecordInvalid
@@ -64,7 +64,7 @@ module FactDb
       def matches_name?(query)
         return true if self.name.downcase == query.downcase
 
-        aliases.exists?(["LOWER(alias_text) = ?", query.downcase])
+        aliases.exists?(["LOWER(name) = ?", query.downcase])
       end
 
       # Get all facts mentioning this entity

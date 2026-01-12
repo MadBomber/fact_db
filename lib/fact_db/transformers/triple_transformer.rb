@@ -46,8 +46,8 @@ module FactDb
         # Aliases
         aliases = get_value(entity, :aliases) || []
         aliases.each do |aka|
-          alias_text = aka.is_a?(Hash) ? aka[:alias_text] : aka.to_s
-          triples << [name, "also_known_as", alias_text]
+          alias_name = aka.is_a?(Hash) ? aka[:name] : aka.to_s
+          triples << [name, "also_known_as", alias_name]
         end
 
         # Resolution status

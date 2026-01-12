@@ -31,7 +31,7 @@ person = entity_service.create(
   description: "Senior Sales Representative"
 )
 puts "Created person: #{person.name}"
-puts "  Aliases: #{person.aliases.map(&:alias_text).join(', ')}"
+puts "  Aliases: #{person.aliases.map(&:name).join(', ')}"
 puts "  Type: #{person.type}"
 
 # Create organization entities
@@ -78,13 +78,13 @@ puts "Result: #{new_person.name} (new: #{new_person.created_at == new_person.upd
 demo_section("Section 3: Managing Aliases")
 
 # Add more aliases to an existing entity
-entity_service.add_alias(person.id, "Robert J.", alias_type: :name, confidence: 0.9)
-entity_service.add_alias(person.id, "rjohnson@example.com", alias_type: :email, confidence: 1.0)
+entity_service.add_alias(person.id, "Robert J.", type: :name, confidence: 0.9)
+entity_service.add_alias(person.id, "rjohnson@example.com", type: :email, confidence: 1.0)
 
 person.reload
 puts "Updated aliases for #{person.name}:"
 person.aliases.each do |a|
-  puts "  - #{a.alias_text} (#{a.alias_type}, confidence: #{a.confidence})"
+  puts "  - #{a.name} (#{a.type}, confidence: #{a.confidence})"
 end
 
 demo_section("Section 4: Merging Entities")

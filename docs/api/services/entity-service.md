@@ -78,7 +78,7 @@ entity = service.resolve("Paula Chen", type: :person)
 ### add_alias
 
 ```ruby
-def add_alias(entity_id, alias_text, type: nil, confidence: 1.0)
+def add_alias(entity_id, alias_name, type: nil, confidence: 1.0)
 ```
 
 Add an alias to an entity.
@@ -94,7 +94,7 @@ service.add_alias(entity.id, "P. Chen", type: :abbreviation)
 ### remove_alias
 
 ```ruby
-def remove_alias(entity_id, alias_text)
+def remove_alias(entity_id, alias_name)
 ```
 
 Remove an alias from an entity.

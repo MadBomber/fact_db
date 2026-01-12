@@ -72,8 +72,8 @@ Stores alternative names for entities.
 |--------|------|-------------|
 | id | bigint | Primary key |
 | entity_id | bigint | Foreign key to entities |
-| alias_text | string | Alternative name |
-| alias_type | string | nickname, abbreviation, etc. |
+| name | string | Alternative name |
+| type | string | nickname, abbreviation, etc. |
 | confidence | float | Match confidence (0-1) |
 
 ### facts

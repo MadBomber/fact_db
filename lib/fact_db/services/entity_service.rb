@@ -75,9 +75,9 @@ module FactDb
         @resolver.merge(keep_id, merge_id)
       end
 
-      def add_alias(entity_id, alias_text, alias_type: nil, confidence: 1.0)
+      def add_alias(entity_id, alias_name, type: nil, confidence: 1.0)
         entity = Models::Entity.find(entity_id)
-        entity.add_alias(alias_text, type: alias_type, confidence: confidence)
+        entity.add_alias(alias_name, type: type, confidence: confidence)
       end
 
       def search(query, type: nil, limit: 20)
@@ -85,7 +85,7 @@ module FactDb
 
         # Search canonical names and aliases
         scope = scope.left_joins(:aliases).where(
-          "LOWER(fact_db_entities.name) LIKE ? OR LOWER(fact_db_entity_aliases.alias_text) LIKE ?",
+          "LOWER(fact_db_entities.name) LIKE ? OR LOWER(fact_db_entity_aliases.name) LIKE ?",
           "%#{query.downcase}%",
           "%#{query.downcase}%"
         ).distinct
@@ -119,14 +119,14 @@ module FactDb
           SELECT DISTINCT e.id,
                  GREATEST(
                    similarity(LOWER(e.name), LOWER(?)),
-                   COALESCE(MAX(similarity(LOWER(a.alias_text), LOWER(?))), 0)
+                   COALESCE(MAX(similarity(LOWER(a.name), LOWER(?))), 0)
                  ) as sim_score
           FROM fact_db_entities e
           LEFT JOIN fact_db_entity_aliases a ON a.entity_id = e.id
           WHERE e.resolution_status != 'merged'
             AND (
               similarity(LOWER(e.name), LOWER(?)) > ?
-              OR similarity(LOWER(a.alias_text), LOWER(?)) > ?
+              OR similarity(LOWER(a.name), LOWER(?)) > ?
             )
           GROUP BY e.id
           ORDER BY sim_score DESC

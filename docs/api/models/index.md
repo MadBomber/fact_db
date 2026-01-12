@@ -23,8 +23,8 @@ end
 | Column | Type | Description |
 |--------|------|-------------|
 | entity_id | bigint | Parent entity |
-| alias_text | string | Alternative name |
-| alias_type | string | Type (nickname, abbreviation, etc.) |
+| name | string | Alternative name |
+| type | string | Type (nickname, abbreviation, etc.) |
 | confidence | float | Match confidence |
 
 ### EntityMention

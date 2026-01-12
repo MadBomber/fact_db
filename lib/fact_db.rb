@@ -370,7 +370,7 @@ module FactDb
         name: entity.name,
         type: entity.type,
         resolution_status: entity.resolution_status,
-        aliases: entity.aliases.map { |a| { alias_text: a.alias_text, alias_type: a.alias_type } }
+        aliases: entity.aliases.map { |a| { name: a.name, type: a.type } }
       }
     end
 
