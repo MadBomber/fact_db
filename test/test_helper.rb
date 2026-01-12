@@ -3,7 +3,7 @@
 $LOAD_PATH.unshift File.expand_path("../lib", __dir__)
 
 # Set test environment BEFORE loading fact_db
-ENV["FDB_ENV"] ||= "test"
+ENV["FDB_ENV"] = "test"
 
 require "minitest/autorun"
 require "timecop"
@@ -79,6 +79,14 @@ end
 # Establish database connection for tests
 begin
   FactDb::Database.establish_connection!
+  # Reset schema cache to pick up current schema
+  ActiveRecord::Base.connection.schema_cache.clear!
+  FactDb::Models::Entity.reset_column_information
+  FactDb::Models::Source.reset_column_information
+  FactDb::Models::Fact.reset_column_information
+  FactDb::Models::EntityAlias.reset_column_information
+  FactDb::Models::EntityMention.reset_column_information
+  FactDb::Models::FactSource.reset_column_information
 rescue StandardError => e
   puts "Warning: Could not connect to test database: #{e.message}"
   puts "Some tests may be skipped."

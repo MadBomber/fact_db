@@ -32,7 +32,7 @@ module FactDb
       end
 
       def migrate!
-        establish_connection! unless connected?
+        establish_connection!
         migrations_path = File.expand_path("../../db/migrate", __dir__)
         ActiveRecord::MigrationContext.new(migrations_path).migrate
       end

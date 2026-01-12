@@ -4,6 +4,7 @@ module FactDb
   module Models
     class Entity < ActiveRecord::Base
       self.table_name = "fact_db_entities"
+      self.inheritance_column = nil # Disable STI - 'type' stores entity classification, not subclass
 
       has_many :aliases, class_name: "FactDb::Models::EntityAlias",
                foreign_key: :entity_id, dependent: :destroy
@@ -49,7 +50,7 @@ module FactDb
 
       def add_alias(text, type: nil, confidence: 1.0)
         # Pre-validate before attempting to create
-        return nil unless Validation::AliasFilter.valid?(text, name: name)
+        return nil unless Validation::AliasFilter.valid?(text, canonical_name: name)
 
         aliases.find_or_create_by!(alias_text: text) do |a|
           a.alias_type = type
@@ -60,10 +61,10 @@ module FactDb
         nil
       end
 
-      def matches_name?(name)
-        return true if name.downcase == name.downcase
+      def matches_name?(query)
+        return true if self.name.downcase == query.downcase
 
-        aliases.exists?(["LOWER(alias_text) = ?", name.downcase])
+        aliases.exists?(["LOWER(alias_text) = ?", query.downcase])
       end
 
       # Get all facts mentioning this entity

@@ -9,7 +9,12 @@ Rake::TestTask.new(:test) do |t|
   t.test_files = FileList["test/**/*_test.rb"]
 end
 
-task test: "db:reset:test"
+# Ensure test environment is set before running tests
+task :set_test_env do
+  ENV["FDB_ENV"] = "test"
+end
+
+task test: [:set_test_env, "db:reset:test"]
 
 namespace :db do
   desc "Drop the database"
