@@ -103,6 +103,61 @@ module FactDb
         scope
       end
 
+      # Fuzzy search using PostgreSQL pg_trgm similarity
+      # Returns entities where canonical_name or aliases are similar to the query
+      # Requires pg_trgm extension and GIN trigram indexes
+      #
+      # @param query [String] Search term (handles misspellings)
+      # @param type [Symbol, nil] Optional entity type filter
+      # @param threshold [Float] Minimum similarity score (0.0-1.0, default 0.3)
+      # @param limit [Integer] Maximum results to return
+      # @return [Array<Entity>] Entities ordered by similarity score
+      def fuzzy_search(query, type: nil, threshold: 0.3, limit: 20)
+        return [] if query.to_s.strip.length < 3
+
+        sql = <<~SQL
+          SELECT DISTINCT e.id,
+                 GREATEST(
+                   similarity(LOWER(e.canonical_name), LOWER(?)),
+                   COALESCE(MAX(similarity(LOWER(a.alias_text), LOWER(?))), 0)
+                 ) as sim_score
+          FROM fact_db_entities e
+          LEFT JOIN fact_db_entity_aliases a ON a.entity_id = e.id
+          WHERE e.resolution_status != 'merged'
+            AND (
+              similarity(LOWER(e.canonical_name), LOWER(?)) > ?
+              OR similarity(LOWER(a.alias_text), LOWER(?)) > ?
+            )
+          GROUP BY e.id
+          ORDER BY sim_score DESC
+          LIMIT ?
+        SQL
+
+        sanitized = ActiveRecord::Base.sanitize_sql(
+          [sql, query, query, query, threshold, query, threshold, limit]
+        )
+
+        results = ActiveRecord::Base.connection.execute(sanitized)
+        entity_ids = results.map { |r| r["id"] }
+
+        return [] if entity_ids.empty?
+
+        # Preserve ordering by fetching in order
+        entities_by_id = Models::Entity.where(id: entity_ids).index_by(&:id)
+        ordered_entities = entity_ids.map { |id| entities_by_id[id] }.compact
+
+        # Apply type filter if specified
+        if type
+          ordered_entities = ordered_entities.select { |e| e.entity_type == type.to_s }
+        end
+
+        ordered_entities
+      rescue ActiveRecord::StatementInvalid => e
+        # pg_trgm extension not available, fall back to LIKE search
+        config.logger&.warn("Fuzzy search unavailable (pg_trgm not installed): #{e.message}")
+        search(query, type: type, limit: limit).to_a
+      end
+
       def by_type(type)
         Models::Entity.by_type(type).not_merged.order(:canonical_name)
       end
