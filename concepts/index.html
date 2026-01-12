@@ -1528,7 +1528,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../api/models/content/" class="md-nav__link">
+      <a href="../api/models/content.md" class="md-nav__link">
         
   
   
@@ -1691,7 +1691,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../api/services/content-service/" class="md-nav__link">
+      <a href="../api/services/content-service.md" class="md-nav__link">
         
   
   
@@ -2600,11 +2600,11 @@
 </ol>
 <h2 id="audit-trails">Audit Trails<a class="headerlink" href="#audit-trails" title="Permanent link">&para;</a></h2>
 <p>Every fact maintains links to its source:</p>
-<div class="language-ruby highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="n">fact</span><span class="o">.</span><span class="n">fact_sources</span><span class="o">.</span><span class="n">each</span><span class="w"> </span><span class="k">do</span><span class="w"> </span><span class="o">|</span><span class="n">source</span><span class="o">|</span>
-</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="w">  </span><span class="nb">puts</span><span class="w"> </span><span class="s2">&quot;Source: </span><span class="si">#{</span><span class="n">source</span><span class="o">.</span><span class="n">content</span><span class="o">.</span><span class="n">title</span><span class="si">}</span><span class="s2">&quot;</span>
-</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="w">  </span><span class="nb">puts</span><span class="w"> </span><span class="s2">&quot;Type: </span><span class="si">#{</span><span class="n">source</span><span class="o">.</span><span class="n">source_type</span><span class="si">}</span><span class="s2">&quot;</span><span class="w">  </span><span class="c1"># primary, supporting, contradicting</span>
-</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="w">  </span><span class="nb">puts</span><span class="w"> </span><span class="s2">&quot;Excerpt: </span><span class="si">#{</span><span class="n">source</span><span class="o">.</span><span class="n">excerpt</span><span class="si">}</span><span class="s2">&quot;</span>
-</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="w">  </span><span class="nb">puts</span><span class="w"> </span><span class="s2">&quot;Confidence: </span><span class="si">#{</span><span class="n">source</span><span class="o">.</span><span class="n">confidence</span><span class="si">}</span><span class="s2">&quot;</span>
+<div class="language-ruby highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="n">fact</span><span class="o">.</span><span class="n">fact_sources</span><span class="o">.</span><span class="n">each</span><span class="w"> </span><span class="k">do</span><span class="w"> </span><span class="o">|</span><span class="n">fact_source</span><span class="o">|</span>
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="w">  </span><span class="nb">puts</span><span class="w"> </span><span class="s2">&quot;Source: </span><span class="si">#{</span><span class="n">fact_source</span><span class="o">.</span><span class="n">source</span><span class="o">.</span><span class="n">title</span><span class="si">}</span><span class="s2">&quot;</span>
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="w">  </span><span class="nb">puts</span><span class="w"> </span><span class="s2">&quot;Type: </span><span class="si">#{</span><span class="n">fact_source</span><span class="o">.</span><span class="n">source_type</span><span class="si">}</span><span class="s2">&quot;</span><span class="w">  </span><span class="c1"># primary, supporting, contradicting</span>
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="w">  </span><span class="nb">puts</span><span class="w"> </span><span class="s2">&quot;Excerpt: </span><span class="si">#{</span><span class="n">fact_source</span><span class="o">.</span><span class="n">excerpt</span><span class="si">}</span><span class="s2">&quot;</span>
+</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="w">  </span><span class="nb">puts</span><span class="w"> </span><span class="s2">&quot;Confidence: </span><span class="si">#{</span><span class="n">fact_source</span><span class="o">.</span><span class="n">confidence</span><span class="si">}</span><span class="s2">&quot;</span>
 </span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a><span class="k">end</span>
 </span></code></pre></div>
 <p>This enables:</p>

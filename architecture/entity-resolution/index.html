@@ -1706,7 +1706,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../api/models/content/" class="md-nav__link">
+      <a href="../../api/models/content.md" class="md-nav__link">
         
   
   
@@ -1869,7 +1869,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../api/services/content-service/" class="md-nav__link">
+      <a href="../../api/services/content-service.md" class="md-nav__link">
         
   
   
@@ -2940,7 +2940,7 @@
 </span></code></pre></div>
 <h3 id="automatic-resolution">Automatic Resolution<a class="headerlink" href="#automatic-resolution" title="Permanent link">&para;</a></h3>
 <p>The LLM extractor resolves mentions automatically:</p>
-<div class="language-ruby highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="n">extracted</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">facts</span><span class="o">.</span><span class="n">extract_facts</span><span class="p">(</span><span class="n">content</span><span class="o">.</span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="ss">extractor</span><span class="p">:</span><span class="w"> </span><span class="ss">:llm</span><span class="p">)</span>
+<div class="language-ruby highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="n">extracted</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">facts</span><span class="o">.</span><span class="n">extract_facts</span><span class="p">(</span><span class="n">source</span><span class="o">.</span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="ss">extractor</span><span class="p">:</span><span class="w"> </span><span class="ss">:llm</span><span class="p">)</span>
 </span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>
 </span><span id="__span-14-3"><a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a><span class="n">extracted</span><span class="o">.</span><span class="n">each</span><span class="w"> </span><span class="k">do</span><span class="w"> </span><span class="o">|</span><span class="n">fact</span><span class="o">|</span>
 </span><span id="__span-14-4"><a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a><span class="w">  </span><span class="n">fact</span><span class="o">.</span><span class="n">entity_mentions</span><span class="o">.</span><span class="n">each</span><span class="w"> </span><span class="k">do</span><span class="w"> </span><span class="o">|</span><span class="n">mention</span><span class="o">|</span>

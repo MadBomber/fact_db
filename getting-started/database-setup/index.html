@@ -759,10 +759,10 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#contents" class="md-nav__link">
+  <a href="#sources" class="md-nav__link">
     <span class="md-ellipsis">
       
-        contents
+        sources
       
     </span>
   </a>
@@ -1544,7 +1544,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../api/models/content/" class="md-nav__link">
+      <a href="../../api/models/content.md" class="md-nav__link">
         
   
   
@@ -1707,7 +1707,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../api/services/content-service/" class="md-nav__link">
+      <a href="../../api/services/content-service.md" class="md-nav__link">
         
   
   
@@ -2331,10 +2331,10 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#contents" class="md-nav__link">
+  <a href="#sources" class="md-nav__link">
     <span class="md-ellipsis">
       
-        contents
+        sources
       
     </span>
   </a>
@@ -2505,8 +2505,8 @@
 </span></code></pre></div>
 <h2 id="schema-overview">Schema Overview<a class="headerlink" href="#schema-overview" title="Permanent link">&para;</a></h2>
 <p>The migrations create six tables:</p>
-<h3 id="contents">contents<a class="headerlink" href="#contents" title="Permanent link">&para;</a></h3>
-<p>Stores immutable source documents.</p>
+<h3 id="sources">sources<a class="headerlink" href="#sources" title="Permanent link">&para;</a></h3>
+<p>Stores immutable source content.</p>
 <table>
 <thead>
 <tr>
@@ -2532,9 +2532,9 @@
 <td>Type (email, document, article)</td>
 </tr>
 <tr>
-<td>raw_text</td>
+<td>content</td>
 <td>text</td>
-<td>Original content</td>
+<td>Original source content</td>
 </tr>
 <tr>
 <td>title</td>
@@ -2792,9 +2792,9 @@
 <td>Foreign key to facts</td>
 </tr>
 <tr>
-<td>content_id</td>
+<td>source_id</td>
 <td>bigint</td>
-<td>Foreign key to contents</td>
+<td>Foreign key to sources</td>
 </tr>
 <tr>
 <td>source_type</td>
@@ -2818,7 +2818,7 @@
 <ul>
 <li>Content hash (unique)</li>
 <li>Content type</li>
-<li>Full-text search on raw_text</li>
+<li>Full-text search on content</li>
 <li>Entity canonical name</li>
 <li>Entity type</li>
 <li>Fact status</li>

@@ -1335,7 +1335,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../models/content/" class="md-nav__link">
+      <a href="../models/content.md" class="md-nav__link">
         
   
   
@@ -1498,7 +1498,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../services/content-service/" class="md-nav__link">
+      <a href="../services/content-service.md" class="md-nav__link">
         
   
   
@@ -2124,10 +2124,10 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#via-facts" class="md-nav__link">
+  <a href="#via-factdb" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Via Facts
+        Via FactDb
       
     </span>
   </a>
@@ -2271,11 +2271,11 @@
 </span></code></pre></div>
 <h2 id="creating-custom-extractors">Creating Custom Extractors<a class="headerlink" href="#creating-custom-extractors" title="Permanent link">&para;</a></h2>
 <div class="language-ruby highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="k">class</span><span class="w"> </span><span class="nc">MyExtractor</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="no">FactDb</span><span class="o">::</span><span class="no">Extractors</span><span class="o">::</span><span class="no">Base</span>
-</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="w">  </span><span class="k">def</span><span class="w"> </span><span class="nf">extract</span><span class="p">(</span><span class="n">content</span><span class="p">)</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="w">  </span><span class="k">def</span><span class="w"> </span><span class="nf">extract</span><span class="p">(</span><span class="n">source</span><span class="p">)</span>
 </span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="w">    </span><span class="n">facts</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">[]</span>
 </span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>
 </span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="w">    </span><span class="c1"># Your extraction logic</span>
-</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="w">    </span><span class="c1"># Parse content.raw_text</span>
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="w">    </span><span class="c1"># Parse source.content</span>
 </span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="w">    </span><span class="c1"># Create fact records</span>
 </span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>
 </span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="w">    </span><span class="n">facts</span>
@@ -2283,13 +2283,13 @@
 </span><span id="__span-1-11"><a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a><span class="k">end</span>
 </span></code></pre></div>
 <h2 id="using-extractors">Using Extractors<a class="headerlink" href="#using-extractors" title="Permanent link">&para;</a></h2>
-<h3 id="via-facts">Via Facts<a class="headerlink" href="#via-facts" title="Permanent link">&para;</a></h3>
+<h3 id="via-factdb">Via FactDb<a class="headerlink" href="#via-factdb" title="Permanent link">&para;</a></h3>
 <div class="language-ruby highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="n">facts</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="no">FactDb</span><span class="o">.</span><span class="n">new</span>
-</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="n">extracted</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">facts</span><span class="o">.</span><span class="n">extract_facts</span><span class="p">(</span><span class="n">content</span><span class="o">.</span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="ss">extractor</span><span class="p">:</span><span class="w"> </span><span class="ss">:llm</span><span class="p">)</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="n">extracted</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">facts</span><span class="o">.</span><span class="n">extract_facts</span><span class="p">(</span><span class="n">source</span><span class="o">.</span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="ss">extractor</span><span class="p">:</span><span class="w"> </span><span class="ss">:llm</span><span class="p">)</span>
 </span></code></pre></div>
 <h3 id="directly">Directly<a class="headerlink" href="#directly" title="Permanent link">&para;</a></h3>
 <div class="language-ruby highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="n">extractor</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="no">FactDb</span><span class="o">::</span><span class="no">Extractors</span><span class="o">::</span><span class="no">LLMExtractor</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
-</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="n">facts</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">extractor</span><span class="o">.</span><span class="n">extract</span><span class="p">(</span><span class="n">content</span><span class="p">)</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="n">facts</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">extractor</span><span class="o">.</span><span class="n">extract</span><span class="p">(</span><span class="n">source</span><span class="p">)</span>
 </span></code></pre></div>
 <h2 id="extractor-selection">Extractor Selection<a class="headerlink" href="#extractor-selection" title="Permanent link">&para;</a></h2>
 <table>

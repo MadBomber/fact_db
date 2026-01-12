@@ -18,7 +18,7 @@
         <link rel="prev" href="../facts/">
       
       
-        <link rel="next" href="content/">
+        <link rel="next" href="entity/">
       
       
         
@@ -1337,7 +1337,7 @@
   
   
     <li class="md-nav__item">
-      <a href="content/" class="md-nav__link">
+      <a href="content.md" class="md-nav__link">
         
   
   
@@ -1500,7 +1500,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../services/content-service/" class="md-nav__link">
+      <a href="../services/content-service.md" class="md-nav__link">
         
   
   
@@ -2236,7 +2236,7 @@
 <p>FactDb uses ActiveRecord models for data persistence.</p>
 <h2 id="core-models">Core Models<a class="headerlink" href="#core-models" title="Permanent link">&para;</a></h2>
 <ul>
-<li><a href="content/">Content</a> - Immutable source documents</li>
+<li><a href="source/">Source</a> - Immutable source content</li>
 <li><a href="entity/">Entity</a> - Resolved identities with aliases</li>
 <li><a href="fact/">Fact</a> - Temporal assertions</li>
 </ul>
@@ -2325,7 +2325,7 @@
 <p>Links facts to source content.</p>
 <div class="language-ruby highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="k">class</span><span class="w"> </span><span class="nc">FactSource</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span>
 </span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="w">  </span><span class="n">belongs_to</span><span class="w"> </span><span class="ss">:fact</span>
-</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="w">  </span><span class="n">belongs_to</span><span class="w"> </span><span class="ss">:content</span>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="w">  </span><span class="n">belongs_to</span><span class="w"> </span><span class="ss">:source</span>
 </span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="k">end</span>
 </span></code></pre></div>
 <table>
@@ -2343,7 +2343,7 @@
 <td>Parent fact</td>
 </tr>
 <tr>
-<td>content_id</td>
+<td>source_id</td>
 <td>bigint</td>
 <td>Source content</td>
 </tr>
@@ -2366,7 +2366,7 @@
 </table>
 <h2 id="model-relationships">Model Relationships<a class="headerlink" href="#model-relationships" title="Permanent link">&para;</a></h2>
 <pre class="mermaid"><code>erDiagram
-    Content ||--o{ FactSource : "sourced by"
+    Source ||--o{ FactSource : "sourced by"
     Entity ||--o{ EntityAlias : "has"
     Entity ||--o{ EntityMention : "mentioned in"
     Fact ||--o{ EntityMention : "mentions"
@@ -2477,13 +2477,13 @@
         
         
           
-          <a href="content/" class="md-footer__link md-footer__link--next" aria-label="Next: Content">
+          <a href="entity/" class="md-footer__link md-footer__link--next" aria-label="Next: Entity">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                Content
+                Entity
               </div>
             </div>
             <div class="md-footer__button md-icon">

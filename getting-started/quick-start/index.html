@@ -1522,7 +1522,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../api/models/content/" class="md-nav__link">
+      <a href="../../api/models/content.md" class="md-nav__link">
         
   
   
@@ -1685,7 +1685,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../api/services/content-service/" class="md-nav__link">
+      <a href="../../api/services/content-service.md" class="md-nav__link">
         
   
   
@@ -2490,14 +2490,14 @@
 </span></code></pre></div>
 <h2 id="4-ingest-content">4. Ingest Content<a class="headerlink" href="#4-ingest-content" title="Permanent link">&para;</a></h2>
 <div class="language-ruby highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="c1"># Ingest an email</span>
-</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="n">content</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">facts</span><span class="o">.</span><span class="n">ingest</span><span class="p">(</span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="n">source</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">facts</span><span class="o">.</span><span class="n">ingest</span><span class="p">(</span>
 </span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="w">  </span><span class="s2">&quot;Hi team, Paula Chen has accepted our offer and will join as Principal Engineer starting January 10, 2024. She&#39;ll be reporting to Sarah in the Platform team.&quot;</span><span class="p">,</span>
 </span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="w">  </span><span class="ss">type</span><span class="p">:</span><span class="w"> </span><span class="ss">:email</span><span class="p">,</span>
 </span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="w">  </span><span class="ss">title</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;New Hire Announcement&quot;</span><span class="p">,</span>
 </span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="w">  </span><span class="ss">captured_at</span><span class="p">:</span><span class="w"> </span><span class="no">Time</span><span class="o">.</span><span class="n">current</span>
 </span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="p">)</span>
 </span><span id="__span-5-8"><a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a>
-</span><span id="__span-5-9"><a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a><span class="nb">puts</span><span class="w"> </span><span class="s2">&quot;Ingested content: </span><span class="si">#{</span><span class="n">content</span><span class="o">.</span><span class="n">id</span><span class="si">}</span><span class="s2">&quot;</span>
+</span><span id="__span-5-9"><a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a><span class="nb">puts</span><span class="w"> </span><span class="s2">&quot;Ingested source: </span><span class="si">#{</span><span class="n">source</span><span class="o">.</span><span class="n">id</span><span class="si">}</span><span class="s2">&quot;</span>
 </span></code></pre></div>
 <h2 id="5-create-entities">5. Create Entities<a class="headerlink" href="#5-create-entities" title="Permanent link">&para;</a></h2>
 <div class="language-ruby highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="c1"># Create entities for people and organizations</span>
@@ -2527,13 +2527,13 @@
 </span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="ss">entity</span><span class="p">:</span><span class="w"> </span><span class="n">paula</span><span class="p">,</span><span class="w"> </span><span class="ss">role</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;subject&quot;</span><span class="p">,</span><span class="w"> </span><span class="ss">text</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Paula Chen&quot;</span><span class="w"> </span><span class="p">}</span>
 </span><span id="__span-7-6"><a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a><span class="w">  </span><span class="o">]</span><span class="p">,</span>
 </span><span id="__span-7-7"><a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a><span class="w">  </span><span class="ss">sources</span><span class="p">:</span><span class="w"> </span><span class="o">[</span>
-</span><span id="__span-7-8"><a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a><span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="ss">content</span><span class="p">:</span><span class="w"> </span><span class="n">content</span><span class="p">,</span><span class="w"> </span><span class="ss">type</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;primary&quot;</span><span class="w"> </span><span class="p">}</span>
+</span><span id="__span-7-8"><a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a><span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="ss">source</span><span class="p">:</span><span class="w"> </span><span class="n">source</span><span class="p">,</span><span class="w"> </span><span class="ss">type</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;primary&quot;</span><span class="w"> </span><span class="p">}</span>
 </span><span id="__span-7-9"><a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a><span class="w">  </span><span class="o">]</span>
 </span><span id="__span-7-10"><a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a><span class="p">)</span>
 </span></code></pre></div>
 <h3 id="llm-extraction">LLM Extraction<a class="headerlink" href="#llm-extraction" title="Permanent link">&para;</a></h3>
 <div class="language-ruby highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="c1"># Extract facts automatically using LLM</span>
-</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="n">extracted</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">facts</span><span class="o">.</span><span class="n">extract_facts</span><span class="p">(</span><span class="n">content</span><span class="o">.</span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="ss">extractor</span><span class="p">:</span><span class="w"> </span><span class="ss">:llm</span><span class="p">)</span>
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="n">extracted</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">facts</span><span class="o">.</span><span class="n">extract_facts</span><span class="p">(</span><span class="n">source</span><span class="o">.</span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="ss">extractor</span><span class="p">:</span><span class="w"> </span><span class="ss">:llm</span><span class="p">)</span>
 </span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>
 </span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="n">extracted</span><span class="o">.</span><span class="n">each</span><span class="w"> </span><span class="k">do</span><span class="w"> </span><span class="o">|</span><span class="n">fact</span><span class="o">|</span>
 </span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a><span class="w">  </span><span class="nb">puts</span><span class="w"> </span><span class="s2">&quot;Extracted: </span><span class="si">#{</span><span class="n">fact</span><span class="o">.</span><span class="n">fact_text</span><span class="si">}</span><span class="s2">&quot;</span>
@@ -2575,7 +2575,7 @@
 </span><span id="__span-11-11"><a id="__codelineno-11-11" name="__codelineno-11-11" href="#__codelineno-11-11"></a><span class="n">facts</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="no">FactDb</span><span class="o">.</span><span class="n">new</span>
 </span><span id="__span-11-12"><a id="__codelineno-11-12" name="__codelineno-11-12" href="#__codelineno-11-12"></a>
 </span><span id="__span-11-13"><a id="__codelineno-11-13" name="__codelineno-11-13" href="#__codelineno-11-13"></a><span class="c1"># Ingest content</span>
-</span><span id="__span-11-14"><a id="__codelineno-11-14" name="__codelineno-11-14" href="#__codelineno-11-14"></a><span class="n">content</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">facts</span><span class="o">.</span><span class="n">ingest</span><span class="p">(</span>
+</span><span id="__span-11-14"><a id="__codelineno-11-14" name="__codelineno-11-14" href="#__codelineno-11-14"></a><span class="n">source</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">facts</span><span class="o">.</span><span class="n">ingest</span><span class="p">(</span>
 </span><span id="__span-11-15"><a id="__codelineno-11-15" name="__codelineno-11-15" href="#__codelineno-11-15"></a><span class="w">  </span><span class="s2">&quot;Paula Chen joined Microsoft as Principal Engineer on January 10, 2024.&quot;</span><span class="p">,</span>
 </span><span id="__span-11-16"><a id="__codelineno-11-16" name="__codelineno-11-16" href="#__codelineno-11-16"></a><span class="w">  </span><span class="ss">type</span><span class="p">:</span><span class="w"> </span><span class="ss">:announcement</span><span class="p">,</span>
 </span><span id="__span-11-17"><a id="__codelineno-11-17" name="__codelineno-11-17" href="#__codelineno-11-17"></a><span class="w">  </span><span class="ss">captured_at</span><span class="p">:</span><span class="w"> </span><span class="no">Time</span><span class="o">.</span><span class="n">current</span>
@@ -2586,7 +2586,7 @@
 </span><span id="__span-11-22"><a id="__codelineno-11-22" name="__codelineno-11-22" href="#__codelineno-11-22"></a><span class="n">microsoft</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">facts</span><span class="o">.</span><span class="n">entity_service</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="s2">&quot;Microsoft&quot;</span><span class="p">,</span><span class="w"> </span><span class="ss">type</span><span class="p">:</span><span class="w"> </span><span class="ss">:organization</span><span class="p">)</span>
 </span><span id="__span-11-23"><a id="__codelineno-11-23" name="__codelineno-11-23" href="#__codelineno-11-23"></a>
 </span><span id="__span-11-24"><a id="__codelineno-11-24" name="__codelineno-11-24" href="#__codelineno-11-24"></a><span class="c1"># Extract facts via LLM</span>
-</span><span id="__span-11-25"><a id="__codelineno-11-25" name="__codelineno-11-25" href="#__codelineno-11-25"></a><span class="n">extracted</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">facts</span><span class="o">.</span><span class="n">extract_facts</span><span class="p">(</span><span class="n">content</span><span class="o">.</span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="ss">extractor</span><span class="p">:</span><span class="w"> </span><span class="ss">:llm</span><span class="p">)</span>
+</span><span id="__span-11-25"><a id="__codelineno-11-25" name="__codelineno-11-25" href="#__codelineno-11-25"></a><span class="n">extracted</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">facts</span><span class="o">.</span><span class="n">extract_facts</span><span class="p">(</span><span class="n">source</span><span class="o">.</span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="ss">extractor</span><span class="p">:</span><span class="w"> </span><span class="ss">:llm</span><span class="p">)</span>
 </span><span id="__span-11-26"><a id="__codelineno-11-26" name="__codelineno-11-26" href="#__codelineno-11-26"></a>
 </span><span id="__span-11-27"><a id="__codelineno-11-27" name="__codelineno-11-27" href="#__codelineno-11-27"></a><span class="c1"># Query</span>
 </span><span id="__span-11-28"><a id="__codelineno-11-28" name="__codelineno-11-28" href="#__codelineno-11-28"></a><span class="nb">puts</span><span class="w"> </span><span class="s2">&quot;Current facts about Paula:&quot;</span>

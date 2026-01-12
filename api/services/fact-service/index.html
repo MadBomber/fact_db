@@ -1335,7 +1335,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../models/content/" class="md-nav__link">
+      <a href="../../models/content.md" class="md-nav__link">
         
   
   
@@ -1500,7 +1500,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../content-service/" class="md-nav__link">
+      <a href="../content-service.md" class="md-nav__link">
         
   
   
@@ -1674,10 +1674,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#extract_from_content" class="md-nav__link">
+  <a href="#extract_from_source" class="md-nav__link">
     <span class="md-ellipsis">
       
-        extract_from_content
+        extract_from_source
       
     </span>
   </a>
@@ -1707,10 +1707,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#from_content" class="md-nav__link">
+  <a href="#from_source" class="md-nav__link">
     <span class="md-ellipsis">
       
-        from_content
+        from_source
       
     </span>
   </a>
@@ -2383,10 +2383,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#extract_from_content" class="md-nav__link">
+  <a href="#extract_from_source" class="md-nav__link">
     <span class="md-ellipsis">
       
-        extract_from_content
+        extract_from_source
       
     </span>
   </a>
@@ -2416,10 +2416,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#from_content" class="md-nav__link">
+  <a href="#from_source" class="md-nav__link">
     <span class="md-ellipsis">
       
-        from_content
+        from_source
       
     </span>
   </a>
@@ -2653,7 +2653,7 @@
 </span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="ss">entity</span><span class="p">:</span><span class="w"> </span><span class="n">paula</span><span class="p">,</span><span class="w"> </span><span class="ss">role</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;subject&quot;</span><span class="p">,</span><span class="w"> </span><span class="ss">text</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Paula Chen&quot;</span><span class="w"> </span><span class="p">}</span>
 </span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="w">  </span><span class="o">]</span><span class="p">,</span>
 </span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="w">  </span><span class="ss">sources</span><span class="p">:</span><span class="w"> </span><span class="o">[</span>
-</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="ss">content</span><span class="p">:</span><span class="w"> </span><span class="n">email</span><span class="p">,</span><span class="w"> </span><span class="ss">type</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;primary&quot;</span><span class="w"> </span><span class="p">}</span>
+</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="ss">source</span><span class="p">:</span><span class="w"> </span><span class="n">email</span><span class="p">,</span><span class="w"> </span><span class="ss">type</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;primary&quot;</span><span class="w"> </span><span class="p">}</span>
 </span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a><span class="w">  </span><span class="o">]</span>
 </span><span id="__span-2-10"><a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a><span class="p">)</span>
 </span></code></pre></div>
@@ -2664,18 +2664,18 @@
 <p>Find fact by ID.</p>
 <p><strong>Returns:</strong> <code>Models::Fact</code></p>
 <hr />
-<h3 id="extract_from_content">extract_from_content<a class="headerlink" href="#extract_from_content" title="Permanent link">&para;</a></h3>
-<div class="language-ruby highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="k">def</span><span class="w"> </span><span class="nf">extract_from_content</span><span class="p">(</span><span class="n">content_id</span><span class="p">,</span><span class="w"> </span><span class="ss">extractor</span><span class="p">:</span><span class="w"> </span><span class="n">config</span><span class="o">.</span><span class="n">default_extractor</span><span class="p">)</span>
+<h3 id="extract_from_source">extract_from_source<a class="headerlink" href="#extract_from_source" title="Permanent link">&para;</a></h3>
+<div class="language-ruby highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="k">def</span><span class="w"> </span><span class="nf">extract_from_source</span><span class="p">(</span><span class="n">source_id</span><span class="p">,</span><span class="w"> </span><span class="ss">extractor</span><span class="p">:</span><span class="w"> </span><span class="n">config</span><span class="o">.</span><span class="n">default_extractor</span><span class="p">)</span>
 </span></code></pre></div>
-<p>Extract facts from content using specified extractor.</p>
+<p>Extract facts from source using specified extractor.</p>
 <p><strong>Parameters:</strong></p>
 <ul>
-<li><code>content_id</code> (Integer) - Content ID</li>
+<li><code>source_id</code> (Integer) - Source ID</li>
 <li><code>extractor</code> (Symbol) - Extractor type (:manual, :llm, :rule_based)</li>
 </ul>
 <p><strong>Returns:</strong> <code>Array&lt;Models::Fact&gt;</code></p>
 <p><strong>Example:</strong></p>
-<div class="language-ruby highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="n">facts</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">service</span><span class="o">.</span><span class="n">extract_from_content</span><span class="p">(</span><span class="n">content</span><span class="o">.</span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="ss">extractor</span><span class="p">:</span><span class="w"> </span><span class="ss">:llm</span><span class="p">)</span>
+<div class="language-ruby highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="n">facts</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">service</span><span class="o">.</span><span class="n">extract_from_source</span><span class="p">(</span><span class="n">source</span><span class="o">.</span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="ss">extractor</span><span class="p">:</span><span class="w"> </span><span class="ss">:llm</span><span class="p">)</span>
 </span></code></pre></div>
 <hr />
 <h3 id="query">query<a class="headerlink" href="#query" title="Permanent link">&para;</a></h3>
@@ -2720,10 +2720,10 @@
 </span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="k">end</span>
 </span></code></pre></div>
 <hr />
-<h3 id="from_content">from_content<a class="headerlink" href="#from_content" title="Permanent link">&para;</a></h3>
-<div class="language-ruby highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="k">def</span><span class="w"> </span><span class="nf">from_content</span><span class="p">(</span><span class="n">content_id</span><span class="p">)</span>
+<h3 id="from_source">from_source<a class="headerlink" href="#from_source" title="Permanent link">&para;</a></h3>
+<div class="language-ruby highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="k">def</span><span class="w"> </span><span class="nf">from_source</span><span class="p">(</span><span class="n">source_id</span><span class="p">)</span>
 </span></code></pre></div>
-<p>Get facts sourced from specific content.</p>
+<p>Get facts sourced from specific source.</p>
 <p><strong>Returns:</strong> <code>Array&lt;Models::Fact&gt;</code></p>
 <hr />
 <h3 id="semantic_search">semantic_search<a class="headerlink" href="#semantic_search" title="Permanent link">&para;</a></h3>

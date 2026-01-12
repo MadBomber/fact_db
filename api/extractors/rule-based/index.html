@@ -1335,7 +1335,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../models/content/" class="md-nav__link">
+      <a href="../../models/content.md" class="md-nav__link">
         
   
   
@@ -1498,7 +1498,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../services/content-service/" class="md-nav__link">
+      <a href="../../services/content-service.md" class="md-nav__link">
         
   
   
@@ -1948,10 +1948,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#3-log-unmatched-content" class="md-nav__link">
+  <a href="#3-log-unmatched-sources" class="md-nav__link">
     <span class="md-ellipsis">
       
-        3. Log Unmatched Content
+        3. Log Unmatched Sources
       
     </span>
   </a>
@@ -2478,10 +2478,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#3-log-unmatched-content" class="md-nav__link">
+  <a href="#3-log-unmatched-sources" class="md-nav__link">
     <span class="md-ellipsis">
       
-        3. Log Unmatched Content
+        3. Log Unmatched Sources
       
     </span>
   </a>
@@ -2618,13 +2618,13 @@
 <h2 id="usage-example">Usage Example<a class="headerlink" href="#usage-example" title="Permanent link">&para;</a></h2>
 <div class="language-ruby highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="n">extractor</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="no">RuleBasedExtractor</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
 </span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>
-</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="n">content</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="no">Models</span><span class="o">::</span><span class="no">Content</span><span class="o">.</span><span class="n">create!</span><span class="p">(</span>
-</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="w">  </span><span class="ss">raw_text</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Paula Chen joined Microsoft on January 10, 2024 as Principal Engineer.&quot;</span><span class="p">,</span>
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="n">source</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="no">Models</span><span class="o">::</span><span class="no">Source</span><span class="o">.</span><span class="n">create!</span><span class="p">(</span>
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="w">  </span><span class="ss">content</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Paula Chen joined Microsoft on January 10, 2024 as Principal Engineer.&quot;</span><span class="p">,</span>
 </span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="w">  </span><span class="ss">content_type</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;announcement&quot;</span><span class="p">,</span>
 </span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="w">  </span><span class="ss">captured_at</span><span class="p">:</span><span class="w"> </span><span class="no">Time</span><span class="o">.</span><span class="n">current</span>
 </span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="p">)</span>
 </span><span id="__span-5-8"><a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a>
-</span><span id="__span-5-9"><a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a><span class="n">facts</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">extractor</span><span class="o">.</span><span class="n">extract</span><span class="p">(</span><span class="n">content</span><span class="p">)</span>
+</span><span id="__span-5-9"><a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a><span class="n">facts</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">extractor</span><span class="o">.</span><span class="n">extract</span><span class="p">(</span><span class="n">source</span><span class="p">)</span>
 </span><span id="__span-5-10"><a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a><span class="c1"># Returns facts about:</span>
 </span><span id="__span-5-11"><a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a><span class="c1"># - Paula joining Microsoft</span>
 </span><span id="__span-5-12"><a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a><span class="c1"># - Paula&#39;s title as Principal Engineer</span>
@@ -2648,20 +2648,20 @@
 </span><span id="__span-6-14"><a id="__codelineno-6-14" name="__codelineno-6-14" href="#__codelineno-6-14"></a>
 </span><span id="__span-6-15"><a id="__codelineno-6-15" name="__codelineno-6-15" href="#__codelineno-6-15"></a><span class="w">  </span><span class="kp">private</span>
 </span><span id="__span-6-16"><a id="__codelineno-6-16" name="__codelineno-6-16" href="#__codelineno-6-16"></a>
-</span><span id="__span-6-17"><a id="__codelineno-6-17" name="__codelineno-6-17" href="#__codelineno-6-17"></a><span class="w">  </span><span class="k">def</span><span class="w"> </span><span class="nf">extract_custom_patterns</span><span class="p">(</span><span class="n">content</span><span class="p">)</span>
+</span><span id="__span-6-17"><a id="__codelineno-6-17" name="__codelineno-6-17" href="#__codelineno-6-17"></a><span class="w">  </span><span class="k">def</span><span class="w"> </span><span class="nf">extract_custom_patterns</span><span class="p">(</span><span class="n">source</span><span class="p">)</span>
 </span><span id="__span-6-18"><a id="__codelineno-6-18" name="__codelineno-6-18" href="#__codelineno-6-18"></a><span class="w">    </span><span class="n">facts</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">[]</span>
 </span><span id="__span-6-19"><a id="__codelineno-6-19" name="__codelineno-6-19" href="#__codelineno-6-19"></a><span class="w">    </span><span class="no">CUSTOM_PATTERNS</span><span class="o">.</span><span class="n">each</span><span class="w"> </span><span class="k">do</span><span class="w"> </span><span class="o">|</span><span class="n">rule</span><span class="o">|</span>
-</span><span id="__span-6-20"><a id="__codelineno-6-20" name="__codelineno-6-20" href="#__codelineno-6-20"></a><span class="w">      </span><span class="n">content</span><span class="o">.</span><span class="n">raw_text</span><span class="o">.</span><span class="n">scan</span><span class="p">(</span><span class="n">rule</span><span class="o">[</span><span class="ss">:pattern</span><span class="o">]</span><span class="p">)</span><span class="w"> </span><span class="k">do</span><span class="w"> </span><span class="o">|</span><span class="n">match</span><span class="o">|</span>
-</span><span id="__span-6-21"><a id="__codelineno-6-21" name="__codelineno-6-21" href="#__codelineno-6-21"></a><span class="w">        </span><span class="n">facts</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="nb">send</span><span class="p">(</span><span class="n">rule</span><span class="o">[</span><span class="ss">:handler</span><span class="o">]</span><span class="p">,</span><span class="w"> </span><span class="n">match</span><span class="p">,</span><span class="w"> </span><span class="n">content</span><span class="p">)</span>
+</span><span id="__span-6-20"><a id="__codelineno-6-20" name="__codelineno-6-20" href="#__codelineno-6-20"></a><span class="w">      </span><span class="n">source</span><span class="o">.</span><span class="n">content</span><span class="o">.</span><span class="n">scan</span><span class="p">(</span><span class="n">rule</span><span class="o">[</span><span class="ss">:pattern</span><span class="o">]</span><span class="p">)</span><span class="w"> </span><span class="k">do</span><span class="w"> </span><span class="o">|</span><span class="n">match</span><span class="o">|</span>
+</span><span id="__span-6-21"><a id="__codelineno-6-21" name="__codelineno-6-21" href="#__codelineno-6-21"></a><span class="w">        </span><span class="n">facts</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="nb">send</span><span class="p">(</span><span class="n">rule</span><span class="o">[</span><span class="ss">:handler</span><span class="o">]</span><span class="p">,</span><span class="w"> </span><span class="n">match</span><span class="p">,</span><span class="w"> </span><span class="n">source</span><span class="p">)</span>
 </span><span id="__span-6-22"><a id="__codelineno-6-22" name="__codelineno-6-22" href="#__codelineno-6-22"></a><span class="w">      </span><span class="k">end</span>
 </span><span id="__span-6-23"><a id="__codelineno-6-23" name="__codelineno-6-23" href="#__codelineno-6-23"></a><span class="w">    </span><span class="k">end</span>
 </span><span id="__span-6-24"><a id="__codelineno-6-24" name="__codelineno-6-24" href="#__codelineno-6-24"></a><span class="w">    </span><span class="n">facts</span>
 </span><span id="__span-6-25"><a id="__codelineno-6-25" name="__codelineno-6-25" href="#__codelineno-6-25"></a><span class="w">  </span><span class="k">end</span>
 </span><span id="__span-6-26"><a id="__codelineno-6-26" name="__codelineno-6-26" href="#__codelineno-6-26"></a>
-</span><span id="__span-6-27"><a id="__codelineno-6-27" name="__codelineno-6-27" href="#__codelineno-6-27"></a><span class="w">  </span><span class="k">def</span><span class="w"> </span><span class="nf">extract_revenue</span><span class="p">(</span><span class="n">match</span><span class="p">,</span><span class="w"> </span><span class="n">content</span><span class="p">)</span>
+</span><span id="__span-6-27"><a id="__codelineno-6-27" name="__codelineno-6-27" href="#__codelineno-6-27"></a><span class="w">  </span><span class="k">def</span><span class="w"> </span><span class="nf">extract_revenue</span><span class="p">(</span><span class="n">match</span><span class="p">,</span><span class="w"> </span><span class="n">source</span><span class="p">)</span>
 </span><span id="__span-6-28"><a id="__codelineno-6-28" name="__codelineno-6-28" href="#__codelineno-6-28"></a><span class="w">    </span><span class="no">Models</span><span class="o">::</span><span class="no">Fact</span><span class="o">.</span><span class="n">create!</span><span class="p">(</span>
 </span><span id="__span-6-29"><a id="__codelineno-6-29" name="__codelineno-6-29" href="#__codelineno-6-29"></a><span class="w">      </span><span class="ss">fact_text</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Revenue of $</span><span class="si">#{</span><span class="n">match</span><span class="o">[</span><span class="ss">:amount</span><span class="o">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
-</span><span id="__span-6-30"><a id="__codelineno-6-30" name="__codelineno-6-30" href="#__codelineno-6-30"></a><span class="w">      </span><span class="ss">valid_at</span><span class="p">:</span><span class="w"> </span><span class="n">content</span><span class="o">.</span><span class="n">captured_at</span><span class="p">,</span>
+</span><span id="__span-6-30"><a id="__codelineno-6-30" name="__codelineno-6-30" href="#__codelineno-6-30"></a><span class="w">      </span><span class="ss">valid_at</span><span class="p">:</span><span class="w"> </span><span class="n">source</span><span class="o">.</span><span class="n">captured_at</span><span class="p">,</span>
 </span><span id="__span-6-31"><a id="__codelineno-6-31" name="__codelineno-6-31" href="#__codelineno-6-31"></a><span class="w">      </span><span class="ss">extraction_method</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;rule_based&quot;</span><span class="p">,</span>
 </span><span id="__span-6-32"><a id="__codelineno-6-32" name="__codelineno-6-32" href="#__codelineno-6-32"></a><span class="w">      </span><span class="c1"># ...</span>
 </span><span id="__span-6-33"><a id="__codelineno-6-33" name="__codelineno-6-33" href="#__codelineno-6-33"></a><span class="w">    </span><span class="p">)</span>
@@ -2696,10 +2696,10 @@
 <div class="language-ruby highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="n">facts</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">extractor</span><span class="o">.</span><span class="n">extract</span><span class="p">(</span><span class="n">content</span><span class="p">)</span>
 </span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="n">facts</span><span class="o">.</span><span class="n">select</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="o">|</span><span class="n">f</span><span class="o">|</span><span class="w"> </span><span class="n">f</span><span class="o">.</span><span class="n">confidence</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">0</span><span class="o">.</span><span class="mi">8</span><span class="w"> </span><span class="p">}</span>
 </span></code></pre></div>
-<h3 id="3-log-unmatched-content">3. Log Unmatched Content<a class="headerlink" href="#3-log-unmatched-content" title="Permanent link">&para;</a></h3>
-<div class="language-ruby highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="n">facts</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">extractor</span><span class="o">.</span><span class="n">extract</span><span class="p">(</span><span class="n">content</span><span class="p">)</span>
+<h3 id="3-log-unmatched-sources">3. Log Unmatched Sources<a class="headerlink" href="#3-log-unmatched-sources" title="Permanent link">&para;</a></h3>
+<div class="language-ruby highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="n">facts</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">extractor</span><span class="o">.</span><span class="n">extract</span><span class="p">(</span><span class="n">source</span><span class="p">)</span>
 </span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="k">if</span><span class="w"> </span><span class="n">facts</span><span class="o">.</span><span class="n">empty?</span>
-</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="w">  </span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="w"> </span><span class="s2">&quot;No patterns matched for content </span><span class="si">#{</span><span class="n">content</span><span class="o">.</span><span class="n">id</span><span class="si">}</span><span class="s2">&quot;</span>
+</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="w">  </span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="w"> </span><span class="s2">&quot;No patterns matched for source </span><span class="si">#{</span><span class="n">source</span><span class="o">.</span><span class="n">id</span><span class="si">}</span><span class="s2">&quot;</span>
 </span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="k">end</span>
 </span></code></pre></div>
 

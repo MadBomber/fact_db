@@ -1516,10 +1516,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#find-entities-in-content" class="md-nav__link">
+  <a href="#find-entities-in-source" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Find Entities in Content
+        Find Entities in Source
       
     </span>
   </a>
@@ -1850,7 +1850,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../api/models/content/" class="md-nav__link">
+      <a href="../../api/models/content.md" class="md-nav__link">
         
   
   
@@ -2013,7 +2013,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../api/services/content-service/" class="md-nav__link">
+      <a href="../../api/services/content-service.md" class="md-nav__link">
         
   
   
@@ -2948,10 +2948,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#find-entities-in-content" class="md-nav__link">
+  <a href="#find-entities-in-source" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Find Entities in Content
+        Find Entities in Source
       
     </span>
   </a>
@@ -3344,9 +3344,9 @@
 </span><span id="__span-20-2"><a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a><span class="w">  </span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="ss">entity_type</span><span class="p">:</span><span class="w"> </span><span class="s1">&#39;person&#39;</span><span class="p">)</span>
 </span><span id="__span-20-3"><a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a><span class="w">  </span><span class="o">.</span><span class="n">where</span><span class="o">.</span><span class="n">not</span><span class="p">(</span><span class="ss">resolution_status</span><span class="p">:</span><span class="w"> </span><span class="s1">&#39;merged&#39;</span><span class="p">)</span>
 </span></code></pre></div>
-<h3 id="find-entities-in-content">Find Entities in Content<a class="headerlink" href="#find-entities-in-content" title="Permanent link">&para;</a></h3>
-<div class="language-ruby highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a><span class="c1"># Find all entities mentioned in a content</span>
-</span><span id="__span-21-2"><a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a><span class="n">entities</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">facts</span><span class="o">.</span><span class="n">entity_service</span><span class="o">.</span><span class="n">in_content</span><span class="p">(</span><span class="n">content</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+<h3 id="find-entities-in-source">Find Entities in Source<a class="headerlink" href="#find-entities-in-source" title="Permanent link">&para;</a></h3>
+<div class="language-ruby highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a><span class="c1"># Find all entities mentioned in a source</span>
+</span><span id="__span-21-2"><a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a><span class="n">entities</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">facts</span><span class="o">.</span><span class="n">entity_service</span><span class="o">.</span><span class="n">in_source</span><span class="p">(</span><span class="n">source</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
 </span></code></pre></div>
 <h3 id="find-related-entities">Find Related Entities<a class="headerlink" href="#find-related-entities" title="Permanent link">&para;</a></h3>
 <div class="language-ruby highlight"><pre><span></span><code><span id="__span-22-1"><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a><span class="c1"># Entities mentioned in facts about Paula</span>

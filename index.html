@@ -1333,7 +1333,7 @@
   
   
     <li class="md-nav__item">
-      <a href="api/models/content/" class="md-nav__link">
+      <a href="api/models/content.md" class="md-nav__link">
         
   
   
@@ -1496,7 +1496,7 @@
   
   
     <li class="md-nav__item">
-      <a href="api/services/content-service/" class="md-nav__link">
+      <a href="api/services/content-service.md" class="md-nav__link">
         
   
   
@@ -2213,14 +2213,14 @@ The system resolves entity mentions to canonical identities, supports aliases an
 </span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="n">facts</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="no">FactDb</span><span class="o">.</span><span class="n">new</span>
 </span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>
 </span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="c1"># Ingest content</span>
-</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="n">content</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">facts</span><span class="o">.</span><span class="n">ingest</span><span class="p">(</span>
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="n">source</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">facts</span><span class="o">.</span><span class="n">ingest</span><span class="p">(</span>
 </span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="w">  </span><span class="s2">&quot;Paula Chen joined Microsoft as Principal Engineer on January 10, 2024.&quot;</span><span class="p">,</span>
 </span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="w">  </span><span class="ss">type</span><span class="p">:</span><span class="w"> </span><span class="ss">:email</span><span class="p">,</span>
 </span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="w">  </span><span class="ss">captured_at</span><span class="p">:</span><span class="w"> </span><span class="no">Time</span><span class="o">.</span><span class="n">current</span>
 </span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="p">)</span>
 </span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>
 </span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="c1"># Extract facts using LLM</span>
-</span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a><span class="n">extracted</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">facts</span><span class="o">.</span><span class="n">extract_facts</span><span class="p">(</span><span class="n">content</span><span class="o">.</span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="ss">extractor</span><span class="p">:</span><span class="w"> </span><span class="ss">:llm</span><span class="p">)</span>
+</span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a><span class="n">extracted</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">facts</span><span class="o">.</span><span class="n">extract_facts</span><span class="p">(</span><span class="n">source</span><span class="o">.</span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="ss">extractor</span><span class="p">:</span><span class="w"> </span><span class="ss">:llm</span><span class="p">)</span>
 </span><span id="__span-0-15"><a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>
 </span><span id="__span-0-16"><a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a><span class="c1"># Query current facts about Paula</span>
 </span><span id="__span-0-17"><a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a><span class="n">current_facts</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">facts</span><span class="o">.</span><span class="n">query_facts</span><span class="p">(</span><span class="ss">entity</span><span class="p">:</span><span class="w"> </span><span class="n">paula</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>

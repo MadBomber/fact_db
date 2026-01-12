@@ -1544,7 +1544,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../models/content/" class="md-nav__link">
+      <a href="../models/content.md" class="md-nav__link">
         
   
   
@@ -1707,7 +1707,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../services/content-service/" class="md-nav__link">
+      <a href="../services/content-service.md" class="md-nav__link">
         
   
   
@@ -2507,9 +2507,9 @@
 <td>Configuration instance</td>
 </tr>
 <tr>
-<td><code>content_service</code></td>
-<td>ContentService</td>
-<td>Service for content operations</td>
+<td><code>source_service</code></td>
+<td>SourceService</td>
+<td>Service for source operations</td>
 </tr>
 <tr>
 <td><code>entity_service</code></td>
@@ -2553,21 +2553,21 @@
 </span></code></pre></div>
 <hr />
 <h3 id="ingest">ingest<a class="headerlink" href="#ingest" title="Permanent link">&para;</a></h3>
-<div class="language-ruby highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="k">def</span><span class="w"> </span><span class="nf">ingest</span><span class="p">(</span><span class="n">raw_text</span><span class="p">,</span><span class="w"> </span><span class="ss">type</span><span class="p">:,</span><span class="w"> </span><span class="ss">captured_at</span><span class="p">:</span><span class="w"> </span><span class="no">Time</span><span class="o">.</span><span class="n">current</span><span class="p">,</span><span class="w"> </span><span class="ss">metadata</span><span class="p">:</span><span class="w"> </span><span class="p">{},</span><span class="w"> </span><span class="ss">title</span><span class="p">:</span><span class="w"> </span><span class="kp">nil</span><span class="p">,</span><span class="w"> </span><span class="ss">source_uri</span><span class="p">:</span><span class="w"> </span><span class="kp">nil</span><span class="p">)</span>
+<div class="language-ruby highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="k">def</span><span class="w"> </span><span class="nf">ingest</span><span class="p">(</span><span class="n">content</span><span class="p">,</span><span class="w"> </span><span class="ss">type</span><span class="p">:,</span><span class="w"> </span><span class="ss">captured_at</span><span class="p">:</span><span class="w"> </span><span class="no">Time</span><span class="o">.</span><span class="n">current</span><span class="p">,</span><span class="w"> </span><span class="ss">metadata</span><span class="p">:</span><span class="w"> </span><span class="p">{},</span><span class="w"> </span><span class="ss">title</span><span class="p">:</span><span class="w"> </span><span class="kp">nil</span><span class="p">,</span><span class="w"> </span><span class="ss">source_uri</span><span class="p">:</span><span class="w"> </span><span class="kp">nil</span><span class="p">)</span>
 </span></code></pre></div>
 <p>Ingest raw content into the fact database.</p>
 <p><strong>Parameters:</strong></p>
 <ul>
-<li><code>raw_text</code> (String) - The content text</li>
+<li><code>content</code> (String) - The source text content</li>
 <li><code>type</code> (Symbol) - Content type (:email, :document, :article, etc.)</li>
 <li><code>captured_at</code> (Time, optional) - When content was captured</li>
 <li><code>metadata</code> (Hash, optional) - Additional metadata</li>
 <li><code>title</code> (String, optional) - Content title</li>
 <li><code>source_uri</code> (String, optional) - Original location</li>
 </ul>
-<p><strong>Returns:</strong> <code>Models::Content</code></p>
+<p><strong>Returns:</strong> <code>Models::Source</code></p>
 <p><strong>Example:</strong></p>
-<div class="language-ruby highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="n">content</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">facts</span><span class="o">.</span><span class="n">ingest</span><span class="p">(</span>
+<div class="language-ruby highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="n">source</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">facts</span><span class="o">.</span><span class="n">ingest</span><span class="p">(</span>
 </span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="w">  </span><span class="s2">&quot;Paula joined Microsoft on Jan 10, 2024&quot;</span><span class="p">,</span>
 </span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="w">  </span><span class="ss">type</span><span class="p">:</span><span class="w"> </span><span class="ss">:announcement</span><span class="p">,</span>
 </span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="w">  </span><span class="ss">title</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;New Hire&quot;</span><span class="p">,</span>
@@ -2576,17 +2576,17 @@
 </span></code></pre></div>
 <hr />
 <h3 id="extract_facts">extract_facts<a class="headerlink" href="#extract_facts" title="Permanent link">&para;</a></h3>
-<div class="language-ruby highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="k">def</span><span class="w"> </span><span class="nf">extract_facts</span><span class="p">(</span><span class="n">content_id</span><span class="p">,</span><span class="w"> </span><span class="ss">extractor</span><span class="p">:</span><span class="w"> </span><span class="vi">@config</span><span class="o">.</span><span class="n">default_extractor</span><span class="p">)</span>
+<div class="language-ruby highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="k">def</span><span class="w"> </span><span class="nf">extract_facts</span><span class="p">(</span><span class="n">source_id</span><span class="p">,</span><span class="w"> </span><span class="ss">extractor</span><span class="p">:</span><span class="w"> </span><span class="vi">@config</span><span class="o">.</span><span class="n">default_extractor</span><span class="p">)</span>
 </span></code></pre></div>
 <p>Extract facts from content.</p>
 <p><strong>Parameters:</strong></p>
 <ul>
-<li><code>content_id</code> (Integer) - Content ID</li>
+<li><code>source_id</code> (Integer) - Source ID</li>
 <li><code>extractor</code> (Symbol, optional) - Extraction method (:manual, :llm, :rule_based)</li>
 </ul>
 <p><strong>Returns:</strong> <code>Array&lt;Models::Fact&gt;</code></p>
 <p><strong>Example:</strong></p>
-<div class="language-ruby highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="n">extracted</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">facts</span><span class="o">.</span><span class="n">extract_facts</span><span class="p">(</span><span class="n">content</span><span class="o">.</span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="ss">extractor</span><span class="p">:</span><span class="w"> </span><span class="ss">:llm</span><span class="p">)</span>
+<div class="language-ruby highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="n">extracted</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">facts</span><span class="o">.</span><span class="n">extract_facts</span><span class="p">(</span><span class="n">source</span><span class="o">.</span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="ss">extractor</span><span class="p">:</span><span class="w"> </span><span class="ss">:llm</span><span class="p">)</span>
 </span></code></pre></div>
 <hr />
 <h3 id="query_facts">query_facts<a class="headerlink" href="#query_facts" title="Permanent link">&para;</a></h3>
@@ -2670,20 +2670,20 @@
 </span></code></pre></div>
 <hr />
 <h3 id="batch_extract">batch_extract<a class="headerlink" href="#batch_extract" title="Permanent link">&para;</a></h3>
-<div class="language-ruby highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="k">def</span><span class="w"> </span><span class="nf">batch_extract</span><span class="p">(</span><span class="n">content_ids</span><span class="p">,</span><span class="w"> </span><span class="ss">extractor</span><span class="p">:</span><span class="w"> </span><span class="vi">@config</span><span class="o">.</span><span class="n">default_extractor</span><span class="p">,</span><span class="w"> </span><span class="ss">parallel</span><span class="p">:</span><span class="w"> </span><span class="kp">true</span><span class="p">)</span>
+<div class="language-ruby highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="k">def</span><span class="w"> </span><span class="nf">batch_extract</span><span class="p">(</span><span class="n">source_ids</span><span class="p">,</span><span class="w"> </span><span class="ss">extractor</span><span class="p">:</span><span class="w"> </span><span class="vi">@config</span><span class="o">.</span><span class="n">default_extractor</span><span class="p">,</span><span class="w"> </span><span class="ss">parallel</span><span class="p">:</span><span class="w"> </span><span class="kp">true</span><span class="p">)</span>
 </span></code></pre></div>
 <p>Batch extract facts from multiple content items.</p>
 <p><strong>Parameters:</strong></p>
 <ul>
-<li><code>content_ids</code> (Array<Integer>) - Content IDs to process</li>
+<li><code>source_ids</code> (Array<Integer>) - Source IDs to process</li>
 <li><code>extractor</code> (Symbol, optional) - Extraction method</li>
 <li><code>parallel</code> (Boolean, optional) - Use parallel processing (default: true)</li>
 </ul>
 <p><strong>Returns:</strong> <code>Array&lt;Hash&gt;</code> - Results per content</p>
 <p><strong>Example:</strong></p>
-<div class="language-ruby highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="n">results</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">facts</span><span class="o">.</span><span class="n">batch_extract</span><span class="p">(</span><span class="o">[</span><span class="n">c1</span><span class="o">.</span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="n">c2</span><span class="o">.</span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="n">c3</span><span class="o">.</span><span class="n">id</span><span class="o">]</span><span class="p">,</span><span class="w"> </span><span class="ss">parallel</span><span class="p">:</span><span class="w"> </span><span class="kp">true</span><span class="p">)</span>
+<div class="language-ruby highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="n">results</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">facts</span><span class="o">.</span><span class="n">batch_extract</span><span class="p">(</span><span class="o">[</span><span class="n">s1</span><span class="o">.</span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="n">s2</span><span class="o">.</span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="n">s3</span><span class="o">.</span><span class="n">id</span><span class="o">]</span><span class="p">,</span><span class="w"> </span><span class="ss">parallel</span><span class="p">:</span><span class="w"> </span><span class="kp">true</span><span class="p">)</span>
 </span><span id="__span-18-2"><a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a><span class="n">results</span><span class="o">.</span><span class="n">each</span><span class="w"> </span><span class="k">do</span><span class="w"> </span><span class="o">|</span><span class="n">r</span><span class="o">|</span>
-</span><span id="__span-18-3"><a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a><span class="w">  </span><span class="nb">puts</span><span class="w"> </span><span class="s2">&quot;</span><span class="si">#{</span><span class="n">r</span><span class="o">[</span><span class="ss">:content_id</span><span class="o">]</span><span class="si">}</span><span class="s2">: </span><span class="si">#{</span><span class="n">r</span><span class="o">[</span><span class="ss">:facts</span><span class="o">].</span><span class="n">count</span><span class="si">}</span><span class="s2"> facts&quot;</span>
+</span><span id="__span-18-3"><a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a><span class="w">  </span><span class="nb">puts</span><span class="w"> </span><span class="s2">&quot;</span><span class="si">#{</span><span class="n">r</span><span class="o">[</span><span class="ss">:source_id</span><span class="o">]</span><span class="si">}</span><span class="s2">: </span><span class="si">#{</span><span class="n">r</span><span class="o">[</span><span class="ss">:facts</span><span class="o">].</span><span class="n">count</span><span class="si">}</span><span class="s2"> facts&quot;</span>
 </span><span id="__span-18-4"><a id="__codelineno-18-4" name="__codelineno-18-4" href="#__codelineno-18-4"></a><span class="k">end</span>
 </span></code></pre></div>
 <hr />

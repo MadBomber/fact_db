@@ -1335,7 +1335,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../api/models/content/" class="md-nav__link">
+      <a href="../api/models/content.md" class="md-nav__link">
         
   
   
@@ -1498,7 +1498,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../api/services/content-service/" class="md-nav__link">
+      <a href="../api/services/content-service.md" class="md-nav__link">
         
   
   
@@ -2311,7 +2311,7 @@
     end
 
     subgraph FactDb["FactDb Core"]
-        CS[ContentService]
+        SS[SourceService]
         ES[EntityService]
         FS[FactService]
 
@@ -2333,17 +2333,17 @@
     end
 
     subgraph Storage["PostgreSQL + pgvector"]
-        Contents[(Contents)]
+        Sources[(Sources)]
         Entities[(Entities)]
         Facts[(Facts)]
     end
 
-    Email --&gt; CS
-    Doc --&gt; CS
-    News --&gt; CS
-    API --&gt; CS
+    Email --&gt; SS
+    Doc --&gt; SS
+    News --&gt; SS
+    API --&gt; SS
 
-    CS --&gt; Contents
+    SS --&gt; Sources
     ES --&gt; Entities
     FS --&gt; Facts
 
@@ -2356,7 +2356,7 @@
     style Doc fill:#1E40AF,stroke:#1E3A8A,color:#FFFFFF
     style News fill:#1E40AF,stroke:#1E3A8A,color:#FFFFFF
     style API fill:#1E40AF,stroke:#1E3A8A,color:#FFFFFF
-    style CS fill:#B45309,stroke:#92400E,color:#FFFFFF
+    style SS fill:#B45309,stroke:#92400E,color:#FFFFFF
     style ES fill:#B45309,stroke:#92400E,color:#FFFFFF
     style FS fill:#B45309,stroke:#92400E,color:#FFFFFF
     style ME fill:#047857,stroke:#065F46,color:#FFFFFF
@@ -2366,13 +2366,13 @@
     style FR fill:#C2410C,stroke:#9A3412,color:#FFFFFF
     style EP fill:#7C3AED,stroke:#6D28D9,color:#FFFFFF
     style RP fill:#7C3AED,stroke:#6D28D9,color:#FFFFFF
-    style Contents fill:#B91C1C,stroke:#991B1B,color:#FFFFFF
+    style Sources fill:#B91C1C,stroke:#991B1B,color:#FFFFFF
     style Entities fill:#B91C1C,stroke:#991B1B,color:#FFFFFF
     style Facts fill:#B91C1C,stroke:#991B1B,color:#FFFFFF</code></pre>
 <h2 id="components">Components<a class="headerlink" href="#components" title="Permanent link">&para;</a></h2>
 <h3 id="services">Services<a class="headerlink" href="#services" title="Permanent link">&para;</a></h3>
 <ul>
-<li><strong>ContentService</strong> - Ingests and manages source content</li>
+<li><strong>SourceService</strong> - Ingests and manages source content</li>
 <li><strong>EntityService</strong> - Creates and resolves entities</li>
 <li><strong>FactService</strong> - Extracts, creates, and queries facts</li>
 </ul>
