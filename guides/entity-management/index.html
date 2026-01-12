@@ -3295,7 +3295,7 @@
 <div class="language-ruby highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="c1"># Reclassify entity type</span>
 </span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a><span class="n">facts</span><span class="o">.</span><span class="n">entity_service</span><span class="o">.</span><span class="n">update</span><span class="p">(</span>
 </span><span id="__span-15-3"><a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a><span class="w">  </span><span class="n">entity</span><span class="o">.</span><span class="n">id</span><span class="p">,</span>
-</span><span id="__span-15-4"><a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a><span class="w">  </span><span class="ss">entity_type</span><span class="p">:</span><span class="w"> </span><span class="ss">:organization</span>
+</span><span id="__span-15-4"><a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a><span class="w">  </span><span class="ss">type</span><span class="p">:</span><span class="w"> </span><span class="ss">:organization</span>
 </span><span id="__span-15-5"><a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a><span class="p">)</span>
 </span></code></pre></div>
 <h2 id="resolution-status">Resolution Status<a class="headerlink" href="#resolution-status" title="Permanent link">&para;</a></h2>
@@ -3341,7 +3341,7 @@
 </span></code></pre></div>
 <h3 id="filter-by-type">Filter by Type<a class="headerlink" href="#filter-by-type" title="Permanent link">&para;</a></h3>
 <div class="language-ruby highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a><span class="n">people</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="no">FactDb</span><span class="o">::</span><span class="no">Models</span><span class="o">::</span><span class="no">Entity</span>
-</span><span id="__span-20-2"><a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a><span class="w">  </span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="ss">entity_type</span><span class="p">:</span><span class="w"> </span><span class="s1">&#39;person&#39;</span><span class="p">)</span>
+</span><span id="__span-20-2"><a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a><span class="w">  </span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="ss">type</span><span class="p">:</span><span class="w"> </span><span class="s1">&#39;person&#39;</span><span class="p">)</span>
 </span><span id="__span-20-3"><a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a><span class="w">  </span><span class="o">.</span><span class="n">where</span><span class="o">.</span><span class="n">not</span><span class="p">(</span><span class="ss">resolution_status</span><span class="p">:</span><span class="w"> </span><span class="s1">&#39;merged&#39;</span><span class="p">)</span>
 </span></code></pre></div>
 <h3 id="find-entities-in-source">Find Entities in Source<a class="headerlink" href="#find-entities-in-source" title="Permanent link">&para;</a></h3>
