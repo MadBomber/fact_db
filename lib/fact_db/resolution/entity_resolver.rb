@@ -83,7 +83,7 @@ module FactDb
           new_entities = split_configs.map do |config|
             create_entity(
               config[:name],
-              type: config[:type] || original.entity_type,
+              type: config[:type] || original.type,
               aliases: config[:aliases] || [],
               attributes: config[:attributes] || {}
             )
@@ -140,20 +140,20 @@ module FactDb
 
       def find_by_exact_alias(name, type:)
         scope = Models::EntityAlias.where(["LOWER(alias_text) = ?", name.downcase])
-        scope = scope.joins(:entity).where(fact_db_entities: { entity_type: type }) if type
+        scope = scope.joins(:entity).where(fact_db_entities: { type: type }) if type
         scope = scope.joins(:entity).where.not(fact_db_entities: { resolution_status: "merged" })
         scope.first&.entity
       end
 
       def find_by_canonical_name(name, type:)
         scope = Models::Entity.where(["LOWER(canonical_name) = ?", name.downcase])
-        scope = scope.where(entity_type: type) if type
+        scope = scope.where(type: type) if type
         scope.not_merged.first
       end
 
       def find_by_fuzzy_match(name, type:)
         candidates = Models::Entity.not_merged
-        candidates = candidates.where(entity_type: type) if type
+        candidates = candidates.where(type: type) if type
 
         best_match = nil
         best_similarity = 0
@@ -184,7 +184,7 @@ module FactDb
       def create_entity(name, type:, aliases: [], attributes: {})
         entity = Models::Entity.create!(
           canonical_name: name,
-          entity_type: type,
+          type: type,
           attributes: attributes,
           resolution_status: "resolved"
         )
@@ -253,8 +253,8 @@ module FactDb
         entity.canonical_name
       end
 
-      def entity_type
-        entity.entity_type
+      def type
+        entity.type
       end
     end
   end

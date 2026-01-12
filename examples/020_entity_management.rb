@@ -32,7 +32,7 @@ person = entity_service.create(
 )
 puts "Created person: #{person.canonical_name}"
 puts "  Aliases: #{person.aliases.map(&:alias_text).join(', ')}"
-puts "  Type: #{person.entity_type}"
+puts "  Type: #{person.type}"
 
 # Create organization entities
 org1 = entity_service.create(
@@ -60,7 +60,7 @@ test_names = ["Bob Johnson", "R Johnson", "Robert J", "Global Ind", "GII"]
 test_names.each do |name|
   resolved = entity_service.resolve(name, type: nil)
   if resolved
-    puts "Resolved '#{name}' -> #{resolved.canonical_name} (#{resolved.entity_type})"
+    puts "Resolved '#{name}' -> #{resolved.canonical_name} (#{resolved.type})"
   else
     puts "Could not resolve '#{name}'"
   end
@@ -131,7 +131,7 @@ entity_service.create("Wilson & Associates", type: :organization, description: "
 puts "Search results for 'Wilson':"
 results = entity_service.search("Wilson")
 results.each do |entity|
-  puts "  - #{entity.canonical_name} (#{entity.entity_type})"
+  puts "  - #{entity.canonical_name} (#{entity.type})"
 end
 
 # Filter by type

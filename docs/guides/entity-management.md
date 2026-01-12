@@ -203,7 +203,7 @@ facts.entity_service.update(
 # Reclassify entity type
 facts.entity_service.update(
   entity.id,
-  entity_type: :organization
+  type: :organization
 )
 ```
 
@@ -250,7 +250,7 @@ entities = facts.entity_service.search("Paula")
 
 ```ruby
 people = FactDb::Models::Entity
-  .where(entity_type: 'person')
+  .where(type: 'person')
   .where.not(resolution_status: 'merged')
 ```
 

@@ -399,7 +399,7 @@ class RagFeedbackLoop
     facts.each_with_index do |fact, idx|
       # Get entity mentions for context
       entities = fact.entity_mentions.map do |m|
-        "#{m.entity.canonical_name} (#{m.entity.entity_type})"
+        "#{m.entity.canonical_name} (#{m.entity.type})"
       end.uniq
 
       lines << "#{idx + 1}. #{fact.fact_text}"
@@ -680,7 +680,7 @@ class RagFeedbackLoop
                        .limit(entities_added)
 
       new_entities.each do |entity|
-        puts "  - #{entity.canonical_name} (#{entity.entity_type})"
+        puts "  - #{entity.canonical_name} (#{entity.type})"
       end
     end
 

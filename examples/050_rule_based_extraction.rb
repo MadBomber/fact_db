@@ -195,7 +195,7 @@ demo_section("Section 3: Query the Extracted Data")
 puts "\nAll extracted entities:"
 FactDb::Models::Entity.where(resolution_status: :resolved).order(:canonical_name).each do |entity|
   fact_count = entity.facts.count
-  puts "  #{entity.canonical_name} (#{entity.entity_type}) - #{fact_count} facts"
+  puts "  #{entity.canonical_name} (#{entity.type}) - #{fact_count} facts"
 end
 
 # Find facts by extraction method

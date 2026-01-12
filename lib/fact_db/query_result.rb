@@ -163,7 +163,7 @@ module FactDb
         {
           id: entity.id,
           canonical_name: entity.canonical_name,
-          entity_type: entity.entity_type,
+          type: entity.type,
           aliases: entity.respond_to?(:aliases) ? entity.aliases.map { |a| { alias_text: a.alias_text, alias_type: a.alias_type } } : [],
           resolution_status: entity.respond_to?(:resolution_status) ? entity.resolution_status : nil
         }

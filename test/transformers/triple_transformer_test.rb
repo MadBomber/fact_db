@@ -18,7 +18,7 @@ class TripleTransformerTest < Minitest::Test
   def test_transform_entity_to_type_triple
     result = FactDb::QueryResult.new(query: "test")
     result.instance_variable_set(:@entities, {
-      1 => { id: 1, canonical_name: "Paula Chen", entity_type: "person" }
+      1 => { id: 1, canonical_name: "Paula Chen", type: "person" }
     })
 
     output = @transformer.transform(result)
@@ -32,7 +32,7 @@ class TripleTransformerTest < Minitest::Test
       1 => {
         id: 1,
         canonical_name: "Paula Chen",
-        entity_type: "person",
+        type: "person",
         aliases: [{ alias_text: "PC" }]
       }
     })
@@ -48,7 +48,7 @@ class TripleTransformerTest < Minitest::Test
       1 => {
         id: 1,
         canonical_name: "Paula Chen",
-        entity_type: "person",
+        type: "person",
         resolution_status: "resolved"
       }
     })
@@ -61,7 +61,7 @@ class TripleTransformerTest < Minitest::Test
   def test_transform_fact_to_triples
     result = FactDb::QueryResult.new(query: "test")
     result.instance_variable_set(:@entities, {
-      1 => { id: 1, canonical_name: "Paula Chen", entity_type: "person" }
+      1 => { id: 1, canonical_name: "Paula Chen", type: "person" }
     })
     result.add_facts([{
       id: 1,
@@ -79,7 +79,7 @@ class TripleTransformerTest < Minitest::Test
   def test_transform_fact_with_temporal_metadata
     result = FactDb::QueryResult.new(query: "test")
     result.instance_variable_set(:@entities, {
-      1 => { id: 1, canonical_name: "Paula Chen", entity_type: "person" }
+      1 => { id: 1, canonical_name: "Paula Chen", type: "person" }
     })
     result.add_facts([{
       id: 1,
@@ -151,8 +151,8 @@ class TripleTransformerTest < Minitest::Test
   def test_transform_fact_with_other_entity_mentions
     result = FactDb::QueryResult.new(query: "test")
     result.instance_variable_set(:@entities, {
-      1 => { id: 1, canonical_name: "Paula Chen", entity_type: "person" },
-      2 => { id: 2, canonical_name: "Microsoft", entity_type: "organization" }
+      1 => { id: 1, canonical_name: "Paula Chen", type: "person" },
+      2 => { id: 2, canonical_name: "Microsoft", type: "organization" }
     })
     result.add_facts([{
       id: 1,

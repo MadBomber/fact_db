@@ -40,7 +40,7 @@ module FactDb
         return triples unless name
 
         # Type triple
-        entity_type = get_value(entity, :entity_type) || get_value(entity, :type)
+        entity_type = get_value(entity, :type)
         triples << [name, "type", entity_type.to_s.capitalize] if entity_type
 
         # Aliases

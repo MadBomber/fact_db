@@ -15,7 +15,7 @@ module FactDb
 
         entity = Models::Entity.create!(
           canonical_name: name,
-          entity_type: type.to_s,
+          type: type.to_s,
           description: description,
           metadata: attributes,
           resolution_status: "resolved",
@@ -35,7 +35,7 @@ module FactDb
 
       def find_by_name(name, type: nil)
         scope = Models::Entity.where(["LOWER(canonical_name) = ?", name.downcase])
-        scope = scope.where(entity_type: type) if type
+        scope = scope.where(type: type) if type
         scope.not_merged.first
       end
 
@@ -90,7 +90,7 @@ module FactDb
           "%#{query.downcase}%"
         ).distinct
 
-        scope = scope.where(entity_type: type) if type
+        scope = scope.where(type: type) if type
         scope.limit(limit)
       end
 
@@ -99,7 +99,7 @@ module FactDb
         return Models::Entity.none unless embedding
 
         scope = Models::Entity.not_merged.nearest_neighbors(embedding, limit: limit)
-        scope = scope.where(entity_type: type) if type
+        scope = scope.where(type: type) if type
         scope
       end
 
@@ -148,7 +148,7 @@ module FactDb
 
         # Apply type filter if specified
         if type
-          ordered_entities = ordered_entities.select { |e| e.entity_type == type.to_s }
+          ordered_entities = ordered_entities.select { |e| e.type == type.to_s }
         end
 
         ordered_entities
@@ -186,7 +186,7 @@ module FactDb
         {
           total: Models::Entity.not_merged.count,
           total_count: Models::Entity.not_merged.count,
-          by_type: Models::Entity.not_merged.group(:entity_type).count,
+          by_type: Models::Entity.not_merged.group(:type).count,
           by_status: Models::Entity.group(:resolution_status).count,
           merged_count: Models::Entity.where(resolution_status: "merged").count,
           with_facts: Models::Entity.joins(:entity_mentions).distinct.count

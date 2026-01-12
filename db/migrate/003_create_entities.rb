@@ -5,7 +5,7 @@ class CreateEntities < ActiveRecord::Migration[7.0]
     create_table :fact_db_entities, comment: "Canonical representations of people, organizations, places, and other named entities" do |t|
       t.string :canonical_name, null: false, limit: 500,
                comment: "Authoritative name for this entity after resolution and normalization"
-      t.string :entity_type, null: false, limit: 50,
+      t.string :type, null: false, limit: 50,
                comment: "Classification of entity (person, organization, location, product, event, etc.)"
 
       t.string :resolution_status, null: false, default: "unresolved", limit: 20,
@@ -25,7 +25,7 @@ class CreateEntities < ActiveRecord::Migration[7.0]
     end
 
     add_index :fact_db_entities, :canonical_name
-    add_index :fact_db_entities, :entity_type
+    add_index :fact_db_entities, :type
     add_index :fact_db_entities, :resolution_status
     add_foreign_key :fact_db_entities, :fact_db_entities,
                     column: :merged_into_id, on_delete: :nullify

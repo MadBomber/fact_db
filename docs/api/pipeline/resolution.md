@@ -202,7 +202,7 @@ end
 
 ```ruby
 # Load entities into memory first
-Entity.where(entity_type: 'person').to_a
+Entity.where(type: 'person').to_a
 
 # Then resolve
 results = pipeline.resolve_entities(person_names, type: :person)

@@ -17,16 +17,16 @@ module FactDb
                foreign_key: :merged_into_id
 
       validates :canonical_name, presence: true
-      validates :entity_type, presence: true
+      validates :type, presence: true
       validates :resolution_status, presence: true
 
       STATUSES = %w[unresolved resolved merged split].freeze
       ENTITY_TYPES = %w[person organization place product event concept].freeze
 
       validates :resolution_status, inclusion: { in: STATUSES }
-      validates :entity_type, inclusion: { in: ENTITY_TYPES }
+      validates :type, inclusion: { in: ENTITY_TYPES }
 
-      scope :by_type, ->(type) { where(entity_type: type) }
+      scope :by_type, ->(t) { where(type: t) }
       scope :resolved, -> { where(resolution_status: "resolved") }
       scope :unresolved, -> { where(resolution_status: "unresolved") }
       scope :not_merged, -> { where.not(resolution_status: "merged") }

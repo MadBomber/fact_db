@@ -439,7 +439,7 @@ class IngestDemo
 
     # Show discovered entities by type
     puts "\nDiscovered entities by type:"
-    ap FactDb::Models::Entity.group(:entity_type).count
+    ap FactDb::Models::Entity.group(:type).count
   end
 
   def demonstrate_queries
@@ -450,7 +450,7 @@ class IngestDemo
     recent_entities = FactDb::Models::Entity.order(created_at: :desc).limit(10)
     recent_entities.each do |entity|
       fact_count = entity.facts.count
-      puts "  #{entity.canonical_name} (#{entity.entity_type}) - #{fact_count} mentions"
+      puts "  #{entity.canonical_name} (#{entity.type}) - #{fact_count} mentions"
     end
 
     # Show recent facts

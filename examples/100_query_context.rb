@@ -62,7 +62,7 @@ class QueryContextGenerator
 
     # Step 2: Resolve entities from candidates
     resolved_entities = resolve_entities(candidates)
-    log_step("Resolved entities", resolved_entities.map { |e| "#{e.canonical_name} (#{e.entity_type})" })
+    log_step("Resolved entities", resolved_entities.map { |e| "#{e.canonical_name} (#{e.type})" })
 
     # Step 3: Gather facts from multiple strategies
     all_facts = gather_facts(query, resolved_entities)

@@ -109,7 +109,7 @@ end
 # List all extracted entities
 puts "\nExtracted Entities:"
 FactDb::Models::Entity.all.each do |entity|
-  puts "  #{entity.canonical_name} (#{entity.entity_type})"
+  puts "  #{entity.canonical_name} (#{entity.type})"
 end
 ```
 

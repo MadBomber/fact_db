@@ -142,7 +142,7 @@ maria_info = facts.introspect("Maria Santos")
 if maria_info
   puts "\nEntity Information:"
   puts "  Name: #{maria_info[:entity][:canonical_name]}"
-  puts "  Type: #{maria_info[:entity][:entity_type]}"
+  puts "  Type: #{maria_info[:entity][:type]}"
   puts "  Status: #{maria_info[:entity][:resolution_status]}"
 
   puts "\nFact Coverage:"
@@ -231,7 +231,7 @@ puts "\nBuilding context for an LLM query about Maria Santos:\n"
 # Step 1: Introspect the topic
 topic_info = facts.introspect("Maria Santos")
 
-puts "1. Entity identified: #{topic_info[:entity][:canonical_name]} (#{topic_info[:entity][:entity_type]})"
+puts "1. Entity identified: #{topic_info[:entity][:canonical_name]} (#{topic_info[:entity][:type]})"
 puts "   Coverage: #{topic_info[:coverage][:facts][:canonical]} current facts, #{topic_info[:coverage][:facts][:superseded]} historical"
 
 # Step 2: Get facts in LLM-friendly format

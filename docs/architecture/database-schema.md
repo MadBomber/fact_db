@@ -29,7 +29,7 @@ erDiagram
     entities {
         bigint id PK
         string canonical_name
-        string entity_type
+        string type
         string resolution_status
         bigint merged_into_id FK
         jsonb metadata
@@ -115,7 +115,7 @@ Stores resolved identities.
 CREATE TABLE entities (
     id BIGSERIAL PRIMARY KEY,
     canonical_name VARCHAR(255) NOT NULL,
-    entity_type VARCHAR(50) NOT NULL,
+    type VARCHAR(50) NOT NULL,
     resolution_status VARCHAR(20) NOT NULL DEFAULT 'unresolved',
     merged_into_id BIGINT REFERENCES entities(id),
     metadata JSONB NOT NULL DEFAULT '{}',
@@ -124,7 +124,7 @@ CREATE TABLE entities (
 );
 
 CREATE INDEX idx_entities_name ON entities(canonical_name);
-CREATE INDEX idx_entities_type ON entities(entity_type);
+CREATE INDEX idx_entities_type ON entities(type);
 CREATE INDEX idx_entities_status ON entities(resolution_status);
 CREATE INDEX idx_entities_embedding ON entities USING hnsw(embedding vector_cosine_ops);
 ```

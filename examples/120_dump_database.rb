@@ -84,7 +84,7 @@ class DatabaseDumper
 
     if entity_count > 0
       puts "\nEntities by type:"
-      FactDb::Models::Entity.group(:entity_type).count.sort_by { |_, v| -v }.each do |type, count|
+      FactDb::Models::Entity.group(:type).count.sort_by { |_, v| -v }.each do |type, count|
         puts "  #{type.to_s.ljust(20)} #{count.to_s.rjust(6)}"
       end
     end
@@ -149,7 +149,7 @@ class DatabaseDumper
     puts "ENTITIES"
     puts "=" * 70
 
-    entities = FactDb::Models::Entity.order(:entity_type, :canonical_name)
+    entities = FactDb::Models::Entity.order(:type, :canonical_name)
 
     if entities.empty?
       puts "  (no entity records)"
@@ -158,8 +158,8 @@ class DatabaseDumper
 
     current_type = nil
     entities.each do |entity|
-      if entity.entity_type != current_type
-        current_type = entity.entity_type
+      if entity.type != current_type
+        current_type = entity.type
         puts "\n--- #{current_type.upcase} ---"
       end
 
@@ -246,7 +246,7 @@ class DatabaseDumper
       entity = entities_by_id[id]
       next unless entity
 
-      puts "  #{entity.canonical_name.to_s.ljust(30)} (#{entity.entity_type.to_s.ljust(12)}) #{count.to_s.rjust(4)} mentions"
+      puts "  #{entity.canonical_name.to_s.ljust(30)} (#{entity.type.to_s.ljust(12)}) #{count.to_s.rjust(4)} mentions"
       if entity.all_aliases.any?
         puts "    Aliases: #{entity.all_aliases.join(', ')}"
       end
@@ -280,7 +280,7 @@ class DatabaseDumper
 
     if entities.any?
       entities.each do |entity|
-        puts "  #{entity.canonical_name} (#{entity.entity_type})"
+        puts "  #{entity.canonical_name} (#{entity.type})"
         puts "    #{entity.description}" if entity.description.present?
       end
     else

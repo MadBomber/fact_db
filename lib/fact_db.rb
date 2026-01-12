@@ -200,7 +200,7 @@ module FactDb
       entity = resolved.respond_to?(:entity) ? resolved.entity : resolved
       suggestions = []
 
-      entity_type = entity.respond_to?(:entity_type) ? entity.entity_type : nil
+      entity_type = entity.respond_to?(:type) ? entity.type : nil
       suggestions << "current status" if entity_type == "person"
 
       # Check relationships
@@ -321,7 +321,7 @@ module FactDb
     def introspect_schema
       {
         capabilities: collect_capabilities,
-        entity_types: Models::Entity.distinct.pluck(:entity_type).compact,
+        entity_types: Models::Entity.distinct.pluck(:type).compact,
         fact_statuses: %w[canonical superseded corroborated synthesized],
         extraction_methods: %w[manual llm rule_based],
         output_formats: FORMATS,
@@ -368,7 +368,7 @@ module FactDb
       {
         id: entity.id,
         canonical_name: entity.canonical_name,
-        entity_type: entity.entity_type,
+        type: entity.type,
         resolution_status: entity.resolution_status,
         aliases: entity.aliases.map { |a| { alias_text: a.alias_text, alias_type: a.alias_type } }
       }

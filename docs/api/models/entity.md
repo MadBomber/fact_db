@@ -7,7 +7,7 @@ Stores resolved identities (people, organizations, places, etc.).
 ```ruby
 entity = FactDb::Models::Entity.new(
   canonical_name: "Paula Chen",
-  entity_type: "person"
+  type: "person"
 )
 ```
 
@@ -17,7 +17,7 @@ entity = FactDb::Models::Entity.new(
 |-----------|------|-------------|
 | `id` | Integer | Primary key |
 | `canonical_name` | String | Authoritative name |
-| `entity_type` | String | Type (person, organization, place, etc.) |
+| `type` | String | Type (person, organization, place, etc.) |
 | `resolution_status` | String | Status (unresolved, resolved, merged) |
 | `merged_into_id` | Integer | Points to canonical entity if merged |
 | `metadata` | Hash | Additional attributes (JSONB) |
@@ -91,7 +91,7 @@ canonical = entity.canonical  # Returns the canonical entity
 ### by_type
 
 ```ruby
-scope :by_type, ->(type) { where(entity_type: type) }
+scope :by_type, ->(t) { where(type: t) }
 ```
 
 Filter by entity type.
@@ -141,7 +141,7 @@ Entity.search_name("paula")
 ```ruby
 entity = Entity.create!(
   canonical_name: "Paula Chen",
-  entity_type: "person",
+  type: "person",
   metadata: {
     department: "Engineering",
     employee_id: "E12345"

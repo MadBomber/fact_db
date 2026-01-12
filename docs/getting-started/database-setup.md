@@ -58,7 +58,7 @@ Stores resolved identities.
 |--------|------|-------------|
 | id | bigint | Primary key |
 | canonical_name | string | Authoritative name |
-| entity_type | string | person, organization, place, etc. |
+| type | string | person, organization, place, etc. |
 | resolution_status | string | unresolved, resolved, merged |
 | merged_into_id | bigint | Points to canonical entity if merged |
 | metadata | jsonb | Additional attributes |
