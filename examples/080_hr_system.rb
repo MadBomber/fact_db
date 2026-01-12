@@ -339,7 +339,7 @@ employees.each do |key, employee|
   puts "\n#{employee.name}:"
   current_facts = fact_service.current_facts(entity: employee.id)
   current_facts.each do |fact|
-    puts "  - #{fact.fact_text}"
+    puts "  - #{fact.text}"
   end
 end
 
@@ -348,23 +348,23 @@ demo_section("Section 7: Historical Query")
 # What was Alex Kim's role in December 2024?
 puts "\nAlex Kim's facts as of December 2024:"
 past_facts = fact_service.facts_at(Date.new(2024, 12, 1), entity: employees[:junior_eng].id)
-past_facts.each { |f| puts "  - #{f.fact_text}" }
+past_facts.each { |f| puts "  - #{f.text}" }
 
 # What is Alex Kim's role now?
 puts "\nAlex Kim's facts as of today:"
 current_facts = fact_service.facts_at(Date.today, entity: employees[:junior_eng].id)
-current_facts.each { |f| puts "  - #{f.fact_text}" }
+current_facts.each { |f| puts "  - #{f.text}" }
 
 demo_section("Section 8: Organization Chart Query")
 
 puts "\nReporting relationships:"
 # Find all "reports to" facts
 reporting_facts = fact_service.search("reports to")
-reporting_facts.each { |f| puts "  #{f.fact_text}" }
+reporting_facts.each { |f| puts "  #{f.text}" }
 
 puts "\nEngineering Department members:"
 engineering_facts = fact_service.current_facts(entity: engineering.id)
-engineering_facts.each { |f| puts "  #{f.fact_text}" }
+engineering_facts.each { |f| puts "  #{f.text}" }
 
 demo_section("Section 9: Employee Timeline")
 
@@ -377,7 +377,7 @@ timeline = fact_service.timeline(
 timeline.each do |entry|
   end_date = entry[:invalid_at]&.strftime("%Y-%m-%d") || "present"
   status_marker = entry[:status] != "canonical" ? " [#{entry[:status]}]" : ""
-  puts "  #{entry[:valid_at].strftime('%Y-%m-%d')} - #{end_date}: #{entry[:fact_text]}#{status_marker}"
+  puts "  #{entry[:valid_at].strftime('%Y-%m-%d')} - #{end_date}: #{entry[:text]}#{status_marker}"
 end
 
 demo_section("Section 10: Audit Trail")
@@ -390,7 +390,7 @@ puts "Complete fact history:"
 alex_facts.each do |fact|
   status_info = fact.status != "canonical" ? " [#{fact.status}]" : ""
   validity = fact.invalid_at ? "#{fact.valid_at} - #{fact.invalid_at}" : "#{fact.valid_at} - present"
-  puts "  [#{validity}] #{fact.fact_text}#{status_info}"
+  puts "  [#{validity}] #{fact.text}#{status_info}"
 
   fact.fact_sources.each do |source|
     puts "    Source: #{source.content.title} (#{source.source_type})"

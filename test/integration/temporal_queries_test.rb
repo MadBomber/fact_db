@@ -16,7 +16,7 @@ class TemporalQueriesIntegrationTest < Minitest::Test
 
     # New format returns a Hash with :facts key
     assert_equal 1, result[:facts].count
-    assert_includes result[:facts].first[:fact_text], "Microsoft"
+    assert_includes result[:facts].first[:text], "Microsoft"
   end
 
   def test_employer_in_2022
@@ -28,7 +28,7 @@ class TemporalQueriesIntegrationTest < Minitest::Test
 
     # New format returns a Hash with :facts key
     assert_equal 1, result[:facts].count
-    assert_includes result[:facts].first[:fact_text], "Google"
+    assert_includes result[:facts].first[:text], "Google"
   end
 
   def test_employer_in_2021
@@ -40,7 +40,7 @@ class TemporalQueriesIntegrationTest < Minitest::Test
 
     # New format returns a Hash with :facts key
     assert result[:facts].any?
-    assert_includes result[:facts].first[:fact_text], "Google"
+    assert_includes result[:facts].first[:text], "Google"
   end
 
   def test_no_employer_in_2019
@@ -64,10 +64,10 @@ class TemporalQueriesIntegrationTest < Minitest::Test
     assert_equal 2, events.count
 
     # First event should be Google
-    assert_includes events.first.fact_text, "Google"
+    assert_includes events.first.text, "Google"
 
     # Last event should be Microsoft
-    assert_includes events.last.fact_text, "Microsoft"
+    assert_includes events.last.text, "Microsoft"
   end
 
   def test_timeline_active_facts
@@ -78,7 +78,7 @@ class TemporalQueriesIntegrationTest < Minitest::Test
 
     # Only Microsoft should be active
     assert_equal 1, active.count
-    assert_includes active.first.fact_text, "Microsoft"
+    assert_includes active.first.text, "Microsoft"
   end
 
   def test_timeline_historical_facts
@@ -89,7 +89,7 @@ class TemporalQueriesIntegrationTest < Minitest::Test
 
     # Only Google should be historical
     assert_equal 1, historical.count
-    assert_includes historical.first.fact_text, "Google"
+    assert_includes historical.first.text, "Google"
   end
 
   def test_timeline_state_at_date
@@ -100,7 +100,7 @@ class TemporalQueriesIntegrationTest < Minitest::Test
     state_2022 = timeline.state_at(Date.new(2022, 6, 15))
 
     assert_equal 1, state_2022.count
-    assert_includes state_2022.first.fact_text, "Google"
+    assert_includes state_2022.first.text, "Google"
   end
 
   private

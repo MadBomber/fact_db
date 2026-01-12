@@ -46,7 +46,7 @@ facts = FactDb.new
 extracted = facts.extract_facts(source.id, extractor: :llm)
 
 extracted.each do |fact|
-  puts fact.fact_text
+  puts fact.text
   puts "  Valid from: #{fact.valid_at}"
   puts "  Entities: #{fact.entity_mentions.map(&:entity).map(&:name)}"
 end
@@ -85,8 +85,8 @@ Every extracted fact includes:
 
 ```ruby
 fact = Models::Fact.new(
-  fact_text: "Paula Chen is Principal Engineer at Microsoft",
-  fact_hash: "sha256...",           # For deduplication
+  text: "Paula Chen is Principal Engineer at Microsoft",
+  digest: "sha256...",           # For deduplication
   valid_at: Time.parse("2024-01-10"),
   invalid_at: nil,                   # nil = currently valid
   status: "canonical",               # canonical, superseded, corroborated, synthesized
@@ -239,8 +239,8 @@ conflicts = facts.fact_service.resolver.find_conflicts(
 
 conflicts.each do |conflict|
   puts "Conflict between:"
-  puts "  #{conflict[:fact1].fact_text}"
-  puts "  #{conflict[:fact2].fact_text}"
+  puts "  #{conflict[:fact1].text}"
+  puts "  #{conflict[:fact2].text}"
 end
 ```
 
@@ -248,7 +248,7 @@ end
 
 ```ruby
 # If multiple sources say the same thing
-if fact1.fact_text.similar_to?(fact2.fact_text)
+if fact1.text.similar_to?(fact2.text)
   facts.fact_service.resolver.corroborate(fact1.id, fact2.id)
 end
 ```

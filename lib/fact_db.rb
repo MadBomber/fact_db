@@ -379,7 +379,7 @@ module FactDb
     end
 
     def comparable_key(fact)
-      text = fact.respond_to?(:fact_text) ? fact.fact_text : fact[:fact_text]
+      text = fact.respond_to?(:text) ? fact.text : fact[:text]
       "#{text}".downcase.strip
     end
   end

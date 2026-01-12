@@ -50,7 +50,7 @@ class CypherTransformerTest < Minitest::Test
     })
     result.add_facts([{
       id: 1,
-      fact_text: "Paula Chen works at Microsoft",
+      text: "Paula Chen works at Microsoft",
       valid_at: Date.new(2024, 1, 10),
       status: "canonical",
       entity_mentions: [
@@ -141,7 +141,7 @@ class CypherTransformerTest < Minitest::Test
     })
     result.add_facts([{
       id: 1,
-      fact_text: "Paula Chen works at Microsoft",
+      text: "Paula Chen works at Microsoft",
       valid_at: Date.new(2024, 1, 10),
       invalid_at: Date.new(2024, 6, 15),
       status: "superseded",

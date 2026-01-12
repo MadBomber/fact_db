@@ -10,14 +10,14 @@ module FactDb
       end
 
       # Supersede an existing fact with a new one
-      def supersede(old_fact_id, new_fact_text, valid_at:, mentions: [])
+      def supersede(old_fact_id, new_text, valid_at:, mentions: [])
         old_fact = Models::Fact.find(old_fact_id)
 
         raise ResolutionError, "Cannot supersede already superseded fact" if old_fact.superseded?
 
         Models::Fact.transaction do
           new_fact = Models::Fact.create!(
-            fact_text: new_fact_text,
+            text: new_text,
             valid_at: valid_at,
             status: "canonical",
             extraction_method: old_fact.extraction_method,
@@ -75,7 +75,7 @@ module FactDb
 
         Models::Fact.transaction do
           synthesized = Models::Fact.create!(
-            fact_text: synthesized_text,
+            text: synthesized_text,
             valid_at: valid_at,
             invalid_at: invalid_at,
             status: "synthesized",
@@ -159,7 +159,7 @@ module FactDb
 
         facts.each_with_index do |fact, i|
           facts[(i + 1)..].each do |other|
-            similarity = text_similarity(fact.fact_text, other.fact_text)
+            similarity = text_similarity(fact.text, other.text)
             if similarity > 0.5 && similarity < 0.95
               conflicts << {
                 fact1: fact,

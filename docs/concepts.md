@@ -38,7 +38,7 @@ Facts are temporal assertions about entities:
 
 ```ruby
 # A fact has:
-# - fact_text: The assertion itself
+# - text: The assertion itself
 # - valid_at: When the fact became true
 # - invalid_at: When the fact stopped being true (nil if still valid)
 # - status: canonical, superseded, corroborated, synthesized

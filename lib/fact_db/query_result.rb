@@ -126,7 +126,7 @@ module FactDb
         else
           {
             id: fact.id,
-            fact_text: fact.fact_text,
+            text: fact.text,
             valid_at: fact.valid_at,
             invalid_at: fact.invalid_at,
             status: fact.status,
@@ -194,7 +194,7 @@ module FactDb
     def normalize_for_comparison(item)
       {
         type: :fact,
-        text: item[:fact_text],
+        text: item[:text],
         valid_at: item[:valid_at]
       }
     end

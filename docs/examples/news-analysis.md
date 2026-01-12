@@ -119,13 +119,13 @@ end
 # CEO-related facts
 puts "\nCEO Facts:"
 facts.query_facts(topic: "CEO").each do |fact|
-  puts "  #{fact.valid_at.to_date}: #{fact.fact_text}"
+  puts "  #{fact.valid_at.to_date}: #{fact.text}"
 end
 
 # Acquisition facts
 puts "\nAcquisition Facts:"
 facts.query_facts(topic: "acquisition").each do |fact|
-  puts "  #{fact.valid_at.to_date}: #{fact.fact_text}"
+  puts "  #{fact.valid_at.to_date}: #{fact.text}"
 end
 ```
 
@@ -139,7 +139,7 @@ techcorp = facts.resolve_entity("TechCorp", type: :organization)
 puts "\nTechCorp Timeline:"
 facts.timeline_for(techcorp.id).each do |fact|
   source = fact.fact_sources.first&.source&.title || "Unknown"
-  puts "  #{fact.valid_at.to_date}: #{fact.fact_text}"
+  puts "  #{fact.valid_at.to_date}: #{fact.text}"
   puts "    Source: #{source}"
 end
 ```
@@ -164,8 +164,8 @@ if acquisition_fact
   )
 
   puts "\nAcquisition status updated:"
-  puts "  Original: #{acquisition_fact.reload.fact_text} (#{acquisition_fact.status})"
-  puts "  Updated: #{acquisition_fact.superseded_by.fact_text}"
+  puts "  Original: #{acquisition_fact.reload.text} (#{acquisition_fact.status})"
+  puts "  Updated: #{acquisition_fact.superseded_by.text}"
 end
 ```
 
@@ -198,12 +198,12 @@ def company_report(facts, company_name)
 
   {
     company: company.name,
-    current_facts: current_facts.map(&:fact_text),
+    current_facts: current_facts.map(&:text),
     leadership: extract_leadership(current_facts),
     timeline: facts.timeline_for(company.id).map { |f|
       {
         date: f.valid_at,
-        fact: f.fact_text,
+        fact: f.text,
         source: f.fact_sources.first&.source&.title
       }
     }
@@ -213,7 +213,7 @@ end
 def extract_leadership(facts)
   leadership = {}
   facts.each do |fact|
-    if fact.fact_text =~ /CEO/
+    if fact.text =~ /CEO/
       leadership[:ceo] = fact.entity_mentions.find { |m| m.mention_role == "subject" }&.entity&.name
     end
   end
@@ -273,7 +273,7 @@ def monitor_topic(facts, topic, since: 1.week.ago)
     new_facts: matching.count,
     facts: matching.map { |f|
       {
-        text: f.fact_text,
+        text: f.text,
         date: f.valid_at,
         source: f.fact_sources.first&.source&.title,
         entities: f.entity_mentions.map { |m| m.entity.name }

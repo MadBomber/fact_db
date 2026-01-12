@@ -55,7 +55,7 @@ fact1 = fact_service.create(
   valid_at: Date.new(2015, 1, 1),
   mentions: [{ entity_id: company.id, role: :subject, text: "TechCorp Ltd" }]
 )
-puts "Created: #{fact1.fact_text}"
+puts "Created: #{fact1.text}"
 puts "  Valid: #{fact1.valid_at} - present"
 
 # Fact with closed validity (historical)
@@ -68,7 +68,7 @@ fact2 = fact_service.create(
     { entity_id: company.id, role: :object, text: "TechCorp Ltd" }
   ]
 )
-puts "\nCreated: #{fact2.fact_text}"
+puts "\nCreated: #{fact2.text}"
 puts "  Valid: #{fact2.valid_at} - #{fact2.invalid_at}"
 
 # Current CEO
@@ -80,7 +80,7 @@ fact3 = fact_service.create(
     { entity_id: company.id, role: :object, text: "TechCorp Ltd" }
   ]
 )
-puts "\nCreated: #{fact3.fact_text}"
+puts "\nCreated: #{fact3.text}"
 puts "  Valid: #{fact3.valid_at} - present"
 
 # Another current fact
@@ -92,7 +92,7 @@ fact4 = fact_service.create(
     { entity_id: company.id, role: :object, text: "TechCorp Ltd" }
   ]
 )
-puts "\nCreated: #{fact4.fact_text}"
+puts "\nCreated: #{fact4.text}"
 puts "  Valid: #{fact4.valid_at} - present"
 
 demo_section("Section 2: Point-in-Time Queries")
@@ -109,7 +109,7 @@ dates_to_query.each do |date|
   puts "\nFacts about TechCorp on #{date}:"
   facts = fact_service.facts_at(date, entity: company.id)
   facts.each do |fact|
-    puts "  - #{fact.fact_text}"
+    puts "  - #{fact.text}"
   end
 end
 
@@ -117,11 +117,11 @@ demo_section("Section 3: Current vs Historical Facts")
 
 puts "Currently valid facts about TechCorp:"
 current = fact_service.current_facts(entity: company.id)
-current.each { |f| puts "  - #{f.fact_text}" }
+current.each { |f| puts "  - #{f.text}" }
 
 puts "\nAll historical facts:"
 FactDb::Models::Fact.historical.each do |fact|
-  puts "  - #{fact.fact_text} (ended: #{fact.invalid_at})"
+  puts "  - #{fact.text} (ended: #{fact.invalid_at})"
 end
 
 demo_section("Section 4: Superseding Facts")
@@ -132,7 +132,7 @@ valuation_2020 = fact_service.create(
   valid_at: Date.new(2020, 1, 1),
   mentions: [{ entity_id: company.id, role: :subject, text: "TechCorp Ltd" }]
 )
-puts "Created valuation fact: #{valuation_2020.fact_text}"
+puts "Created valuation fact: #{valuation_2020.text}"
 
 # Supersede with new valuation
 valuation_2023 = fact_service.supersede(
@@ -141,7 +141,7 @@ valuation_2023 = fact_service.supersede(
   valid_at: Date.new(2023, 1, 1),
   mentions: [{ entity_id: company.id, role: :subject, text: "TechCorp Ltd" }]
 )
-puts "\nSuperseded with: #{valuation_2023.fact_text}"
+puts "\nSuperseded with: #{valuation_2023.text}"
 
 # Check the old fact status
 valuation_2020.reload
@@ -160,7 +160,7 @@ puts "Complete timeline for #{company.name}:"
 timeline.each do |entry|
   end_date = entry[:invalid_at] || "present"
   status_indicator = entry[:status] == "canonical" ? "" : " [#{entry[:status]}]"
-  puts "  #{entry[:valid_at]} - #{end_date}: #{entry[:fact_text]}#{status_indicator}"
+  puts "  #{entry[:valid_at]} - #{end_date}: #{entry[:text]}#{status_indicator}"
 end
 
 demo_section("Section 6: Temporal Diff")
@@ -177,17 +177,17 @@ diff = temporal_query.diff(
 
 if diff[:added].any?
   puts "\n  Added:"
-  diff[:added].each { |f| puts "    + #{f.fact_text}" }
+  diff[:added].each { |f| puts "    + #{f.text}" }
 end
 
 if diff[:removed].any?
   puts "\n  Removed:"
-  diff[:removed].each { |f| puts "    - #{f.fact_text}" }
+  diff[:removed].each { |f| puts "    - #{f.text}" }
 end
 
 if diff[:unchanged].any?
   puts "\n  Unchanged:"
-  diff[:unchanged].each { |f| puts "    = #{f.fact_text}" }
+  diff[:unchanged].each { |f| puts "    = #{f.text}" }
 end
 
 demo_section("Section 7: Facts Created/Invalidated in Date Range")
@@ -197,14 +197,14 @@ new_facts = temporal_query.facts_created_between(
   from: Date.new(2025, 1, 1),
   to: Date.new(2025, 12, 31)
 )
-new_facts.each { |f| puts "  - #{f.fact_text} (valid from #{f.valid_at})" }
+new_facts.each { |f| puts "  - #{f.text} (valid from #{f.valid_at})" }
 
 puts "\nFacts that ended in 2024:"
 ended_facts = temporal_query.facts_invalidated_between(
   from: Date.new(2024, 1, 1),
   to: Date.new(2024, 12, 31)
 )
-ended_facts.each { |f| puts "  - #{f.fact_text} (ended #{f.invalid_at})" }
+ended_facts.each { |f| puts "  - #{f.text} (ended #{f.invalid_at})" }
 
 demo_section("Section 8: Entity Role Queries")
 
@@ -213,13 +213,13 @@ subject_facts = temporal_query.facts_with_entity_role(
   entity_id: company.id,
   role: :subject
 )
-subject_facts.each { |f| puts "  - #{f.fact_text}" }
+subject_facts.each { |f| puts "  - #{f.text}" }
 
 puts "\nFacts where TechCorp is the object:"
 object_facts = temporal_query.facts_with_entity_role(
   entity_id: company.id,
   role: :object
 )
-object_facts.each { |f| puts "  - #{f.fact_text}" }
+object_facts.each { |f| puts "  - #{f.text}" }
 
 demo_footer

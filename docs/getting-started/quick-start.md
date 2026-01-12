@@ -119,7 +119,7 @@ fact = facts.fact_service.create(
 extracted = facts.extract_facts(source.id, extractor: :llm)
 
 extracted.each do |fact|
-  puts "Extracted: #{fact.fact_text}"
+  puts "Extracted: #{fact.text}"
   puts "  Valid from: #{fact.valid_at}"
 end
 ```
@@ -129,7 +129,7 @@ end
 ```ruby
 # Get current facts about Paula
 current = facts.current_facts_for(paula.id)
-current.each { |f| puts f.fact_text }
+current.each { |f| puts f.text }
 
 # Get facts valid at a specific date
 historical = facts.facts_at(
@@ -147,7 +147,7 @@ team_facts = facts.query_facts(topic: "Platform Team")
 timeline = facts.timeline_for(paula.id)
 
 timeline.each do |entry|
-  puts "#{entry[:date]}: #{entry[:fact].fact_text}"
+  puts "#{entry[:date]}: #{entry[:fact].text}"
 end
 ```
 
@@ -183,7 +183,7 @@ extracted = facts.extract_facts(source.id, extractor: :llm)
 # Query
 puts "Current facts about Paula:"
 facts.current_facts_for(paula.id).each do |fact|
-  puts "  - #{fact.fact_text}"
+  puts "  - #{fact.text}"
 end
 ```
 

@@ -124,7 +124,7 @@ extracted = facts.extract_facts(email.id, extractor: :llm)
 
 puts "LLM extracted #{extracted.count} facts:"
 extracted.each do |fact|
-  puts "  - #{fact.fact_text}"
+  puts "  - #{fact.text}"
 end
 ```
 
@@ -134,13 +134,13 @@ end
 # Current facts about Paula
 puts "\nCurrent facts about Paula:"
 facts.current_facts_for(paula.id).each do |fact|
-  puts "  - #{fact.fact_text}"
+  puts "  - #{fact.text}"
 end
 
 # Facts about Microsoft
 puts "\nFacts about Microsoft:"
 facts.query_facts(entity: microsoft.id).each do |fact|
-  puts "  - #{fact.fact_text}"
+  puts "  - #{fact.text}"
 end
 ```
 
@@ -167,8 +167,8 @@ new_fact = facts.fact_service.resolver.supersede(
 )
 
 puts "\nSuperseded fact:"
-puts "  Old: #{fact1.reload.fact_text} (#{fact1.status})"
-puts "  New: #{new_fact.fact_text} (#{new_fact.status})"
+puts "  Old: #{fact1.reload.text} (#{fact1.status})"
+puts "  New: #{new_fact.text} (#{new_fact.status})"
 ```
 
 ## Timeline
@@ -178,7 +178,7 @@ puts "  New: #{new_fact.fact_text} (#{new_fact.status})"
 puts "\nPaula's timeline:"
 facts.timeline_for(paula.id).each do |fact|
   valid = fact.invalid_at ? "#{fact.valid_at} - #{fact.invalid_at}" : "#{fact.valid_at} - present"
-  puts "  #{valid}: #{fact.fact_text}"
+  puts "  #{valid}: #{fact.text}"
 end
 ```
 
@@ -188,13 +188,13 @@ end
 # What did we know before promotion?
 puts "\nFacts about Paula on March 1, 2024:"
 facts.facts_at(Date.parse("2024-03-01"), entity: paula.id).each do |fact|
-  puts "  - #{fact.fact_text}"
+  puts "  - #{fact.text}"
 end
 
 # What do we know after promotion?
 puts "\nFacts about Paula on July 1, 2024:"
 facts.facts_at(Date.parse("2024-07-01"), entity: paula.id).each do |fact|
-  puts "  - #{fact.fact_text}"
+  puts "  - #{fact.text}"
 end
 ```
 
@@ -231,5 +231,5 @@ fact = facts.fact_service.create(
 
 # Query
 puts "Current facts about Paula:"
-facts.current_facts_for(paula.id).each { |f| puts "  - #{f.fact_text}" }
+facts.current_facts_for(paula.id).each { |f| puts "  - #{f.text}" }
 ```

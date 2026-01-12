@@ -104,9 +104,9 @@ results.each do |result|
   if result[:conflict_count] > 0
     puts "Entity #{result[:entity_id]} has #{result[:conflict_count]} conflicts:"
     result[:conflicts].each do |conflict|
-      puts "  #{conflict[:fact1].fact_text}"
+      puts "  #{conflict[:fact1].text}"
       puts "  vs"
-      puts "  #{conflict[:fact2].fact_text}"
+      puts "  #{conflict[:fact2].text}"
       puts "  Similarity: #{conflict[:similarity]}"
     end
   end

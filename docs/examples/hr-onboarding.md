@@ -233,7 +233,7 @@ facts.timeline_for(paula.id).each do |fact|
     "#{fact.valid_at.to_date} - present"
 
   status = fact.superseded? ? " [superseded]" : ""
-  puts "#{valid}: #{fact.fact_text}#{status}"
+  puts "#{valid}: #{fact.text}#{status}"
 end
 ```
 
@@ -265,7 +265,7 @@ dates = [
 dates.each do |date|
   puts "\nPaula's status on #{date}:"
   facts.facts_at(date, entity: paula.id).each do |fact|
-    puts "  - #{fact.fact_text}"
+    puts "  - #{fact.text}"
   end
 end
 ```
@@ -285,19 +285,19 @@ def employment_report(facts, employee_id)
 
   # Current status
   current.each do |fact|
-    if fact.fact_text.include?("title is")
-      report[:current_status][:title] = fact.fact_text.split("title is ").last
-    elsif fact.fact_text.include?("works in")
-      report[:current_status][:department] = fact.fact_text.split("works in ").last
-    elsif fact.fact_text.include?("reports to")
-      report[:current_status][:manager] = fact.fact_text.split("reports to ").last
+    if fact.text.include?("title is")
+      report[:current_status][:title] = fact.text.split("title is ").last
+    elsif fact.text.include?("works in")
+      report[:current_status][:department] = fact.text.split("works in ").last
+    elsif fact.text.include?("reports to")
+      report[:current_status][:manager] = fact.text.split("reports to ").last
     end
   end
 
   # Employment history
   report[:history] = facts.timeline_for(employee_id).map do |fact|
     {
-      fact: fact.fact_text,
+      fact: fact.text,
       from: fact.valid_at,
       to: fact.invalid_at,
       status: fact.status

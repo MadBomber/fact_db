@@ -60,8 +60,8 @@ module FactDb
       end
 
       def fact_to_cypher(fact, entities, defined_nodes, lines)
-        fact_text = get_value(fact, :fact_text) || ""
-        return nil if fact_text.empty?
+        text = get_value(fact, :text) || ""
+        return nil if text.empty?
 
         mentions = get_value(fact, :entity_mentions) || []
 
@@ -69,13 +69,13 @@ module FactDb
         subject_mention = mentions.find { |m| get_value(m, :mention_role) == "subject" }
         object_mention = mentions.find { |m| get_value(m, :mention_role) != "subject" }
 
-        # Get subject - from mentions or parse from fact_text
+        # Get subject - from mentions or parse from text
         if subject_mention
           subject_id = get_value(subject_mention, :entity_id)
           subject_entity = entities[subject_id]
           subject_name = subject_entity ? get_value(subject_entity, :name) : "Entity_#{subject_id}"
         else
-          subject_name = extract_subject(fact_text)
+          subject_name = extract_subject(text)
         end
 
         return nil if subject_name.nil? || subject_name.empty?
@@ -105,7 +105,7 @@ module FactDb
         rel_props[:confidence] = confidence if confidence
 
         # Extract relationship type from fact text
-        rel_type = extract_relationship_type(fact_text)
+        rel_type = extract_relationship_type(text)
 
         if object_mention
           # Relationship to another entity
@@ -125,43 +125,43 @@ module FactDb
           "(#{subject_var})-[:#{rel_type}#{props_str}]->(#{object_var})"
         else
           # Relationship to a literal value
-          object_value = extract_object_value(fact_text, subject_name)
+          object_value = extract_object_value(text, subject_name)
           props_str = rel_props.empty? ? "" : " #{format_props(rel_props)}"
           "(#{subject_var})-[:#{rel_type}#{props_str}]->(\"#{escape_string(object_value)}\")"
         end
       end
 
-      def extract_relationship_type(fact_text)
-        if fact_text.match?(/\bworks?\s+(at|for)\b/i)
+      def extract_relationship_type(text)
+        if text.match?(/\bworks?\s+(at|for)\b/i)
           "WORKS_AT"
-        elsif fact_text.match?(/\bworked\s+(at|for)\b/i)
+        elsif text.match?(/\bworked\s+(at|for)\b/i)
           "WORKED_AT"
-        elsif fact_text.match?(/\breports?\s+to\b/i)
+        elsif text.match?(/\breports?\s+to\b/i)
           "REPORTS_TO"
-        elsif fact_text.match?(/\bis\s+(a|an|the)\b/i)
+        elsif text.match?(/\bis\s+(a|an|the)\b/i)
           "IS_A"
-        elsif fact_text.match?(/\bis\s+\w+/i)
+        elsif text.match?(/\bis\s+\w+/i)
           "IS"
-        elsif fact_text.match?(/\bhas\b/i)
+        elsif text.match?(/\bhas\b/i)
           "HAS"
-        elsif fact_text.match?(/\bdecided\b/i)
+        elsif text.match?(/\bdecided\b/i)
           "DECIDED"
-        elsif fact_text.match?(/\bjoined\b/i)
+        elsif text.match?(/\bjoined\b/i)
           "JOINED"
-        elsif fact_text.match?(/\bleft\b/i)
+        elsif text.match?(/\bleft\b/i)
           "LEFT"
         else
           "RELATES_TO"
         end
       end
 
-      def extract_subject(fact_text)
-        words = fact_text.split(/\s+/)
+      def extract_subject(text)
+        words = text.split(/\s+/)
         words.take_while { |w| !w.match?(/^(is|are|was|were|has|have|works|worked|reports)$/i) }.join(" ")
       end
 
-      def extract_object_value(fact_text, subject)
-        remainder = fact_text.sub(/^#{Regexp.escape(subject)}\s*/i, "")
+      def extract_object_value(text, subject)
+        remainder = text.sub(/^#{Regexp.escape(subject)}\s*/i, "")
         remainder.sub(/^(is|are|was|were|has|have|works?|worked|reports?)\s+(at|for|to|a|an|the)?\s*/i, "")
       end
 

@@ -116,21 +116,21 @@ puts "\nQuery: What was Alex's role in 2021?"
 results_2021 = facts.at("2021-06-15").facts_for(alex.id)
 puts "Date: 2021-06-15"
 results_2021.each_fact do |fact|
-  puts "  - #{fact[:fact_text]}"
+  puts "  - #{fact[:text]}"
 end
 
 puts "\nQuery: What was Alex's role in 2022 (after promotion)?"
 results_2022 = facts.at("2022-09-01").facts_for(alex.id)
 puts "Date: 2022-09-01"
 results_2022.each_fact do |fact|
-  puts "  - #{fact[:fact_text]}"
+  puts "  - #{fact[:text]}"
 end
 
 puts "\nQuery: What is Alex's current situation?"
 results_now = facts.at(Date.today).facts_for(alex.id)
 puts "Date: #{Date.today}"
 results_now.each_fact do |fact|
-  puts "  - #{fact[:fact_text]}"
+  puts "  - #{fact[:text]}"
 end
 
 demo_section("Section 2: Query Builder with Output Formats")
@@ -150,12 +150,12 @@ diff_result = facts.diff(nil, from: "2021-06-01", to: "2024-01-01")
 
 puts "\nRemoved facts (no longer true):"
 diff_result[:removed].each do |fact|
-  puts "  - #{fact.fact_text}"
+  puts "  - #{fact.text}"
 end
 
 puts "\nAdded facts (became true):"
 diff_result[:added].each do |fact|
-  puts "  - #{fact.fact_text}"
+  puts "  - #{fact.text}"
 end
 
 puts "\nUnchanged facts:"
@@ -163,7 +163,7 @@ if diff_result[:unchanged].empty?
   puts "  (none - everything changed!)"
 else
   diff_result[:unchanged].each do |fact|
-    puts "  - #{fact.fact_text}"
+    puts "  - #{fact.text}"
   end
 end
 
@@ -199,7 +199,7 @@ checkpoints.each do |date|
     puts "  (no facts yet)"
   else
     facts.at(date).facts_for(alex.id).each_fact do |fact|
-      puts "  - #{fact[:fact_text]}"
+      puts "  - #{fact[:text]}"
     end
   end
   puts
@@ -211,7 +211,7 @@ puts "\nSnapshot of Alex's state on 2022-08-01:"
 state = facts.at("2022-08-01").state_for(alex.id)
 puts "Facts at this moment:"
 state.each_fact do |fact|
-  puts "  - #{fact[:fact_text]}"
+  puts "  - #{fact[:text]}"
 end
 
 demo_footer

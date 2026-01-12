@@ -61,7 +61,7 @@ results = pipeline.detect_conflicts([paula.id, john.id])
 results.each do |result|
   puts "Entity #{result[:entity_id]}: #{result[:conflict_count]} conflicts"
   result[:conflicts].each do |c|
-    puts "  - #{c[:fact1].fact_text} vs #{c[:fact2].fact_text}"
+    puts "  - #{c[:fact1].text} vs #{c[:fact2].text}"
   end
 end
 ```

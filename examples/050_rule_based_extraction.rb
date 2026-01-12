@@ -185,7 +185,7 @@ result.each do |fact_data|
   # Link to source content
   fact.add_source(content: content, type: :primary, confidence: fact_data[:confidence])
 
-  puts "Saved fact: #{fact.fact_text}"
+  puts "Saved fact: #{fact.text}"
   puts "  ID: #{fact.id}, Mentions: #{fact.entity_mentions.count}"
 end
 
@@ -201,7 +201,7 @@ end
 # Find facts by extraction method
 puts "\nFacts extracted by rule-based extractor:"
 FactDb::Models::Fact.by_extraction_method(:rule_based).limit(10).each do |fact|
-  puts "  [#{fact.confidence}] #{fact.fact_text}"
+  puts "  [#{fact.confidence}] #{fact.text}"
 end
 
 demo_section("Section 4: Pattern Examples")

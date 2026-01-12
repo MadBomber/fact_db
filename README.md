@@ -103,7 +103,7 @@ Query facts temporally:
 ```ruby
 # Query current facts about Paula
 facts.current_facts_for(paula.id).each do |fact|
-  puts fact.fact_text
+  puts fact.text
 end
 
 # Query facts at a point in time (before she joined)
@@ -118,7 +118,7 @@ Query results can be transformed into multiple formats for different use cases:
 # Raw - original ActiveRecord objects for direct database access
 results = facts.query_facts(topic: "Paula Chen", format: :raw)
 results.each do |fact|
-  puts fact.fact_text
+  puts fact.text
   puts fact.entity_mentions.map(&:entity).map(&:name)
 end
 

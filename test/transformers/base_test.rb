@@ -9,7 +9,7 @@ class BaseTransformerTest < Minitest::Test
 
   def test_transform_returns_input_unchanged
     result = FactDb::QueryResult.new(query: "test")
-    result.add_facts([{ id: 1, fact_text: "Test fact" }])
+    result.add_facts([{ id: 1, text: "Test fact" }])
 
     transformed = @transformer.transform(result)
 

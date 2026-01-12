@@ -62,8 +62,8 @@ module FactDb
 
     def create_fact(text: "Test fact", valid_at: Time.current, **attrs)
       Models::Fact.create!(
-        fact_text: text,
-        fact_hash: Digest::SHA256.hexdigest(text + rand.to_s),
+        text: text,
+        digest: Digest::SHA256.hexdigest(text + rand.to_s),
         valid_at: valid_at,
         status: attrs.delete(:status) || "canonical",
         **attrs

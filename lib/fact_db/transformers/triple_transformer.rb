@@ -60,8 +60,8 @@ module FactDb
       def fact_to_triples(fact, entities)
         triples = []
 
-        fact_text = get_value(fact, :fact_text)
-        return triples unless fact_text
+        text = get_value(fact, :text)
+        return triples unless text
 
         # Try to extract subject from entity mentions
         mentions = get_value(fact, :entity_mentions) || []
@@ -72,11 +72,11 @@ module FactDb
           entity = entities[entity_id]
           subject = entity ? get_value(entity, :name) : "Entity_#{entity_id}"
         else
-          subject = extract_subject(fact_text)
+          subject = extract_subject(text)
         end
 
         # Main fact assertion
-        predicate, object = extract_predicate_object(fact_text, subject)
+        predicate, object = extract_predicate_object(text, subject)
         triples << [subject, predicate, object]
 
         # Temporal metadata
@@ -109,13 +109,13 @@ module FactDb
         triples
       end
 
-      def extract_subject(fact_text)
-        words = fact_text.split(/\s+/)
+      def extract_subject(text)
+        words = text.split(/\s+/)
         words.take_while { |w| !w.match?(/^(is|are|was|were|has|have|works|worked)$/i) }.join(" ")
       end
 
-      def extract_predicate_object(fact_text, subject)
-        remainder = fact_text.sub(/^#{Regexp.escape(subject)}\s*/i, "")
+      def extract_predicate_object(text, subject)
+        remainder = text.sub(/^#{Regexp.escape(subject)}\s*/i, "")
 
         if (match = remainder.match(/^(is|are|was|were|has|have|works?|worked)\s+(.+)/i))
           verb = match[1].downcase

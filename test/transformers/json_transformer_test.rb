@@ -25,12 +25,12 @@ class JsonTransformerTest < Minitest::Test
 
   def test_transform_includes_facts
     result = FactDb::QueryResult.new(query: "test")
-    result.add_facts([{ id: 1, fact_text: "Test fact" }])
+    result.add_facts([{ id: 1, text: "Test fact" }])
 
     output = @transformer.transform(result)
 
     assert_equal 1, output[:facts].size
-    assert_equal "Test fact", output[:facts].first[:fact_text]
+    assert_equal "Test fact", output[:facts].first[:text]
   end
 
   def test_transform_includes_entities

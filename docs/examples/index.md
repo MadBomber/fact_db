@@ -45,7 +45,7 @@ historical = facts.facts_at(Date.parse("2023-06-15"), entity: paula.id)
 # Build complete timeline
 timeline = facts.timeline_for(paula.id)
 timeline.each do |fact|
-  puts "#{fact.valid_at}: #{fact.fact_text}"
+  puts "#{fact.valid_at}: #{fact.text}"
 end
 ```
 

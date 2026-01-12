@@ -195,7 +195,7 @@ class DatabaseDumper
     facts.each do |fact|
       puts "\n#{'-' * 60}"
       puts "ID: #{fact.id}"
-      puts "Text: #{fact.fact_text}"
+      puts "Text: #{fact.text}"
       puts "Valid: #{fact.valid_at}#{" to #{fact.invalid_at}" if fact.invalid_at}"
       puts "Status: #{fact.status}"
       puts "Method: #{fact.extraction_method}"
@@ -290,14 +290,14 @@ class DatabaseDumper
     # Search facts
     puts "\nMatching Facts:"
     facts = FactDb::Models::Fact.where(
-      "fact_text ILIKE ?", "%#{term}%"
+      "text ILIKE ?", "%#{term}%"
     ).order(:created_at).limit(50)
 
     if facts.any?
       facts.each do |fact|
-        puts "  [#{fact.id}] #{fact.fact_text}"
+        puts "  [#{fact.id}] #{fact.text}"
       end
-      puts "  (showing first 50 of #{FactDb::Models::Fact.where("fact_text ILIKE ?", "%#{term}%").count})" if facts.count == 50
+      puts "  (showing first 50 of #{FactDb::Models::Fact.where("text ILIKE ?", "%#{term}%").count})" if facts.count == 50
     else
       puts "  (no matching facts)"
     end

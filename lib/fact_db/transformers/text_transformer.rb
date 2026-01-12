@@ -91,12 +91,12 @@ module FactDb
       end
 
       def format_fact(fact, _entities)
-        fact_text = get_value(fact, :fact_text)
+        text = get_value(fact, :text)
         valid_at = get_value(fact, :valid_at)
         invalid_at = get_value(fact, :invalid_at)
         confidence = get_value(fact, :confidence)
 
-        line = "- #{fact_text}"
+        line = "- #{text}"
 
         # Add temporal info
         temporal = []

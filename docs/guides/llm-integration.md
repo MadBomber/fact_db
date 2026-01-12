@@ -102,7 +102,7 @@ source = facts.ingest(
 extracted = facts.extract_facts(source.id, extractor: :llm)
 
 extracted.each do |fact|
-  puts "Fact: #{fact.fact_text}"
+  puts "Fact: #{fact.text}"
   puts "  Valid: #{fact.valid_at}"
   puts "  Confidence: #{fact.confidence}"
   fact.entity_mentions.each do |m|

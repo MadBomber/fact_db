@@ -3,7 +3,7 @@
 require "test_helper"
 
 # Mock fact object that behaves like an ActiveRecord model
-MockFact = Struct.new(:id, :fact_text, :valid_at, :invalid_at, :status, :confidence, :entity_mentions, keyword_init: true) do
+MockFact = Struct.new(:id, :text, :valid_at, :invalid_at, :status, :confidence, :entity_mentions, keyword_init: true) do
   def as_json
     to_h
   end
@@ -32,8 +32,8 @@ class RawTransformerTest < Minitest::Test
 
   def test_transform_returns_raw_facts_unchanged
     raw_facts = [
-      { id: 1, fact_text: "Paula works at Microsoft" },
-      { id: 2, fact_text: "Paula is a Principal Engineer" }
+      { id: 1, text: "Paula works at Microsoft" },
+      { id: 2, text: "Paula is a Principal Engineer" }
     ]
 
     result = FactDb::QueryResult.new(query: "Paula")
@@ -48,7 +48,7 @@ class RawTransformerTest < Minitest::Test
   def test_transform_preserves_original_objects
     mock_fact = MockFact.new(
       id: 1,
-      fact_text: "Test fact",
+      text: "Test fact",
       valid_at: Date.new(2024, 1, 10),
       status: "canonical"
     )
@@ -66,7 +66,7 @@ class RawTransformerTest < Minitest::Test
   def test_transform_does_not_normalize_facts
     mock_fact = MockFact.new(
       id: 42,
-      fact_text: "Original fact text",
+      text: "Original fact text",
       valid_at: Date.new(2024, 6, 15),
       status: "canonical"
     )
@@ -77,7 +77,7 @@ class RawTransformerTest < Minitest::Test
     output = @transformer.transform(result)
 
     # Raw transformer should return the original object, not a normalized hash
-    assert_respond_to output.first, :fact_text
-    assert_equal "Original fact text", output.first.fact_text
+    assert_respond_to output.first, :text
+    assert_equal "Original fact text", output.first.text
   end
 end

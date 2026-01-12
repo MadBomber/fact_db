@@ -3,10 +3,10 @@
 class CreateFacts < ActiveRecord::Migration[7.0]
   def change
     create_table :fact_db_facts, comment: "Extracted factual assertions with temporal validity tracking (Event Clock pattern)" do |t|
-      t.text :fact_text, null: false,
+      t.text :text, null: false,
              comment: "The factual assertion in natural language form"
-      t.string :fact_hash, null: false, limit: 64,
-               comment: "SHA-256 hash of normalized fact_text for deduplication"
+      t.string :digest, null: false, limit: 64,
+               comment: "SHA-256 hash of normalized text for deduplication"
 
       t.timestamptz :valid_at, null: false,
                     comment: "When this fact became true (Event Clock valid_from)"
@@ -36,8 +36,8 @@ class CreateFacts < ActiveRecord::Migration[7.0]
       t.timestamps
     end
 
-    # Unique constraint on fact_hash + valid_at allows same fact text at different times
-    add_index :fact_db_facts, [:fact_hash, :valid_at], unique: true, name: "index_fact_db_facts_on_fact_hash_valid_at"
+    # Unique constraint on digest + valid_at allows same fact text at different times
+    add_index :fact_db_facts, [:digest, :valid_at], unique: true, name: "index_fact_db_facts_on_digest_valid_at"
     add_index :fact_db_facts, :valid_at
     add_index :fact_db_facts, :invalid_at
     add_index :fact_db_facts, :status
@@ -60,7 +60,7 @@ class CreateFacts < ActiveRecord::Migration[7.0]
     # Full-text search index
     execute <<-SQL
       CREATE INDEX idx_facts_fulltext ON fact_db_facts
-      USING gin(to_tsvector('english', fact_text));
+      USING gin(to_tsvector('english', text));
     SQL
 
     # HNSW index for vector similarity search
@@ -69,10 +69,10 @@ class CreateFacts < ActiveRecord::Migration[7.0]
       USING hnsw (embedding vector_cosine_ops);
     SQL
 
-    # GIN trigram index on fact_text for fuzzy fact search
+    # GIN trigram index on text for fuzzy fact search
     execute <<-SQL
       CREATE INDEX idx_facts_text_trgm ON fact_db_facts
-      USING gin (fact_text gin_trgm_ops);
+      USING gin (text gin_trgm_ops);
     SQL
 
     execute "COMMENT ON COLUMN fact_db_facts.created_at IS 'When this fact was recorded in the database';"

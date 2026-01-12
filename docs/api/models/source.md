@@ -150,7 +150,7 @@ source = Source.find_by(content_hash: hash)
 
 ```ruby
 source.facts.each do |fact|
-  puts fact.fact_text
+  puts fact.text
 end
 ```
 

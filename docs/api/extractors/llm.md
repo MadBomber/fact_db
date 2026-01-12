@@ -46,7 +46,7 @@ extractor = LLMExtractor.new(config)
 facts = extractor.extract(source)
 
 facts.each do |fact|
-  puts fact.fact_text
+  puts fact.text
   puts "  Valid: #{fact.valid_at}"
   puts "  Confidence: #{fact.confidence}"
 end

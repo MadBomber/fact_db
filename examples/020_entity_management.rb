@@ -182,7 +182,7 @@ timeline = entity_service.timeline_for(person.id, from: Date.new(2017, 1, 1), to
 timeline.each do |entry|
   date_range = entry[:invalid_at] ? "#{entry[:valid_at]} - #{entry[:invalid_at]}" : "#{entry[:valid_at]} - present"
   puts "  [#{date_range}]"
-  puts "    #{entry[:fact_text]}"
+  puts "    #{entry[:text]}"
 end
 
 demo_section("Section 7: Entity Statistics")

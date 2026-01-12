@@ -14,7 +14,7 @@ module FactDb
     # @example Basic usage
     #   results = facts.query_facts(topic: "Paula Chen", format: :raw)
     #   results.each do |fact|
-    #     puts fact.fact_text
+    #     puts fact.text
     #     fact.entity_mentions.each { |m| puts m.entity.name }
     #   end
     #

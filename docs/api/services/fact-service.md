@@ -19,14 +19,14 @@ service = FactDb::Services::FactService.new(config)
 ### create
 
 ```ruby
-def create(fact_text, valid_at:, invalid_at: nil, mentions: [], sources: [], confidence: 1.0, metadata: {})
+def create(text, valid_at:, invalid_at: nil, mentions: [], sources: [], confidence: 1.0, metadata: {})
 ```
 
 Create a new fact.
 
 **Parameters:**
 
-- `fact_text` (String) - The assertion
+- `text` (String) - The assertion
 - `valid_at` (Date/Time) - When fact became true
 - `invalid_at` (Date/Time) - When fact stopped (optional)
 - `mentions` (Array) - Entity mentions
@@ -142,7 +142,7 @@ Build a timeline for an entity.
 ```ruby
 timeline = service.timeline(entity_id: paula.id)
 timeline.each do |fact|
-  puts "#{fact.valid_at}: #{fact.fact_text}"
+  puts "#{fact.valid_at}: #{fact.text}"
 end
 ```
 

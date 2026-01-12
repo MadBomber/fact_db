@@ -47,8 +47,8 @@ erDiagram
 
     facts {
         bigint id PK
-        text fact_text
-        string fact_hash
+        text text
+        string digest
         timestamptz valid_at
         timestamptz invalid_at
         string status
@@ -154,8 +154,8 @@ Stores temporal assertions.
 ```sql
 CREATE TABLE facts (
     id BIGSERIAL PRIMARY KEY,
-    fact_text TEXT NOT NULL,
-    fact_hash VARCHAR(64) NOT NULL,
+    text TEXT NOT NULL,
+    digest VARCHAR(64) NOT NULL,
     valid_at TIMESTAMPTZ NOT NULL,
     invalid_at TIMESTAMPTZ,
     status VARCHAR(20) NOT NULL DEFAULT 'canonical',
@@ -174,7 +174,7 @@ CREATE INDEX idx_facts_valid ON facts(valid_at);
 CREATE INDEX idx_facts_invalid ON facts(invalid_at);
 CREATE INDEX idx_facts_temporal ON facts(valid_at, invalid_at);
 CREATE INDEX idx_facts_method ON facts(extraction_method);
-CREATE INDEX idx_facts_text ON facts USING gin(to_tsvector('english', fact_text));
+CREATE INDEX idx_facts_text ON facts USING gin(to_tsvector('english', text));
 CREATE INDEX idx_facts_embedding ON facts USING hnsw(embedding vector_cosine_ops);
 ```
 

@@ -65,7 +65,7 @@ class TripleTransformerTest < Minitest::Test
     })
     result.add_facts([{
       id: 1,
-      fact_text: "Paula Chen is a engineer",
+      text: "Paula Chen is a engineer",
       entity_mentions: [{ entity_id: 1, mention_role: "subject" }]
     }])
 
@@ -83,7 +83,7 @@ class TripleTransformerTest < Minitest::Test
     })
     result.add_facts([{
       id: 1,
-      fact_text: "Paula Chen is a engineer",
+      text: "Paula Chen is a engineer",
       valid_at: Date.new(2024, 1, 10),
       invalid_at: Date.new(2024, 6, 15),
       status: "superseded",
@@ -108,7 +108,7 @@ class TripleTransformerTest < Minitest::Test
     assert_equal 1, confidence_triples.size
   end
 
-  def test_extract_subject_from_fact_text
+  def test_extract_subject_from_text
     subject = @transformer.send(:extract_subject, "Paula Chen is a engineer")
 
     assert_equal "Paula Chen", subject
@@ -156,7 +156,7 @@ class TripleTransformerTest < Minitest::Test
     })
     result.add_facts([{
       id: 1,
-      fact_text: "Paula Chen works at Microsoft",
+      text: "Paula Chen works at Microsoft",
       entity_mentions: [
         { entity_id: 1, mention_role: "subject" },
         { entity_id: 2, mention_role: "object" }

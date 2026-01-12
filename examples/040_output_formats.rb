@@ -135,7 +135,7 @@ if raw_results.respond_to?(:raw_facts) && raw_results.raw_facts.any?
   fact = raw_results.raw_facts.first
   puts "  Class: #{fact.class}"
   puts "  ID: #{fact.id}"
-  puts "  Text: #{fact.fact_text}"
+  puts "  Text: #{fact.text}"
   puts "  Valid at: #{fact.valid_at}"
 else
   puts "  Results: #{raw_results.inspect}"

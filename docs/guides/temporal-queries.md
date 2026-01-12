@@ -66,7 +66,7 @@ timeline = facts.timeline_for(paula.id)
 
 timeline.each do |fact|
   range = fact.invalid_at ? "#{fact.valid_at} - #{fact.invalid_at}" : "#{fact.valid_at} - present"
-  puts "#{range}: #{fact.fact_text}"
+  puts "#{range}: #{fact.text}"
 end
 
 # Timeline for specific period
@@ -196,7 +196,7 @@ similar_about_paula = facts.fact_service.semantic_search(
 ```ruby
 fact = facts.query_facts(entity: paula.id).first
 
-fact.fact_text        # The assertion text
+fact.text        # The assertion text
 fact.valid_at         # When it became true
 fact.invalid_at       # When it stopped (nil if current)
 fact.status           # canonical, superseded, etc.
@@ -222,14 +222,14 @@ end
 # Superseding fact
 if fact.superseded?
   new_fact = fact.superseded_by
-  puts "Superseded by: #{new_fact.fact_text}"
+  puts "Superseded by: #{new_fact.text}"
 end
 
 # Source facts (for synthesized)
 if fact.synthesized?
   fact.derived_from_ids.each do |id|
     source = FactDb::Models::Fact.find(id)
-    puts "Derived from: #{source.fact_text}"
+    puts "Derived from: #{source.text}"
   end
 end
 ```
@@ -295,7 +295,7 @@ all_facts = FactDb::Models::Fact
 
 all_facts.each do |fact|
   status_info = fact.superseded? ? "(superseded)" : "(current)"
-  puts "#{fact.valid_at}: #{fact.fact_text} #{status_info}"
+  puts "#{fact.valid_at}: #{fact.text} #{status_info}"
 end
 ```
 
@@ -309,7 +309,7 @@ recently_superseded = FactDb::Models::Fact
   .includes(:superseded_by)
 
 recently_superseded.each do |old_fact|
-  puts "Changed: #{old_fact.fact_text}"
-  puts "To: #{old_fact.superseded_by.fact_text}"
+  puts "Changed: #{old_fact.text}"
+  puts "To: #{old_fact.superseded_by.text}"
 end
 ```

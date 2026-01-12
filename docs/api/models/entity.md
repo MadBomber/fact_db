@@ -169,7 +169,7 @@ end
 
 ```ruby
 entity.facts.each do |fact|
-  puts "#{fact.valid_at}: #{fact.fact_text}"
+  puts "#{fact.valid_at}: #{fact.text}"
 end
 ```
 

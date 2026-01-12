@@ -20,12 +20,12 @@ class QueryResultTest < Minitest::Test
     result = FactDb::QueryResult.new(query: "test")
 
     result.add_facts([
-      { id: 1, fact_text: "Fact one", status: "canonical" },
-      { id: 2, fact_text: "Fact two", status: "canonical" }
+      { id: 1, text: "Fact one", status: "canonical" },
+      { id: 2, text: "Fact two", status: "canonical" }
     ])
 
     assert_equal 2, result.fact_count
-    assert_equal "Fact one", result.facts.first[:fact_text]
+    assert_equal "Fact one", result.facts.first[:text]
   end
 
   def test_add_facts_with_nil_or_empty
@@ -45,7 +45,7 @@ class QueryResultTest < Minitest::Test
     result.add_facts([fact])
 
     assert_equal 1, result.fact_count
-    assert_equal "Paula works at Microsoft", result.facts.first[:fact_text]
+    assert_equal "Paula works at Microsoft", result.facts.first[:text]
   end
 
   def test_empty_check
@@ -53,7 +53,7 @@ class QueryResultTest < Minitest::Test
 
     assert result.empty?
 
-    result.add_facts([{ id: 1, fact_text: "Test" }])
+    result.add_facts([{ id: 1, text: "Test" }])
 
     refute result.empty?
   end
@@ -61,7 +61,7 @@ class QueryResultTest < Minitest::Test
   def test_to_h
     Timecop.freeze(Time.local(2024, 6, 15, 12, 0, 0)) do
       result = FactDb::QueryResult.new(query: "Paula Chen")
-      result.add_facts([{ id: 1, fact_text: "Test fact" }])
+      result.add_facts([{ id: 1, text: "Test fact" }])
 
       hash = result.to_h
 
@@ -75,12 +75,12 @@ class QueryResultTest < Minitest::Test
   def test_each_fact
     result = FactDb::QueryResult.new(query: "test")
     result.add_facts([
-      { id: 1, fact_text: "Fact one" },
-      { id: 2, fact_text: "Fact two" }
+      { id: 1, text: "Fact one" },
+      { id: 2, text: "Fact two" }
     ])
 
     texts = []
-    result.each_fact { |f| texts << f[:fact_text] }
+    result.each_fact { |f| texts << f[:text] }
 
     assert_equal ["Fact one", "Fact two"], texts
   end
@@ -104,7 +104,7 @@ class QueryResultTest < Minitest::Test
     assert_equal 0, result.fact_count
     assert_equal 0, result.entity_count
 
-    result.add_facts([{ id: 1, fact_text: "Test" }])
+    result.add_facts([{ id: 1, text: "Test" }])
     result.instance_variable_set(:@entities, { 1 => { id: 1, name: "Test Entity" } })
 
     assert_equal 1, result.fact_count
@@ -114,7 +114,7 @@ class QueryResultTest < Minitest::Test
   def test_items_returns_normalized_format
     result = FactDb::QueryResult.new(query: "test")
     result.add_facts([
-      { id: 1, fact_text: "Fact one", valid_at: Date.new(2024, 1, 15) }
+      { id: 1, text: "Fact one", valid_at: Date.new(2024, 1, 15) }
     ])
 
     items = result.items
@@ -127,7 +127,7 @@ class QueryResultTest < Minitest::Test
 
   def test_resolve_entities_with_nil_service
     result = FactDb::QueryResult.new(query: "test")
-    result.add_facts([{ id: 1, fact_text: "Test", entity_mentions: [{ entity_id: 1, mention_role: "subject" }] }])
+    result.add_facts([{ id: 1, text: "Test", entity_mentions: [{ entity_id: 1, mention_role: "subject" }] }])
 
     result.resolve_entities(nil)
 
@@ -138,7 +138,7 @@ class QueryResultTest < Minitest::Test
     result = FactDb::QueryResult.new(query: "test")
     entity = create_entity(name: "Paula Chen", type: "person")
     result.add_facts([
-      { id: 1, fact_text: "Test", entity_mentions: [{ entity_id: entity.id, mention_role: "subject" }] }
+      { id: 1, text: "Test", entity_mentions: [{ entity_id: entity.id, mention_role: "subject" }] }
     ])
 
     # Use a simple stub object instead of Minitest::Mock

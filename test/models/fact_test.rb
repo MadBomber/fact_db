@@ -101,11 +101,11 @@ class FactTest < Minitest::Test
     assert fact.invalid_at.present?
   end
 
-  def test_fact_hash_generation
-    fact = FactDb::Models::Fact.new(fact_text: "Test assertion", valid_at: Time.current)
+  def test_digest_generation
+    fact = FactDb::Models::Fact.new(text: "Test assertion", valid_at: Time.current)
     fact.valid?
 
-    assert fact.fact_hash.present?
-    assert_equal 64, fact.fact_hash.length
+    assert fact.digest.present?
+    assert_equal 64, fact.digest.length
   end
 end

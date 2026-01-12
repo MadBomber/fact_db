@@ -212,7 +212,7 @@ class RagFeedbackLoop
     ts_scores = compute_ts_rank_scores(query, facts.map(&:id))
 
     scored_facts = facts.map do |fact|
-      fact_text_lower = fact.fact_text.downcase
+      text_lower = fact.text.downcase
       signals = {}
 
       # Signal 1: PostgreSQL ts_rank (full-text search relevance) - weight 0.30
@@ -220,11 +220,11 @@ class RagFeedbackLoop
       signals[:ts_rank] = ts_score * 0.30
 
       # Signal 2: Entity mention score - weight 0.25
-      entity_match_count = entity_names.count { |name| fact_text_lower.include?(name) }
+      entity_match_count = entity_names.count { |name| text_lower.include?(name) }
       signals[:entity] = [entity_match_count * 0.125, 0.25].min
 
       # Signal 3: Query term overlap - weight 0.20
-      term_matches = query_terms.count { |term| fact_text_lower.include?(term.downcase) }
+      term_matches = query_terms.count { |term| text_lower.include?(term.downcase) }
       signals[:terms] = query_terms.empty? ? 0 : (term_matches.to_f / query_terms.size) * 0.20
 
       # Signal 4: Fact confidence - weight 0.15
@@ -262,7 +262,7 @@ class RagFeedbackLoop
 
     sql = <<~SQL
       SELECT id,
-             ts_rank_cd(to_tsvector('english', fact_text),
+             ts_rank_cd(to_tsvector('english', text),
                         plainto_tsquery('english', ?),
                         32) as rank
       FROM fact_db_facts
@@ -402,7 +402,7 @@ class RagFeedbackLoop
         "#{m.entity.name} (#{m.entity.type})"
       end.uniq
 
-      lines << "#{idx + 1}. #{fact.fact_text}"
+      lines << "#{idx + 1}. #{fact.text}"
       lines << "   Entities: #{entities.join(', ')}" if entities.any?
       lines << "   Valid from: #{fact.valid_at}" if fact.valid_at
     end
@@ -413,7 +413,7 @@ class RagFeedbackLoop
     require "json"
     data = facts.map do |fact|
       {
-        text: fact.fact_text,
+        text: fact.text,
         entities: fact.entity_mentions.map { |m| m.entity.name },
         valid_at: fact.valid_at&.to_s,
         confidence: fact.confidence
@@ -530,21 +530,21 @@ class RagFeedbackLoop
   end
 
   # Find an existing fact that matches the given text (duplicate detection)
-  def find_duplicate_fact(fact_text)
-    normalized_text = normalize_fact_text(fact_text)
+  def find_duplicate_fact(text)
+    normalized_text = normalize_text(text)
     return nil if normalized_text.length < 10
 
     # Search for similar facts
-    candidates = @fact_service.search(fact_text, status: nil, limit: 10)
+    candidates = @fact_service.search(text, status: nil, limit: 10)
 
     candidates.find do |candidate|
-      normalized_candidate = normalize_fact_text(candidate.fact_text)
+      normalized_candidate = normalize_text(candidate.text)
       # Consider it a duplicate if normalized texts are very similar
       text_similarity(normalized_text, normalized_candidate) > 0.85
     end
   end
 
-  def normalize_fact_text(text)
+  def normalize_text(text)
     text.downcase
         .gsub(/[^a-z0-9\s]/, "")
         .gsub(/\s+/, " ")
@@ -565,11 +565,11 @@ class RagFeedbackLoop
   end
 
   # Find the line numbers in the source text where a fact most likely originated
-  def find_source_lines(fact_text, source_lines, mentions)
+  def find_source_lines(text, source_lines, mentions)
     return { line_start: 1, line_end: source_lines.length } if source_lines.empty?
 
     # Extract key terms from the fact and entity mentions
-    key_terms = extract_fact_key_terms(fact_text, mentions)
+    key_terms = extract_fact_key_terms(text, mentions)
     return { line_start: 1, line_end: source_lines.length } if key_terms.empty?
 
     # Score each line by how many key terms it contains
@@ -598,7 +598,7 @@ class RagFeedbackLoop
     end
   end
 
-  def extract_fact_key_terms(fact_text, mentions)
+  def extract_fact_key_terms(text, mentions)
     terms = []
 
     # Add entity names from mentions
@@ -611,7 +611,7 @@ class RagFeedbackLoop
                     will would could should may might must shall can to of in for
                     on with at by from as into through during before after]
 
-    fact_words = fact_text.downcase
+    fact_words = text.downcase
                           .gsub(/[^a-z\s]/, " ")
                           .split
                           .reject { |w| w.length < 4 || stop_words.include?(w) }
@@ -651,7 +651,7 @@ class RagFeedbackLoop
     if extracted_facts.any?
       puts "\nExtracted Facts:"
       extracted_facts.each do |fact|
-        puts "\n  [ID: #{fact.id}] #{fact.fact_text[0..90]}#{'...' if fact.fact_text.length > 90}"
+        puts "\n  [ID: #{fact.id}] #{fact.text[0..90]}#{'...' if fact.text.length > 90}"
 
         entities = fact.entity_mentions.map { |m| m.entity.name }
         puts "     Entities: #{entities.join(', ')}" if entities.any?
@@ -668,7 +668,7 @@ class RagFeedbackLoop
       @duplicate_facts.each do |dup|
         existing = dup[:existing_fact]
         puts "\n  [DUP of ID: #{existing.id}] #{dup[:extracted_text][0..80]}..."
-        puts "     Existing: #{existing.fact_text[0..80]}..."
+        puts "     Existing: #{existing.text[0..80]}..."
       end
     end
 
@@ -692,7 +692,7 @@ class RagFeedbackLoop
     @scored_context.each_with_index do |scored_fact, idx|
       fact = scored_fact[:fact]
       score = scored_fact[:score]
-      puts "  #{idx + 1}. [#{(score * 100).round(1)}%] #{fact.fact_text[0..70]}..."
+      puts "  #{idx + 1}. [#{(score * 100).round(1)}%] #{fact.text[0..70]}..."
     end
     if @filtered_count > 0
       puts "  (#{@filtered_count} facts filtered out due to low relevance)"

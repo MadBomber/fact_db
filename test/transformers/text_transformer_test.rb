@@ -20,7 +20,7 @@ class TextTransformerTest < Minitest::Test
     result.instance_variable_set(:@entities, {
       1 => { id: 1, name: "Paula Chen", type: "person" }
     })
-    result.add_facts([{ id: 1, fact_text: "Test", status: "canonical" }])
+    result.add_facts([{ id: 1, text: "Test", status: "canonical" }])
 
     output = @transformer.transform(result)
 
@@ -39,7 +39,7 @@ class TextTransformerTest < Minitest::Test
         aliases: [{ name: "PC" }, { name: "Paula" }]
       }
     })
-    result.add_facts([{ id: 1, fact_text: "Test", status: "canonical" }])
+    result.add_facts([{ id: 1, text: "Test", status: "canonical" }])
 
     output = @transformer.transform(result)
 
@@ -49,7 +49,7 @@ class TextTransformerTest < Minitest::Test
   def test_transform_facts_section
     result = FactDb::QueryResult.new(query: "test")
     result.add_facts([
-      { id: 1, fact_text: "Paula works at Microsoft", status: "canonical" }
+      { id: 1, text: "Paula works at Microsoft", status: "canonical" }
     ])
 
     output = @transformer.transform(result)
@@ -61,9 +61,9 @@ class TextTransformerTest < Minitest::Test
   def test_transform_groups_by_status
     result = FactDb::QueryResult.new(query: "test")
     result.add_facts([
-      { id: 1, fact_text: "Current fact", status: "canonical" },
-      { id: 2, fact_text: "Old fact", status: "superseded" },
-      { id: 3, fact_text: "Verified fact", status: "corroborated" }
+      { id: 1, text: "Current fact", status: "canonical" },
+      { id: 2, text: "Old fact", status: "superseded" },
+      { id: 3, text: "Verified fact", status: "corroborated" }
     ])
 
     output = @transformer.transform(result)
@@ -77,7 +77,7 @@ class TextTransformerTest < Minitest::Test
     result = FactDb::QueryResult.new(query: "test")
     result.add_facts([{
       id: 1,
-      fact_text: "Paula works at Microsoft",
+      text: "Paula works at Microsoft",
       status: "canonical",
       valid_at: Date.new(2024, 1, 10),
       invalid_at: Date.new(2024, 6, 15)
@@ -93,7 +93,7 @@ class TextTransformerTest < Minitest::Test
     result = FactDb::QueryResult.new(query: "test")
     result.add_facts([{
       id: 1,
-      fact_text: "Paula works at Microsoft",
+      text: "Paula works at Microsoft",
       status: "canonical",
       confidence: 0.95
     }])
@@ -106,7 +106,7 @@ class TextTransformerTest < Minitest::Test
   def test_transform_synthesized_section
     result = FactDb::QueryResult.new(query: "test")
     result.add_facts([
-      { id: 1, fact_text: "Synthesized fact", status: "synthesized" }
+      { id: 1, text: "Synthesized fact", status: "synthesized" }
     ])
 
     output = @transformer.transform(result)

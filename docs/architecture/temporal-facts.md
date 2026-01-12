@@ -20,7 +20,7 @@ Facts with `invalid_at: nil` are currently valid:
 ```ruby
 # Paula is currently a Principal Engineer
 {
-  fact_text: "Paula Chen is Principal Engineer",
+  text: "Paula Chen is Principal Engineer",
   valid_at: "2024-01-10",
   invalid_at: nil
 }
@@ -33,7 +33,7 @@ Facts with both dates represent historical periods:
 ```ruby
 # Paula was Senior Engineer before promotion
 {
-  fact_text: "Paula Chen is Senior Engineer",
+  text: "Paula Chen is Senior Engineer",
   valid_at: "2022-03-15",
   invalid_at: "2024-01-10"
 }
@@ -168,7 +168,7 @@ timeline = facts.timeline_for(paula.id)
 
 # Returns chronological list of facts
 timeline.each do |entry|
-  puts "#{entry.valid_at}: #{entry.fact_text}"
+  puts "#{entry.valid_at}: #{entry.text}"
   puts "  Until: #{entry.invalid_at || 'present'}"
 end
 ```
@@ -198,8 +198,8 @@ conflicts = facts.fact_service.resolver.find_conflicts(
 
 conflicts.each do |conflict|
   puts "Potential conflict:"
-  puts "  Fact 1: #{conflict[:fact1].fact_text}"
-  puts "  Fact 2: #{conflict[:fact2].fact_text}"
+  puts "  Fact 1: #{conflict[:fact1].text}"
+  puts "  Fact 2: #{conflict[:fact2].text}"
   puts "  Similarity: #{conflict[:similarity]}"
 end
 ```

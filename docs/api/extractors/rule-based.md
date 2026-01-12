@@ -111,7 +111,7 @@ class CustomRuleExtractor < FactDb::Extractors::RuleBasedExtractor
 
   def extract_revenue(match, source)
     Models::Fact.create!(
-      fact_text: "Revenue of $#{match[:amount]}",
+      text: "Revenue of $#{match[:amount]}",
       valid_at: source.captured_at,
       extraction_method: "rule_based",
       # ...

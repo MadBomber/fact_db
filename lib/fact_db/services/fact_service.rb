@@ -15,7 +15,7 @@ module FactDb
         embedding = generate_embedding(text)
 
         fact = Models::Fact.create!(
-          fact_text: text,
+          text: text,
           valid_at: valid_at,
           invalid_at: invalid_at,
           status: status.to_s,
@@ -46,8 +46,8 @@ module FactDb
       end
 
       def find_or_create(text, valid_at:, invalid_at: nil, status: :canonical, source_id: nil, mentions: [], extraction_method: :manual, confidence: 1.0, metadata: {})
-        fact_hash = Digest::SHA256.hexdigest(text)
-        existing = Models::Fact.find_by(fact_hash: fact_hash, valid_at: valid_at)
+        digest = Digest::SHA256.hexdigest(text)
+        existing = Models::Fact.find_by(digest: digest, valid_at: valid_at)
 
         return existing if existing
 
@@ -116,8 +116,8 @@ module FactDb
         Temporal::Timeline.new.build(entity_id: entity_id, from: from, to: to)
       end
 
-      def supersede(old_fact_id, new_fact_text, valid_at:, mentions: [])
-        @resolver.supersede(old_fact_id, new_fact_text, valid_at: valid_at, mentions: mentions)
+      def supersede(old_fact_id, new_text, valid_at:, mentions: [])
+        @resolver.supersede(old_fact_id, new_text, valid_at: valid_at, mentions: mentions)
       end
 
       def synthesize(source_fact_ids, synthesized_text, valid_at:, invalid_at: nil, mentions: [])

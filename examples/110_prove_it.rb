@@ -62,7 +62,7 @@ class ProveItDemo
     puts "=" * 70
     puts
 
-    facts = FactDb::Models::Fact.where("fact_text ILIKE ?", "%#{term}%").limit(20)
+    facts = FactDb::Models::Fact.where("text ILIKE ?", "%#{term}%").limit(20)
 
     if facts.empty?
       puts "No facts found matching \"#{term}\"."
@@ -107,7 +107,7 @@ class ProveItDemo
     puts "FACT ID: #{fact.id}"
     puts "-" * 70
     puts
-    puts "Text: #{fact.fact_text}"
+    puts "Text: #{fact.text}"
     puts
     puts "Valid: #{fact.valid_at}#{" to #{fact.invalid_at}" if fact.invalid_at}"
     puts "Status: #{fact.status}"

@@ -95,7 +95,7 @@ fact1 = fact_service.find_or_create(
     { entity_id: acme.id, role: :object, text: "Acme Corp" }
   ]
 )
-puts "Fact: #{fact1.fact_text}"
+puts "Fact: #{fact1.text}"
 puts "  Valid from: #{fact1.valid_at}"
 
 # Fact 2: Jane previously worked at TechStartup (now invalid)
@@ -110,7 +110,7 @@ fact2 = fact_service.find_or_create(
     { entity_id: techstartup.id, role: :object, text: "TechStartup Inc" }
   ]
 )
-puts "Fact: #{fact2.fact_text}"
+puts "Fact: #{fact2.text}"
 puts "  Valid from: #{fact2.valid_at} to #{fact2.invalid_at}"
 
 # Link facts to source content (skip if already linked)
@@ -123,14 +123,14 @@ demo_section("Step 4: Querying Facts")
 puts "\nCurrent facts about Jane Smith:"
 current_facts = fact_service.current_facts(entity: jane.id)
 current_facts.each do |fact|
-  puts "  - #{fact.fact_text}"
+  puts "  - #{fact.text}"
 end
 
 # Get facts valid at a specific date (when Jane was at TechStartup)
 puts "\nFacts about Jane on January 1, 2024:"
 past_facts = fact_service.facts_at(Date.new(2024, 1, 1), entity: jane.id)
 past_facts.each do |fact|
-  puts "  - #{fact.fact_text}"
+  puts "  - #{fact.text}"
 end
 
 # Get all facts (including historical)
@@ -138,7 +138,7 @@ puts "\nAll facts in the system:"
 all_facts = facts.query_facts
 all_facts.each_fact do |fact|
   status = fact[:invalid_at] ? "(historical)" : "(current)"
-  puts "  - #{fact[:fact_text]} #{status}"
+  puts "  - #{fact[:text]} #{status}"
 end
 
 demo_section("Step 5: Statistics")

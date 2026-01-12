@@ -83,8 +83,8 @@ Stores temporal assertions.
 | Column | Type | Description |
 |--------|------|-------------|
 | id | bigint | Primary key |
-| fact_text | text | The assertion |
-| fact_hash | string | For deduplication |
+| text | text | The assertion |
+| digest | string | SHA256 digest for deduplication |
 | valid_at | timestamptz | When fact became true |
 | invalid_at | timestamptz | When fact stopped being true |
 | status | string | canonical, superseded, corroborated, synthesized |

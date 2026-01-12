@@ -18,12 +18,12 @@ module FactDb
       has_many :supersedes, class_name: "FactDb::Models::Fact",
                foreign_key: :superseded_by_id
 
-      validates :fact_text, presence: true
-      validates :fact_hash, presence: true, uniqueness: { scope: :valid_at }
+      validates :text, presence: true
+      validates :digest, presence: true, uniqueness: { scope: :valid_at }
       validates :valid_at, presence: true
       validates :status, presence: true
 
-      before_validation :generate_fact_hash, on: :create
+      before_validation :generate_digest, on: :create
 
       # Fact statuses
       STATUSES = %w[canonical superseded corroborated synthesized].freeze
@@ -71,7 +71,7 @@ module FactDb
 
       # Full-text search
       scope :search_text, lambda { |query|
-        where("to_tsvector('english', fact_text) @@ plainto_tsquery('english', ?)", query)
+        where("to_tsvector('english', text) @@ plainto_tsquery('english', ?)", query)
       }
 
       # Extraction method
@@ -114,10 +114,10 @@ module FactDb
         update!(invalid_at: at)
       end
 
-      def supersede_with!(new_fact_text, valid_at:)
+      def supersede_with!(new_text, valid_at:)
         transaction do
           new_fact = self.class.create!(
-            fact_text: new_fact_text,
+            text: new_text,
             valid_at: valid_at,
             status: "canonical",
             extraction_method: extraction_method
@@ -229,7 +229,7 @@ module FactDb
                         where why how all each few more most other some such no nor
                         not only own same so than too very just and but or if]
 
-        fact_words = fact_text.downcase
+        fact_words = text.downcase
                               .gsub(/[^a-z\s]/, " ")
                               .split
                               .reject { |w| w.length < 3 || stop_words.include?(w) }
@@ -263,8 +263,8 @@ module FactDb
 
       private
 
-      def generate_fact_hash
-        self.fact_hash = Digest::SHA256.hexdigest(fact_text) if fact_text.present?
+      def generate_digest
+        self.digest = Digest::SHA256.hexdigest(text) if text.present?
       end
     end
   end

@@ -457,7 +457,7 @@ class IngestDemo
     puts "\nRecent facts (last 5):"
     recent_facts = FactDb::Models::Fact.order(created_at: :desc).limit(5)
     recent_facts.each do |fact|
-      puts "  #{fact.fact_text[0..80]}..."
+      puts "  #{fact.text[0..80]}..."
     end
   end
 end

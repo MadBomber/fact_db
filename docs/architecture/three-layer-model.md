@@ -142,7 +142,7 @@ Facts are temporal assertions about entities, extracted from content.
 
 ```ruby
 fact = Models::Fact.new(
-  fact_text: "Paula Chen is Principal Engineer at Microsoft",
+  text: "Paula Chen is Principal Engineer at Microsoft",
   valid_at: Date.parse("2024-01-10"),
   invalid_at: nil,  # Still valid
   status: "canonical",

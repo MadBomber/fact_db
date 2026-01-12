@@ -106,7 +106,7 @@ module FactDb
     class TimelineEvent
       attr_reader :fact
 
-      delegate :id, :fact_text, :valid_at, :invalid_at, :status,
+      delegate :id, :text, :valid_at, :invalid_at, :status,
                :currently_valid?, :valid_at?, :duration, :duration_days,
                :entities, :source_contents, to: :fact
 
@@ -117,7 +117,7 @@ module FactDb
       def to_hash
         {
           id: id,
-          fact_text: fact_text,
+          text: text,
           valid_at: valid_at,
           invalid_at: invalid_at,
           status: status,

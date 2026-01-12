@@ -6,7 +6,7 @@ Stores temporal assertions about entities.
 
 ```ruby
 fact = FactDb::Models::Fact.new(
-  fact_text: "Paula Chen is Principal Engineer",
+  text: "Paula Chen is Principal Engineer",
   valid_at: Date.parse("2024-01-10"),
   status: "canonical"
 )
@@ -17,8 +17,8 @@ fact = FactDb::Models::Fact.new(
 | Attribute | Type | Description |
 |-----------|------|-------------|
 | `id` | Integer | Primary key |
-| `fact_text` | Text | The assertion |
-| `fact_hash` | String | Hash for deduplication |
+| `text` | Text | The assertion |
+| `digest` | String | SHA256 digest for deduplication |
 | `valid_at` | DateTime | When fact became true |
 | `invalid_at` | DateTime | When fact stopped being true (nil if current) |
 | `status` | String | Status (canonical, superseded, corroborated, synthesized) |
@@ -169,7 +169,7 @@ Fact.mentioning_entity(paula.id)
 
 ```ruby
 scope :search_text, ->(query) {
-  where("fact_text @@ plainto_tsquery(?)", query)
+  where("text @@ plainto_tsquery(?)", query)
 }
 ```
 
@@ -207,7 +207,7 @@ High confidence facts only.
 
 ```ruby
 fact = Fact.create!(
-  fact_text: "Paula Chen joined Microsoft as Principal Engineer",
+  text: "Paula Chen joined Microsoft as Principal Engineer",
   valid_at: Date.parse("2024-01-10"),
   status: "canonical",
   extraction_method: "manual",
@@ -239,7 +239,7 @@ Fact.search_text("promoted")
 
 ```ruby
 new_fact = Fact.create!(
-  fact_text: "Paula Chen is Senior Principal Engineer",
+  text: "Paula Chen is Senior Principal Engineer",
   valid_at: Date.parse("2024-06-01"),
   status: "canonical"
 )

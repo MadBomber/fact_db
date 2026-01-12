@@ -72,7 +72,7 @@ class QueryContextGenerator
     @ranked_results = nil
     if @rank
       @ranked_results = rank_facts(query, all_facts, resolved_entities)
-      log_step("Top ranked facts", @ranked_results.first(5).map { |f| "#{f[:score].round(2)}: #{f[:fact].fact_text[0..60]}..." })
+      log_step("Top ranked facts", @ranked_results.first(5).map { |f| "#{f[:score].round(2)}: #{f[:fact].text[0..60]}..." })
       all_facts = @ranked_results.map { |f| f[:fact] }
 
       # Show signal breakdown if verbose
@@ -93,7 +93,7 @@ class QueryContextGenerator
       fact = result[:fact]
       signals = result[:signals]
 
-      puts "\n#{idx + 1}. \"#{fact.fact_text[0..70]}...\""
+      puts "\n#{idx + 1}. \"#{fact.text[0..70]}...\""
       puts "   Total Score: #{result[:score].round(3)}"
       puts "   Signals:"
 
@@ -248,7 +248,7 @@ class QueryContextGenerator
 
     scored_facts = facts.map do |fact|
       signals = {}
-      fact_text_lower = fact.fact_text.downcase
+      text_lower = fact.text.downcase
 
       # Signal 1: PostgreSQL ts_rank score
       # Full-text search relevance from PostgreSQL
@@ -265,20 +265,20 @@ class QueryContextGenerator
       entity_mention_score = 0.0
       mention_increment = @weights[:entity_mentions] / 2.0  # Allow up to 2 entity mentions
       entity_names.each do |name|
-        entity_mention_score += mention_increment if fact_text_lower.include?(name)
+        entity_mention_score += mention_increment if text_lower.include?(name)
       end
       signals[:entity_mentions] = [entity_mention_score, @weights[:entity_mentions]].min
 
       # Signal 4: Query term overlap
       # How many query terms appear in the fact
-      term_matches = query_terms.count { |term| fact_text_lower.include?(term.downcase) }
+      term_matches = query_terms.count { |term| text_lower.include?(term.downcase) }
       term_score = query_terms.empty? ? 0 : (term_matches.to_f / query_terms.size) * @weights[:term_overlap]
       signals[:term_overlap] = term_score
 
       # Signal 5: Relationship term bonus
       # Bonus for facts containing relationship words from the query
       relationship_terms = extract_relationship_terms(query)
-      rel_matches = relationship_terms.count { |term| fact_text_lower.include?(term.downcase) }
+      rel_matches = relationship_terms.count { |term| text_lower.include?(term.downcase) }
       signals[:relationship_match] = rel_matches > 0 ? @weights[:relationship_match] : 0.0
 
       # Signal 6: Direct answer bonus
@@ -307,7 +307,7 @@ class QueryContextGenerator
     # Use ts_rank_cd (cover density) for better phrase matching
     sql = <<~SQL
       SELECT id,
-             ts_rank_cd(to_tsvector('english', fact_text),
+             ts_rank_cd(to_tsvector('english', text),
                         plainto_tsquery('english', ?),
                         32) as rank
       FROM fact_db_facts
@@ -418,7 +418,7 @@ class QueryContextGenerator
 
   def score_direct_answer(query, fact)
     query_lower = query.downcase
-    fact_lower = fact.fact_text.downcase
+    fact_lower = fact.text.downcase
 
     # Pattern: "Who is X's husband/wife?" -> look for spouse relationships
     # Recognize both the queried term AND its inverse (wife/husband)
