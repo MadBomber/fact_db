@@ -2746,7 +2746,7 @@
 <td>Status (unresolved, resolved, merged)</td>
 </tr>
 <tr>
-<td><code>merged_into_id</code></td>
+<td><code>canonical_id</code></td>
 <td>Integer</td>
 <td>Points to canonical entity if merged</td>
 </tr>
@@ -2872,7 +2872,7 @@
 <div class="language-ruby highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a><span class="c1"># entity2 will be merged into entity1</span>
 </span><span id="__span-19-2"><a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a><span class="n">entity2</span><span class="o">.</span><span class="n">update!</span><span class="p">(</span>
 </span><span id="__span-19-3"><a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a><span class="w">  </span><span class="ss">resolution_status</span><span class="p">:</span><span class="w"> </span><span class="s1">&#39;merged&#39;</span><span class="p">,</span>
-</span><span id="__span-19-4"><a id="__codelineno-19-4" name="__codelineno-19-4" href="#__codelineno-19-4"></a><span class="w">  </span><span class="ss">merged_into_id</span><span class="p">:</span><span class="w"> </span><span class="n">entity1</span><span class="o">.</span><span class="n">id</span>
+</span><span id="__span-19-4"><a id="__codelineno-19-4" name="__codelineno-19-4" href="#__codelineno-19-4"></a><span class="w">  </span><span class="ss">canonical_id</span><span class="p">:</span><span class="w"> </span><span class="n">entity1</span><span class="o">.</span><span class="n">id</span>
 </span><span id="__span-19-5"><a id="__codelineno-19-5" name="__codelineno-19-5" href="#__codelineno-19-5"></a><span class="p">)</span>
 </span><span id="__span-19-6"><a id="__codelineno-19-6" name="__codelineno-19-6" href="#__codelineno-19-6"></a>
 </span><span id="__span-19-7"><a id="__codelineno-19-7" name="__codelineno-19-7" href="#__codelineno-19-7"></a><span class="c1"># Copy aliases</span>
