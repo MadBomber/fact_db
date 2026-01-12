@@ -46,7 +46,7 @@ Stores immutable source content.
 | content | text | Original source content |
 | title | string | Optional title |
 | source_uri | string | Original location |
-| source_metadata | jsonb | Additional metadata |
+| metadata | jsonb | Additional metadata |
 | embedding | vector(1536) | Semantic search vector |
 | captured_at | timestamptz | When content was captured |
 

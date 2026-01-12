@@ -123,7 +123,7 @@ class IngestDemo
 
     # Find and remove sources from this directory
     dir_name = File.basename(@directory)
-    directory_sources = FactDb::Models::Source.where("source_metadata->>'source_directory' = ?", dir_name)
+    directory_sources = FactDb::Models::Source.where("metadata->>'source_directory' = ?", dir_name)
     source_ids = directory_sources.pluck(:id)
 
     if source_ids.any?
@@ -429,7 +429,7 @@ class IngestDemo
     # Directory-specific stats if available
     if @directory
       dir_name = File.basename(@directory)
-      dir_sources = FactDb::Models::Source.where("source_metadata->>'source_directory' = ?", dir_name).count
+      dir_sources = FactDb::Models::Source.where("metadata->>'source_directory' = ?", dir_name).count
       dir_facts = FactDb::Models::Fact.where("metadata->>'source_file' IS NOT NULL").count
 
       puts "\nDirectory '#{dir_name}':"

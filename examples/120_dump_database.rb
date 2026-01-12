@@ -130,8 +130,8 @@ class DatabaseDumper
       puts "Captured: #{source.captured_at}"
       puts "Created: #{source.created_at}"
 
-      if source.source_metadata.present?
-        puts "Metadata: #{source.source_metadata.to_json}"
+      if source.metadata.present?
+        puts "Metadata: #{source.metadata.to_json}"
       end
 
       # Show linked facts count

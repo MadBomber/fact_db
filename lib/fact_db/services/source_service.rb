@@ -24,7 +24,7 @@ module FactDb
           type: type.to_s,
           title: title,
           source_uri: source_uri,
-          source_metadata: metadata,
+          metadata: metadata,
           captured_at: captured_at,
           embedding: embedding
         )

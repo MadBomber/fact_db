@@ -15,7 +15,7 @@ class CreateSources < ActiveRecord::Migration[7.0]
 
       t.text :source_uri,
              comment: "URI identifying the original source location (URL, file path, message ID)"
-      t.jsonb :source_metadata, null: false, default: {},
+      t.jsonb :metadata, null: false, default: {},
               comment: "Flexible metadata about the source (author, date, headers, etc.)"
 
       t.vector :embedding, limit: 1536,
@@ -29,7 +29,7 @@ class CreateSources < ActiveRecord::Migration[7.0]
     add_index :fact_db_sources, :content_hash, unique: true
     add_index :fact_db_sources, :captured_at
     add_index :fact_db_sources, :type
-    add_index :fact_db_sources, :source_metadata, using: :gin
+    add_index :fact_db_sources, :metadata, using: :gin
 
     # Full-text search index
     execute <<-SQL

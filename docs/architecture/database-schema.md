@@ -20,7 +20,7 @@ erDiagram
         text content
         string title
         string source_uri
-        jsonb source_metadata
+        jsonb metadata
         vector embedding
         timestamptz captured_at
         timestamptz created_at
@@ -95,7 +95,7 @@ CREATE TABLE sources (
     content TEXT NOT NULL,
     title VARCHAR(255),
     source_uri TEXT,
-    source_metadata JSONB NOT NULL DEFAULT '{}',
+    metadata JSONB NOT NULL DEFAULT '{}',
     embedding VECTOR(1536),
     captured_at TIMESTAMPTZ NOT NULL,
     created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()

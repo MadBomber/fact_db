@@ -22,7 +22,7 @@ source = FactDb::Models::Source.new(
 | `content` | Text | Original unmodified text content |
 | `title` | String | Optional title |
 | `source_uri` | String | Original location |
-| `source_metadata` | Hash | Additional metadata (JSONB) |
+| `metadata` | Hash | Additional metadata (JSONB) |
 | `embedding` | Vector | Semantic search vector |
 | `captured_at` | DateTime | When content was captured |
 | `created_at` | DateTime | Record creation time |
@@ -132,7 +132,7 @@ source = Source.create!(
   title: "Q4 Report",
   source_uri: "https://example.com/report.pdf",
   captured_at: Time.current,
-  source_metadata: {
+  metadata: {
     author: "Jane Smith",
     department: "Finance"
   }

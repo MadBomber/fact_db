@@ -45,7 +45,7 @@ module FactDb
         content_hash: Digest::SHA256.hexdigest(content + rand.to_s),
         type: type,
         captured_at: captured_at,
-        source_metadata: {},
+        metadata: {},
         **attrs
       )
     end
