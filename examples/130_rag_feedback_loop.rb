@@ -130,7 +130,7 @@ class RagFeedbackLoop
     @facts = FactDb.new
     @entity_service = @facts.entity_service
     @fact_service = @facts.fact_service
-    @content_service = @facts.content_service
+    @source_service = @facts.source_service
     @extractor = FactDb::Extractors::Base.for(:llm)
     @llm_client = FactDb.config.llm_client
   end
@@ -139,7 +139,7 @@ class RagFeedbackLoop
     @stats_before = {
       facts: FactDb::Models::Fact.count,
       entities: FactDb::Models::Entity.count,
-      content: FactDb::Models::Content.count
+      sources: FactDb::Models::Source.count
     }
   end
 
@@ -147,7 +147,7 @@ class RagFeedbackLoop
     @stats_after = {
       facts: FactDb::Models::Fact.count,
       entities: FactDb::Models::Entity.count,
-      content: FactDb::Models::Content.count
+      sources: FactDb::Models::Source.count
     }
   end
 
@@ -442,7 +442,7 @@ class RagFeedbackLoop
     timestamp = Time.now.strftime("%Y%m%d_%H%M%S")
     title = "RAG Response: #{original_prompt[0..50]}..."
 
-    @content_service.create(
+    @source_service.create(
       llm_response,
       type: :document,
       title: title,
@@ -514,7 +514,7 @@ class RagFeedbackLoop
           }
         )
 
-        fact.add_source(content: content, type: :primary, confidence: 0.9)
+        fact.add_source(source: source, type: :primary, confidence: 0.9)
         extracted_facts << fact
 
       rescue StandardError => e
@@ -639,11 +639,11 @@ class RagFeedbackLoop
     # Calculate deltas
     facts_added = @stats_after[:facts] - @stats_before[:facts]
     entities_added = @stats_after[:entities] - @stats_before[:entities]
-    content_added = @stats_after[:content] - @stats_before[:content]
+    sources_added = @stats_after[:sources] - @stats_before[:sources]
     duplicates_found = @duplicate_facts&.size || 0
 
     puts "\nSummary:"
-    puts "  Content records added: #{content_added}"
+    puts "  Source records added:  #{sources_added}"
     puts "  Facts extracted:       #{facts_added}"
     puts "  Duplicates skipped:    #{duplicates_found}" if duplicates_found > 0
     puts "  Entities discovered:   #{entities_added}"

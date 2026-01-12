@@ -34,16 +34,16 @@ FactDb::Database.migrate!
 
 The migrations create six tables:
 
-### contents
+### sources
 
-Stores immutable source documents.
+Stores immutable source content.
 
 | Column | Type | Description |
 |--------|------|-------------|
 | id | bigint | Primary key |
 | content_hash | string | SHA256 hash for deduplication |
 | content_type | string | Type (email, document, article) |
-| raw_text | text | Original content |
+| content | text | Original source content |
 | title | string | Optional title |
 | source_uri | string | Original location |
 | source_metadata | jsonb | Additional metadata |
@@ -117,7 +117,7 @@ Links facts to source content.
 |--------|------|-------------|
 | id | bigint | Primary key |
 | fact_id | bigint | Foreign key to facts |
-| content_id | bigint | Foreign key to contents |
+| source_id | bigint | Foreign key to sources |
 | source_type | string | primary, supporting, contradicting |
 | excerpt | text | Relevant text excerpt |
 | confidence | float | Source confidence |
@@ -128,7 +128,7 @@ The migrations create indexes for:
 
 - Content hash (unique)
 - Content type
-- Full-text search on raw_text
+- Full-text search on content
 - Entity canonical name
 - Entity type
 - Fact status

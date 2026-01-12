@@ -50,7 +50,7 @@ Pipeline results follow a consistent format:
 
 ```ruby
 {
-  content_id: 123,          # Item identifier
+  source_id: 123,           # Item identifier
   facts: [<Fact>, ...],     # Extracted/resolved items
   error: nil                # Error message if failed
 }

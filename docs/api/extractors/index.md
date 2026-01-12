@@ -34,11 +34,11 @@ end
 
 ```ruby
 class MyExtractor < FactDb::Extractors::Base
-  def extract(content)
+  def extract(source)
     facts = []
 
     # Your extraction logic
-    # Parse content.raw_text
+    # Parse source.content
     # Create fact records
 
     facts
@@ -48,18 +48,18 @@ end
 
 ## Using Extractors
 
-### Via Facts
+### Via FactDb
 
 ```ruby
 facts = FactDb.new
-extracted = facts.extract_facts(content.id, extractor: :llm)
+extracted = facts.extract_facts(source.id, extractor: :llm)
 ```
 
 ### Directly
 
 ```ruby
 extractor = FactDb::Extractors::LLMExtractor.new(config)
-facts = extractor.extract(content)
+facts = extractor.extract(source)
 ```
 
 ## Extractor Selection

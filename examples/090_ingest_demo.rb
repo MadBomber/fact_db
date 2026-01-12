@@ -100,7 +100,7 @@ class IngestDemo
     @facts = FactDb.new
     @entity_service = @facts.entity_service
     @fact_service = @facts.fact_service
-    @content_service = @facts.content_service
+    @source_service = @facts.source_service
     @extractor = FactDb::Extractors::Base.for(:llm)
   end
 
@@ -113,7 +113,7 @@ class IngestDemo
     FactDb::Models::Fact.delete_all
     FactDb::Models::EntityAlias.delete_all
     FactDb::Models::Entity.delete_all
-    FactDb::Models::Content.delete_all
+    FactDb::Models::Source.delete_all
 
     puts "  All data cleared"
   end
@@ -121,15 +121,15 @@ class IngestDemo
   def clear_directory_data
     puts "Clearing existing data from this directory..."
 
-    # Find and remove content from this directory
+    # Find and remove sources from this directory
     dir_name = File.basename(@directory)
-    directory_content = FactDb::Models::Content.where("source_metadata->>'source_directory' = ?", dir_name)
-    content_ids = directory_content.pluck(:id)
+    directory_sources = FactDb::Models::Source.where("source_metadata->>'source_directory' = ?", dir_name)
+    source_ids = directory_sources.pluck(:id)
 
-    if content_ids.any?
-      FactDb::Models::FactSource.where(content_id: content_ids).delete_all
-      directory_content.delete_all
-      puts "  Removed #{content_ids.count} content records"
+    if source_ids.any?
+      FactDb::Models::FactSource.where(source_id: source_ids).delete_all
+      directory_sources.delete_all
+      puts "  Removed #{source_ids.count} source records"
     end
 
     puts "  Data cleared"
@@ -137,7 +137,7 @@ class IngestDemo
 
   def file_already_processed?(file_path)
     filename = File.basename(file_path, ".md")
-    FactDb::Models::Content.exists?(title: filename)
+    FactDb::Models::Source.exists?(title: filename)
   end
 
   def process_markdown_files
@@ -189,14 +189,14 @@ class IngestDemo
     # Parse frontmatter and content
     frontmatter, body = parse_frontmatter(content_text)
 
-    # Create content record for the document
-    content = find_or_create_content(filename, content_text, frontmatter)
+    # Create source record for the document
+    source = find_or_create_source(filename, content_text, frontmatter)
 
     # Split into paragraphs/sections for processing
     sections = parse_sections(body)
 
     # Process sections with LLM extraction
-    process_sections_with_extraction(filename, sections, content)
+    process_sections_with_extraction(filename, sections, source)
   end
 
   def parse_frontmatter(content)
@@ -211,13 +211,13 @@ class IngestDemo
     [{}, content]
   end
 
-  def find_or_create_content(filename, content_text, frontmatter)
+  def find_or_create_source(filename, content_text, frontmatter)
     title = frontmatter["title"] || filename
 
-    existing = FactDb::Models::Content.find_by(title: title)
+    existing = FactDb::Models::Source.find_by(title: title)
     return existing if existing
 
-    @content_service.create(
+    @source_service.create(
       content_text,
       type: :document,
       title: title,
@@ -261,7 +261,7 @@ class IngestDemo
     sections
   end
 
-  def process_sections_with_extraction(filename, sections, content)
+  def process_sections_with_extraction(filename, sections, source)
     fact_count = 0
     entity_count = 0
     skipped_count = 0
@@ -343,7 +343,7 @@ class IngestDemo
             metadata: fact_metadata
           )
 
-          fact.add_source(content: content, type: :primary, confidence: 1.0)
+          fact.add_source(source: source, type: :primary, confidence: 1.0)
           fact_count += 1
         end
 
@@ -417,8 +417,8 @@ class IngestDemo
   def show_statistics
     puts "\n--- Database Statistics ---\n"
 
-    puts "Content:"
-    ap @content_service.stats
+    puts "Sources:"
+    ap @source_service.stats
 
     puts "\nEntities:"
     ap @entity_service.stats
@@ -429,11 +429,11 @@ class IngestDemo
     # Directory-specific stats if available
     if @directory
       dir_name = File.basename(@directory)
-      dir_content = FactDb::Models::Content.where("source_metadata->>'source_directory' = ?", dir_name).count
+      dir_sources = FactDb::Models::Source.where("source_metadata->>'source_directory' = ?", dir_name).count
       dir_facts = FactDb::Models::Fact.where("metadata->>'source_file' IS NOT NULL").count
 
       puts "\nDirectory '#{dir_name}':"
-      puts "  Documents loaded: #{dir_content}"
+      puts "  Documents loaded: #{dir_sources}"
       puts "  Facts extracted: #{dir_facts}"
     end
 

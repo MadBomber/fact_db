@@ -35,7 +35,7 @@ Extract facts from content using LLM.
 
 **Parameters:**
 
-- `content` (Models::Content) - Content to process
+- `source` (Models::Source) - Source to process
 
 **Returns:** `Array<Models::Fact>`
 
@@ -43,7 +43,7 @@ Extract facts from content using LLM.
 
 ```ruby
 extractor = LLMExtractor.new(config)
-facts = extractor.extract(content)
+facts = extractor.extract(source)
 
 facts.each do |fact|
   puts fact.fact_text
@@ -73,7 +73,7 @@ Extract temporal facts from this content. For each fact:
 4. Assess confidence level
 
 Content:
-{content.raw_text}
+{source.content}
 
 Return JSON:
 {
@@ -134,7 +134,7 @@ end
 ### 1. Validate Results
 
 ```ruby
-facts = extractor.extract(content)
+facts = extractor.extract(source)
 facts.each do |fact|
   if fact.confidence < 0.7
     fact.update!(metadata: { needs_review: true })
@@ -145,9 +145,9 @@ end
 ### 2. Cache Responses
 
 ```ruby
-cache_key = "llm:#{content.content_hash}"
+cache_key = "llm:#{source.content_hash}"
 facts = Rails.cache.fetch(cache_key) do
-  extractor.extract(content)
+  extractor.extract(source)
 end
 ```
 
@@ -157,6 +157,6 @@ end
 require 'retryable'
 
 Retryable.retryable(tries: 3, sleep: lambda { |n| 2**n }) do
-  extractor.extract(content)
+  extractor.extract(source)
 end
 ```

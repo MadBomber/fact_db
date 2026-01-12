@@ -11,7 +11,7 @@ module FactDb
 
       has_many :fact_sources, class_name: "FactDb::Models::FactSource",
                foreign_key: :fact_id, dependent: :destroy
-      has_many :source_contents, through: :fact_sources, source: :content
+      has_many :sources, through: :fact_sources, source: :source
 
       belongs_to :superseded_by, class_name: "FactDb::Models::Fact",
                  foreign_key: :superseded_by_id, optional: true
@@ -140,8 +140,8 @@ module FactDb
         end
       end
 
-      def add_source(content:, type: "primary", excerpt: nil, confidence: 1.0)
-        fact_sources.find_or_create_by!(content: content) do |s|
+      def add_source(source:, type: "primary", excerpt: nil, confidence: 1.0)
+        fact_sources.find_or_create_by!(source: source) do |s|
           s.source_type = type
           s.excerpt = excerpt
           s.confidence = confidence
@@ -162,30 +162,30 @@ module FactDb
         Fact.where(id: corroborated_by_ids)
       end
 
-      # Evidence chain - trace back to original content
+      # Evidence chain - trace back to original sources
       def evidence_chain
-        sources = source_contents.to_a
+        evidence = sources.to_a
 
         if synthesized? && derived_from_ids.any?
           source_facts.each do |source_fact|
-            sources.concat(source_fact.evidence_chain)
+            evidence.concat(source_fact.evidence_chain)
           end
         end
 
-        sources.uniq
+        evidence.uniq
       end
 
       # Returns the original source lines from which this fact was derived
       # Returns a hash with :full_section, :focused_lines, and :focused_line_numbers
       def prove_it
-        source = fact_sources.first&.content
-        return nil unless source&.raw_text
+        source = fact_sources.first&.source
+        return nil unless source&.content
 
         line_start = metadata&.dig("line_start")
         line_end = metadata&.dig("line_end")
         return nil unless line_start && line_end
 
-        lines = source.raw_text.lines
+        lines = source.content.lines
         start_idx = line_start.to_i - 1
         end_idx = line_end.to_i - 1
 

@@ -4,7 +4,7 @@ FactDb uses ActiveRecord models for data persistence.
 
 ## Core Models
 
-- [Content](content.md) - Immutable source documents
+- [Source](source.md) - Immutable source content
 - [Entity](entity.md) - Resolved identities with aliases
 - [Fact](fact.md) - Temporal assertions
 
@@ -53,14 +53,14 @@ Links facts to source content.
 ```ruby
 class FactSource < ActiveRecord::Base
   belongs_to :fact
-  belongs_to :content
+  belongs_to :source
 end
 ```
 
 | Column | Type | Description |
 |--------|------|-------------|
 | fact_id | bigint | Parent fact |
-| content_id | bigint | Source content |
+| source_id | bigint | Source content |
 | source_type | string | Type (primary, supporting, contradicting) |
 | excerpt | text | Relevant text excerpt |
 | confidence | float | Source confidence |
@@ -69,7 +69,7 @@ end
 
 ```mermaid
 erDiagram
-    Content ||--o{ FactSource : "sourced by"
+    Source ||--o{ FactSource : "sourced by"
     Entity ||--o{ EntityAlias : "has"
     Entity ||--o{ EntityMention : "mentioned in"
     Fact ||--o{ EntityMention : "mentions"

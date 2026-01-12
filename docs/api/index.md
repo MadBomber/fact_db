@@ -8,13 +8,13 @@ Complete API documentation for FactDb.
 
 ## Models
 
-- [Content](models/content.md) - Immutable source documents
+- [Source](models/source.md) - Immutable source content
 - [Entity](models/entity.md) - Resolved identities
 - [Fact](models/fact.md) - Temporal assertions
 
 ## Services
 
-- [ContentService](services/content-service.md) - Ingest and manage content
+- [SourceService](services/source-service.md) - Ingest and manage sources
 - [EntityService](services/entity-service.md) - Create and resolve entities
 - [FactService](services/fact-service.md) - Extract and query facts
 
@@ -37,14 +37,14 @@ FactDb
 ├── Config                   # Configuration
 ├── Database                 # Database connection
 ├── Models
-│   ├── Content
+│   ├── Source
 │   ├── Entity
 │   ├── EntityAlias
 │   ├── Fact
 │   ├── EntityMention
 │   └── FactSource
 ├── Services
-│   ├── ContentService
+│   ├── SourceService
 │   ├── EntityService
 │   └── FactService
 ├── Extractors

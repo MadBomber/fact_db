@@ -63,14 +63,14 @@ facts = FactDb.new
 
 ```ruby
 # Ingest an email
-content = facts.ingest(
+source = facts.ingest(
   "Hi team, Paula Chen has accepted our offer and will join as Principal Engineer starting January 10, 2024. She'll be reporting to Sarah in the Platform team.",
   type: :email,
   title: "New Hire Announcement",
   captured_at: Time.current
 )
 
-puts "Ingested content: #{content.id}"
+puts "Ingested source: #{source.id}"
 ```
 
 ## 5. Create Entities
@@ -107,7 +107,7 @@ fact = facts.fact_service.create(
     { entity: paula, role: "subject", text: "Paula Chen" }
   ],
   sources: [
-    { content: content, type: "primary" }
+    { source: source, type: "primary" }
   ]
 )
 ```
@@ -116,7 +116,7 @@ fact = facts.fact_service.create(
 
 ```ruby
 # Extract facts automatically using LLM
-extracted = facts.extract_facts(content.id, extractor: :llm)
+extracted = facts.extract_facts(source.id, extractor: :llm)
 
 extracted.each do |fact|
   puts "Extracted: #{fact.fact_text}"
@@ -167,7 +167,7 @@ end
 facts = FactDb.new
 
 # Ingest content
-content = facts.ingest(
+source = facts.ingest(
   "Paula Chen joined Microsoft as Principal Engineer on January 10, 2024.",
   type: :announcement,
   captured_at: Time.current
@@ -178,7 +178,7 @@ paula = facts.entity_service.create("Paula Chen", type: :person)
 microsoft = facts.entity_service.create("Microsoft", type: :organization)
 
 # Extract facts via LLM
-extracted = facts.extract_facts(content.id, extractor: :llm)
+extracted = facts.extract_facts(source.id, extractor: :llm)
 
 # Query
 puts "Current facts about Paula:"

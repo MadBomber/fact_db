@@ -6,18 +6,18 @@ FactDb uses PostgreSQL with the pgvector extension for semantic search capabilit
 
 ```mermaid
 erDiagram
-    contents ||--o{ fact_sources : "sourced by"
+    sources ||--o{ fact_sources : "sourced by"
     entities ||--o{ entity_aliases : "has"
     entities ||--o{ entity_mentions : "mentioned in"
     facts ||--o{ entity_mentions : "mentions"
     facts ||--o{ fact_sources : "sourced from"
     facts ||--o| facts : "superseded by"
 
-    contents {
+    sources {
         bigint id PK
         string content_hash UK
         string content_type
-        text raw_text
+        text content
         string title
         string source_uri
         jsonb source_metadata
@@ -74,7 +74,7 @@ erDiagram
     fact_sources {
         bigint id PK
         bigint fact_id FK
-        bigint content_id FK
+        bigint source_id FK
         string source_type
         text excerpt
         float confidence
@@ -83,16 +83,16 @@ erDiagram
 
 ## Tables
 
-### contents
+### sources
 
-Stores immutable source documents.
+Stores immutable source content.
 
 ```sql
-CREATE TABLE contents (
+CREATE TABLE sources (
     id BIGSERIAL PRIMARY KEY,
     content_hash VARCHAR(64) NOT NULL UNIQUE,
     content_type VARCHAR(50) NOT NULL,
-    raw_text TEXT NOT NULL,
+    content TEXT NOT NULL,
     title VARCHAR(255),
     source_uri TEXT,
     source_metadata JSONB NOT NULL DEFAULT '{}',
@@ -101,10 +101,10 @@ CREATE TABLE contents (
     created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 
-CREATE INDEX idx_contents_type ON contents(content_type);
-CREATE INDEX idx_contents_captured ON contents(captured_at);
-CREATE INDEX idx_contents_text ON contents USING gin(to_tsvector('english', raw_text));
-CREATE INDEX idx_contents_embedding ON contents USING hnsw(embedding vector_cosine_ops);
+CREATE INDEX idx_sources_type ON sources(content_type);
+CREATE INDEX idx_sources_captured ON sources(captured_at);
+CREATE INDEX idx_sources_text ON sources USING gin(to_tsvector('english', content));
+CREATE INDEX idx_sources_embedding ON sources USING hnsw(embedding vector_cosine_ops);
 ```
 
 ### entities
@@ -205,15 +205,15 @@ Links facts to source content.
 CREATE TABLE fact_sources (
     id BIGSERIAL PRIMARY KEY,
     fact_id BIGINT NOT NULL REFERENCES facts(id) ON DELETE CASCADE,
-    content_id BIGINT NOT NULL REFERENCES contents(id),
+    source_id BIGINT NOT NULL REFERENCES sources(id),
     source_type VARCHAR(50) NOT NULL DEFAULT 'primary',
     excerpt TEXT,
     confidence FLOAT DEFAULT 1.0
 );
 
-CREATE INDEX idx_sources_fact ON fact_sources(fact_id);
-CREATE INDEX idx_sources_content ON fact_sources(content_id);
-CREATE INDEX idx_sources_type ON fact_sources(source_type);
+CREATE INDEX idx_fact_sources_fact ON fact_sources(fact_id);
+CREATE INDEX idx_fact_sources_source ON fact_sources(source_id);
+CREATE INDEX idx_fact_sources_type ON fact_sources(source_type);
 ```
 
 ## Vector Indexes
@@ -221,8 +221,8 @@ CREATE INDEX idx_sources_type ON fact_sources(source_type);
 FactDb uses HNSW indexes for fast approximate nearest neighbor search:
 
 ```sql
--- Contents semantic search
-CREATE INDEX idx_contents_embedding ON contents
+-- Sources semantic search
+CREATE INDEX idx_sources_embedding ON sources
     USING hnsw(embedding vector_cosine_ops)
     WITH (m = 16, ef_construction = 64);
 
@@ -269,7 +269,7 @@ ORDER BY f.valid_at ASC;
 
 ```sql
 SELECT *, embedding <=> '[...]' AS distance
-FROM contents
+FROM sources
 ORDER BY embedding <=> '[...]'
 LIMIT 10;
 ```
@@ -279,7 +279,7 @@ LIMIT 10;
 ### Vacuum and Analyze
 
 ```sql
-VACUUM ANALYZE contents;
+VACUUM ANALYZE sources;
 VACUUM ANALYZE entities;
 VACUUM ANALYZE facts;
 ```
@@ -287,7 +287,7 @@ VACUUM ANALYZE facts;
 ### Reindex Vectors
 
 ```sql
-REINDEX INDEX idx_contents_embedding;
+REINDEX INDEX idx_sources_embedding;
 REINDEX INDEX idx_entities_embedding;
 REINDEX INDEX idx_facts_embedding;
 ```

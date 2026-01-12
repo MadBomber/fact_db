@@ -96,14 +96,14 @@ facts.fact_service.create(
     { entity: paula, role: "subject", text: "Paula Chen" },
     { entity: acme, role: "organization", text: "Acme Corporation" }
   ],
-  sources: [{ content: offer_letter, type: "primary" }]
+  sources: [{ source: offer_letter, type: "primary" }]
 )
 
 facts.fact_service.create(
   "Paula Chen's title is Software Engineer",
   valid_at: Date.parse("2022-03-01"),
   mentions: [{ entity: paula, role: "subject", text: "Paula Chen" }],
-  sources: [{ content: offer_letter, type: "primary" }]
+  sources: [{ source: offer_letter, type: "primary" }]
 )
 
 facts.fact_service.create(
@@ -113,7 +113,7 @@ facts.fact_service.create(
     { entity: paula, role: "subject", text: "Paula Chen" },
     { entity: john, role: "object", text: "John Smith" }
   ],
-  sources: [{ content: offer_letter, type: "primary" }]
+  sources: [{ source: offer_letter, type: "primary" }]
 )
 
 facts.fact_service.create(
@@ -123,7 +123,7 @@ facts.fact_service.create(
     { entity: paula, role: "subject", text: "Paula Chen" },
     { entity: engineering, role: "organization", text: "Engineering" }
   ],
-  sources: [{ content: offer_letter, type: "primary" }]
+  sources: [{ source: offer_letter, type: "primary" }]
 )
 ```
 

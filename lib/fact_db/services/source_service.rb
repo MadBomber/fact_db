@@ -2,24 +2,24 @@
 
 module FactDb
   module Services
-    class ContentService
+    class SourceService
       attr_reader :config
 
       def initialize(config = FactDb.config)
         @config = config
       end
 
-      def create(raw_text, type:, captured_at: Time.current, metadata: {}, title: nil, source_uri: nil)
-        content_hash = Digest::SHA256.hexdigest(raw_text)
+      def create(content, type:, captured_at: Time.current, metadata: {}, title: nil, source_uri: nil)
+        content_hash = Digest::SHA256.hexdigest(content)
 
         # Check for duplicate content
-        existing = Models::Content.find_by(content_hash: content_hash)
+        existing = Models::Source.find_by(content_hash: content_hash)
         return existing if existing
 
-        embedding = generate_embedding(raw_text)
+        embedding = generate_embedding(content)
 
-        Models::Content.create!(
-          raw_text: raw_text,
+        Models::Source.create!(
+          content: content,
           content_hash: content_hash,
           content_type: type.to_s,
           title: title,
@@ -31,15 +31,15 @@ module FactDb
       end
 
       def find(id)
-        Models::Content.find(id)
+        Models::Source.find(id)
       end
 
       def find_by_hash(hash)
-        Models::Content.find_by(content_hash: hash)
+        Models::Source.find_by(content_hash: hash)
       end
 
       def search(query, type: nil, from: nil, to: nil, limit: 20)
-        scope = Models::Content.search_text(query)
+        scope = Models::Source.search_text(query)
         scope = scope.by_type(type) if type
         scope = scope.captured_after(from) if from
         scope = scope.captured_before(to) if to
@@ -48,33 +48,33 @@ module FactDb
 
       def semantic_search(query, limit: 20)
         embedding = generate_embedding(query)
-        return Models::Content.none unless embedding
+        return Models::Source.none unless embedding
 
-        Models::Content.nearest_neighbors(embedding, limit: limit)
+        Models::Source.nearest_neighbors(embedding, limit: limit)
       end
 
       def by_type(type, limit: nil)
-        scope = Models::Content.by_type(type).order(captured_at: :desc)
+        scope = Models::Source.by_type(type).order(captured_at: :desc)
         scope = scope.limit(limit) if limit
         scope
       end
 
       def between(from, to)
-        Models::Content.captured_between(from, to).order(captured_at: :asc)
+        Models::Source.captured_between(from, to).order(captured_at: :asc)
       end
 
       def recent(limit: 10)
-        Models::Content.order(captured_at: :desc).limit(limit)
+        Models::Source.order(captured_at: :desc).limit(limit)
       end
 
       def stats
         {
-          total: Models::Content.count,
-          total_count: Models::Content.count,
-          by_type: Models::Content.group(:content_type).count,
-          earliest: Models::Content.minimum(:captured_at),
-          latest: Models::Content.maximum(:captured_at),
-          total_words: Models::Content.sum("array_length(regexp_split_to_array(raw_text, '\\s+'), 1)")
+          total: Models::Source.count,
+          total_count: Models::Source.count,
+          by_type: Models::Source.group(:content_type).count,
+          earliest: Models::Source.minimum(:captured_at),
+          latest: Models::Source.maximum(:captured_at),
+          total_words: Models::Source.sum("array_length(regexp_split_to_array(content, '\\s+'), 1)")
         }
       end
 

@@ -254,11 +254,11 @@ people = FactDb::Models::Entity
   .where.not(resolution_status: 'merged')
 ```
 
-### Find Entities in Content
+### Find Entities in Source
 
 ```ruby
-# Find all entities mentioned in a content
-entities = facts.entity_service.in_content(content.id)
+# Find all entities mentioned in a source
+entities = facts.entity_service.in_source(source.id)
 ```
 
 ### Find Related Entities

@@ -48,7 +48,7 @@ graph TB
     end
 
     subgraph FactDb["FactDb Core"]
-        CS[ContentService]
+        SS[SourceService]
         ES[EntityService]
         FS[FactService]
 
@@ -70,17 +70,17 @@ graph TB
     end
 
     subgraph Storage["PostgreSQL + pgvector"]
-        Contents[(Contents)]
+        Sources[(Sources)]
         Entities[(Entities)]
         Facts[(Facts)]
     end
 
-    Email --> CS
-    Doc --> CS
-    News --> CS
-    API --> CS
+    Email --> SS
+    Doc --> SS
+    News --> SS
+    API --> SS
 
-    CS --> Contents
+    SS --> Sources
     ES --> Entities
     FS --> Facts
 
@@ -93,7 +93,7 @@ graph TB
     style Doc fill:#1E40AF,stroke:#1E3A8A,color:#FFFFFF
     style News fill:#1E40AF,stroke:#1E3A8A,color:#FFFFFF
     style API fill:#1E40AF,stroke:#1E3A8A,color:#FFFFFF
-    style CS fill:#B45309,stroke:#92400E,color:#FFFFFF
+    style SS fill:#B45309,stroke:#92400E,color:#FFFFFF
     style ES fill:#B45309,stroke:#92400E,color:#FFFFFF
     style FS fill:#B45309,stroke:#92400E,color:#FFFFFF
     style ME fill:#047857,stroke:#065F46,color:#FFFFFF
@@ -103,7 +103,7 @@ graph TB
     style FR fill:#C2410C,stroke:#9A3412,color:#FFFFFF
     style EP fill:#7C3AED,stroke:#6D28D9,color:#FFFFFF
     style RP fill:#7C3AED,stroke:#6D28D9,color:#FFFFFF
-    style Contents fill:#B91C1C,stroke:#991B1B,color:#FFFFFF
+    style Sources fill:#B91C1C,stroke:#991B1B,color:#FFFFFF
     style Entities fill:#B91C1C,stroke:#991B1B,color:#FFFFFF
     style Facts fill:#B91C1C,stroke:#991B1B,color:#FFFFFF
 ```
@@ -112,7 +112,7 @@ graph TB
 
 ### Services
 
-- **ContentService** - Ingests and manages source content
+- **SourceService** - Ingests and manages source content
 - **EntityService** - Creates and resolves entities
 - **FactService** - Extracts, creates, and queries facts
 

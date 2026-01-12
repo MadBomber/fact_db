@@ -62,10 +62,10 @@ end
 facts = FactDb.new
 
 # Ingest content
-content = facts.ingest("Important information...", type: :document)
+source = facts.ingest("Important information...", type: :document)
 
 # Extract and query facts
-extracted = facts.extract_facts(content.id)
+extracted = facts.extract_facts(source.id)
 ```
 
 Continue to the [Installation Guide](installation.md) to begin.

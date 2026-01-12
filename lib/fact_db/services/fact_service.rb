@@ -11,7 +11,7 @@ module FactDb
         @entity_service = EntityService.new(config)
       end
 
-      def create(text, valid_at:, invalid_at: nil, status: :canonical, source_content_id: nil, mentions: [], extraction_method: :manual, confidence: 1.0, metadata: {})
+      def create(text, valid_at:, invalid_at: nil, status: :canonical, source_id: nil, mentions: [], extraction_method: :manual, confidence: 1.0, metadata: {})
         embedding = generate_embedding(text)
 
         fact = Models::Fact.create!(
@@ -25,10 +25,10 @@ module FactDb
           embedding: embedding
         )
 
-        # Link to source content
-        if source_content_id
-          content = Models::Content.find(source_content_id)
-          fact.add_source(content: content, type: "primary")
+        # Link to source
+        if source_id
+          source = Models::Source.find(source_id)
+          fact.add_source(source: source, type: "primary")
         end
 
         # Add entity mentions
@@ -45,7 +45,7 @@ module FactDb
         fact
       end
 
-      def find_or_create(text, valid_at:, invalid_at: nil, status: :canonical, source_content_id: nil, mentions: [], extraction_method: :manual, confidence: 1.0, metadata: {})
+      def find_or_create(text, valid_at:, invalid_at: nil, status: :canonical, source_id: nil, mentions: [], extraction_method: :manual, confidence: 1.0, metadata: {})
         fact_hash = Digest::SHA256.hexdigest(text)
         existing = Models::Fact.find_by(fact_hash: fact_hash, valid_at: valid_at)
 
@@ -56,7 +56,7 @@ module FactDb
           valid_at: valid_at,
           invalid_at: invalid_at,
           status: status,
-          source_content_id: source_content_id,
+          source_id: source_id,
           mentions: mentions,
           extraction_method: extraction_method,
           confidence: confidence,
@@ -68,13 +68,13 @@ module FactDb
         Models::Fact.find(id)
       end
 
-      def extract_from_content(content_id, extractor: config.default_extractor)
-        content = Models::Content.find(content_id)
+      def extract_from_source(source_id, extractor: config.default_extractor)
+        source = Models::Source.find(source_id)
         extractor_instance = Extractors::Base.for(extractor, config)
 
         extracted = extractor_instance.extract(
-          content.raw_text,
-          { captured_at: content.captured_at }
+          source.content,
+          { captured_at: source.captured_at }
         )
 
         extracted.map do |fact_data|
@@ -82,7 +82,7 @@ module FactDb
             fact_data[:text],
             valid_at: fact_data[:valid_at],
             invalid_at: fact_data[:invalid_at],
-            source_content_id: content_id,
+            source_id: source_id,
             mentions: fact_data[:mentions],
             extraction_method: fact_data[:extraction_method] || extractor,
             confidence: fact_data[:confidence] || 1.0,
@@ -90,6 +90,9 @@ module FactDb
           )
         end
       end
+
+      # Alias for backward compatibility
+      alias extract_from_content extract_from_source
 
       def query(topic: nil, at: nil, entity: nil, status: :canonical, limit: nil)
         Temporal::Query.new.execute(

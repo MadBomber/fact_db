@@ -9,7 +9,7 @@ require_relative "fact_db/config"
 require_relative "fact_db/database"
 
 # Models
-require_relative "fact_db/models/content"
+require_relative "fact_db/models/source"
 require_relative "fact_db/models/entity"
 require_relative "fact_db/models/entity_alias"
 require_relative "fact_db/models/fact"
@@ -42,7 +42,7 @@ require_relative "fact_db/pipeline/extraction_pipeline"
 require_relative "fact_db/pipeline/resolution_pipeline"
 
 # Services
-require_relative "fact_db/services/content_service"
+require_relative "fact_db/services/source_service"
 require_relative "fact_db/services/entity_service"
 require_relative "fact_db/services/fact_service"
 
@@ -65,14 +65,14 @@ module FactDb
     # Available retrieval strategies
     STRATEGIES = %i[auto semantic fulltext graph temporal hybrid].freeze
 
-    attr_reader :config, :content_service, :entity_service, :fact_service,
+    attr_reader :config, :source_service, :entity_service, :fact_service,
                 :extraction_pipeline, :resolution_pipeline
 
     def initialize(config: nil)
       @config = config || FactDb.config
       Database.establish_connection!(@config)
 
-      @content_service = Services::ContentService.new(@config)
+      @source_service = Services::SourceService.new(@config)
       @entity_service = Services::EntityService.new(@config)
       @fact_service = Services::FactService.new(@config)
       @extraction_pipeline = Pipeline::ExtractionPipeline.new(@config)
@@ -81,9 +81,9 @@ module FactDb
     end
 
     # Ingest raw content
-    def ingest(raw_text, type:, captured_at: Time.current, metadata: {}, title: nil, source_uri: nil)
-      @content_service.create(
-        raw_text,
+    def ingest(content, type:, captured_at: Time.current, metadata: {}, title: nil, source_uri: nil)
+      @source_service.create(
+        content,
         type: type,
         captured_at: captured_at,
         metadata: metadata,
@@ -92,9 +92,9 @@ module FactDb
       )
     end
 
-    # Extract facts from content
-    def extract_facts(content_id, extractor: @config.default_extractor)
-      @fact_service.extract_from_content(content_id, extractor: extractor)
+    # Extract facts from source
+    def extract_facts(source_id, extractor: @config.default_extractor)
+      @fact_service.extract_from_source(source_id, extractor: extractor)
     end
 
     # Query facts with temporal and entity filtering
@@ -245,18 +245,18 @@ module FactDb
       strategies
     end
 
-    # Batch extract facts from multiple content items
+    # Batch extract facts from multiple sources
     #
-    # @param content_ids [Array<Integer>] Content IDs to process
+    # @param source_ids [Array<Integer>] Source IDs to process
     # @param extractor [Symbol] Extractor type (:manual, :llm, :rule_based)
     # @param parallel [Boolean] Whether to use parallel processing
-    # @return [Array<Hash>] Results with extracted facts per content
-    def batch_extract(content_ids, extractor: @config.default_extractor, parallel: true)
-      contents = Models::Content.where(id: content_ids).to_a
+    # @return [Array<Hash>] Results with extracted facts per source
+    def batch_extract(source_ids, extractor: @config.default_extractor, parallel: true)
+      sources = Models::Source.where(id: source_ids).to_a
       if parallel
-        @extraction_pipeline.process_parallel(contents, extractor: extractor)
+        @extraction_pipeline.process_parallel(sources, extractor: extractor)
       else
-        @extraction_pipeline.process(contents, extractor: extractor)
+        @extraction_pipeline.process(sources, extractor: extractor)
       end
     end
 
@@ -360,7 +360,7 @@ module FactDb
       {
         facts: @fact_service.stats,
         entities: @entity_service.stats,
-        content: @content_service.stats
+        sources: @source_service.stats
       }
     end
 

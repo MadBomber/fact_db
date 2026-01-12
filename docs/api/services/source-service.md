@@ -1,11 +1,11 @@
-# ContentService
+# SourceService
 
 Service for ingesting and managing source content.
 
-## Class: `FactDb::Services::ContentService`
+## Class: `FactDb::Services::SourceService`
 
 ```ruby
-service = FactDb::Services::ContentService.new(config)
+service = FactDb::Services::SourceService.new(config)
 ```
 
 ## Methods
@@ -13,26 +13,26 @@ service = FactDb::Services::ContentService.new(config)
 ### create
 
 ```ruby
-def create(raw_text, type:, captured_at: Time.current, metadata: {}, title: nil, source_uri: nil)
+def create(content, type:, captured_at: Time.current, metadata: {}, title: nil, source_uri: nil)
 ```
 
-Create new content with automatic deduplication.
+Create new source with automatic deduplication.
 
 **Parameters:**
 
-- `raw_text` (String) - Content text
+- `content` (String) - Source text content
 - `type` (Symbol) - Content type
 - `captured_at` (Time) - Capture timestamp
 - `metadata` (Hash) - Additional metadata
 - `title` (String) - Optional title
 - `source_uri` (String) - Original location
 
-**Returns:** `Models::Content`
+**Returns:** `Models::Source`
 
 **Example:**
 
 ```ruby
-content = service.create(
+source = service.create(
   "Email body text...",
   type: :email,
   title: "RE: Important",
@@ -48,9 +48,9 @@ content = service.create(
 def find(id)
 ```
 
-Find content by ID.
+Find source by ID.
 
-**Returns:** `Models::Content`
+**Returns:** `Models::Source`
 
 ---
 
@@ -60,15 +60,15 @@ Find content by ID.
 def find_by_hash(hash)
 ```
 
-Find content by SHA256 hash.
+Find source by SHA256 hash.
 
-**Returns:** `Models::Content` or `nil`
+**Returns:** `Models::Source` or `nil`
 
 **Example:**
 
 ```ruby
 hash = Digest::SHA256.hexdigest(text)
-content = service.find_by_hash(hash)
+source = service.find_by_hash(hash)
 ```
 
 ---
@@ -79,14 +79,14 @@ content = service.find_by_hash(hash)
 def search(query, limit: 20)
 ```
 
-Full-text search content.
+Full-text search sources.
 
 **Parameters:**
 
 - `query` (String) - Search query
 - `limit` (Integer) - Max results
 
-**Returns:** `Array<Models::Content>`
+**Returns:** `Array<Models::Source>`
 
 **Example:**
 
@@ -109,7 +109,7 @@ Semantic similarity search using embeddings.
 - `query` (String) - Search query
 - `limit` (Integer) - Max results
 
-**Returns:** `Array<Models::Content>`
+**Returns:** `Array<Models::Source>`
 
 **Example:**
 
@@ -125,7 +125,7 @@ results = service.semantic_search("financial performance")
 def by_type(type)
 ```
 
-Filter content by type.
+Filter sources by type.
 
 **Returns:** `ActiveRecord::Relation`
 
@@ -143,9 +143,9 @@ emails = service.by_type(:email)
 def recent(limit: 20)
 ```
 
-Get recently captured content.
+Get recently captured sources.
 
-**Returns:** `Array<Models::Content>`
+**Returns:** `Array<Models::Source>`
 
 ---
 
@@ -155,12 +155,12 @@ Get recently captured content.
 def mentioning_entity(entity_id)
 ```
 
-Find content that mentions an entity (via facts).
+Find sources that mention an entity (via facts).
 
-**Returns:** `Array<Models::Content>`
+**Returns:** `Array<Models::Source>`
 
 **Example:**
 
 ```ruby
-paula_content = service.mentioning_entity(paula.id)
+paula_sources = service.mentioning_entity(paula.id)
 ```

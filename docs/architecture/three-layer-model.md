@@ -68,7 +68,7 @@ The content layer stores raw source material that serves as evidence for facts.
 ### Example
 
 ```ruby
-content = facts.ingest(
+source = facts.ingest(
   "Paula Chen accepted the offer for Principal Engineer...",
   type: :email,
   title: "RE: Offer Letter - Paula Chen",
@@ -185,11 +185,11 @@ Facts connect to both content and entities:
 
 ```mermaid
 graph LR
-    C[Content] -->|fact_sources| F[Fact]
+    S[Source] -->|fact_sources| F[Fact]
     F -->|entity_mentions| E1[Entity 1]
     F -->|entity_mentions| E2[Entity 2]
 
-    style C fill:#1E40AF,stroke:#1E3A8A,color:#FFFFFF
+    style S fill:#1E40AF,stroke:#1E3A8A,color:#FFFFFF
     style F fill:#B91C1C,stroke:#991B1B,color:#FFFFFF
     style E1 fill:#047857,stroke:#065F46,color:#FFFFFF
     style E2 fill:#047857,stroke:#065F46,color:#FFFFFF
@@ -197,18 +197,18 @@ graph LR
 
 ## Layer Interactions
 
-### Content to Facts
+### Source to Facts
 
-Facts are extracted from content and maintain source links:
+Facts are extracted from sources and maintain source links:
 
 ```ruby
-# Extract facts from content
-extracted = facts.extract_facts(content.id, extractor: :llm)
+# Extract facts from source
+extracted = facts.extract_facts(source.id, extractor: :llm)
 
 # Each fact links back to source
-extracted.first.fact_sources.each do |source|
-  puts source.content.title
-  puts source.excerpt
+extracted.first.fact_sources.each do |fs|
+  puts fs.source.title
+  puts fs.excerpt
 end
 ```
 
@@ -231,12 +231,12 @@ end
 Query across all layers:
 
 ```ruby
-# Find all content about an entity
-contents = facts.content_service.mentioning_entity(paula.id)
+# Find all sources about an entity
+sources = facts.source_service.mentioning_entity(paula.id)
 
-# Find all entities mentioned in content
-entities = facts.entity_service.in_content(content.id)
+# Find all entities mentioned in source
+entities = facts.entity_service.in_source(source.id)
 
 # Find all facts from a specific source
-source_facts = facts.fact_service.from_content(content.id)
+source_facts = facts.fact_service.from_source(source.id)
 ```

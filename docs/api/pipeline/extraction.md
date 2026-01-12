@@ -13,14 +13,14 @@ pipeline = FactDb::Pipeline::ExtractionPipeline.new(config)
 ### process
 
 ```ruby
-def process(contents, extractor: config.default_extractor)
+def process(sources, extractor: config.default_extractor)
 ```
 
-Process content items sequentially.
+Process source items sequentially.
 
 **Parameters:**
 
-- `contents` (Array<Content>) - Content records
+- `sources` (Array<Source>) - Source records
 - `extractor` (Symbol) - Extraction method
 
 **Returns:** `Array<Hash>`
@@ -28,8 +28,8 @@ Process content items sequentially.
 **Example:**
 
 ```ruby
-contents = Models::Content.where(id: [1, 2, 3])
-results = pipeline.process(contents, extractor: :llm)
+sources = Models::Source.where(id: [1, 2, 3])
+results = pipeline.process(sources, extractor: :llm)
 ```
 
 ---
@@ -37,14 +37,14 @@ results = pipeline.process(contents, extractor: :llm)
 ### process_parallel
 
 ```ruby
-def process_parallel(contents, extractor: config.default_extractor)
+def process_parallel(sources, extractor: config.default_extractor)
 ```
 
-Process content items concurrently.
+Process source items concurrently.
 
 **Parameters:**
 
-- `contents` (Array<Content>) - Content records
+- `sources` (Array<Source>) - Source records
 - `extractor` (Symbol) - Extraction method
 
 **Returns:** `Array<Hash>`
@@ -52,10 +52,10 @@ Process content items concurrently.
 **Example:**
 
 ```ruby
-results = pipeline.process_parallel(contents, extractor: :llm)
+results = pipeline.process_parallel(sources, extractor: :llm)
 
 results.each do |result|
-  puts "Content #{result[:content_id]}:"
+  puts "Source #{result[:source_id]}:"
   puts "  Facts: #{result[:facts].count}"
   puts "  Error: #{result[:error]}" if result[:error]
 end
@@ -67,7 +67,7 @@ end
 
 ```mermaid
 graph LR
-    A[Content] --> B[Validate]
+    A[Source] --> B[Validate]
     B --> C[Extract]
     C --> D[Validate Facts]
     D --> E[Results]
@@ -79,7 +79,7 @@ graph LR
     style E fill:#B91C1C,stroke:#991B1B,color:#FFFFFF
 ```
 
-1. **Validate** - Check content is not empty
+1. **Validate** - Check source is not empty
 2. **Extract** - Run extractor
 3. **Validate Facts** - Filter valid facts
 4. **Results** - Return extracted facts
@@ -89,9 +89,9 @@ graph LR
 ```mermaid
 graph TB
     subgraph Parallel
-        A1[Content 1] --> E1[Extract 1]
-        A2[Content 2] --> E2[Extract 2]
-        A3[Content 3] --> E3[Extract 3]
+        A1[Source 1] --> E1[Extract 1]
+        A2[Source 2] --> E2[Extract 2]
+        A3[Source 3] --> E3[Extract 3]
     end
     E1 --> Aggregate
     E2 --> Aggregate
@@ -110,22 +110,22 @@ graph TB
 
 ```ruby
 {
-  content_id: 123,
+  source_id: 123,
   facts: [<Fact>, <Fact>, ...],  # Extracted facts
   error: nil                      # Error message if failed
 }
 ```
 
-## Usage via Facts
+## Usage via FactDb
 
 ```ruby
 facts = FactDb.new
 
 # Sequential
-results = facts.batch_extract(content_ids, parallel: false)
+results = facts.batch_extract(source_ids, parallel: false)
 
 # Parallel (default)
-results = facts.batch_extract(content_ids, parallel: true)
+results = facts.batch_extract(source_ids, parallel: true)
 ```
 
 ## Error Handling
@@ -133,13 +133,13 @@ results = facts.batch_extract(content_ids, parallel: true)
 The pipeline catches errors per-item:
 
 ```ruby
-results = pipeline.process_parallel(contents)
+results = pipeline.process_parallel(sources)
 
 results.each do |result|
   if result[:error]
-    logger.error "Content #{result[:content_id]}: #{result[:error]}"
+    logger.error "Source #{result[:source_id]}: #{result[:error]}"
   else
-    logger.info "Content #{result[:content_id]}: #{result[:facts].count} facts"
+    logger.info "Source #{result[:source_id]}: #{result[:facts].count} facts"
   end
 end
 ```
@@ -151,12 +151,12 @@ end
 Optimal batch size depends on:
 
 - Extractor type (LLM has rate limits)
-- Content length
+- Source length
 - System resources
 
 ```ruby
 # Process in optimal batches
-contents.each_slice(25) do |batch|
+sources.each_slice(25) do |batch|
   results = pipeline.process_parallel(batch)
   process_results(results)
 end
@@ -167,7 +167,7 @@ end
 For large batches, process and discard:
 
 ```ruby
-contents.each_slice(50) do |batch|
+sources.each_slice(50) do |batch|
   results = pipeline.process_parallel(batch)
   save_facts(results.flat_map { |r| r[:facts] })
   # Results discarded after each batch

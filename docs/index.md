@@ -34,14 +34,14 @@ require 'fact_db'
 facts = FactDb.new
 
 # Ingest content
-content = facts.ingest(
+source = facts.ingest(
   "Paula Chen joined Microsoft as Principal Engineer on January 10, 2024.",
   type: :email,
   captured_at: Time.current
 )
 
 # Extract facts using LLM
-extracted = facts.extract_facts(content.id, extractor: :llm)
+extracted = facts.extract_facts(source.id, extractor: :llm)
 
 # Query current facts about Paula
 current_facts = facts.query_facts(entity: paula.id)

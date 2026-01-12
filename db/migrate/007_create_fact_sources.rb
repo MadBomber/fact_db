@@ -5,7 +5,7 @@ class CreateFactSources < ActiveRecord::Migration[7.0]
     create_table :fact_db_fact_sources, comment: "Links facts to their source content for provenance tracking" do |t|
       t.references :fact, null: false, foreign_key: { to_table: :fact_db_facts, on_delete: :cascade },
                    comment: "The fact derived from this source"
-      t.references :content, null: false, foreign_key: { to_table: :fact_db_contents, on_delete: :cascade },
+      t.references :source, null: false, foreign_key: { to_table: :fact_db_sources, on_delete: :cascade },
                    comment: "The source content from which the fact was extracted"
       t.string :source_type, default: "primary", limit: 50,
                comment: "Relationship type: primary (direct extraction), supporting, or corroborating"
@@ -17,8 +17,8 @@ class CreateFactSources < ActiveRecord::Migration[7.0]
       t.timestamps
     end
 
-    add_index :fact_db_fact_sources, [:fact_id, :content_id], unique: true,
-              name: "idx_unique_fact_content"
+    add_index :fact_db_fact_sources, [:fact_id, :source_id], unique: true,
+              name: "idx_unique_fact_source"
 
     execute "COMMENT ON COLUMN fact_db_fact_sources.created_at IS 'When this source link was established';"
     execute "COMMENT ON COLUMN fact_db_fact_sources.updated_at IS 'When this source record was last modified';"

@@ -1,12 +1,12 @@
-# Content Model
+# Source Model
 
-Stores immutable source documents.
+Stores immutable source content from which facts are extracted.
 
-## Class: `FactDb::Models::Content`
+## Class: `FactDb::Models::Source`
 
 ```ruby
-content = FactDb::Models::Content.new(
-  raw_text: "Document content...",
+source = FactDb::Models::Source.new(
+  content: "Document content...",
   content_type: "email",
   captured_at: Time.current
 )
@@ -19,7 +19,7 @@ content = FactDb::Models::Content.new(
 | `id` | Integer | Primary key |
 | `content_hash` | String | SHA256 hash for deduplication |
 | `content_type` | String | Type (email, document, etc.) |
-| `raw_text` | Text | Original content |
+| `content` | Text | Original unmodified text content |
 | `title` | String | Optional title |
 | `source_uri` | String | Original location |
 | `source_metadata` | Hash | Additional metadata (JSONB) |
@@ -49,7 +49,7 @@ before_create :generate_embedding
 def compute_hash
 ```
 
-Computes SHA256 hash of raw_text for deduplication.
+Computes SHA256 hash of content for deduplication.
 
 ### generate_embedding
 
@@ -67,12 +67,12 @@ Generates embedding vector using configured generator.
 def self.find_or_create_by_text(text, **attributes)
 ```
 
-Find existing content by hash or create new.
+Find existing source by hash or create new.
 
 **Example:**
 
 ```ruby
-content = Content.find_or_create_by_text(
+source = Source.find_or_create_by_text(
   "Document text",
   content_type: "document",
   captured_at: Time.current
@@ -90,7 +90,7 @@ scope :by_type, ->(type) { where(content_type: type) }
 Filter by content type.
 
 ```ruby
-Content.by_type('email')
+Source.by_type('email')
 ```
 
 ### captured_between
@@ -104,30 +104,30 @@ scope :captured_between, ->(from, to) {
 Filter by capture date range.
 
 ```ruby
-Content.captured_between(1.week.ago, Time.current)
+Source.captured_between(1.week.ago, Time.current)
 ```
 
 ### search_text
 
 ```ruby
 scope :search_text, ->(query) {
-  where("raw_text @@ plainto_tsquery(?)", query)
+  where("content @@ plainto_tsquery(?)", query)
 }
 ```
 
 Full-text search.
 
 ```ruby
-Content.search_text("quarterly earnings")
+Source.search_text("quarterly earnings")
 ```
 
 ## Usage Examples
 
-### Create Content
+### Create Source
 
 ```ruby
-content = Content.create!(
-  raw_text: "Important document...",
+source = Source.create!(
+  content: "Important document...",
   content_type: "document",
   title: "Q4 Report",
   source_uri: "https://example.com/report.pdf",
@@ -143,13 +143,13 @@ content = Content.create!(
 
 ```ruby
 hash = Digest::SHA256.hexdigest("Document text")
-content = Content.find_by(content_hash: hash)
+source = Source.find_by(content_hash: hash)
 ```
 
 ### Get Related Facts
 
 ```ruby
-content.facts.each do |fact|
+source.facts.each do |fact|
   puts fact.fact_text
 end
 ```
@@ -158,7 +158,7 @@ end
 
 ```ruby
 # Requires embedding
-similar = Content
+similar = Source
   .where.not(embedding: nil)
   .order(Arel.sql("embedding <=> '#{query_embedding}'"))
   .limit(10)

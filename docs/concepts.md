@@ -167,11 +167,11 @@ Resolution strategies (in order):
 Every fact maintains links to its source:
 
 ```ruby
-fact.fact_sources.each do |source|
-  puts "Source: #{source.content.title}"
-  puts "Type: #{source.source_type}"  # primary, supporting, contradicting
-  puts "Excerpt: #{source.excerpt}"
-  puts "Confidence: #{source.confidence}"
+fact.fact_sources.each do |fact_source|
+  puts "Source: #{fact_source.source.title}"
+  puts "Type: #{fact_source.source_type}"  # primary, supporting, contradicting
+  puts "Excerpt: #{fact_source.excerpt}"
+  puts "Confidence: #{fact_source.confidence}"
 end
 ```
 

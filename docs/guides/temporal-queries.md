@@ -214,9 +214,9 @@ fact.entity_mentions.each do |mention|
 end
 
 # Source content
-fact.fact_sources.each do |source|
-  puts "Source: #{source.content.title}"
-  puts "Excerpt: #{source.excerpt}"
+fact.fact_sources.each do |fact_source|
+  puts "Source: #{fact_source.source.title}"
+  puts "Excerpt: #{fact_source.excerpt}"
 end
 
 # Superseding fact

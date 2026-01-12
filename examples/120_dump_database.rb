@@ -11,7 +11,7 @@
 #   ruby dump_database.rb --summary      # Summary only
 #   ruby dump_database.rb --entities     # Entities only
 #   ruby dump_database.rb --facts        # Facts only
-#   ruby dump_database.rb --content      # Content only
+#   ruby dump_database.rb --sources      # Sources only
 #   ruby dump_database.rb --search TERM  # Search facts/entities
 
 require_relative "utilities"
@@ -39,11 +39,11 @@ class DatabaseDumper
       dump_entities
     elsif options[:facts]
       dump_facts
-    elsif options[:content]
-      dump_content
+    elsif options[:sources]
+      dump_sources
     else
       dump_summary
-      dump_content
+      dump_sources
       dump_entities
       dump_facts
       dump_relationships
@@ -68,18 +68,18 @@ class DatabaseDumper
     puts "SUMMARY"
     puts "=" * 70
 
-    content_count = FactDb::Models::Content.count
+    source_count = FactDb::Models::Source.count
     entity_count = FactDb::Models::Entity.count
     fact_count = FactDb::Models::Fact.count
     mention_count = FactDb::Models::EntityMention.count
-    source_count = FactDb::Models::FactSource.count
+    fact_source_count = FactDb::Models::FactSource.count
 
     puts <<~SUMMARY
-      Content records:     #{content_count.to_s.rjust(6)}
+      Source records:      #{source_count.to_s.rjust(6)}
       Entity records:      #{entity_count.to_s.rjust(6)}
       Fact records:        #{fact_count.to_s.rjust(6)}
       Entity mentions:     #{mention_count.to_s.rjust(6)}
-      Fact sources:        #{source_count.to_s.rjust(6)}
+      Fact sources:        #{fact_source_count.to_s.rjust(6)}
     SUMMARY
 
     if entity_count > 0
@@ -101,45 +101,45 @@ class DatabaseDumper
       end
     end
 
-    if content_count > 0
-      puts "\nContent by type:"
-      FactDb::Models::Content.group(:content_type).count.each do |type, count|
+    if source_count > 0
+      puts "\nSources by type:"
+      FactDb::Models::Source.group(:content_type).count.each do |type, count|
         puts "  #{type.to_s.ljust(20)} #{count.to_s.rjust(6)}"
       end
     end
   end
 
-  def dump_content
+  def dump_sources
     puts "\n" + "=" * 70
-    puts "CONTENT"
+    puts "SOURCES"
     puts "=" * 70
 
-    contents = FactDb::Models::Content.order(:created_at)
+    sources = FactDb::Models::Source.order(:created_at)
 
-    if contents.empty?
-      puts "  (no content records)"
+    if sources.empty?
+      puts "  (no source records)"
       return
     end
 
-    contents.each do |content|
+    sources.each do |source|
       puts "\n#{'-' * 60}"
-      puts "ID: #{content.id}"
-      puts "Title: #{content.title || '(untitled)'}"
-      puts "Type: #{content.content_type}"
-      puts "Hash: #{content.content_hash[0..16]}..."
-      puts "Captured: #{content.captured_at}"
-      puts "Created: #{content.created_at}"
+      puts "ID: #{source.id}"
+      puts "Title: #{source.title || '(untitled)'}"
+      puts "Type: #{source.content_type}"
+      puts "Hash: #{source.content_hash[0..16]}..."
+      puts "Captured: #{source.captured_at}"
+      puts "Created: #{source.created_at}"
 
-      if content.source_metadata.present?
-        puts "Metadata: #{content.source_metadata.to_json}"
+      if source.source_metadata.present?
+        puts "Metadata: #{source.source_metadata.to_json}"
       end
 
       # Show linked facts count
-      fact_count = content.facts.count
+      fact_count = source.facts.count
       puts "Linked facts: #{fact_count}"
 
       # Preview of content
-      preview = content.raw_text.to_s.gsub(/\s+/, ' ').strip[0..200]
+      preview = source.content.to_s.gsub(/\s+/, ' ').strip[0..200]
       puts "Preview: #{preview}..." if preview.present?
     end
   end
@@ -217,9 +217,9 @@ class DatabaseDumper
       # Sources
       if fact.fact_sources.any?
         puts "Sources:"
-        fact.fact_sources.each do |source|
-          content_title = source.content&.title || "(unknown)"
-          puts "  - #{content_title} (#{source.source_type}, confidence: #{source.confidence})"
+        fact.fact_sources.each do |fact_source|
+          source_title = fact_source.source&.title || "(unknown)"
+          puts "  - #{source_title} (#{fact_source.source_type}, confidence: #{fact_source.confidence})"
         end
       end
     end
@@ -252,16 +252,16 @@ class DatabaseDumper
       end
     end
 
-    # Content with most facts
-    puts "\nContent by linked fact count:"
-    content_facts = FactDb::Models::Content
+    # Sources with most facts
+    puts "\nSources by linked fact count:"
+    source_facts = FactDb::Models::Source
       .joins(:fact_sources)
-      .group('fact_db_contents.id', 'fact_db_contents.title')
+      .group('fact_db_sources.id', 'fact_db_sources.title')
       .order(Arel.sql('count(*) DESC'))
       .limit(10)
       .count
 
-    content_facts.each do |(id, title), count|
+    source_facts.each do |(id, title), count|
       puts "  #{(title || 'untitled').to_s.ljust(40)} #{count.to_s.rjust(4)} facts"
     end
   end
@@ -302,19 +302,19 @@ class DatabaseDumper
       puts "  (no matching facts)"
     end
 
-    # Search content
-    puts "\nMatching Content:"
-    contents = FactDb::Models::Content.where(
-      "title ILIKE ? OR raw_text ILIKE ?",
+    # Search sources
+    puts "\nMatching Sources:"
+    sources = FactDb::Models::Source.where(
+      "title ILIKE ? OR content ILIKE ?",
       "%#{term}%", "%#{term}%"
     ).order(:title).limit(20)
 
-    if contents.any?
-      contents.each do |content|
-        puts "  [#{content.id}] #{content.title || '(untitled)'} (#{content.content_type})"
+    if sources.any?
+      sources.each do |source|
+        puts "  [#{source.id}] #{source.title || '(untitled)'} (#{source.content_type})"
       end
     else
-      puts "  (no matching content)"
+      puts "  (no matching sources)"
     end
   end
 end
@@ -331,8 +331,8 @@ if __FILE__ == $PROGRAM_NAME
       options[:entities] = true
     when "--facts"
       options[:facts] = true
-    when "--content"
-      options[:content] = true
+    when "--sources"
+      options[:sources] = true
     when "--search"
       options[:search] = ARGV[i + 1]
     when "--help", "-h"
@@ -344,8 +344,8 @@ if __FILE__ == $PROGRAM_NAME
           ruby dump_database.rb --summary      # Summary statistics only
           ruby dump_database.rb --entities     # Entities only
           ruby dump_database.rb --facts        # Facts only
-          ruby dump_database.rb --content      # Content only
-          ruby dump_database.rb --search TERM  # Search facts/entities/content
+          ruby dump_database.rb --sources      # Sources only
+          ruby dump_database.rb --search TERM  # Search facts/entities/sources
 
         Environment:
           DATABASE_URL  # PostgreSQL connection URL (default: postgres://USER@localhost/fact_db_demo)

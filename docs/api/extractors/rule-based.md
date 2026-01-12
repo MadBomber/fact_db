@@ -65,13 +65,13 @@ The extractor includes patterns for common fact types:
 ```ruby
 extractor = RuleBasedExtractor.new(config)
 
-content = Models::Content.create!(
-  raw_text: "Paula Chen joined Microsoft on January 10, 2024 as Principal Engineer.",
+source = Models::Source.create!(
+  content: "Paula Chen joined Microsoft on January 10, 2024 as Principal Engineer.",
   content_type: "announcement",
   captured_at: Time.current
 )
 
-facts = extractor.extract(content)
+facts = extractor.extract(source)
 # Returns facts about:
 # - Paula joining Microsoft
 # - Paula's title as Principal Engineer
@@ -99,20 +99,20 @@ class CustomRuleExtractor < FactDb::Extractors::RuleBasedExtractor
 
   private
 
-  def extract_custom_patterns(content)
+  def extract_custom_patterns(source)
     facts = []
     CUSTOM_PATTERNS.each do |rule|
-      content.raw_text.scan(rule[:pattern]) do |match|
-        facts << send(rule[:handler], match, content)
+      source.content.scan(rule[:pattern]) do |match|
+        facts << send(rule[:handler], match, source)
       end
     end
     facts
   end
 
-  def extract_revenue(match, content)
+  def extract_revenue(match, source)
     Models::Fact.create!(
       fact_text: "Revenue of $#{match[:amount]}",
-      valid_at: content.captured_at,
+      valid_at: source.captured_at,
       extraction_method: "rule_based",
       # ...
     )
@@ -155,11 +155,11 @@ facts = extractor.extract(content)
 facts.select { |f| f.confidence > 0.8 }
 ```
 
-### 3. Log Unmatched Content
+### 3. Log Unmatched Sources
 
 ```ruby
-facts = extractor.extract(content)
+facts = extractor.extract(source)
 if facts.empty?
-  logger.info "No patterns matched for content #{content.id}"
+  logger.info "No patterns matched for source #{source.id}"
 end
 ```

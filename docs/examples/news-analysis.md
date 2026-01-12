@@ -138,7 +138,7 @@ techcorp = facts.resolve_entity("TechCorp", type: :organization)
 # Timeline of TechCorp facts
 puts "\nTechCorp Timeline:"
 facts.timeline_for(techcorp.id).each do |fact|
-  source = fact.fact_sources.first&.content&.title || "Unknown"
+  source = fact.fact_sources.first&.source&.title || "Unknown"
   puts "  #{fact.valid_at.to_date}: #{fact.fact_text}"
   puts "    Source: #{source}"
 end
@@ -204,7 +204,7 @@ def company_report(facts, company_name)
       {
         date: f.valid_at,
         fact: f.fact_text,
-        source: f.fact_sources.first&.content&.title
+        source: f.fact_sources.first&.source&.title
       }
     }
   }
@@ -228,19 +228,19 @@ puts JSON.pretty_generate(report)
 
 ```ruby
 def process_news_feed(facts, articles)
-  content_ids = articles.map do |article|
-    content = facts.ingest(
+  source_ids = articles.map do |article|
+    source = facts.ingest(
       article[:text],
       type: :article,
       title: article[:title],
       source_uri: article[:url],
       captured_at: article[:published_at]
     )
-    content.id
+    source.id
   end
 
   # Parallel extraction
-  results = facts.batch_extract(content_ids, extractor: :llm)
+  results = facts.batch_extract(source_ids, extractor: :llm)
 
   {
     processed: results.count,
@@ -275,7 +275,7 @@ def monitor_topic(facts, topic, since: 1.week.ago)
       {
         text: f.fact_text,
         date: f.valid_at,
-        source: f.fact_sources.first&.content&.title,
+        source: f.fact_sources.first&.source&.title,
         entities: f.entity_mentions.map { |m| m.entity.canonical_name }
       }
     }

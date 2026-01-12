@@ -167,13 +167,13 @@ Filter entities by type.
 
 ---
 
-### in_content
+### in_source
 
 ```ruby
-def in_content(content_id)
+def in_source(source_id)
 ```
 
-Find entities mentioned in a content.
+Find entities mentioned in a source.
 
 **Returns:** `Array<Models::Entity>`
 

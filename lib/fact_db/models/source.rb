@@ -2,16 +2,16 @@
 
 module FactDb
   module Models
-    class Content < ActiveRecord::Base
-      self.table_name = "fact_db_contents"
+    class Source < ActiveRecord::Base
+      self.table_name = "fact_db_sources"
 
       has_many :fact_sources, class_name: "FactDb::Models::FactSource",
-               foreign_key: :content_id, dependent: :destroy
+               foreign_key: :source_id, dependent: :destroy
       has_many :facts, through: :fact_sources
 
       validates :content_hash, presence: true, uniqueness: true
       validates :content_type, presence: true
-      validates :raw_text, presence: true
+      validates :content, presence: true
       validates :captured_at, presence: true
 
       before_validation :generate_content_hash, on: :create
@@ -28,7 +28,7 @@ module FactDb
 
       # Full-text search
       scope :search_text, lambda { |query|
-        where("to_tsvector('english', raw_text) @@ plainto_tsquery('english', ?)", query)
+        where("to_tsvector('english', content) @@ plainto_tsquery('english', ?)", query)
       }
 
       # Vector similarity search (requires neighbor gem configured)
@@ -43,19 +43,19 @@ module FactDb
       end
 
       def word_count
-        raw_text.split.size
+        content.split.size
       end
 
       def preview(length: 200)
-        return raw_text if raw_text.length <= length
+        return content if content.length <= length
 
-        "#{raw_text[0, length]}..."
+        "#{content[0, length]}..."
       end
 
       private
 
       def generate_content_hash
-        self.content_hash = Digest::SHA256.hexdigest(raw_text) if raw_text.present?
+        self.content_hash = Digest::SHA256.hexdigest(content) if content.present?
       end
     end
   end

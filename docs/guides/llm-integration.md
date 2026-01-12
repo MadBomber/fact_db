@@ -93,13 +93,13 @@ PROVIDER_DEFAULTS = {
 facts = FactDb.new
 
 # Ingest content
-content = facts.ingest(
+source = facts.ingest(
   "Paula Chen joined Microsoft as Principal Engineer on January 10, 2024. She previously worked at Google for 5 years.",
   type: :announcement
 )
 
 # Extract facts using LLM
-extracted = facts.extract_facts(content.id, extractor: :llm)
+extracted = facts.extract_facts(source.id, extractor: :llm)
 
 extracted.each do |fact|
   puts "Fact: #{fact.fact_text}"
@@ -130,7 +130,7 @@ Extract temporal facts from this content. For each fact:
 4. Assess confidence level
 
 Content:
-{content.raw_text}
+{source.content}
 
 Return JSON:
 {
@@ -182,12 +182,12 @@ puts response
 
 ```ruby
 begin
-  extracted = facts.extract_facts(content.id, extractor: :llm)
+  extracted = facts.extract_facts(source.id, extractor: :llm)
 rescue FactDb::ConfigurationError => e
   # LLM not configured or ruby_llm missing
   puts "LLM Error: #{e.message}"
   # Fall back to rule-based
-  extracted = facts.extract_facts(content.id, extractor: :rule_based)
+  extracted = facts.extract_facts(source.id, extractor: :rule_based)
 rescue StandardError => e
   # API error, rate limit, etc.
   puts "Extraction failed: #{e.message}"
@@ -199,16 +199,16 @@ end
 Process multiple documents efficiently:
 
 ```ruby
-content_ids = [content1.id, content2.id, content3.id]
+source_ids = [content1.id, content2.id, content3.id]
 
 # Parallel processing (uses simple_flow pipeline)
-results = facts.batch_extract(content_ids, extractor: :llm, parallel: true)
+results = facts.batch_extract(source_ids, extractor: :llm, parallel: true)
 
 results.each do |result|
   if result[:error]
-    puts "Error for #{result[:content_id]}: #{result[:error]}"
+    puts "Error for #{result[:source_id]}: #{result[:error]}"
   else
-    puts "Extracted #{result[:facts].count} facts from #{result[:content_id]}"
+    puts "Extracted #{result[:facts].count} facts from #{result[:source_id]}"
   end
 end
 ```
@@ -229,7 +229,7 @@ config.llm.model = "gpt-4o"
 
 ```ruby
 # Process in batches to reduce API calls
-content_ids.each_slice(10) do |batch|
+source_ids.each_slice(10) do |batch|
   facts.batch_extract(batch, extractor: :llm)
   sleep(1)  # Rate limiting
 end
@@ -267,7 +267,7 @@ end
 ### 1. Validate Extractions
 
 ```ruby
-extracted = facts.extract_facts(content.id, extractor: :llm)
+extracted = facts.extract_facts(source.id, extractor: :llm)
 
 extracted.each do |fact|
   # Flag low-confidence extractions
@@ -281,9 +281,9 @@ end
 
 ```ruby
 # Cache LLM responses for repeated content
-cache_key = "llm_extraction:#{content.content_hash}"
+cache_key = "llm_extraction:#{source.content_hash}"
 extracted = Rails.cache.fetch(cache_key) do
-  facts.extract_facts(content.id, extractor: :llm)
+  facts.extract_facts(source.id, extractor: :llm)
 end
 ```
 
@@ -293,7 +293,7 @@ end
 require 'retryable'
 
 Retryable.retryable(tries: 3, sleep: 5) do
-  facts.extract_facts(content.id, extractor: :llm)
+  facts.extract_facts(source.id, extractor: :llm)
 end
 ```
 
@@ -301,7 +301,7 @@ end
 
 ```ruby
 # Track extraction statistics
-extracted = facts.extract_facts(content.id, extractor: :llm)
+extracted = facts.extract_facts(source.id, extractor: :llm)
 StatsD.increment('fact_db.llm_extractions')
 StatsD.histogram('fact_db.facts_per_content', extracted.count)
 ```

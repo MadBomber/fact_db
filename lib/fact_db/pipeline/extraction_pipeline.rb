@@ -4,16 +4,16 @@ require "simple_flow"
 
 module FactDb
   module Pipeline
-    # Pipeline for extracting facts from content using SimpleFlow
-    # Supports parallel processing of multiple content items
+    # Pipeline for extracting facts from sources using SimpleFlow
+    # Supports parallel processing of multiple source items
     #
     # @example Sequential extraction
     #   pipeline = ExtractionPipeline.new(config)
-    #   results = pipeline.process([content1, content2], extractor: :llm)
+    #   results = pipeline.process([source1, source2], extractor: :llm)
     #
     # @example Parallel extraction
     #   pipeline = ExtractionPipeline.new(config)
-    #   results = pipeline.process_parallel([content1, content2, content3], extractor: :llm)
+    #   results = pipeline.process_parallel([source1, source2, source3], extractor: :llm)
     #
     class ExtractionPipeline
       attr_reader :config
@@ -22,40 +22,40 @@ module FactDb
         @config = config
       end
 
-      # Process multiple content items sequentially
+      # Process multiple source items sequentially
       #
-      # @param contents [Array<Models::Content>] Content records to process
+      # @param sources [Array<Models::Source>] Source records to process
       # @param extractor [Symbol] Extractor type (:manual, :llm, :rule_based)
-      # @return [Array<Hash>] Results with extracted facts per content
-      def process(contents, extractor: config.default_extractor)
+      # @return [Array<Hash>] Results with extracted facts per source
+      def process(sources, extractor: config.default_extractor)
         pipeline = build_extraction_pipeline(extractor)
 
-        contents.map do |content|
-          result = pipeline.call(SimpleFlow::Result.new(content))
+        sources.map do |source|
+          result = pipeline.call(SimpleFlow::Result.new(source))
           {
-            content_id: content.id,
+            source_id: source.id,
             facts: result.success? ? result.value : [],
             error: result.halted? ? result.error : nil
           }
         end
       end
 
-      # Process multiple content items in parallel
+      # Process multiple source items in parallel
       # Uses SimpleFlow's parallel execution capabilities
       #
-      # @param contents [Array<Models::Content>] Content records to process
+      # @param sources [Array<Models::Source>] Source records to process
       # @param extractor [Symbol] Extractor type (:manual, :llm, :rule_based)
-      # @return [Array<Hash>] Results with extracted facts per content
-      def process_parallel(contents, extractor: config.default_extractor)
-        pipeline = build_parallel_pipeline(contents, extractor)
-        initial_result = SimpleFlow::Result.new(contents: contents, results: {})
+      # @return [Array<Hash>] Results with extracted facts per source
+      def process_parallel(sources, extractor: config.default_extractor)
+        pipeline = build_parallel_pipeline(sources, extractor)
+        initial_result = SimpleFlow::Result.new(sources: sources, results: {})
 
         final_result = pipeline.call(initial_result)
 
-        contents.map do |content|
-          result = final_result.value[:results][content.id]
+        sources.map do |source|
+          result = final_result.value[:results][source.id]
           {
-            content_id: content.id,
+            source_id: source.id,
             facts: result&.dig(:facts) || [],
             error: result&.dig(:error)
           }
@@ -68,21 +68,21 @@ module FactDb
         extractor_instance = get_extractor(extractor)
 
         SimpleFlow::Pipeline.new do
-          # Step 1: Validate content
+          # Step 1: Validate source
           step ->(result) {
-            content = result.value
-            if content.nil? || content.raw_text.blank?
-              result.halt("Content is empty or missing")
+            source = result.value
+            if source.nil? || source.content.blank?
+              result.halt("Source content is empty or missing")
             else
-              result.continue(content)
+              result.continue(source)
             end
           }
 
           # Step 2: Extract facts
           step ->(result) {
-            content = result.value
+            source = result.value
             begin
-              facts = extractor_instance.extract(content)
+              facts = extractor_instance.extract(source)
               result.continue(facts)
             rescue StandardError => e
               result.halt("Extraction failed: #{e.message}")
@@ -98,24 +98,24 @@ module FactDb
         end
       end
 
-      def build_parallel_pipeline(contents, extractor)
+      def build_parallel_pipeline(sources, extractor)
         extractor_instance = get_extractor(extractor)
 
         SimpleFlow::Pipeline.new do
-          # Create a step for each content item
-          contents.each do |content|
-            step "extract_#{content.id}", depends_on: [] do |result|
+          # Create a step for each source item
+          sources.each do |source|
+            step "extract_#{source.id}", depends_on: [] do |result|
               begin
-                facts = extractor_instance.extract(content)
+                facts = extractor_instance.extract(source)
                 valid_facts = facts.select { |f| f.valid? }
 
                 new_results = result.value[:results].merge(
-                  content.id => { facts: valid_facts, error: nil }
+                  source.id => { facts: valid_facts, error: nil }
                 )
                 result.continue(result.value.merge(results: new_results))
               rescue StandardError => e
                 new_results = result.value[:results].merge(
-                  content.id => { facts: [], error: e.message }
+                  source.id => { facts: [], error: e.message }
                 )
                 result.continue(result.value.merge(results: new_results))
               end
@@ -123,7 +123,7 @@ module FactDb
           end
 
           # Aggregate results
-          step "aggregate", depends_on: contents.map { |c| "extract_#{c.id}" } do |result|
+          step "aggregate", depends_on: sources.map { |s| "extract_#{s.id}" } do |result|
             result.continue(result.value)
           end
         end

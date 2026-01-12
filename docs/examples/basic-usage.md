@@ -85,7 +85,7 @@ fact1 = facts.fact_service.create(
     { entity: microsoft, role: "organization", text: "Microsoft" }
   ],
   sources: [
-    { content: email, type: "primary" }
+    { source: email, type: "primary" }
   ]
 )
 
@@ -97,7 +97,7 @@ fact2 = facts.fact_service.create(
     { entity: sarah, role: "object", text: "Sarah Johnson" }
   ],
   sources: [
-    { content: email, type: "primary" }
+    { source: email, type: "primary" }
   ]
 )
 
@@ -109,7 +109,7 @@ fact3 = facts.fact_service.create(
     { entity: platform_team, role: "organization", text: "Platform Team" }
   ],
   sources: [
-    { content: email, type: "primary" }
+    { source: email, type: "primary" }
   ]
 )
 
@@ -212,7 +212,7 @@ end
 facts = FactDb.new
 
 # Ingest
-content = facts.ingest("Paula joined Microsoft on Jan 10, 2024", type: :note)
+source = facts.ingest("Paula joined Microsoft on Jan 10, 2024", type: :note)
 
 # Create entities
 paula = facts.entity_service.create("Paula", type: :person)
@@ -226,7 +226,7 @@ fact = facts.fact_service.create(
     { entity: paula, role: "subject", text: "Paula" },
     { entity: microsoft, role: "organization", text: "Microsoft" }
   ],
-  sources: [{ content: content, type: "primary" }]
+  sources: [{ source: source, type: "primary" }]
 )
 
 # Query

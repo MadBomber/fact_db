@@ -46,7 +46,7 @@ fact = service.create(
     { entity: paula, role: "subject", text: "Paula Chen" }
   ],
   sources: [
-    { content: email, type: "primary" }
+    { source: email, type: "primary" }
   ]
 )
 ```
@@ -65,17 +65,17 @@ Find fact by ID.
 
 ---
 
-### extract_from_content
+### extract_from_source
 
 ```ruby
-def extract_from_content(content_id, extractor: config.default_extractor)
+def extract_from_source(source_id, extractor: config.default_extractor)
 ```
 
-Extract facts from content using specified extractor.
+Extract facts from source using specified extractor.
 
 **Parameters:**
 
-- `content_id` (Integer) - Content ID
+- `source_id` (Integer) - Source ID
 - `extractor` (Symbol) - Extractor type (:manual, :llm, :rule_based)
 
 **Returns:** `Array<Models::Fact>`
@@ -83,7 +83,7 @@ Extract facts from content using specified extractor.
 **Example:**
 
 ```ruby
-facts = service.extract_from_content(content.id, extractor: :llm)
+facts = service.extract_from_source(source.id, extractor: :llm)
 ```
 
 ---
@@ -148,13 +148,13 @@ end
 
 ---
 
-### from_content
+### from_source
 
 ```ruby
-def from_content(content_id)
+def from_source(source_id)
 ```
 
-Get facts sourced from specific content.
+Get facts sourced from specific source.
 
 **Returns:** `Array<Models::Fact>`
 

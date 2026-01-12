@@ -20,10 +20,10 @@ Process content one at a time:
 ```ruby
 facts = FactDb.new
 
-content_ids = [content1.id, content2.id, content3.id]
+source_ids = [content1.id, content2.id, content3.id]
 
 results = facts.batch_extract(
-  content_ids,
+  source_ids,
   extractor: :llm,
   parallel: false
 )
@@ -35,13 +35,13 @@ Process content concurrently (default):
 
 ```ruby
 results = facts.batch_extract(
-  content_ids,
+  source_ids,
   extractor: :llm,
   parallel: true  # default
 )
 
 results.each do |result|
-  puts "Content #{result[:content_id]}:"
+  puts "Content #{result[:source_id]}:"
   puts "  Facts extracted: #{result[:facts].count}"
   puts "  Error: #{result[:error]}" if result[:error]
 end
@@ -51,7 +51,7 @@ end
 
 ```ruby
 result = {
-  content_id: 123,
+  source_id: 123,
   facts: [<Fact>, <Fact>, ...],  # Extracted facts
   error: nil                      # Error message if failed
 }
@@ -153,7 +153,7 @@ pipeline = SimpleFlow::Pipeline.new do
   # Step 1: Validate
   step ->(result) {
     content = result.value
-    if content.raw_text.blank?
+    if source.content.blank?
       result.halt("Empty content")
     else
       result.continue(content)
@@ -182,7 +182,7 @@ result = pipeline.call(SimpleFlow::Result.new(content))
 ### Graceful Degradation
 
 ```ruby
-results = facts.batch_extract(content_ids, extractor: :llm)
+results = facts.batch_extract(source_ids, extractor: :llm)
 
 successful = results.select { |r| r[:error].nil? }
 failed = results.reject { |r| r[:error].nil? }
@@ -192,7 +192,7 @@ puts "Failed: #{failed.count}"
 
 # Retry failed items with different extractor
 if failed.any?
-  retry_ids = failed.map { |r| r[:content_id] }
+  retry_ids = failed.map { |r| r[:source_id] }
   retry_results = facts.batch_extract(retry_ids, extractor: :rule_based)
 end
 ```
@@ -204,7 +204,7 @@ results.each do |result|
   if result[:error]
     logger.error(
       "Extraction failed",
-      content_id: result[:content_id],
+      source_id: result[:source_id],
       error: result[:error]
     )
   end
@@ -217,7 +217,7 @@ end
 
 ```ruby
 # Process in batches of 10-50 for optimal performance
-content_ids.each_slice(25) do |batch|
+source_ids.each_slice(25) do |batch|
   results = facts.batch_extract(batch, parallel: true)
   process_results(results)
 end
@@ -228,7 +228,7 @@ end
 For LLM extraction, add delays between batches:
 
 ```ruby
-content_ids.each_slice(10) do |batch|
+source_ids.each_slice(10) do |batch|
   results = facts.batch_extract(batch, extractor: :llm)
   process_results(results)
   sleep(2)  # Rate limit
@@ -239,7 +239,7 @@ end
 
 ```ruby
 # Process results immediately to avoid memory buildup
-content_ids.each_slice(50) do |batch|
+source_ids.each_slice(50) do |batch|
   results = facts.batch_extract(batch)
 
   results.each do |result|
@@ -259,7 +259,7 @@ Track batch processing metrics:
 ```ruby
 start_time = Time.now
 
-results = facts.batch_extract(content_ids, parallel: true)
+results = facts.batch_extract(source_ids, parallel: true)
 
 duration = Time.now - start_time
 success_rate = results.count { |r| r[:error].nil? }.to_f / results.count
@@ -275,18 +275,18 @@ puts "Items/second: #{(results.count / duration).round(2)}"
 
 ```ruby
 # Sequential for small batches (< 5 items)
-if content_ids.count < 5
-  results = facts.batch_extract(content_ids, parallel: false)
+if source_ids.count < 5
+  results = facts.batch_extract(source_ids, parallel: false)
 else
-  results = facts.batch_extract(content_ids, parallel: true)
+  results = facts.batch_extract(source_ids, parallel: true)
 end
 ```
 
 ### 2. Handle Partial Failures
 
 ```ruby
-def process_batch(content_ids)
-  results = facts.batch_extract(content_ids)
+def process_batch(source_ids)
+  results = facts.batch_extract(source_ids)
 
   {
     successful: results.select { |r| r[:error].nil? },
@@ -294,17 +294,17 @@ def process_batch(content_ids)
   }
 end
 
-batch_result = process_batch(content_ids)
+batch_result = process_batch(source_ids)
 retry_failed(batch_result[:failed]) if batch_result[:failed].any?
 ```
 
 ### 3. Log Progress
 
 ```ruby
-total = content_ids.count
+total = source_ids.count
 processed = 0
 
-content_ids.each_slice(25) do |batch|
+source_ids.each_slice(25) do |batch|
   results = facts.batch_extract(batch)
   processed += batch.count
 
@@ -316,10 +316,10 @@ end
 
 ```ruby
 # LLM for complex documents
-complex_docs = contents.select { |c| c.raw_text.length > 1000 }
+complex_docs = sources.select { |s| s.content.length > 1000 }
 facts.batch_extract(complex_docs.map(&:id), extractor: :llm)
 
 # Rule-based for simple, structured content
-simple_docs = contents.select { |c| c.raw_text.length <= 1000 }
+simple_docs = sources.select { |s| s.content.length <= 1000 }
 facts.batch_extract(simple_docs.map(&:id), extractor: :rule_based)
 ```

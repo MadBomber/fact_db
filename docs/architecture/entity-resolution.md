@@ -193,7 +193,7 @@ fact = facts.fact_service.create(
 The LLM extractor resolves mentions automatically:
 
 ```ruby
-extracted = facts.extract_facts(content.id, extractor: :llm)
+extracted = facts.extract_facts(source.id, extractor: :llm)
 
 extracted.each do |fact|
   fact.entity_mentions.each do |mention|

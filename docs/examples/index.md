@@ -19,10 +19,10 @@ Practical examples demonstrating FactDb usage patterns.
 facts = FactDb.new
 
 # Ingest content
-content = facts.ingest(document_text, type: :document)
+source = facts.ingest(document_text, type: :document)
 
 # Extract facts
-extracted = facts.extract_facts(content.id, extractor: :llm)
+extracted = facts.extract_facts(source.id, extractor: :llm)
 ```
 
 ### Query Current State
@@ -60,5 +60,5 @@ entity = facts.resolve_entity("Paula Chen", type: :person)
 
 ```ruby
 # Process multiple documents
-results = facts.batch_extract(content_ids, parallel: true)
+results = facts.batch_extract(source_ids, parallel: true)
 ```

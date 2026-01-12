@@ -254,10 +254,10 @@ old_fact.update!(
 ### Get Sources
 
 ```ruby
-fact.fact_sources.each do |source|
-  puts "Source: #{source.content.title}"
-  puts "Type: #{source.source_type}"
-  puts "Excerpt: #{source.excerpt}"
+fact.fact_sources.each do |fact_source|
+  puts "Source: #{fact_source.source.title}"
+  puts "Type: #{fact_source.source_type}"
+  puts "Excerpt: #{fact_source.excerpt}"
 end
 ```
 

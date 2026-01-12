@@ -24,7 +24,7 @@ fact = facts.fact_service.create(
     { entity: microsoft, role: "organization", text: "Microsoft" }
   ],
   sources: [
-    { content: content, type: "primary", excerpt: "...accepted the offer..." }
+    { source: source, type: "primary", excerpt: "...accepted the offer..." }
   ]
 )
 ```
@@ -42,8 +42,8 @@ end
 
 facts = FactDb.new
 
-# Extract facts from content
-extracted = facts.extract_facts(content.id, extractor: :llm)
+# Extract facts from source
+extracted = facts.extract_facts(source.id, extractor: :llm)
 
 extracted.each do |fact|
   puts fact.fact_text
@@ -57,7 +57,7 @@ end
 Use regex patterns for structured content:
 
 ```ruby
-extracted = facts.extract_facts(content.id, extractor: :rule_based)
+extracted = facts.extract_facts(source.id, extractor: :rule_based)
 ```
 
 The rule-based extractor includes patterns for:
@@ -76,7 +76,7 @@ FactDb.configure do |config|
 end
 
 # Uses configured default
-extracted = facts.extract_facts(content.id)
+extracted = facts.extract_facts(source.id)
 ```
 
 ## Fact Structure
@@ -127,7 +127,7 @@ Facts link to source content:
 
 ```ruby
 fact.add_source(
-  content: email_content,
+  source: email_source,
   type: "primary",
   excerpt: "Paula has accepted our offer to join as Principal Engineer...",
   confidence: 0.95
@@ -147,16 +147,16 @@ fact.add_source(
 Process multiple content items:
 
 ```ruby
-content_ids = [content1.id, content2.id, content3.id]
+source_ids = [source1.id, source2.id, source3.id]
 
 # Sequential processing
-results = facts.batch_extract(content_ids, parallel: false)
+results = facts.batch_extract(source_ids, parallel: false)
 
 # Parallel processing (default)
-results = facts.batch_extract(content_ids, parallel: true)
+results = facts.batch_extract(source_ids, parallel: true)
 
 results.each do |result|
-  puts "Content #{result[:content_id]}:"
+  puts "Source #{result[:source_id]}:"
   puts "  Facts: #{result[:facts].count}"
   puts "  Error: #{result[:error]}" if result[:error]
 end
@@ -168,11 +168,11 @@ Create custom extractors by extending the base class:
 
 ```ruby
 class MyExtractor < FactDb::Extractors::Base
-  def extract(content)
+  def extract(source)
     extracted = []
 
     # Your extraction logic here
-    # Parse content.raw_text
+    # Parse source.content
     # Create fact records
 
     extracted
@@ -180,8 +180,8 @@ class MyExtractor < FactDb::Extractors::Base
 end
 
 # Register and use
-facts.fact_service.extract_from_content(
-  content.id,
+facts.fact_service.extract_from_source(
+  source.id,
   extractor: MyExtractor.new(config)
 )
 ```
@@ -217,7 +217,7 @@ After extraction, you may want to:
 ### Resolve Entities
 
 ```ruby
-extracted = facts.extract_facts(content.id, extractor: :llm)
+extracted = facts.extract_facts(source.id, extractor: :llm)
 
 extracted.each do |fact|
   fact.entity_mentions.each do |mention|
@@ -258,7 +258,7 @@ end
 ### 1. Review LLM Extractions
 
 ```ruby
-extracted = facts.extract_facts(content.id, extractor: :llm)
+extracted = facts.extract_facts(source.id, extractor: :llm)
 
 extracted.select { |f| f.confidence < 0.8 }.each do |fact|
   # Flag for human review
@@ -282,7 +282,7 @@ end
 fact = facts.fact_service.create(
   "Important fact",
   valid_at: Date.today,
-  sources: [{ content: source_content, type: "primary" }]
+  sources: [{ source: source_record, type: "primary" }]
 )
 ```
 
@@ -290,10 +290,10 @@ fact = facts.fact_service.create(
 
 ```ruby
 begin
-  extracted = facts.extract_facts(content.id, extractor: :llm)
+  extracted = facts.extract_facts(source.id, extractor: :llm)
 rescue FactDb::ExtractionError => e
   logger.error "Extraction failed: #{e.message}"
   # Fall back to manual or rule-based
-  extracted = facts.extract_facts(content.id, extractor: :rule_based)
+  extracted = facts.extract_facts(source.id, extractor: :rule_based)
 end
 ```

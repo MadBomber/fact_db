@@ -34,15 +34,15 @@ module FactDb
       Models::Fact.delete_all
       Models::EntityAlias.delete_all
       Models::Entity.delete_all
-      Models::Content.delete_all
+      Models::Source.delete_all
     rescue ActiveRecord::StatementInvalid
       # Tables may not exist yet
     end
 
-    def create_content(raw_text: "Test content", type: "document", captured_at: Time.current, **attrs)
-      Models::Content.create!(
-        raw_text: raw_text,
-        content_hash: Digest::SHA256.hexdigest(raw_text + rand.to_s),
+    def create_source(content: "Test content", type: "document", captured_at: Time.current, **attrs)
+      Models::Source.create!(
+        content: content,
+        content_hash: Digest::SHA256.hexdigest(content + rand.to_s),
         content_type: type,
         captured_at: captured_at,
         source_metadata: {},

@@ -16,8 +16,8 @@ content = facts.ingest(
 ## Full Options
 
 ```ruby
-content = facts.ingest(
-  raw_text,
+source = facts.ingest(
+  text_content,
   type: :email,
   title: "RE: Offer Letter - Paula Chen",
   source_uri: "mailto:hr@company.com/msg/12345",
@@ -89,12 +89,12 @@ Content is automatically deduplicated by SHA256 hash:
 
 ```ruby
 # First ingestion - creates new record
-content1 = facts.ingest("Hello world", type: :note)
+source1 = facts.ingest("Hello world", type: :note)
 
 # Second ingestion - returns existing record
-content2 = facts.ingest("Hello world", type: :note)
+source2 = facts.ingest("Hello world", type: :note)
 
-content1.id == content2.id  # => true
+source1.id == source2.id  # => true
 ```
 
 ## Timestamps
@@ -132,29 +132,29 @@ contents = documents.map do |doc|
 end
 ```
 
-## Content Service
+## Source Service
 
-For advanced operations, use the content service directly:
+For advanced operations, use the source service directly:
 
 ```ruby
-# Create content
-content = facts.content_service.create(
-  raw_text,
+# Create source
+source = facts.source_service.create(
+  text_content,
   type: :document,
   title: "Annual Report"
 )
 
 # Find by ID
-content = facts.content_service.find(content_id)
+source = facts.source_service.find(source_id)
 
 # Find by hash
-content = facts.content_service.find_by_hash(sha256_hash)
+source = facts.source_service.find_by_hash(sha256_hash)
 
 # Search by text
-results = facts.content_service.search("quarterly earnings")
+results = facts.source_service.search("quarterly earnings")
 
 # Semantic search (requires embedding)
-results = facts.content_service.semantic_search(
+results = facts.source_service.semantic_search(
   "financial performance",
   limit: 10
 )

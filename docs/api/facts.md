@@ -15,7 +15,7 @@ facts = FactDb::Facts.new(config: custom_config)
 | Attribute | Type | Description |
 |-----------|------|-------------|
 | `config` | Config | Configuration instance |
-| `content_service` | ContentService | Service for content operations |
+| `source_service` | SourceService | Service for source operations |
 | `entity_service` | EntityService | Service for entity operations |
 | `fact_service` | FactService | Service for fact operations |
 | `extraction_pipeline` | ExtractionPipeline | Pipeline for batch extraction |
@@ -52,26 +52,26 @@ facts = FactDb.new(config: config)
 ### ingest
 
 ```ruby
-def ingest(raw_text, type:, captured_at: Time.current, metadata: {}, title: nil, source_uri: nil)
+def ingest(content, type:, captured_at: Time.current, metadata: {}, title: nil, source_uri: nil)
 ```
 
 Ingest raw content into the fact database.
 
 **Parameters:**
 
-- `raw_text` (String) - The content text
+- `content` (String) - The source text content
 - `type` (Symbol) - Content type (:email, :document, :article, etc.)
 - `captured_at` (Time, optional) - When content was captured
 - `metadata` (Hash, optional) - Additional metadata
 - `title` (String, optional) - Content title
 - `source_uri` (String, optional) - Original location
 
-**Returns:** `Models::Content`
+**Returns:** `Models::Source`
 
 **Example:**
 
 ```ruby
-content = facts.ingest(
+source = facts.ingest(
   "Paula joined Microsoft on Jan 10, 2024",
   type: :announcement,
   title: "New Hire",
@@ -84,14 +84,14 @@ content = facts.ingest(
 ### extract_facts
 
 ```ruby
-def extract_facts(content_id, extractor: @config.default_extractor)
+def extract_facts(source_id, extractor: @config.default_extractor)
 ```
 
 Extract facts from content.
 
 **Parameters:**
 
-- `content_id` (Integer) - Content ID
+- `source_id` (Integer) - Source ID
 - `extractor` (Symbol, optional) - Extraction method (:manual, :llm, :rule_based)
 
 **Returns:** `Array<Models::Fact>`
@@ -99,7 +99,7 @@ Extract facts from content.
 **Example:**
 
 ```ruby
-extracted = facts.extract_facts(content.id, extractor: :llm)
+extracted = facts.extract_facts(source.id, extractor: :llm)
 ```
 
 ---
@@ -232,14 +232,14 @@ historical = facts.facts_at(Date.parse("2023-06-15"), entity: paula.id)
 ### batch_extract
 
 ```ruby
-def batch_extract(content_ids, extractor: @config.default_extractor, parallel: true)
+def batch_extract(source_ids, extractor: @config.default_extractor, parallel: true)
 ```
 
 Batch extract facts from multiple content items.
 
 **Parameters:**
 
-- `content_ids` (Array<Integer>) - Content IDs to process
+- `source_ids` (Array<Integer>) - Source IDs to process
 - `extractor` (Symbol, optional) - Extraction method
 - `parallel` (Boolean, optional) - Use parallel processing (default: true)
 
@@ -248,9 +248,9 @@ Batch extract facts from multiple content items.
 **Example:**
 
 ```ruby
-results = facts.batch_extract([c1.id, c2.id, c3.id], parallel: true)
+results = facts.batch_extract([s1.id, s2.id, s3.id], parallel: true)
 results.each do |r|
-  puts "#{r[:content_id]}: #{r[:facts].count} facts"
+  puts "#{r[:source_id]}: #{r[:facts].count} facts"
 end
 ```
 
