@@ -49,8 +49,8 @@ module FactDb
           # Copy sources from old fact
           old_fact.fact_sources.each do |source|
             new_fact.add_source(
-              content: source.content,
-              type: source.source_type,
+              source: source.source,
+              kind: source.kind,
               excerpt: source.excerpt,
               confidence: source.confidence
             )

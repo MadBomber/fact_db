@@ -161,7 +161,7 @@ module FactDb
         parsed.map do |entity_data|
           build_entity(
             name: entity_data["name"],
-            type: entity_data["type"] || "concept",
+            kind: entity_data["type"] || "concept",
             aliases: entity_data["aliases"] || [],
             attributes: entity_data["attributes"] || {}
           )
@@ -177,7 +177,7 @@ module FactDb
         mentions_data.map do |mention|
           build_mention(
             name: mention["name"],
-            type: mention["type"] || "concept",
+            kind: mention["type"] || "concept",
             role: mention["role"],
             confidence: mention["confidence"]&.to_f || 1.0,
             aliases: mention["aliases"] || []

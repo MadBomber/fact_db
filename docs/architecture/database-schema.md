@@ -75,7 +75,7 @@ erDiagram
         bigint id PK
         bigint fact_id FK
         bigint source_id FK
-        string source_type
+        string kind
         text excerpt
         float confidence
     }
@@ -206,14 +206,14 @@ CREATE TABLE fact_sources (
     id BIGSERIAL PRIMARY KEY,
     fact_id BIGINT NOT NULL REFERENCES facts(id) ON DELETE CASCADE,
     source_id BIGINT NOT NULL REFERENCES sources(id),
-    source_type VARCHAR(50) NOT NULL DEFAULT 'primary',
+    kind VARCHAR(50) NOT NULL DEFAULT 'primary',
     excerpt TEXT,
     confidence FLOAT DEFAULT 1.0
 );
 
 CREATE INDEX idx_fact_sources_fact ON fact_sources(fact_id);
 CREATE INDEX idx_fact_sources_source ON fact_sources(source_id);
-CREATE INDEX idx_fact_sources_type ON fact_sources(source_type);
+CREATE INDEX idx_fact_sources_kind ON fact_sources(kind);
 ```
 
 ## Vector Indexes

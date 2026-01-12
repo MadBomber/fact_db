@@ -10,18 +10,18 @@ module FactDb
 
       validates :fact_id, uniqueness: { scope: :source_id }
 
-      # Source types
-      TYPES = %w[primary supporting corroborating].freeze
+      # Source relationship kinds
+      KINDS = %w[primary supporting corroborating].freeze
 
-      validates :source_type, inclusion: { in: TYPES }
+      validates :kind, inclusion: { in: KINDS }
 
-      scope :primary, -> { where(source_type: "primary") }
-      scope :supporting, -> { where(source_type: "supporting") }
-      scope :corroborating, -> { where(source_type: "corroborating") }
+      scope :primary, -> { where(kind: "primary") }
+      scope :supporting, -> { where(kind: "supporting") }
+      scope :corroborating, -> { where(kind: "corroborating") }
       scope :high_confidence, -> { where("confidence >= ?", 0.9) }
 
       def primary?
-        source_type == "primary"
+        kind == "primary"
       end
 
       def excerpt_preview(length: 100)

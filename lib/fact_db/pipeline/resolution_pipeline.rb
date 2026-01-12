@@ -23,10 +23,10 @@ module FactDb
       # Resolve multiple entity names in parallel
       #
       # @param names [Array<String>] Entity names to resolve
-      # @param type [Symbol, nil] Entity type filter
+      # @param kind [Symbol, nil] Entity kind filter
       # @return [Array<Hash>] Resolution results
-      def resolve_entities(names, type: nil)
-        pipeline = build_entity_resolution_pipeline(names, type)
+      def resolve_entities(names, kind: nil)
+        pipeline = build_entity_resolution_pipeline(names, kind)
         initial_result = SimpleFlow::Result.new(names: names, resolved: {})
 
         final_result = pipeline.call(initial_result)
@@ -64,7 +64,7 @@ module FactDb
 
       private
 
-      def build_entity_resolution_pipeline(names, type)
+      def build_entity_resolution_pipeline(names, kind)
         resolver = @entity_resolver
 
         SimpleFlow::Pipeline.new do
@@ -72,7 +72,7 @@ module FactDb
           names.each do |name|
             step "resolve_#{name.hash.abs}", depends_on: [] do |result|
               begin
-                entity = resolver.resolve(name, type: type)
+                entity = resolver.resolve(name, kind: kind)
                 status = entity ? :resolved : :not_found
 
                 new_resolved = result.value[:resolved].merge(

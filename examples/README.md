@@ -54,11 +54,11 @@ ruby examples/010_basic_usage.rb
 **Deep dive into entity operations**
 
 Demonstrates:
-- Creating entities with multiple types (person, organization, place)
+- Creating entities with multiple kinds (person, organization, place)
 - Managing aliases (names, emails, abbreviations)
 - Entity resolution using fuzzy matching
 - Merging duplicate entities
-- Searching entities by name and type
+- Searching entities by name and kind
 - Building entity timelines
 
 ```bash

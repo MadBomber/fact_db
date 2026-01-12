@@ -65,7 +65,7 @@ facts = FactDb.new
 # Ingest an email
 source = facts.ingest(
   "Hi team, Paula Chen has accepted our offer and will join as Principal Engineer starting January 10, 2024. She'll be reporting to Sarah in the Platform team.",
-  type: :email,
+  kind: :email,
   title: "New Hire Announcement",
   captured_at: Time.current
 )
@@ -79,19 +79,19 @@ puts "Ingested source: #{source.id}"
 # Create entities for people and organizations
 paula = facts.entity_service.create(
   "Paula Chen",
-  type: :person,
+  kind: :person,
   aliases: ["Paula", "P. Chen"]
 )
 
 sarah = facts.entity_service.create(
   "Sarah Johnson",
-  type: :person,
+  kind: :person,
   aliases: ["Sarah"]
 )
 
 platform_team = facts.entity_service.create(
   "Platform Team",
-  type: :organization
+  kind: :organization
 )
 ```
 
@@ -169,13 +169,13 @@ facts = FactDb.new
 # Ingest content
 source = facts.ingest(
   "Paula Chen joined Microsoft as Principal Engineer on January 10, 2024.",
-  type: :announcement,
+  kind: :announcement,
   captured_at: Time.current
 )
 
 # Create entities
-paula = facts.entity_service.create("Paula Chen", type: :person)
-microsoft = facts.entity_service.create("Microsoft", type: :organization)
+paula = facts.entity_service.create("Paula Chen", kind: :person)
+microsoft = facts.entity_service.create("Microsoft", kind: :organization)
 
 # Extract facts via LLM
 extracted = facts.extract_facts(source.id, extractor: :llm)

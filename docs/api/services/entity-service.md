@@ -13,7 +13,7 @@ service = FactDb::Services::EntityService.new(config)
 ### create
 
 ```ruby
-def create(name, type:, aliases: [], metadata: {})
+def create(name, kind:, aliases: [], metadata: {})
 ```
 
 Create a new entity.
@@ -21,7 +21,7 @@ Create a new entity.
 **Parameters:**
 
 - `name` (String) - Authoritative name
-- `type` (Symbol) - Entity type
+- `kind` (Symbol) - Entity kind
 - `aliases` (Array) - Alternative names
 - `metadata` (Hash) - Additional attributes
 
@@ -32,7 +32,7 @@ Create a new entity.
 ```ruby
 entity = service.create(
   "Paula Chen",
-  type: :person,
+  kind: :person,
   aliases: ["Paula", "P. Chen"],
   metadata: { department: "Engineering" }
 )
@@ -55,7 +55,7 @@ Find entity by ID.
 ### resolve
 
 ```ruby
-def resolve(name, type: nil)
+def resolve(name, kind: nil)
 ```
 
 Resolve a name to an entity using multiple strategies.
@@ -63,14 +63,14 @@ Resolve a name to an entity using multiple strategies.
 **Parameters:**
 
 - `name` (String) - Name to resolve
-- `type` (Symbol) - Optional type filter
+- `kind` (Symbol) - Optional kind filter
 
 **Returns:** `Models::Entity` or `nil`
 
 **Example:**
 
 ```ruby
-entity = service.resolve("Paula Chen", type: :person)
+entity = service.resolve("Paula Chen", kind: :person)
 ```
 
 ---
@@ -78,7 +78,7 @@ entity = service.resolve("Paula Chen", type: :person)
 ### add_alias
 
 ```ruby
-def add_alias(entity_id, alias_name, type: nil, confidence: 1.0)
+def add_alias(entity_id, alias_name, kind: nil, confidence: 1.0)
 ```
 
 Add an alias to an entity.
@@ -86,7 +86,7 @@ Add an alias to an entity.
 **Example:**
 
 ```ruby
-service.add_alias(entity.id, "P. Chen", type: :abbreviation)
+service.add_alias(entity.id, "P. Chen", kind: :abbreviation)
 ```
 
 ---
@@ -140,7 +140,7 @@ service.update(
 ### search
 
 ```ruby
-def search(query, type: nil, limit: 20)
+def search(query, kind: nil, limit: 20)
 ```
 
 Search entities by name.
@@ -148,20 +148,20 @@ Search entities by name.
 **Parameters:**
 
 - `query` (String) - Search query
-- `type` (Symbol) - Optional type filter
+- `kind` (Symbol) - Optional kind filter
 - `limit` (Integer) - Max results
 
 **Returns:** `Array<Models::Entity>`
 
 ---
 
-### by_type
+### by_kind
 
 ```ruby
-def by_type(type)
+def by_kind(kind)
 ```
 
-Filter entities by type.
+Filter entities by kind.
 
 **Returns:** `ActiveRecord::Relation`
 
@@ -194,7 +194,7 @@ Find entities that appear in facts with the given entity.
 ### semantic_search
 
 ```ruby
-def semantic_search(query, type: nil, limit: 10)
+def semantic_search(query, kind: nil, limit: 10)
 ```
 
 Semantic similarity search using embeddings.

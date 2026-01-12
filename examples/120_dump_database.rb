@@ -83,9 +83,9 @@ class DatabaseDumper
     SUMMARY
 
     if entity_count > 0
-      puts "\nEntities by type:"
-      FactDb::Models::Entity.group(:type).count.sort_by { |_, v| -v }.each do |type, count|
-        puts "  #{type.to_s.ljust(20)} #{count.to_s.rjust(6)}"
+      puts "\nEntities by kind:"
+      FactDb::Models::Entity.group(:kind).count.sort_by { |_, v| -v }.each do |kind, count|
+        puts "  #{kind.to_s.ljust(20)} #{count.to_s.rjust(6)}"
       end
     end
 
@@ -102,9 +102,9 @@ class DatabaseDumper
     end
 
     if source_count > 0
-      puts "\nSources by type:"
-      FactDb::Models::Source.group(:type).count.each do |type, count|
-        puts "  #{type.to_s.ljust(20)} #{count.to_s.rjust(6)}"
+      puts "\nSources by kind:"
+      FactDb::Models::Source.group(:kind).count.each do |kind, count|
+        puts "  #{kind.to_s.ljust(20)} #{count.to_s.rjust(6)}"
       end
     end
   end
@@ -125,7 +125,7 @@ class DatabaseDumper
       puts "\n#{'-' * 60}"
       puts "ID: #{source.id}"
       puts "Title: #{source.title || '(untitled)'}"
-      puts "Type: #{source.type}"
+      puts "Kind: #{source.kind}"
       puts "Hash: #{source.content_hash[0..16]}..."
       puts "Captured: #{source.captured_at}"
       puts "Created: #{source.created_at}"
@@ -149,18 +149,18 @@ class DatabaseDumper
     puts "ENTITIES"
     puts "=" * 70
 
-    entities = FactDb::Models::Entity.order(:type, :name)
+    entities = FactDb::Models::Entity.order(:kind, :name)
 
     if entities.empty?
       puts "  (no entity records)"
       return
     end
 
-    current_type = nil
+    current_kind = nil
     entities.each do |entity|
-      if entity.type != current_type
-        current_type = entity.type
-        puts "\n--- #{current_type.upcase} ---"
+      if entity.kind != current_kind
+        current_kind = entity.kind
+        puts "\n--- #{current_kind.upcase} ---"
       end
 
       mention_count = entity.entity_mentions.count
@@ -219,7 +219,7 @@ class DatabaseDumper
         puts "Sources:"
         fact.fact_sources.each do |fact_source|
           source_title = fact_source.source&.title || "(unknown)"
-          puts "  - #{source_title} (#{fact_source.source_type}, confidence: #{fact_source.confidence})"
+          puts "  - #{source_title} (#{fact_source.kind}, confidence: #{fact_source.confidence})"
         end
       end
     end
@@ -246,7 +246,7 @@ class DatabaseDumper
       entity = entities_by_id[id]
       next unless entity
 
-      puts "  #{entity.name.to_s.ljust(30)} (#{entity.type.to_s.ljust(12)}) #{count.to_s.rjust(4)} mentions"
+      puts "  #{entity.name.to_s.ljust(30)} (#{entity.kind.to_s.ljust(12)}) #{count.to_s.rjust(4)} mentions"
       if entity.all_aliases.any?
         puts "    Aliases: #{entity.all_aliases.join(', ')}"
       end
@@ -280,7 +280,7 @@ class DatabaseDumper
 
     if entities.any?
       entities.each do |entity|
-        puts "  #{entity.name} (#{entity.type})"
+        puts "  #{entity.name} (#{entity.kind})"
         puts "    #{entity.description}" if entity.description.present?
       end
     else
@@ -311,7 +311,7 @@ class DatabaseDumper
 
     if sources.any?
       sources.each do |source|
-        puts "  [#{source.id}] #{source.title || '(untitled)'} (#{source.type})"
+        puts "  [#{source.id}] #{source.title || '(untitled)'} (#{source.kind})"
       end
     else
       puts "  (no matching sources)"

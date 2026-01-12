@@ -106,9 +106,9 @@ class TemporalQueriesIntegrationTest < Minitest::Test
   private
 
   def setup_employment_history
-    @paula = create_entity(name: "Paula Chen", type: "person")
-    @google = create_entity(name: "Google", type: "organization")
-    @microsoft = create_entity(name: "Microsoft", type: "organization")
+    @paula = create_entity(name: "Paula Chen", kind: "person")
+    @google = create_entity(name: "Google", kind: "organization")
+    @microsoft = create_entity(name: "Microsoft", kind: "organization")
 
     # Paula worked at Google from 2020-01-15 to 2024-03-14
     @google_fact = create_fact(

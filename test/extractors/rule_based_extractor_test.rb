@@ -20,8 +20,8 @@ class RuleBasedExtractorTest < Minitest::Test
     assert_match(/Paula Chen.*Microsoft/i, fact[:text])
     assert_equal 2, fact[:mentions].length
 
-    person_mention = fact[:mentions].find { |m| m[:type] == "person" }
-    org_mention = fact[:mentions].find { |m| m[:type] == "organization" }
+    person_mention = fact[:mentions].find { |m| m[:kind] == "person" }
+    org_mention = fact[:mentions].find { |m| m[:kind] == "organization" }
 
     assert_equal "Paula Chen", person_mention[:name]
     assert_equal "subject", person_mention[:role]
@@ -53,8 +53,8 @@ class RuleBasedExtractorTest < Minitest::Test
     assert facts.any?
     fact = facts.first
 
-    person_mention = fact[:mentions].find { |m| m[:type] == "person" }
-    place_mention = fact[:mentions].find { |m| m[:type] == "place" }
+    person_mention = fact[:mentions].find { |m| m[:kind] == "person" }
+    place_mention = fact[:mentions].find { |m| m[:kind] == "place" }
 
     assert_equal "Paula Chen", person_mention[:name]
     assert_equal "Seattle", place_mention[:name]

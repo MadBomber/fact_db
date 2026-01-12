@@ -136,7 +136,7 @@ class QueryResultTest < Minitest::Test
 
   def test_resolve_entities_caches_entities
     result = FactDb::QueryResult.new(query: "test")
-    entity = create_entity(name: "Paula Chen", type: "person")
+    entity = create_entity(name: "Paula Chen", kind: "person")
     result.add_facts([
       { id: 1, text: "Test", entity_mentions: [{ entity_id: entity.id, mention_role: "subject" }] }
     ])

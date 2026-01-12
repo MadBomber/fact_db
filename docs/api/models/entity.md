@@ -7,7 +7,7 @@ Stores resolved identities (people, organizations, places, etc.).
 ```ruby
 entity = FactDb::Models::Entity.new(
   name: "Paula Chen",
-  type: "person"
+  kind: "person"
 )
 ```
 
@@ -17,14 +17,14 @@ entity = FactDb::Models::Entity.new(
 |-----------|------|-------------|
 | `id` | Integer | Primary key |
 | `name` | String | Authoritative name |
-| `type` | String | Type (person, organization, place, etc.) |
+| `kind` | String | Kind (person, organization, place, etc.) |
 | `resolution_status` | String | Status (unresolved, resolved, merged) |
 | `canonical_id` | Integer | Points to canonical entity if merged |
 | `metadata` | Hash | Additional attributes (JSONB) |
 | `embedding` | Vector | Semantic search vector |
 | `created_at` | DateTime | Record creation time |
 
-## Entity Types
+## Entity Kinds
 
 - `person` - Individual people
 - `organization` - Companies, teams, groups
@@ -52,7 +52,7 @@ belongs_to :merged_into, class_name: 'Entity', optional: true
 ### add_alias
 
 ```ruby
-def add_alias(text, type: nil, confidence: 1.0)
+def add_alias(text, kind: nil, confidence: 1.0)
 ```
 
 Add an alias to the entity.
@@ -60,7 +60,7 @@ Add an alias to the entity.
 **Example:**
 
 ```ruby
-entity.add_alias("Paula", type: "nickname", confidence: 0.95)
+entity.add_alias("Paula", kind: "nickname", confidence: 0.95)
 ```
 
 ### merged?
@@ -88,16 +88,16 @@ canonical = entity.canonical  # Returns the canonical entity
 
 ## Scopes
 
-### by_type
+### by_kind
 
 ```ruby
-scope :by_type, ->(t) { where(type: t) }
+scope :by_kind, ->(k) { where(kind: k) }
 ```
 
-Filter by entity type.
+Filter by entity kind.
 
 ```ruby
-Entity.by_type('person')
+Entity.by_kind('person')
 ```
 
 ### active
@@ -141,7 +141,7 @@ Entity.search_name("paula")
 ```ruby
 entity = Entity.create!(
   name: "Paula Chen",
-  type: "person",
+  kind: "person",
   metadata: {
     department: "Engineering",
     employee_id: "E12345"
@@ -153,15 +153,15 @@ entity = Entity.create!(
 
 ```ruby
 entity.add_alias("Paula")
-entity.add_alias("P. Chen", type: "abbreviation")
-entity.add_alias("Chen, Paula", type: "formal")
+entity.add_alias("P. Chen", kind: "abbreviation")
+entity.add_alias("Chen, Paula", kind: "formal")
 ```
 
 ### Check Aliases
 
 ```ruby
 entity.entity_aliases.each do |a|
-  puts "#{a.name} (#{a.type})"
+  puts "#{a.name} (#{a.kind})"
 end
 ```
 
@@ -197,6 +197,6 @@ entity2.update!(
 
 # Copy aliases
 entity2.entity_aliases.each do |a|
-  entity1.add_alias(a.name, type: a.type)
+  entity1.add_alias(a.name, kind: a.kind)
 end
 ```

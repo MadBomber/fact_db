@@ -81,14 +81,14 @@ module FactDb
           next if known_place?(name)
           next if organization_indicator?(name)
 
-          entities << build_entity(name: name, type: "person")
+          entities << build_entity(name: name, kind: "person")
         end
 
         # Extract organization names (from employment patterns)
         EMPLOYMENT_PATTERNS.each do |pattern|
           text.scan(pattern).each do |match|
             org_name = match.last
-            entities << build_entity(name: org_name, type: "organization") unless common_word?(org_name)
+            entities << build_entity(name: org_name, kind: "organization") unless common_word?(org_name)
           end
         end
 
@@ -96,7 +96,7 @@ module FactDb
         LOCATION_PATTERNS.each do |pattern|
           text.scan(pattern).each do |match|
             location = match.last
-            entities << build_entity(name: location, type: "place") unless common_word?(location)
+            entities << build_entity(name: location, kind: "place") unless common_word?(location)
           end
         end
 
@@ -122,13 +122,13 @@ module FactDb
             invalid_at = is_termination ? (extract_end_date(text) || default_date) : nil
 
             mentions = [
-              build_mention(name: person, type: "person", role: "subject"),
-              build_mention(name: org, type: "organization", role: "object")
+              build_mention(name: person, kind: "person", role: "subject"),
+              build_mention(name: org, kind: "organization", role: "object")
             ]
 
             # Add role if present
             if rest.length > 1
-              mentions << build_mention(name: rest[0], type: "concept", role: "instrument")
+              mentions << build_mention(name: rest[0], kind: "concept", role: "instrument")
             end
 
             facts << build_fact(
@@ -154,7 +154,7 @@ module FactDb
 
             mentions = match.map.with_index do |name, i|
               role = i.zero? ? "subject" : "object"
-              build_mention(name: name, type: "person", role: role)
+              build_mention(name: name, kind: "person", role: role)
             end
 
             facts << build_fact(
@@ -183,8 +183,8 @@ module FactDb
             entity_type = text.match?(/#{Regexp.escape(entity_name)}\s+(?:lives?|lived)/i) ? "person" : "organization"
 
             mentions = [
-              build_mention(name: entity_name, type: entity_type, role: "subject"),
-              build_mention(name: location, type: "place", role: "location")
+              build_mention(name: entity_name, kind: entity_type, role: "subject"),
+              build_mention(name: location, kind: "place", role: "location")
             ]
 
             facts << build_fact(

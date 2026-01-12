@@ -7,7 +7,7 @@ class CreateFactSources < ActiveRecord::Migration[7.0]
                    comment: "The fact derived from this source"
       t.references :source, null: false, foreign_key: { to_table: :fact_db_sources, on_delete: :cascade },
                    comment: "The source content from which the fact was extracted"
-      t.string :source_type, default: "primary", limit: 50,
+      t.string :kind, default: "primary", limit: 50,
                comment: "Relationship type: primary (direct extraction), supporting, or corroborating"
       t.text :excerpt,
              comment: "The specific text passage within the content that supports this fact"

@@ -28,7 +28,7 @@ module FactDb
         # Link to source
         if source_id
           source = Models::Source.find(source_id)
-          fact.add_source(source: source, type: "primary")
+          fact.add_source(source: source, kind: "primary")
         end
 
         # Add entity mentions
@@ -211,10 +211,10 @@ module FactDb
         end
 
         name = mention[:name] || mention[:text]
-        type = mention[:type]&.to_sym || :concept
+        kind = mention[:kind]&.to_sym || :concept
         aliases = mention[:aliases] || []
 
-        entity = @entity_service.resolve_or_create(name, type: type, aliases: aliases)
+        entity = @entity_service.resolve_or_create(name, kind: kind, aliases: aliases)
 
         # If entity was resolved (not created), still add any new aliases
         add_aliases_to_entity(entity, aliases) if aliases.any?

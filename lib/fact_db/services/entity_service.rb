@@ -10,12 +10,12 @@ module FactDb
         @resolver = Resolution::EntityResolver.new(config)
       end
 
-      def create(name, type:, aliases: [], attributes: {}, description: nil)
+      def create(name, kind:, aliases: [], attributes: {}, description: nil)
         embedding = generate_embedding(name)
 
         entity = Models::Entity.create!(
           name: name,
-          type: type.to_s,
+          kind: kind.to_s,
           description: description,
           metadata: attributes,
           resolution_status: "resolved",
@@ -33,19 +33,19 @@ module FactDb
         Models::Entity.find(id)
       end
 
-      def find_by_name(name, type: nil)
+      def find_by_name(name, kind: nil)
         scope = Models::Entity.where(["LOWER(name) = ?", name.downcase])
-        scope = scope.where(type: type) if type
+        scope = scope.where(kind: kind) if kind
         scope.not_merged.first
       end
 
-      def resolve(name, type: nil)
-        @resolver.resolve(name, type: type)
+      def resolve(name, kind: nil)
+        @resolver.resolve(name, kind: kind)
       end
 
-      def resolve_or_create(name, type:, aliases: [], attributes: {}, description: nil)
+      def resolve_or_create(name, kind:, aliases: [], attributes: {}, description: nil)
         # First, try to resolve the canonical name
-        resolved = @resolver.resolve(name, type: type)
+        resolved = @resolver.resolve(name, kind: kind)
         if resolved
           # Add any new aliases to the resolved entity
           add_new_aliases(resolved.entity, aliases)
@@ -57,7 +57,7 @@ module FactDb
         aliases.each do |alias_text|
           next if alias_text.to_s.strip.empty?
 
-          resolved_by_alias = @resolver.resolve(alias_text.to_s.strip, type: type)
+          resolved_by_alias = @resolver.resolve(alias_text.to_s.strip, kind: kind)
           if resolved_by_alias
             entity = resolved_by_alias.entity
             # Add the new canonical name as an alias to the existing entity
@@ -68,19 +68,19 @@ module FactDb
           end
         end
 
-        create(name, type: type, aliases: aliases, attributes: attributes, description: description)
+        create(name, kind: kind, aliases: aliases, attributes: attributes, description: description)
       end
 
       def merge(keep_id, merge_id)
         @resolver.merge(keep_id, merge_id)
       end
 
-      def add_alias(entity_id, alias_name, type: nil, confidence: 1.0)
+      def add_alias(entity_id, alias_name, kind: nil, confidence: 1.0)
         entity = Models::Entity.find(entity_id)
-        entity.add_alias(alias_name, type: type, confidence: confidence)
+        entity.add_alias(alias_name, kind: kind, confidence: confidence)
       end
 
-      def search(query, type: nil, limit: 20)
+      def search(query, kind: nil, limit: 20)
         scope = Models::Entity.not_merged
 
         # Search canonical names and aliases
@@ -90,16 +90,16 @@ module FactDb
           "%#{query.downcase}%"
         ).distinct
 
-        scope = scope.where(type: type) if type
+        scope = scope.where(kind: kind) if kind
         scope.limit(limit)
       end
 
-      def semantic_search(query, type: nil, limit: 20)
+      def semantic_search(query, kind: nil, limit: 20)
         embedding = generate_embedding(query)
         return Models::Entity.none unless embedding
 
         scope = Models::Entity.not_merged.nearest_neighbors(embedding, limit: limit)
-        scope = scope.where(type: type) if type
+        scope = scope.where(kind: kind) if kind
         scope
       end
 
@@ -112,7 +112,7 @@ module FactDb
       # @param threshold [Float] Minimum similarity score (0.0-1.0, default 0.3)
       # @param limit [Integer] Maximum results to return
       # @return [Array<Entity>] Entities ordered by similarity score
-      def fuzzy_search(query, type: nil, threshold: 0.3, limit: 20)
+      def fuzzy_search(query, kind: nil, threshold: 0.3, limit: 20)
         return [] if query.to_s.strip.length < 3
 
         sql = <<~SQL
@@ -146,20 +146,20 @@ module FactDb
         entities_by_id = Models::Entity.where(id: entity_ids).index_by(&:id)
         ordered_entities = entity_ids.map { |id| entities_by_id[id] }.compact
 
-        # Apply type filter if specified
-        if type
-          ordered_entities = ordered_entities.select { |e| e.type == type.to_s }
+        # Apply kind filter if specified
+        if kind
+          ordered_entities = ordered_entities.select { |e| e.kind == kind.to_s }
         end
 
         ordered_entities
       rescue ActiveRecord::StatementInvalid => e
         # pg_trgm extension not available, fall back to LIKE search
         config.logger&.warn("Fuzzy search unavailable (pg_trgm not installed): #{e.message}")
-        search(query, type: type, limit: limit).to_a
+        search(query, kind: kind, limit: limit).to_a
       end
 
-      def by_type(type)
-        Models::Entity.by_type(type).not_merged.order(:name)
+      def by_kind(kind)
+        Models::Entity.by_kind(kind).not_merged.order(:name)
       end
 
       def facts_about(entity_id, at: nil, status: :canonical)
@@ -186,7 +186,7 @@ module FactDb
         {
           total: Models::Entity.not_merged.count,
           total_count: Models::Entity.not_merged.count,
-          by_type: Models::Entity.not_merged.group(:type).count,
+          by_kind: Models::Entity.not_merged.group(:kind).count,
           by_status: Models::Entity.group(:resolution_status).count,
           merged_count: Models::Entity.where(resolution_status: "merged").count,
           with_facts: Models::Entity.joins(:entity_mentions).distinct.count

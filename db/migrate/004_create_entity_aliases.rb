@@ -7,7 +7,7 @@ class CreateEntityAliases < ActiveRecord::Migration[7.0]
                    comment: "The canonical entity this alias refers to"
       t.string :name, null: false, limit: 500,
                comment: "The alternative name, identifier, or reference text"
-      t.string :type, limit: 50,
+      t.string :kind, limit: 50,
                comment: "Classification of alias: name, nickname, email, handle, abbreviation, former_name"
       t.float :confidence, default: 1.0,
               comment: "Confidence score (0.0-1.0) that this alias correctly refers to the entity"

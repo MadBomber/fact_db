@@ -174,12 +174,12 @@ nav:
       - Facts: api/facts.md
       - Models:
           - api/models/index.md
-          - Content: api/models/content.md
+          - Source: api/models/source.md
           - Entity: api/models/entity.md
           - Fact: api/models/fact.md
       - Services:
           - api/services/index.md
-          - ContentService: api/services/content-service.md
+          - SourceService: api/services/source-service.md
           - EntityService: api/services/entity-service.md
           - FactService: api/services/fact-service.md
       - Extractors:

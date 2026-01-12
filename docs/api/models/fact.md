@@ -72,7 +72,7 @@ fact.add_mention(
 ### add_source
 
 ```ruby
-def add_source(content:, type: "primary", excerpt: nil, confidence: 1.0)
+def add_source(source:, kind: "primary", excerpt: nil, confidence: 1.0)
 ```
 
 Add a source content link.
@@ -81,8 +81,8 @@ Add a source content link.
 
 ```ruby
 fact.add_source(
-  content: email,
-  type: "primary",
+  source: email,
+  kind: "primary",
   excerpt: "...accepted the offer..."
 )
 ```
@@ -219,7 +219,7 @@ fact.add_mention(entity: paula, text: "Paula Chen", role: "subject")
 fact.add_mention(entity: microsoft, text: "Microsoft", role: "organization")
 
 # Add source
-fact.add_source(content: announcement, type: "primary")
+fact.add_source(source: announcement, kind: "primary")
 ```
 
 ### Query Facts
@@ -256,7 +256,7 @@ old_fact.update!(
 ```ruby
 fact.fact_sources.each do |fact_source|
   puts "Source: #{fact_source.source.title}"
-  puts "Type: #{fact_source.source_type}"
+  puts "Kind: #{fact_source.kind}"
   puts "Excerpt: #{fact_source.excerpt}"
 end
 ```

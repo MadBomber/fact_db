@@ -81,10 +81,10 @@ module FactDb
     end
 
     # Ingest raw content
-    def ingest(content, type:, captured_at: Time.current, metadata: {}, title: nil, source_uri: nil)
+    def ingest(content, kind:, captured_at: Time.current, metadata: {}, title: nil, source_uri: nil)
       @source_service.create(
         content,
-        type: type,
+        kind: kind,
         captured_at: captured_at,
         metadata: metadata,
         title: title,
@@ -111,8 +111,8 @@ module FactDb
     end
 
     # Resolve a name to an entity
-    def resolve_entity(name, type: nil)
-      @entity_service.resolve(name, type: type)
+    def resolve_entity(name, kind: nil)
+      @entity_service.resolve(name, kind: kind)
     end
 
     # Build a timeline for an entity
@@ -200,8 +200,8 @@ module FactDb
       entity = resolved.respond_to?(:entity) ? resolved.entity : resolved
       suggestions = []
 
-      entity_type = entity.respond_to?(:type) ? entity.type : nil
-      suggestions << "current status" if entity_type == "person"
+      entity_kind = entity.respond_to?(:kind) ? entity.kind : nil
+      suggestions << "current status" if entity_kind == "person"
 
       # Check relationships
       relationships = @entity_service.relationship_types_for(entity.id)
@@ -263,10 +263,10 @@ module FactDb
     # Batch resolve entity names
     #
     # @param names [Array<String>] Entity names to resolve
-    # @param type [Symbol, nil] Entity type filter
+    # @param kind [Symbol, nil] Entity kind filter
     # @return [Array<Hash>] Resolution results
-    def batch_resolve_entities(names, type: nil)
-      @resolution_pipeline.resolve_entities(names, type: type)
+    def batch_resolve_entities(names, kind: nil)
+      @resolution_pipeline.resolve_entities(names, kind: kind)
     end
 
     # Detect fact conflicts for multiple entities
@@ -321,7 +321,7 @@ module FactDb
     def introspect_schema
       {
         capabilities: collect_capabilities,
-        entity_types: Models::Entity.distinct.pluck(:type).compact,
+        entity_kinds: Models::Entity.distinct.pluck(:kind).compact,
         fact_statuses: %w[canonical superseded corroborated synthesized],
         extraction_methods: %w[manual llm rule_based],
         output_formats: FORMATS,
@@ -368,9 +368,9 @@ module FactDb
       {
         id: entity.id,
         name: entity.name,
-        type: entity.type,
+        kind: entity.kind,
         resolution_status: entity.resolution_status,
-        aliases: entity.aliases.map { |a| { name: a.name, type: a.type } }
+        aliases: entity.aliases.map { |a| { name: a.name, kind: a.kind } }
       }
     end
 

@@ -4,7 +4,6 @@ module FactDb
   module Models
     class Entity < ActiveRecord::Base
       self.table_name = "fact_db_entities"
-      self.inheritance_column = nil # Disable STI - 'type' stores entity classification, not subclass
 
       has_many :aliases, class_name: "FactDb::Models::EntityAlias",
                foreign_key: :entity_id, dependent: :destroy
@@ -18,16 +17,16 @@ module FactDb
                foreign_key: :canonical_id
 
       validates :name, presence: true
-      validates :type, presence: true
+      validates :kind, presence: true
       validates :resolution_status, presence: true
 
       STATUSES = %w[unresolved resolved merged split].freeze
-      ENTITY_TYPES = %w[person organization place product event concept].freeze
+      ENTITY_KINDS = %w[person organization place product event concept].freeze
 
       validates :resolution_status, inclusion: { in: STATUSES }
-      validates :type, inclusion: { in: ENTITY_TYPES }
+      validates :kind, inclusion: { in: ENTITY_KINDS }
 
-      scope :by_type, ->(t) { where(type: t) }
+      scope :by_kind, ->(k) { where(kind: k) }
       scope :resolved, -> { where(resolution_status: "resolved") }
       scope :unresolved, -> { where(resolution_status: "unresolved") }
       scope :not_merged, -> { where.not(resolution_status: "merged") }
@@ -48,12 +47,12 @@ module FactDb
         aliases.pluck(:name)
       end
 
-      def add_alias(text, type: nil, confidence: 1.0)
+      def add_alias(text, kind: nil, confidence: 1.0)
         # Pre-validate before attempting to create
         return nil unless Validation::AliasFilter.valid?(text, canonical_name: name)
 
         aliases.find_or_create_by!(name: text) do |a|
-          a.type = type
+          a.kind = kind
           a.confidence = confidence
         end
       rescue ActiveRecord::RecordInvalid

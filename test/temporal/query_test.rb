@@ -45,8 +45,8 @@ class TemporalQueryTest < Minitest::Test
   end
 
   def test_query_by_entity
-    paula = create_entity(name: "Paula Chen", type: "person")
-    john = create_entity(name: "John Smith", type: "person")
+    paula = create_entity(name: "Paula Chen", kind: "person")
+    john = create_entity(name: "John Smith", kind: "person")
 
     paula_fact = create_fact(text: "Paula works at Google")
     john_fact = create_fact(text: "John works at Microsoft")
@@ -85,7 +85,7 @@ class TemporalQueryTest < Minitest::Test
   end
 
   def test_diff_between_dates
-    entity = create_entity(name: "Paula", type: "person")
+    entity = create_entity(name: "Paula", kind: "person")
 
     # Fact valid from 2 years ago, still valid
     long_running = create_fact(

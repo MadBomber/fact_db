@@ -26,8 +26,8 @@ class FactServiceTest < Minitest::Test
   end
 
   def test_fact_stats_for_specific_entity
-    entity = create_entity(name: "Paula Chen", type: "person")
-    other_entity = create_entity(name: "Microsoft", type: "organization")
+    entity = create_entity(name: "Paula Chen", kind: "person")
+    other_entity = create_entity(name: "Microsoft", kind: "organization")
 
     fact1 = create_fact(text: "Paula Chen joined", status: "canonical")
     fact2 = create_fact(text: "Paula Chen promoted", status: "canonical")

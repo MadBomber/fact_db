@@ -219,7 +219,7 @@ class IngestDemo
 
     @source_service.create(
       content_text,
-      type: :document,
+      kind: :document,
       title: title,
       metadata: frontmatter.merge(
         source_directory: File.basename(@directory),
@@ -302,7 +302,7 @@ class IngestDemo
           (fact_data[:mentions] || []).each do |mention_data|
             entity = @entity_service.resolve_or_create(
               mention_data[:name],
-              type: mention_data[:type] || :concept,
+              kind: mention_data[:kind] || :concept,
               aliases: mention_data[:aliases] || [],
               description: "Extracted from #{filename}"
             )
@@ -343,7 +343,7 @@ class IngestDemo
             metadata: fact_metadata
           )
 
-          fact.add_source(source: source, type: :primary, confidence: 1.0)
+          fact.add_source(source: source, kind: :primary, confidence: 1.0)
           fact_count += 1
         end
 
@@ -437,9 +437,9 @@ class IngestDemo
       puts "  Facts extracted: #{dir_facts}"
     end
 
-    # Show discovered entities by type
-    puts "\nDiscovered entities by type:"
-    ap FactDb::Models::Entity.group(:type).count
+    # Show discovered entities by kind
+    puts "\nDiscovered entities by kind:"
+    ap FactDb::Models::Entity.group(:kind).count
   end
 
   def demonstrate_queries
@@ -450,7 +450,7 @@ class IngestDemo
     recent_entities = FactDb::Models::Entity.order(created_at: :desc).limit(10)
     recent_entities.each do |entity|
       fact_count = entity.facts.count
-      puts "  #{entity.name} (#{entity.type}) - #{fact_count} mentions"
+      puts "  #{entity.name} (#{entity.kind}) - #{fact_count} mentions"
     end
 
     # Show recent facts

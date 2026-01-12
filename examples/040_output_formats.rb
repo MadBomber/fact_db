@@ -22,21 +22,21 @@ demo_section("Setup: Creating Sample Data")
 # Create entities
 paula = entity_service.resolve_or_create(
   "Paula Chen",
-  type: :person,
+  kind: :person,
   aliases: ["P. Chen"],
   description: "Principal Engineer"
 )
 
 microsoft = entity_service.resolve_or_create(
   "Microsoft",
-  type: :organization,
+  kind: :organization,
   aliases: ["MSFT"],
   description: "Technology company"
 )
 
 seattle = entity_service.resolve_or_create(
   "Seattle",
-  type: :place,
+  kind: :place,
   description: "City in Washington state"
 )
 

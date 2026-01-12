@@ -12,19 +12,19 @@ module FactDb
       end
 
       # Resolve a name to an entity
-      def resolve(name, type: nil)
+      def resolve(name, kind: nil)
         return nil if name.nil? || name.empty?
 
         # 1. Exact alias match
-        exact = find_by_exact_alias(name, type: type)
+        exact = find_by_exact_alias(name, kind: kind)
         return ResolvedEntity.new(exact, confidence: 1.0, match_type: :exact_alias) if exact
 
         # 2. Canonical name match
-        canonical = find_by_name(name, type: type)
+        canonical = find_by_name(name, kind: kind)
         return ResolvedEntity.new(canonical, confidence: 1.0, match_type: :name) if canonical
 
         # 3. Fuzzy matching
-        fuzzy = find_by_fuzzy_match(name, type: type)
+        fuzzy = find_by_fuzzy_match(name, kind: kind)
         return fuzzy if fuzzy && fuzzy.confidence >= @threshold
 
         # 4. No match found
@@ -32,11 +32,11 @@ module FactDb
       end
 
       # Resolve or create an entity
-      def resolve_or_create(name, type:, aliases: [], attributes: {})
-        resolved = resolve(name, type: type)
+      def resolve_or_create(name, kind:, aliases: [], attributes: {})
+        resolved = resolve(name, kind: kind)
         return resolved.entity if resolved
 
-        create_entity(name, type: type, aliases: aliases, attributes: attributes)
+        create_entity(name, kind: kind, aliases: aliases, attributes: attributes)
       end
 
       # Merge two entities, keeping one as canonical
@@ -51,14 +51,14 @@ module FactDb
           # Move all aliases to kept entity
           merge_entity.aliases.each do |alias_record|
             keep.aliases.find_or_create_by!(name: alias_record.name) do |a|
-              a.type = alias_record.type
+              a.kind = alias_record.kind
               a.confidence = alias_record.confidence
             end
           end
 
           # Add the merged entity's canonical name as an alias
           keep.aliases.find_or_create_by!(name: merge_entity.name) do |a|
-            a.type = "name"
+            a.kind = "name"
             a.confidence = 1.0
           end
 
@@ -83,7 +83,7 @@ module FactDb
           new_entities = split_configs.map do |config|
             create_entity(
               config[:name],
-              type: config[:type] || original.type,
+              kind: config[:kind] || original.kind,
               aliases: config[:aliases] || [],
               attributes: config[:attributes] || {}
             )
@@ -138,22 +138,22 @@ module FactDb
 
       private
 
-      def find_by_exact_alias(name, type:)
+      def find_by_exact_alias(name, kind:)
         scope = Models::EntityAlias.where(["LOWER(fact_db_entity_aliases.name) = ?", name.downcase])
-        scope = scope.joins(:entity).where(fact_db_entities: { type: type }) if type
+        scope = scope.joins(:entity).where(fact_db_entities: { kind: kind }) if kind
         scope = scope.joins(:entity).where.not(fact_db_entities: { resolution_status: "merged" })
         scope.first&.entity
       end
 
-      def find_by_name(name, type:)
+      def find_by_name(name, kind:)
         scope = Models::Entity.where(["LOWER(name) = ?", name.downcase])
-        scope = scope.where(type: type) if type
+        scope = scope.where(kind: kind) if kind
         scope.not_merged.first
       end
 
-      def find_by_fuzzy_match(name, type:)
+      def find_by_fuzzy_match(name, kind:)
         candidates = Models::Entity.not_merged
-        candidates = candidates.where(type: type) if type
+        candidates = candidates.where(kind: kind) if kind
 
         best_match = nil
         best_similarity = 0
@@ -181,10 +181,10 @@ module FactDb
         ResolvedEntity.new(best_match, confidence: best_similarity, match_type: :fuzzy)
       end
 
-      def create_entity(name, type:, aliases: [], attributes: {})
+      def create_entity(name, kind:, aliases: [], attributes: {})
         entity = Models::Entity.create!(
           name: name,
-          type: type,
+          kind: kind,
           attributes: attributes,
           resolution_status: "resolved"
         )
@@ -253,8 +253,8 @@ module FactDb
         entity.name
       end
 
-      def type
-        entity.type
+      def kind
+        entity.kind
       end
     end
   end

@@ -4,7 +4,6 @@ module FactDb
   module Models
     class EntityAlias < ActiveRecord::Base
       self.table_name = "fact_db_entity_aliases"
-      self.inheritance_column = nil # Disable STI - 'type' stores alias classification, not subclass
 
       belongs_to :entity, class_name: "FactDb::Models::Entity"
 
@@ -12,12 +11,12 @@ module FactDb
       validates :name, uniqueness: { scope: :entity_id }
       validate :name_is_valid
 
-      # Alias types
-      TYPES = %w[name nickname email handle abbreviation title].freeze
+      # Alias kinds
+      KINDS = %w[name nickname email handle abbreviation title].freeze
 
-      validates :type, inclusion: { in: TYPES }, allow_nil: true
+      validates :kind, inclusion: { in: KINDS }, allow_nil: true
 
-      scope :by_type, ->(t) { where(type: t) }
+      scope :by_kind, ->(k) { where(kind: k) }
       scope :high_confidence, -> { where("confidence >= ?", 0.9) }
 
       def self.find_entity_by_alias(text)

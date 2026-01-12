@@ -23,25 +23,25 @@ demo_section("Setup: Creating Entities")
 
 company = entity_service.create(
   "TechCorp Ltd",
-  type: :organization,
+  kind: :organization,
   description: "Technology company"
 )
 
 ceo = entity_service.create(
   "Alice Chen",
-  type: :person,
+  kind: :person,
   description: "Executive"
 )
 
 new_ceo = entity_service.create(
   "David Park",
-  type: :person,
+  kind: :person,
   description: "Executive"
 )
 
 cfo = entity_service.create(
   "Sarah Miller",
-  type: :person,
+  kind: :person,
   description: "Finance executive"
 )
 

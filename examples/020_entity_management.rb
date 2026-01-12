@@ -25,19 +25,19 @@ demo_section("Section 1: Creating Entities")
 # Create a person entity with aliases
 person = entity_service.create(
   "Robert Johnson",
-  type: :person,
+  kind: :person,
   aliases: ["Bob Johnson", "R. Johnson", "Bobby"],
   attributes: { email: "rjohnson@example.com", department: "Sales" },
   description: "Senior Sales Representative"
 )
 puts "Created person: #{person.name}"
 puts "  Aliases: #{person.aliases.map(&:name).join(', ')}"
-puts "  Type: #{person.type}"
+puts "  Type: #{person.kind}"
 
 # Create organization entities
 org1 = entity_service.create(
   "Global Industries Inc",
-  type: :organization,
+  kind: :organization,
   aliases: ["Global Industries", "GII"],
   description: "Fortune 500 manufacturing company"
 )
@@ -46,7 +46,7 @@ puts "\nCreated organization: #{org1.name}"
 # Create a location entity
 location = entity_service.create(
   "San Francisco",
-  type: :place,
+  kind: :place,
   aliases: ["SF", "San Fran"],
   attributes: { country: "USA", state: "California" }
 )
@@ -58,9 +58,9 @@ demo_section("Section 2: Entity Resolution")
 test_names = ["Bob Johnson", "R Johnson", "Robert J", "Global Ind", "GII"]
 
 test_names.each do |name|
-  resolved = entity_service.resolve(name, type: nil)
+  resolved = entity_service.resolve(name, kind: nil)
   if resolved
-    puts "Resolved '#{name}' -> #{resolved.name} (#{resolved.type})"
+    puts "Resolved '#{name}' -> #{resolved.name} (#{resolved.kind})"
   else
     puts "Could not resolve '#{name}'"
   end
@@ -70,7 +70,7 @@ end
 puts "\nUsing resolve_or_create:"
 new_person = entity_service.resolve_or_create(
   "Maria Garcia",
-  type: :person,
+  kind: :person,
   description: "New employee"
 )
 puts "Result: #{new_person.name} (new: #{new_person.created_at == new_person.updated_at})"
@@ -78,13 +78,13 @@ puts "Result: #{new_person.name} (new: #{new_person.created_at == new_person.upd
 demo_section("Section 3: Managing Aliases")
 
 # Add more aliases to an existing entity
-entity_service.add_alias(person.id, "Robert J.", type: :name, confidence: 0.9)
-entity_service.add_alias(person.id, "rjohnson@example.com", type: :email, confidence: 1.0)
+entity_service.add_alias(person.id, "Robert J.", kind: :name, confidence: 0.9)
+entity_service.add_alias(person.id, "rjohnson@example.com", kind: :email, confidence: 1.0)
 
 person.reload
 puts "Updated aliases for #{person.name}:"
 person.aliases.each do |a|
-  puts "  - #{a.name} (#{a.type}, confidence: #{a.confidence})"
+  puts "  - #{a.name} (#{a.kind}, confidence: #{a.confidence})"
 end
 
 demo_section("Section 4: Merging Entities")
@@ -93,7 +93,7 @@ demo_section("Section 4: Merging Entities")
 # Using "Robert Johnsen" (misspelling) to demonstrate fuzzy matching
 duplicate = entity_service.create(
   "Robert Johnsen",
-  type: :person,
+  kind: :person,
   description: "Possible duplicate of Robert Johnson (typo)"
 )
 puts "Created potential duplicate: #{duplicate.name} (ID: #{duplicate.id})"
@@ -123,25 +123,25 @@ puts "Canonical ID: #{duplicate.canonical_id}"
 demo_section("Section 5: Searching Entities")
 
 # Create more entities for search demo
-entity_service.create("Jennifer Wilson", type: :person, description: "Marketing Manager")
-entity_service.create("John Williams", type: :person, description: "Software Engineer")
-entity_service.create("Wilson & Associates", type: :organization, description: "Law firm")
+entity_service.create("Jennifer Wilson", kind: :person, description: "Marketing Manager")
+entity_service.create("John Williams", kind: :person, description: "Software Engineer")
+entity_service.create("Wilson & Associates", kind: :organization, description: "Law firm")
 
 # Text search
 puts "Search results for 'Wilson':"
 results = entity_service.search("Wilson")
 results.each do |entity|
-  puts "  - #{entity.name} (#{entity.type})"
+  puts "  - #{entity.name} (#{entity.kind})"
 end
 
 # Filter by type
 puts "\nPeople only:"
-entity_service.by_type("person").each do |entity|
+entity_service.by_kind("person").each do |entity|
   puts "  - #{entity.name}"
 end
 
 puts "\nOrganizations only:"
-entity_service.by_type("organization").each do |entity|
+entity_service.by_kind("organization").each do |entity|
   puts "  - #{entity.name}"
 end
 
@@ -189,9 +189,9 @@ demo_section("Section 7: Entity Statistics")
 
 stats = entity_service.stats
 puts "Total entities: #{stats[:total]}"
-puts "By type:"
-stats[:by_type].each do |type, count|
-  puts "  #{type}: #{count}"
+puts "By kind:"
+stats[:by_kind].each do |kind, count|
+  puts "  #{kind}: #{count}"
 end
 puts "By resolution status:"
 stats[:by_status].each do |status, count|

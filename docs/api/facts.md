@@ -52,7 +52,7 @@ facts = FactDb.new(config: config)
 ### ingest
 
 ```ruby
-def ingest(content, type:, captured_at: Time.current, metadata: {}, title: nil, source_uri: nil)
+def ingest(content, kind:, captured_at: Time.current, metadata: {}, title: nil, source_uri: nil)
 ```
 
 Ingest raw content into the fact database.
@@ -60,7 +60,7 @@ Ingest raw content into the fact database.
 **Parameters:**
 
 - `content` (String) - The source text content
-- `type` (Symbol) - Content type (:email, :document, :article, etc.)
+- `kind` (Symbol) - Content kind (:email, :document, :article, etc.)
 - `captured_at` (Time, optional) - When content was captured
 - `metadata` (Hash, optional) - Additional metadata
 - `title` (String, optional) - Content title
@@ -73,7 +73,7 @@ Ingest raw content into the fact database.
 ```ruby
 source = facts.ingest(
   "Paula joined Microsoft on Jan 10, 2024",
-  type: :announcement,
+  kind: :announcement,
   title: "New Hire",
   captured_at: Time.current
 )
@@ -139,7 +139,7 @@ results = facts.query_facts(at: Date.parse("2023-06-15"))
 ### resolve_entity
 
 ```ruby
-def resolve_entity(name, type: nil)
+def resolve_entity(name, kind: nil)
 ```
 
 Resolve a name to an entity.
@@ -147,14 +147,14 @@ Resolve a name to an entity.
 **Parameters:**
 
 - `name` (String) - Name to resolve
-- `type` (Symbol, optional) - Entity type filter
+- `kind` (Symbol, optional) - Entity kind filter
 
 **Returns:** `Models::Entity` or `nil`
 
 **Example:**
 
 ```ruby
-entity = facts.resolve_entity("Paula Chen", type: :person)
+entity = facts.resolve_entity("Paula Chen", kind: :person)
 ```
 
 ---
@@ -259,7 +259,7 @@ end
 ### batch_resolve_entities
 
 ```ruby
-def batch_resolve_entities(names, type: nil)
+def batch_resolve_entities(names, kind: nil)
 ```
 
 Batch resolve entity names.
@@ -267,7 +267,7 @@ Batch resolve entity names.
 **Parameters:**
 
 - `names` (Array<String>) - Names to resolve
-- `type` (Symbol, optional) - Entity type filter
+- `kind` (Symbol, optional) - Entity kind filter
 
 **Returns:** `Array<Hash>` - Resolution results
 

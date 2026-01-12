@@ -12,8 +12,8 @@ class EntityServiceTest < Minitest::Test
   end
 
   def test_relationship_types_returns_distinct_roles
-    entity1 = create_entity(name: "Paula Chen", type: "person")
-    entity2 = create_entity(name: "Microsoft", type: "organization")
+    entity1 = create_entity(name: "Paula Chen", kind: "person")
+    entity2 = create_entity(name: "Microsoft", kind: "organization")
 
     fact = create_fact(text: "Paula Chen works at Microsoft")
 
@@ -43,8 +43,8 @@ class EntityServiceTest < Minitest::Test
   end
 
   def test_relationship_types_for_entity
-    entity = create_entity(name: "Paula Chen", type: "person")
-    org = create_entity(name: "Microsoft", type: "organization")
+    entity = create_entity(name: "Paula Chen", kind: "person")
+    org = create_entity(name: "Microsoft", kind: "organization")
 
     fact1 = create_fact(text: "Paula Chen works at Microsoft")
     fact2 = create_fact(text: "Paula Chen reports to John")
@@ -75,7 +75,7 @@ class EntityServiceTest < Minitest::Test
   end
 
   def test_relationship_types_for_entity_returns_empty_when_none
-    entity = create_entity(name: "Paula Chen", type: "person")
+    entity = create_entity(name: "Paula Chen", kind: "person")
 
     roles = @service.relationship_types_for(entity.id)
 
@@ -84,7 +84,7 @@ class EntityServiceTest < Minitest::Test
 
   def test_timespan_for_entity
     Timecop.freeze(Time.local(2024, 6, 15, 12, 0, 0)) do
-      entity = create_entity(name: "Paula Chen", type: "person")
+      entity = create_entity(name: "Paula Chen", kind: "person")
 
       fact1 = create_fact(text: "Paula Chen joined", valid_at: Date.new(2024, 1, 10))
       fact2 = create_fact(text: "Paula Chen promoted", valid_at: Date.new(2024, 3, 15))
@@ -111,7 +111,7 @@ class EntityServiceTest < Minitest::Test
 
   def test_timespan_for_entity_with_no_facts
     Timecop.freeze(Time.local(2024, 6, 15, 12, 0, 0)) do
-      entity = create_entity(name: "Paula Chen", type: "person")
+      entity = create_entity(name: "Paula Chen", kind: "person")
 
       timespan = @service.timespan_for(entity.id)
 

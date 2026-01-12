@@ -43,7 +43,7 @@ EMAIL
 
 content = facts.ingest(
   email_content,
-  type: :email,
+  kind: :email,
   title: "New Hire Announcement - Jane Smith",
   captured_at: Time.new(2026, 1, 8)
 )
@@ -58,7 +58,7 @@ entity_service = facts.entity_service
 
 jane = entity_service.resolve_or_create(
   "Jane Smith",
-  type: :person,
+  kind: :person,
   aliases: ["J. Smith"],
   description: "Director of Engineering at Acme Corp"
 )
@@ -66,7 +66,7 @@ puts "Entity: #{jane.name} (ID: #{jane.id})"
 
 acme = entity_service.resolve_or_create(
   "Acme Corp",
-  type: :organization,
+  kind: :organization,
   aliases: ["Acme", "Acme Corporation"],
   description: "Technology company"
 )
@@ -74,7 +74,7 @@ puts "Entity: #{acme.name} (ID: #{acme.id})"
 
 techstartup = entity_service.resolve_or_create(
   "TechStartup Inc",
-  type: :organization,
+  kind: :organization,
   aliases: ["TechStartup"],
   description: "Technology startup company"
 )
@@ -114,8 +114,8 @@ puts "Fact: #{fact2.text}"
 puts "  Valid from: #{fact2.valid_at} to #{fact2.invalid_at}"
 
 # Link facts to source content (skip if already linked)
-fact1.add_source(content: content, type: :primary, confidence: 1.0) rescue nil
-fact2.add_source(content: content, type: :supporting, confidence: 0.8) rescue nil
+fact1.add_source(content: content, kind: :primary, confidence: 1.0) rescue nil
+fact2.add_source(content: content, kind: :supporting, confidence: 0.8) rescue nil
 
 demo_section("Step 4: Querying Facts")
 

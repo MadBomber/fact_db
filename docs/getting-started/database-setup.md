@@ -118,7 +118,7 @@ Links facts to source content.
 | id | bigint | Primary key |
 | fact_id | bigint | Foreign key to facts |
 | source_id | bigint | Foreign key to sources |
-| source_type | string | primary, supporting, contradicting |
+| kind | string | primary, supporting, corroborating |
 | excerpt | text | Relevant text excerpt |
 | confidence | float | Source confidence |
 

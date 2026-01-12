@@ -23,30 +23,30 @@ demo_section("Setup: Creating Career Progression Data")
 # Create entities
 alex = entity_service.resolve_or_create(
   "Alex Rivera",
-  type: :person,
+  kind: :person,
   description: "Software professional"
 )
 
 startup = entity_service.resolve_or_create(
   "TechStartup Inc",
-  type: :organization,
+  kind: :organization,
   description: "Early stage company"
 )
 
 bigcorp = entity_service.resolve_or_create(
   "BigCorp Systems",
-  type: :organization,
+  kind: :organization,
   description: "Enterprise software company"
 )
 
 sf = entity_service.resolve_or_create(
   "San Francisco",
-  type: :place
+  kind: :place
 )
 
 nyc = entity_service.resolve_or_create(
   "New York City",
-  type: :place
+  kind: :place
 )
 
 puts "Created entities for Alex's career story"

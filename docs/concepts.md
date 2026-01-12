@@ -169,7 +169,7 @@ Every fact maintains links to its source:
 ```ruby
 fact.fact_sources.each do |fact_source|
   puts "Source: #{fact_source.source.title}"
-  puts "Type: #{fact_source.source_type}"  # primary, supporting, contradicting
+  puts "Kind: #{fact_source.kind}"  # primary, supporting, corroborating
   puts "Excerpt: #{fact_source.excerpt}"
   puts "Confidence: #{fact_source.confidence}"
 end

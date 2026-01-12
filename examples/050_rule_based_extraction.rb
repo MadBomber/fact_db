@@ -24,7 +24,7 @@ facts = FactDb.new
 documents = [
   {
     title: "Company Announcement",
-    type: :document,
+    kind: :document,
     text: <<~TEXT
       FOR IMMEDIATE RELEASE - January 15, 2026
 
@@ -45,7 +45,7 @@ documents = [
   },
   {
     title: "HR Update Email",
-    type: :email,
+    kind: :email,
     text: <<~TEXT
       From: hr@example.com
       Subject: Team Updates - Q1 2026
@@ -71,7 +71,7 @@ documents = [
   },
   {
     title: "Meeting Notes",
-    type: :meeting_notes,
+    kind: :meeting_notes,
     text: <<~TEXT
       Project Status Meeting - January 22, 2026
 
@@ -106,7 +106,7 @@ documents.each_with_index do |doc, index|
   # Ingest the content
   content = facts.ingest(
     doc[:text],
-    type: doc[:type],
+    kind: doc[:kind],
     title: doc[:title],
     captured_at: Time.now
   )
@@ -133,7 +133,7 @@ documents.each_with_index do |doc, index|
   if entities.any?
     puts "\nExtracted #{entities.length} entities:"
     entities.each do |entity|
-      puts "  - #{entity[:name]} (#{entity[:type]})"
+      puts "  - #{entity[:name]} (#{entity[:kind]})"
     end
   end
 end
@@ -160,7 +160,7 @@ result.each do |fact_data|
     # Try to resolve the entity, create if not found
     entity = entity_service.resolve_or_create(
       mention[:name],
-      type: mention[:type] || :unknown,
+      kind: mention[:kind] || :unknown,
       description: "Auto-extracted entity"
     )
 
@@ -183,7 +183,7 @@ result.each do |fact_data|
   )
 
   # Link to source content
-  fact.add_source(content: content, type: :primary, confidence: fact_data[:confidence])
+  fact.add_source(content: content, kind: :primary, confidence: fact_data[:confidence])
 
   puts "Saved fact: #{fact.text}"
   puts "  ID: #{fact.id}, Mentions: #{fact.entity_mentions.count}"
@@ -195,7 +195,7 @@ demo_section("Section 3: Query the Extracted Data")
 puts "\nAll extracted entities:"
 FactDb::Models::Entity.where(resolution_status: :resolved).order(:name).each do |entity|
   fact_count = entity.facts.count
-  puts "  #{entity.name} (#{entity.type}) - #{fact_count} facts"
+  puts "  #{entity.name} (#{entity.kind}) - #{fact_count} facts"
 end
 
 # Find facts by extraction method

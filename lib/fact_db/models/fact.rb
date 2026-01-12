@@ -140,9 +140,9 @@ module FactDb
         end
       end
 
-      def add_source(source:, type: "primary", excerpt: nil, confidence: 1.0)
+      def add_source(source:, kind: "primary", excerpt: nil, confidence: 1.0)
         fact_sources.find_or_create_by!(source: source) do |s|
-          s.source_type = type
+          s.kind = kind
           s.excerpt = excerpt
           s.confidence = confidence
         end

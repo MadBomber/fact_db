@@ -15,15 +15,15 @@ class TripleTransformerTest < Minitest::Test
     assert_equal [], output
   end
 
-  def test_transform_entity_to_type_triple
+  def test_transform_entity_to_kind_triple
     result = FactDb::QueryResult.new(query: "test")
     result.instance_variable_set(:@entities, {
-      1 => { id: 1, name: "Paula Chen", type: "person" }
+      1 => { id: 1, name: "Paula Chen", kind: "person" }
     })
 
     output = @transformer.transform(result)
 
-    assert_includes output, ["Paula Chen", "type", "Person"]
+    assert_includes output, ["Paula Chen", "kind", "Person"]
   end
 
   def test_transform_entity_aliases
@@ -32,7 +32,7 @@ class TripleTransformerTest < Minitest::Test
       1 => {
         id: 1,
         name: "Paula Chen",
-        type: "person",
+        kind: "person",
         aliases: [{ name: "PC" }]
       }
     })
@@ -48,7 +48,7 @@ class TripleTransformerTest < Minitest::Test
       1 => {
         id: 1,
         name: "Paula Chen",
-        type: "person",
+        kind: "person",
         resolution_status: "resolved"
       }
     })
@@ -61,7 +61,7 @@ class TripleTransformerTest < Minitest::Test
   def test_transform_fact_to_triples
     result = FactDb::QueryResult.new(query: "test")
     result.instance_variable_set(:@entities, {
-      1 => { id: 1, name: "Paula Chen", type: "person" }
+      1 => { id: 1, name: "Paula Chen", kind: "person" }
     })
     result.add_facts([{
       id: 1,
@@ -79,7 +79,7 @@ class TripleTransformerTest < Minitest::Test
   def test_transform_fact_with_temporal_metadata
     result = FactDb::QueryResult.new(query: "test")
     result.instance_variable_set(:@entities, {
-      1 => { id: 1, name: "Paula Chen", type: "person" }
+      1 => { id: 1, name: "Paula Chen", kind: "person" }
     })
     result.add_facts([{
       id: 1,
@@ -151,8 +151,8 @@ class TripleTransformerTest < Minitest::Test
   def test_transform_fact_with_other_entity_mentions
     result = FactDb::QueryResult.new(query: "test")
     result.instance_variable_set(:@entities, {
-      1 => { id: 1, name: "Paula Chen", type: "person" },
-      2 => { id: 2, name: "Microsoft", type: "organization" }
+      1 => { id: 1, name: "Paula Chen", kind: "person" },
+      2 => { id: 2, name: "Microsoft", kind: "organization" }
     })
     result.add_facts([{
       id: 1,

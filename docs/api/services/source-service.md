@@ -13,7 +13,7 @@ service = FactDb::Services::SourceService.new(config)
 ### create
 
 ```ruby
-def create(content, type:, captured_at: Time.current, metadata: {}, title: nil, source_uri: nil)
+def create(content, kind:, captured_at: Time.current, metadata: {}, title: nil, source_uri: nil)
 ```
 
 Create new source with automatic deduplication.
@@ -21,7 +21,7 @@ Create new source with automatic deduplication.
 **Parameters:**
 
 - `content` (String) - Source text content
-- `type` (Symbol) - Content type
+- `kind` (Symbol) - Content kind
 - `captured_at` (Time) - Capture timestamp
 - `metadata` (Hash) - Additional metadata
 - `title` (String) - Optional title
@@ -34,7 +34,7 @@ Create new source with automatic deduplication.
 ```ruby
 source = service.create(
   "Email body text...",
-  type: :email,
+  kind: :email,
   title: "RE: Important",
   metadata: { from: "sender@example.com" }
 )
@@ -119,20 +119,20 @@ results = service.semantic_search("financial performance")
 
 ---
 
-### by_type
+### by_kind
 
 ```ruby
-def by_type(type)
+def by_kind(kind)
 ```
 
-Filter sources by type.
+Filter sources by kind.
 
 **Returns:** `ActiveRecord::Relation`
 
 **Example:**
 
 ```ruby
-emails = service.by_type(:email)
+emails = service.by_kind(:email)
 ```
 
 ---

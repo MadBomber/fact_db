@@ -79,13 +79,13 @@ Once configured, you can ingest content and create facts:
 # Ingest content
 content = facts.ingest(
   "Paula Chen joined Microsoft as Principal Engineer on January 10, 2024.",
-  type: :email,
+  kind: :email,
   captured_at: Time.now
 )
 
 # Create entities
-paula = facts.entity_service.create("Paula Chen", type: :person)
-microsoft = facts.entity_service.create("Microsoft", type: :organization)
+paula = facts.entity_service.create("Paula Chen", kind: :person)
+microsoft = facts.entity_service.create("Microsoft", kind: :organization)
 
 # Create a fact with entity mentions
 facts.fact_service.create(
@@ -127,7 +127,7 @@ facts.query_facts(topic: "Paula Chen", format: :json)
 
 # Triples - Subject-Predicate-Object for semantic encoding
 facts.query_facts(topic: "Paula Chen", format: :triples)
-# => [["Paula Chen", "type", "Person"],
+# => [["Paula Chen", "kind", "Person"],
 #     ["Paula Chen", "works_at", "Microsoft"],
 #     ["Paula Chen", "works_at.valid_from", "2024-01-10"]]
 
@@ -179,7 +179,7 @@ Discover what the fact database knows about:
 # Get schema and capabilities
 facts.introspect
 # => { capabilities: [:temporal_query, :entity_resolution, ...],
-#      entity_types: ["person", "organization", ...],
+#      entity_kinds: ["person", "organization", ...],
 #      output_formats: [:raw, :json, :triples, :cypher, :text],
 #      statistics: { facts: {...}, entities: {...} } }
 

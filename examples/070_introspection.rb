@@ -24,32 +24,32 @@ demo_section("Setup: Creating Sample Data")
 # Create entities
 maria = entity_service.resolve_or_create(
   "Maria Santos",
-  type: :person,
+  kind: :person,
   aliases: ["M. Santos"],
   description: "Engineering Manager"
 )
 
 raj = entity_service.resolve_or_create(
   "Raj Patel",
-  type: :person,
+  kind: :person,
   description: "Senior Engineer"
 )
 
 sarah = entity_service.resolve_or_create(
   "Sarah Kim",
-  type: :person,
+  kind: :person,
   description: "Software Engineer"
 )
 
 techcorp = entity_service.resolve_or_create(
   "TechCorp",
-  type: :organization,
+  kind: :organization,
   description: "Software company"
 )
 
 austin = entity_service.resolve_or_create(
   "Austin",
-  type: :place,
+  kind: :place,
   description: "City in Texas"
 )
 
@@ -119,7 +119,7 @@ puts "\nSystem Capabilities:"
 schema[:capabilities].each { |c| puts "  - #{c}" }
 
 puts "\nEntity Types in Database:"
-schema[:entity_types].each { |t| puts "  - #{t}" }
+schema[:entity_kinds].each { |t| puts "  - #{t}" }
 
 puts "\nAvailable Fact Statuses:"
 schema[:fact_statuses].each { |s| puts "  - #{s}" }
@@ -142,7 +142,7 @@ maria_info = facts.introspect("Maria Santos")
 if maria_info
   puts "\nEntity Information:"
   puts "  Name: #{maria_info[:entity][:name]}"
-  puts "  Type: #{maria_info[:entity][:type]}"
+  puts "  Type: #{maria_info[:entity][:kind]}"
   puts "  Status: #{maria_info[:entity][:resolution_status]}"
 
   puts "\nFact Coverage:"
@@ -231,7 +231,7 @@ puts "\nBuilding context for an LLM query about Maria Santos:\n"
 # Step 1: Introspect the topic
 topic_info = facts.introspect("Maria Santos")
 
-puts "1. Entity identified: #{topic_info[:entity][:name]} (#{topic_info[:entity][:type]})"
+puts "1. Entity identified: #{topic_info[:entity][:name]} (#{topic_info[:entity][:kind]})"
 puts "   Coverage: #{topic_info[:coverage][:facts][:canonical]} current facts, #{topic_info[:coverage][:facts][:superseded]} historical"
 
 # Step 2: Get facts in LLM-friendly format

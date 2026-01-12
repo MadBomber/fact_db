@@ -29,7 +29,7 @@ demo_section("Section 1: Setting Up Organization")
 # Create the company
 company = entity_service.create(
   "Innovate Corp",
-  type: :organization,
+  kind: :organization,
   description: "Technology company specializing in AI solutions",
   attributes: { industry: "Technology", founded: "2010" }
 )
@@ -37,21 +37,21 @@ company = entity_service.create(
 # Create departments
 engineering = entity_service.create(
   "Engineering Department",
-  type: :organization,
+  kind: :organization,
   description: "Software engineering team",
   attributes: { parent: company.id }
 )
 
 product = entity_service.create(
   "Product Department",
-  type: :organization,
+  kind: :organization,
   description: "Product management team",
   attributes: { parent: company.id }
 )
 
 hr_dept = entity_service.create(
   "Human Resources",
-  type: :organization,
+  kind: :organization,
   description: "HR team",
   attributes: { parent: company.id }
 )
@@ -62,14 +62,14 @@ puts "Created departments: #{engineering.name}, #{product.name}, #{hr_dept.name}
 # Create locations
 hq = entity_service.create(
   "San Francisco HQ",
-  type: :place,
+  kind: :place,
   aliases: ["SF Office", "Headquarters"],
   attributes: { city: "San Francisco", state: "CA" }
 )
 
 remote_office = entity_service.create(
   "Austin Office",
-  type: :place,
+  kind: :place,
   aliases: ["Austin TX Office"],
   attributes: { city: "Austin", state: "TX" }
 )
@@ -83,7 +83,7 @@ employees = {}
 # CEO
 employees[:ceo] = entity_service.create(
   "Katherine Rodriguez",
-  type: :person,
+  kind: :person,
   aliases: ["Kate Rodriguez", "K. Rodriguez"],
   attributes: { employee_id: "EMP001", email: "krodriguez@innovatecorp.com" },
   description: "Chief Executive Officer"
@@ -92,7 +92,7 @@ employees[:ceo] = entity_service.create(
 # VP Engineering
 employees[:vp_eng] = entity_service.create(
   "Marcus Chen",
-  type: :person,
+  kind: :person,
   aliases: ["Marc Chen"],
   attributes: { employee_id: "EMP002", email: "mchen@innovatecorp.com" },
   description: "VP of Engineering"
@@ -101,7 +101,7 @@ employees[:vp_eng] = entity_service.create(
 # Senior Engineer
 employees[:senior_eng] = entity_service.create(
   "Priya Sharma",
-  type: :person,
+  kind: :person,
   attributes: { employee_id: "EMP003", email: "psharma@innovatecorp.com" },
   description: "Senior Software Engineer"
 )
@@ -109,7 +109,7 @@ employees[:senior_eng] = entity_service.create(
 # Junior Engineer (will be promoted)
 employees[:junior_eng] = entity_service.create(
   "Alex Kim",
-  type: :person,
+  kind: :person,
   attributes: { employee_id: "EMP004", email: "akim@innovatecorp.com" },
   description: "Software Engineer"
 )
@@ -117,7 +117,7 @@ employees[:junior_eng] = entity_service.create(
 # Product Manager
 employees[:pm] = entity_service.create(
   "Jordan Taylor",
-  type: :person,
+  kind: :person,
   attributes: { employee_id: "EMP005", email: "jtaylor@innovatecorp.com" },
   description: "Product Manager"
 )
@@ -125,7 +125,7 @@ employees[:pm] = entity_service.create(
 # HR Manager
 employees[:hr_mgr] = entity_service.create(
   "Michelle Brown",
-  type: :person,
+  kind: :person,
   attributes: { employee_id: "EMP006", email: "mbrown@innovatecorp.com" },
   description: "HR Manager"
 )
@@ -146,7 +146,7 @@ onboarding_doc = content_service.create(
     Jordan Taylor - Hired as Associate PM on February 1, 2022
     Michelle Brown - Hired as HR Coordinator on April 1, 2021
   DOC
-  type: :document,
+  kind: :document,
   title: "Historical Onboarding Records"
 )
 
@@ -159,7 +159,7 @@ ceo_employment = fact_service.create(
     { entity_id: company.id, role: :object, text: "Innovate Corp" }
   ]
 )
-ceo_employment.add_source(content: onboarding_doc, type: :primary)
+ceo_employment.add_source(content: onboarding_doc, kind: :primary)
 
 ceo_location = fact_service.create(
   "Katherine Rodriguez works at San Francisco HQ",
@@ -267,7 +267,7 @@ promotion_memo = content_service.create(
 
     Congratulations Alex!
   MEMO
-  type: :document,
+  kind: :document,
   title: "Promotion Memo - Alex Kim"
 )
 
@@ -281,7 +281,7 @@ promoted_fact = fact_service.supersede(
     { entity_id: engineering.id, role: :object, text: "Engineering Department" }
   ]
 )
-promoted_fact.add_source(content: promotion_memo, type: :primary)
+promoted_fact.add_source(content: promotion_memo, kind: :primary)
 
 puts "Promoted Alex Kim from Junior Developer to Software Engineer"
 puts "Previous fact (#{junior_original.id}) now superseded"
@@ -300,7 +300,7 @@ transfer_memo = content_service.create(
     effective February 1, 2026. Jordan will continue in the
     Product Manager role but will lead our Texas expansion efforts.
   MEMO
-  type: :document,
+  kind: :document,
   title: "Transfer Notice - Jordan Taylor"
 )
 
@@ -325,7 +325,7 @@ jordan_austin_location = fact_service.create(
     { entity_id: remote_office.id, role: :location, text: "Austin Office" }
   ]
 )
-jordan_austin_location.add_source(content: transfer_memo, type: :primary)
+jordan_austin_location.add_source(content: transfer_memo, kind: :primary)
 
 puts "Recorded Jordan Taylor's transfer to Austin Office"
 
@@ -393,14 +393,14 @@ alex_facts.each do |fact|
   puts "  [#{validity}] #{fact.text}#{status_info}"
 
   fact.fact_sources.each do |source|
-    puts "    Source: #{source.content.title} (#{source.source_type})"
+    puts "    Source: #{source.source.title} (#{source.kind})"
   end
 end
 
 demo_section("Section 11: Statistics")
 
-puts "Total employees tracked: #{entity_service.by_type("person").count}"
-puts "Total departments: #{entity_service.by_type("organization").where("description LIKE ?", "%team%").count}"
+puts "Total employees tracked: #{entity_service.by_kind("person").count}"
+puts "Total departments: #{entity_service.by_kind("organization").where("description LIKE ?", "%team%").count}"
 puts "Total employment facts: #{fact_service.stats[:total]}"
 puts "Current facts: #{FactDb::Models::Fact.currently_valid.count}"
 puts "Historical facts: #{FactDb::Models::Fact.historical.count}"

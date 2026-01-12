@@ -399,7 +399,7 @@ class RagFeedbackLoop
     facts.each_with_index do |fact, idx|
       # Get entity mentions for context
       entities = fact.entity_mentions.map do |m|
-        "#{m.entity.name} (#{m.entity.type})"
+        "#{m.entity.name} (#{m.entity.kind})"
       end.uniq
 
       lines << "#{idx + 1}. #{fact.text}"
@@ -444,7 +444,7 @@ class RagFeedbackLoop
 
     @source_service.create(
       llm_response,
-      type: :document,
+      kind: :document,
       title: title,
       metadata: {
         source_type: "rag_synthesis",
@@ -482,7 +482,7 @@ class RagFeedbackLoop
         (fact_data[:mentions] || []).each do |mention_data|
           entity = @entity_service.resolve_or_create(
             mention_data[:name],
-            type: mention_data[:type] || :concept,
+            kind: mention_data[:kind] || :concept,
             aliases: mention_data[:aliases] || [],
             description: "Extracted from RAG synthesis"
           )
@@ -514,7 +514,7 @@ class RagFeedbackLoop
           }
         )
 
-        fact.add_source(source: source, type: :primary, confidence: 0.9)
+        fact.add_source(source: source, kind: :primary, confidence: 0.9)
         extracted_facts << fact
 
       rescue StandardError => e
@@ -680,7 +680,7 @@ class RagFeedbackLoop
                        .limit(entities_added)
 
       new_entities.each do |entity|
-        puts "  - #{entity.name} (#{entity.type})"
+        puts "  - #{entity.name} (#{entity.kind})"
       end
     end
 

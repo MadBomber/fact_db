@@ -44,8 +44,8 @@ module FactDb
         return nil unless name
 
         var = to_variable(name)
-        entity_type = get_value(entity, :type) || "Entity"
-        label = entity_type.to_s.capitalize
+        entity_kind = get_value(entity, :kind) || "Entity"
+        label = entity_kind.to_s.capitalize
 
         props = { name: name }
 

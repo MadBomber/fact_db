@@ -18,7 +18,7 @@ class TextTransformerTest < Minitest::Test
   def test_transform_entities_section
     result = FactDb::QueryResult.new(query: "test")
     result.instance_variable_set(:@entities, {
-      1 => { id: 1, name: "Paula Chen", type: "person" }
+      1 => { id: 1, name: "Paula Chen", kind: "person" }
     })
     result.add_facts([{ id: 1, text: "Test", status: "canonical" }])
 
@@ -35,7 +35,7 @@ class TextTransformerTest < Minitest::Test
       1 => {
         id: 1,
         name: "Paula Chen",
-        type: "person",
+        kind: "person",
         aliases: [{ name: "PC" }, { name: "Paula" }]
       }
     })

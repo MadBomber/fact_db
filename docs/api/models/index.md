@@ -61,7 +61,7 @@ end
 |--------|------|-------------|
 | fact_id | bigint | Parent fact |
 | source_id | bigint | Source content |
-| source_type | string | Type (primary, supporting, contradicting) |
+| kind | string | Kind (primary, supporting, corroborating) |
 | excerpt | text | Relevant text excerpt |
 | confidence | float | Source confidence |
 

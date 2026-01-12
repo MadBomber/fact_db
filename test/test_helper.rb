@@ -39,21 +39,21 @@ module FactDb
       # Tables may not exist yet
     end
 
-    def create_source(content: "Test content", type: "document", captured_at: Time.current, **attrs)
+    def create_source(content: "Test content", kind: "document", captured_at: Time.current, **attrs)
       Models::Source.create!(
         content: content,
         content_hash: Digest::SHA256.hexdigest(content + rand.to_s),
-        type: type,
+        kind: kind,
         captured_at: captured_at,
         metadata: {},
         **attrs
       )
     end
 
-    def create_entity(name: "Test Entity", type: "person", **attrs)
+    def create_entity(name: "Test Entity", kind: "person", **attrs)
       Models::Entity.create!(
         name: name,
-        type: type,
+        kind: kind,
         resolution_status: attrs.delete(:resolution_status) || "resolved",
         metadata: attrs.delete(:metadata) || {},
         **attrs

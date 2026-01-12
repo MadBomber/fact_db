@@ -7,7 +7,7 @@ Stores immutable source content from which facts are extracted.
 ```ruby
 source = FactDb::Models::Source.new(
   content: "Document content...",
-  type: "email",
+  kind: "email",
   captured_at: Time.current
 )
 ```
@@ -18,7 +18,7 @@ source = FactDb::Models::Source.new(
 |-----------|------|-------------|
 | `id` | Integer | Primary key |
 | `content_hash` | String | SHA256 hash for deduplication |
-| `type` | String | Type (email, document, etc.) |
+| `kind` | String | Kind (email, document, etc.) |
 | `content` | Text | Original unmodified text content |
 | `title` | String | Optional title |
 | `source_uri` | String | Original location |
@@ -74,23 +74,23 @@ Find existing source by hash or create new.
 ```ruby
 source = Source.find_or_create_by_text(
   "Document text",
-  type: "document",
+  kind: "document",
   captured_at: Time.current
 )
 ```
 
 ## Scopes
 
-### by_type
+### by_kind
 
 ```ruby
-scope :by_type, ->(type) { where(type: type) }
+scope :by_kind, ->(kind) { where(kind: kind) }
 ```
 
-Filter by content type.
+Filter by content kind.
 
 ```ruby
-Source.by_type('email')
+Source.by_kind('email')
 ```
 
 ### captured_between
@@ -128,7 +128,7 @@ Source.search_text("quarterly earnings")
 ```ruby
 source = Source.create!(
   content: "Important document...",
-  type: "document",
+  kind: "document",
   title: "Q4 Report",
   source_uri: "https://example.com/report.pdf",
   captured_at: Time.current,

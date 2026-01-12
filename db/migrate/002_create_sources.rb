@@ -5,7 +5,7 @@ class CreateSources < ActiveRecord::Migration[7.0]
     create_table :fact_db_sources, comment: "Stores immutable source content from which facts are extracted" do |t|
       t.string :content_hash, null: false, limit: 64,
                comment: "SHA-256 hash of content for deduplication and integrity verification"
-      t.string :type, null: false, limit: 50,
+      t.string :kind, null: false, limit: 50,
                comment: "Classification of content origin (e.g., email, document, webpage, transcript)"
 
       t.text :content, null: false,
@@ -28,7 +28,7 @@ class CreateSources < ActiveRecord::Migration[7.0]
 
     add_index :fact_db_sources, :content_hash, unique: true
     add_index :fact_db_sources, :captured_at
-    add_index :fact_db_sources, :type
+    add_index :fact_db_sources, :kind
     add_index :fact_db_sources, :metadata, using: :gin
 
     # Full-text search index

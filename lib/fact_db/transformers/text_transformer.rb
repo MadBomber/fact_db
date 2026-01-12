@@ -32,10 +32,10 @@ module FactDb
 
         results.each_entity do |entity|
           name = get_value(entity, :name)
-          entity_type = get_value(entity, :type)
+          entity_kind = get_value(entity, :kind)
 
           line = "- **#{name}**"
-          line += " (#{entity_type})" if entity_type
+          line += " (#{entity_kind})" if entity_kind
 
           aliases = get_value(entity, :aliases)
           if aliases && !aliases.empty?

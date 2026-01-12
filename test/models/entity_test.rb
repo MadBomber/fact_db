@@ -6,27 +6,27 @@ class EntityTest < Minitest::Test
   include FactDb::TestHelpers
 
   def test_entity_creation
-    entity = create_entity(name: "Paula Chen", type: "person")
+    entity = create_entity(name: "Paula Chen", kind: "person")
 
     assert_equal "Paula Chen", entity.name
-    assert_equal "person", entity.type
+    assert_equal "person", entity.kind
     assert_equal "resolved", entity.resolution_status
   end
 
-  def test_entity_types
-    person = create_entity(type: "person")
-    org = create_entity(name: "Acme Corp", type: "organization")
-    place = create_entity(name: "Seattle", type: "place")
+  def test_entity_kinds
+    person = create_entity(kind: "person")
+    org = create_entity(name: "Acme Corp", kind: "organization")
+    place = create_entity(name: "Seattle", kind: "place")
 
-    assert_includes FactDb::Models::Entity.by_type("person"), person
-    assert_includes FactDb::Models::Entity.by_type("organization"), org
-    assert_includes FactDb::Models::Entity.by_type("place"), place
+    assert_includes FactDb::Models::Entity.by_kind("person"), person
+    assert_includes FactDb::Models::Entity.by_kind("organization"), org
+    assert_includes FactDb::Models::Entity.by_kind("place"), place
   end
 
   def test_add_alias
     entity = create_entity(name: "Paula Chen")
     entity.add_alias("P. Chen")
-    entity.add_alias("@paula", type: "handle")
+    entity.add_alias("@paula", kind: "handle")
 
     assert_equal 2, entity.aliases.count
     assert_includes entity.all_aliases, "P. Chen"
@@ -67,17 +67,17 @@ class EntityTest < Minitest::Test
 
     refute entity.valid?
     assert entity.errors[:name].any?
-    assert entity.errors[:type].any?
+    assert entity.errors[:kind].any?
   end
 
-  def test_entity_type_validation
+  def test_entity_kind_validation
     entity = FactDb::Models::Entity.new(
       name: "Test",
-      type: "invalid_type",
+      kind: "invalid_kind",
       resolution_status: "resolved"
     )
 
     refute entity.valid?
-    assert entity.errors[:type].any?
+    assert entity.errors[:kind].any?
   end
 end
