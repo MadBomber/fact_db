@@ -1,0 +1,5 @@
+--output-dir doc
+--readme README.md
+--markup markdown
+--asset docs/assets:assets
+lib/**/*.rb

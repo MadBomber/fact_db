@@ -1,0 +1,33 @@
+# Build artifacts
+doc/
+site/
+pkg/
+*.gem
+
+# YARD cache
+.yardoc/
+
+# Claude Code settings
+.claude/
+
+# Ruby/Bundler
+/.bundle/
+/vendor/bundle/
+Gemfile.lock
+
+# Testing
+/coverage/
+/tmp/
+
+# Database dumps
+db/dumps/
+
+# IDE/Editor
+.idea/
+*.swp
+*.swo
+*~
+.vscode/
+
+# macOS
+.DS_Store

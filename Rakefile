@@ -101,6 +101,127 @@ namespace :db do
     end
   end
 
+  namespace :schema do
+    desc "Dump database schema to db/schema.sql"
+    task :dump do
+      require_relative "lib/fact_db"
+      db = FactDb.config.database
+
+      puts "Environment: #{FactDb.config.environment}"
+      puts "Database: #{db.name}"
+
+      schema_file = File.expand_path("db/schema.sql", __dir__)
+      host = db.host || "localhost"
+      port = db.port || 5432
+      user = db.username || ENV["USER"]
+
+      cmd = ["pg_dump", "--schema-only", "--no-owner", "--no-acl"]
+      cmd += ["-h", host, "-p", port.to_s]
+      cmd += ["-U", user] if user
+      cmd << db.name
+
+      File.open(schema_file, "w") do |f|
+        f.puts "-- Schema dump for #{db.name}"
+        f.puts "-- Generated: #{Time.now.utc.iso8601}"
+        f.puts "-- Environment: #{FactDb.config.environment}"
+        f.puts
+      end
+
+      system(*cmd, out: [schema_file, "a"]) || abort("pg_dump failed")
+      puts "Schema dumped to #{schema_file}"
+    end
+
+    desc "Load database schema from db/schema.sql"
+    task :load do
+      require_relative "lib/fact_db"
+      db = FactDb.config.database
+
+      puts "Environment: #{FactDb.config.environment}"
+      puts "Database: #{db.name}"
+
+      schema_file = File.expand_path("db/schema.sql", __dir__)
+      abort("Schema file not found: #{schema_file}") unless File.exist?(schema_file)
+
+      host = db.host || "localhost"
+      port = db.port || 5432
+      user = db.username || ENV["USER"]
+
+      cmd = ["psql", "-q"]
+      cmd += ["-h", host, "-p", port.to_s]
+      cmd += ["-U", user] if user
+      cmd += ["-d", db.name, "-f", schema_file]
+
+      system(*cmd) || abort("psql failed")
+      puts "Schema loaded from #{schema_file}"
+    end
+  end
+
+  desc "Dump database to file. DIR=path (default: .)"
+  task :dump do
+    require_relative "lib/fact_db"
+    db = FactDb.config.database
+
+    puts "Environment: #{FactDb.config.environment}"
+    puts "Database: #{db.name}"
+
+    dumps_dir = ENV["DIR"] || Dir.pwd
+    timestamp = Time.now.strftime("%Y%m%d_%H%M%S")
+    dump_file = File.join(dumps_dir, "fact_db_#{FactDb.config.environment}_#{timestamp}.dump")
+
+    host = db.host || "localhost"
+    port = db.port || 5432
+    user = db.username || ENV["USER"]
+
+    cmd = ["pg_dump", "-Fc", "--no-owner", "--no-acl"]
+    cmd += ["-h", host, "-p", port.to_s]
+    cmd += ["-U", user] if user
+    cmd += ["-f", dump_file]
+    cmd << db.name
+
+    system(*cmd) || abort("pg_dump failed")
+    puts "Database dumped to #{dump_file}"
+  end
+
+  desc "Restore database from dump file. DIR=path (default: .)"
+  task :restore do
+    require_relative "lib/fact_db"
+    db = FactDb.config.database
+
+    dumps_dir = ENV["DIR"] || Dir.pwd
+    pattern = File.join(dumps_dir, "fact_db_#{FactDb.config.environment}_*.dump")
+    dump_files = Dir.glob(pattern).sort
+    abort("No dump files found matching: #{pattern}") if dump_files.empty?
+
+    dump_file = if dump_files.size == 1
+      dump_files.first
+    else
+      puts "Available dump files:"
+      dump_files.each_with_index do |file, index|
+        puts "  #{index + 1}. #{File.basename(file)}"
+      end
+      print "\nSelect file (1-#{dump_files.size}): "
+      choice = $stdin.gets.to_i
+      abort("Invalid selection") unless choice.between?(1, dump_files.size)
+      dump_files[choice - 1]
+    end
+
+    puts "Environment: #{FactDb.config.environment}"
+    puts "Database: #{db.name}"
+    puts "Restoring from: #{dump_file}"
+
+    host = db.host || "localhost"
+    port = db.port || 5432
+    user = db.username || ENV["USER"]
+
+    cmd = ["pg_restore", "--no-owner", "--no-acl", "-d", db.name]
+    cmd += ["-h", host, "-p", port.to_s]
+    cmd += ["-U", user] if user
+    cmd << dump_file
+
+    system(*cmd) || abort("pg_restore failed")
+    puts "Database restored from #{dump_file}"
+  end
+
   desc "Clean up invalid aliases (pronouns, generic terms). Use EXECUTE=1 to apply changes."
   task :cleanup_aliases do
     require_relative "lib/fact_db"
@@ -129,6 +250,25 @@ namespace :db do
     puts "\nChecked: #{stats[:checked]}, Removed: #{stats[:removed]}"
     puts "\nRun with EXECUTE=1 to apply changes." if dry_run && stats[:removed] > 0
   end
+end
+
+namespace :docs do
+  desc "Build mkdocs documentation site"
+  task :mkdocs do
+    output_dir = File.expand_path("site", __dir__)
+    system("mkdocs", "build", "--clean") || abort("mkdocs build failed")
+    puts "MkDocs site built to #{output_dir}"
+  end
+
+  desc "Build YARD API documentation"
+  task :yard do
+    output_dir = File.expand_path("doc", __dir__)
+    system("yard", "doc") || abort("yard doc failed")
+    puts "YARD documentation built to #{output_dir}"
+  end
+
+  desc "Build all documentation (mkdocs and YARD)"
+  task all: [:mkdocs, :yard]
 end
 
 task default: :test

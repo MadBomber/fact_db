@@ -110,6 +110,10 @@ bundle install
 
 See the [Installation Guide](getting-started/installation.md) for detailed setup instructions.
 
+## API Documentation
+
+API documentation (YARD) is available at **[https://madbomber.github.io/fact_db/yard](https://madbomber.github.io/fact_db/yard)**
+
 ## Requirements
 
 - Ruby >= 3.0

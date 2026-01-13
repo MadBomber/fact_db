@@ -201,6 +201,8 @@ facts.suggest_strategies("What happened last week?")
 
 Full documentation is available at **[https://madbomber.github.io/fact_db](https://madbomber.github.io/fact_db)**
 
+API documentation (YARD) is available at **[https://madbomber.github.io/fact_db/yard](https://madbomber.github.io/fact_db/yard)**
+
 ## Examples
 
 See the [examples directory](examples/README.md) for runnable demo programs covering:
