@@ -22,7 +22,7 @@ end
 facts = FactDb.new
 entity_service = facts.entity_service
 fact_service = facts.fact_service
-content_service = facts.content_service
+source_service = facts.source_service
 
 demo_section("Section 1: Setting Up Organization")
 
@@ -135,7 +135,7 @@ puts "Created #{employees.length} employee profiles"
 demo_section("Section 3: Record Initial Employment Facts")
 
 # Ingest an onboarding document
-onboarding_doc = content_service.create(
+onboarding_doc = source_service.create(
   <<~DOC,
     EMPLOYEE ONBOARDING RECORDS - 2020-2024
 
@@ -159,7 +159,7 @@ ceo_employment = fact_service.create(
     { entity_id: company.id, role: :object, text: "Innovate Corp" }
   ]
 )
-ceo_employment.add_source(content: onboarding_doc, kind: :primary)
+ceo_employment.add_source(source: onboarding_doc, kind: :primary)
 
 ceo_location = fact_service.create(
   "Katherine Rodriguez works at San Francisco HQ",
@@ -253,7 +253,7 @@ puts "Recorded employment history facts"
 demo_section("Section 4: Process a Promotion")
 
 # Ingest the promotion memo
-promotion_memo = content_service.create(
+promotion_memo = source_service.create(
   <<~MEMO,
     INTERNAL MEMO
     Date: January 8, 2026
@@ -281,7 +281,7 @@ promoted_fact = fact_service.supersede(
     { entity_id: engineering.id, role: :object, text: "Engineering Department" }
   ]
 )
-promoted_fact.add_source(content: promotion_memo, kind: :primary)
+promoted_fact.add_source(source: promotion_memo, kind: :primary)
 
 puts "Promoted Alex Kim from Junior Developer to Software Engineer"
 puts "Previous fact (#{junior_original.id}) now superseded"
@@ -290,7 +290,7 @@ puts "New fact ID: #{promoted_fact.id}"
 demo_section("Section 5: Record a Transfer")
 
 # Jordan is transferring to Austin
-transfer_memo = content_service.create(
+transfer_memo = source_service.create(
   <<~MEMO,
     INTERNAL MEMO
     Date: January 10, 2026
@@ -325,7 +325,7 @@ jordan_austin_location = fact_service.create(
     { entity_id: remote_office.id, role: :location, text: "Austin Office" }
   ]
 )
-jordan_austin_location.add_source(content: transfer_memo, kind: :primary)
+jordan_austin_location.add_source(source: transfer_memo, kind: :primary)
 
 puts "Recorded Jordan Taylor's transfer to Austin Office"
 
@@ -404,6 +404,6 @@ puts "Total departments: #{entity_service.by_kind("organization").where("descrip
 puts "Total employment facts: #{fact_service.stats[:total]}"
 puts "Current facts: #{FactDb::Models::Fact.currently_valid.count}"
 puts "Historical facts: #{FactDb::Models::Fact.historical.count}"
-puts "Documents processed: #{content_service.stats[:total]}"
+puts "Documents processed: #{source_service.stats[:total]}"
 
 demo_footer

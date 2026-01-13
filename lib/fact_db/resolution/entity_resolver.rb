@@ -2,16 +2,42 @@
 
 module FactDb
   module Resolution
+    # Resolves entity names to canonical entities in the database
+    #
+    # Provides entity resolution through exact alias matching, canonical name matching,
+    # and fuzzy matching using Levenshtein distance. Also handles entity merging,
+    # splitting, and duplicate detection.
+    #
+    # @example Basic usage
+    #   resolver = EntityResolver.new
+    #   resolved = resolver.resolve("John Smith", kind: :person)
+    #   if resolved
+    #     puts "Found: #{resolved.entity.name} (confidence: #{resolved.confidence})"
+    #   end
+    #
     class EntityResolver
+      # @return [FactDb::Config] the configuration object
       attr_reader :config
 
+      # Initializes a new EntityResolver instance
+      #
+      # @param config [FactDb::Config] configuration object (defaults to FactDb.config)
       def initialize(config = FactDb.config)
         @config = config
         @threshold = config.fuzzy_match_threshold
         @auto_merge_threshold = config.auto_merge_threshold
       end
 
-      # Resolve a name to an entity
+      # Resolves a name to an existing entity
+      #
+      # Tries resolution in order: exact alias match, canonical name match, fuzzy match.
+      #
+      # @param name [String] the name to resolve
+      # @param kind [Symbol, nil] optional entity kind filter (:person, :organization, etc.)
+      # @return [ResolvedEntity, nil] resolved entity with confidence score, or nil if not found
+      #
+      # @example Resolve with kind filter
+      #   resolver.resolve("Acme", kind: :organization)
       def resolve(name, kind: nil)
         return nil if name.nil? || name.empty?
 
@@ -31,7 +57,16 @@ module FactDb
         nil
       end
 
-      # Resolve or create an entity
+      # Resolves a name to an entity, creating one if not found
+      #
+      # @param name [String] the name to resolve or create
+      # @param kind [Symbol] the entity kind (required for creation)
+      # @param aliases [Array<String>] additional aliases to add
+      # @param attributes [Hash] additional attributes for new entity
+      # @return [FactDb::Models::Entity] the resolved or created entity
+      #
+      # @example Create with aliases
+      #   resolver.resolve_or_create("John Smith", kind: :person, aliases: ["J. Smith", "Johnny"])
       def resolve_or_create(name, kind:, aliases: [], attributes: {})
         resolved = resolve(name, kind: kind)
         return resolved.entity if resolved
@@ -39,7 +74,17 @@ module FactDb
         create_entity(name, kind: kind, aliases: aliases, attributes: attributes)
       end
 
-      # Merge two entities, keeping one as canonical
+      # Merges two entities, keeping one as canonical
+      #
+      # Transfers all aliases and mentions from the merged entity to the kept entity.
+      #
+      # @param keep_id [Integer] ID of the entity to keep
+      # @param merge_id [Integer] ID of the entity to merge (will be marked as merged)
+      # @return [FactDb::Models::Entity] the kept entity with updated aliases
+      # @raise [ResolutionError] if attempting to merge into itself or merge already merged entity
+      #
+      # @example Merge duplicate entities
+      #   resolver.merge(primary_entity.id, duplicate_entity.id)
       def merge(keep_id, merge_id)
         keep = Models::Entity.find(keep_id)
         merge_entity = Models::Entity.find(merge_id)
@@ -75,7 +120,19 @@ module FactDb
         keep.reload
       end
 
-      # Split an entity into multiple entities
+      # Splits an entity into multiple new entities
+      #
+      # Creates new entities based on the split configuration and marks the original as split.
+      #
+      # @param entity_id [Integer] ID of the entity to split
+      # @param split_configs [Array<Hash>] array of hashes with :name, :kind, :aliases, :attributes
+      # @return [Array<FactDb::Models::Entity>] array of newly created entities
+      #
+      # @example Split an ambiguous entity
+      #   resolver.split(entity.id, [
+      #     { name: "John Smith (Sales)", kind: :person },
+      #     { name: "John Smith (Engineering)", kind: :person }
+      #   ])
       def split(entity_id, split_configs)
         original = Models::Entity.find(entity_id)
 
@@ -95,7 +152,14 @@ module FactDb
         end
       end
 
-      # Find potential duplicate entities
+      # Finds potential duplicate entities based on name similarity
+      #
+      # @param threshold [Float, nil] minimum similarity score (defaults to config threshold)
+      # @return [Array<Hash>] array of hashes with :entity1, :entity2, :similarity keys
+      #
+      # @example Find duplicates with custom threshold
+      #   duplicates = resolver.find_duplicates(threshold: 0.85)
+      #   duplicates.each { |d| puts "#{d[:entity1].name} ~ #{d[:entity2].name} (#{d[:similarity]})" }
       def find_duplicates(threshold: nil)
         threshold ||= @threshold
         duplicates = []
@@ -118,7 +182,11 @@ module FactDb
         duplicates.sort_by { |d| -d[:similarity] }
       end
 
-      # Auto-merge high-confidence duplicates
+      # Automatically merges high-confidence duplicates
+      #
+      # Uses the auto_merge_threshold from config and keeps the entity with more mentions.
+      #
+      # @return [void]
       def auto_merge_duplicates!
         duplicates = find_duplicates(threshold: @auto_merge_threshold)
 
@@ -228,31 +296,63 @@ module FactDb
       end
     end
 
+    # Represents a resolved entity with confidence metadata
+    #
+    # Wraps an entity with information about how it was resolved
+    # and the confidence level of the match.
+    #
     class ResolvedEntity
-      attr_reader :entity, :confidence, :match_type
+      # @return [FactDb::Models::Entity] the resolved entity
+      attr_reader :entity
 
+      # @return [Float] confidence score from 0.0 to 1.0
+      attr_reader :confidence
+
+      # @return [Symbol] how the entity was matched (:exact_alias, :name, :fuzzy)
+      attr_reader :match_type
+
+      # Initializes a new ResolvedEntity
+      #
+      # @param entity [FactDb::Models::Entity] the resolved entity
+      # @param confidence [Float] confidence score (0.0 to 1.0)
+      # @param match_type [Symbol] match type (:exact_alias, :name, :fuzzy)
       def initialize(entity, confidence:, match_type:)
         @entity = entity
         @confidence = confidence
         @match_type = match_type
       end
 
+      # Checks if this was an exact match (confidence == 1.0)
+      #
+      # @return [Boolean] true if confidence is 1.0
       def exact_match?
         confidence == 1.0
       end
 
+      # Checks if this was a fuzzy match
+      #
+      # @return [Boolean] true if match_type is :fuzzy
       def fuzzy_match?
         match_type == :fuzzy
       end
 
+      # Returns the entity ID
+      #
+      # @return [Integer] the entity's database ID
       def id
         entity.id
       end
 
+      # Returns the entity name
+      #
+      # @return [String] the entity's canonical name
       def name
         entity.name
       end
 
+      # Returns the entity kind
+      #
+      # @return [String] the entity's kind
       def kind
         entity.kind
       end

@@ -2,14 +2,43 @@
 
 module FactDb
   module Resolution
+    # Handles fact lifecycle operations including supersession, synthesis, and conflict resolution
+    #
+    # Provides methods for managing fact relationships: superseding outdated facts,
+    # synthesizing new facts from multiple sources, handling corroboration,
+    # and detecting/resolving conflicts.
+    #
+    # @example Supersede an outdated fact
+    #   resolver = FactResolver.new
+    #   new_fact = resolver.supersede(old_fact.id, "Updated information", valid_at: Date.today)
+    #
     class FactResolver
+      # @return [FactDb::Config] the configuration object
       attr_reader :config
 
+      # Initializes a new FactResolver instance
+      #
+      # @param config [FactDb::Config] configuration object (defaults to FactDb.config)
       def initialize(config = FactDb.config)
         @config = config
       end
 
-      # Supersede an existing fact with a new one
+      # Supersedes an existing fact with a new one
+      #
+      # Creates a new canonical fact and marks the old one as superseded.
+      # Copies mentions and sources from the old fact unless new mentions are provided.
+      #
+      # @param old_fact_id [Integer] ID of the fact to supersede
+      # @param new_text [String] the updated fact text
+      # @param valid_at [Date, Time] when the new fact became valid
+      # @param mentions [Array<Hash>] optional entity mentions for the new fact
+      # @return [FactDb::Models::Fact] the new canonical fact
+      # @raise [ResolutionError] if the fact is already superseded
+      #
+      # @example Supersede with new mentions
+      #   resolver.supersede(fact.id, "John now works at NewCo",
+      #     valid_at: Date.today,
+      #     mentions: [{ entity_id: john.id, text: "John", role: :subject }])
       def supersede(old_fact_id, new_text, valid_at:, mentions: [])
         old_fact = Models::Fact.find(old_fact_id)
 
@@ -67,7 +96,21 @@ module FactDb
         end
       end
 
-      # Synthesize a new fact from multiple source facts
+      # Synthesizes a new fact from multiple source facts
+      #
+      # Creates a single synthesized fact that aggregates information from multiple facts.
+      # Automatically aggregates entity mentions and links to all source content.
+      #
+      # @param source_fact_ids [Array<Integer>] IDs of the source facts
+      # @param synthesized_text [String] the synthesized summary text
+      # @param valid_at [Date, Time] when the synthesis is valid from
+      # @param invalid_at [Date, Time, nil] when the synthesis becomes invalid
+      # @param mentions [Array<Hash>] optional entity mentions (aggregated from sources if empty)
+      # @return [FactDb::Models::Fact] the synthesized fact
+      # @raise [ResolutionError] if no source facts are found
+      #
+      # @example Synthesize multiple facts
+      #   resolver.synthesize([fact1.id, fact2.id], "Summary of events", valid_at: Date.today)
       def synthesize(source_fact_ids, synthesized_text, valid_at:, invalid_at: nil, mentions: [])
         source_facts = Models::Fact.where(id: source_fact_ids)
 
@@ -117,7 +160,15 @@ module FactDb
         end
       end
 
-      # Mark a fact as corroborated by another fact
+      # Marks a fact as corroborated by another fact
+      #
+      # Adds the corroborating fact ID to the corroborated_by_ids array.
+      # If 2+ facts corroborate, status changes to "corroborated".
+      #
+      # @param fact_id [Integer] ID of the fact being corroborated
+      # @param corroborating_fact_id [Integer] ID of the supporting fact
+      # @return [FactDb::Models::Fact] the updated fact
+      # @raise [ResolutionError] if attempting to corroborate with the same fact
       def corroborate(fact_id, corroborating_fact_id)
         fact = Models::Fact.find(fact_id)
         _corroborating = Models::Fact.find(corroborating_fact_id)
@@ -134,14 +185,24 @@ module FactDb
         fact
       end
 
-      # Invalidate a fact without replacement
+      # Invalidates a fact without replacement
+      #
+      # @param fact_id [Integer] ID of the fact to invalidate
+      # @param at [Time] when the fact became invalid (defaults to now)
+      # @return [FactDb::Models::Fact] the invalidated fact
       def invalidate(fact_id, at: Time.current)
         fact = Models::Fact.find(fact_id)
         fact.update!(invalid_at: at)
         fact
       end
 
-      # Find potentially conflicting facts
+      # Finds potentially conflicting facts
+      #
+      # Identifies facts with similar text (50-95% similarity) that might be contradictory.
+      #
+      # @param entity_id [Integer, nil] entity ID to filter by
+      # @param topic [String, nil] topic to search for
+      # @return [Array<Hash>] array of hashes with :fact1, :fact2, :similarity keys
       def find_conflicts(entity_id: nil, topic: nil)
         scope = Models::Fact.canonical.currently_valid
 
@@ -173,7 +234,12 @@ module FactDb
         conflicts.sort_by { |c| -c[:similarity] }
       end
 
-      # Resolve conflicts by keeping one fact and superseding others
+      # Resolves conflicts by keeping one fact and superseding others
+      #
+      # @param keep_fact_id [Integer] ID of the fact to keep as canonical
+      # @param supersede_fact_ids [Array<Integer>] IDs of facts to mark as superseded
+      # @param reason [String, nil] reason for the resolution (stored in metadata)
+      # @return [FactDb::Models::Fact] the kept fact
       def resolve_conflict(keep_fact_id, supersede_fact_ids, reason: nil)
         Models::Fact.transaction do
           supersede_fact_ids.each do |fact_id|
@@ -190,7 +256,13 @@ module FactDb
         Models::Fact.find(keep_fact_id)
       end
 
-      # Build a timeline fact from point-in-time facts
+      # Builds a timeline fact from point-in-time facts for an entity
+      #
+      # Creates a synthesized fact summarizing the entity's history on a topic.
+      #
+      # @param entity_id [Integer] the entity ID
+      # @param topic [String, nil] optional topic filter
+      # @return [FactDb::Models::Fact, nil] synthesized timeline fact or nil if no facts found
       def build_timeline_fact(entity_id:, topic: nil)
         facts = Models::Fact.mentioning_entity(entity_id)
         facts = facts.search_text(topic) if topic

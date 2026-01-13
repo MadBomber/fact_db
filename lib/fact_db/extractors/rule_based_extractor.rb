@@ -2,8 +2,18 @@
 
 module FactDb
   module Extractors
+    # Rule-based fact extractor using regex patterns
+    #
+    # Extracts facts from text using predefined regex patterns for common
+    # fact types like employment, relationships, and locations. Does not
+    # require an LLM but is limited to recognized patterns.
+    #
+    # @example Extract facts using patterns
+    #   extractor = RuleBasedExtractor.new
+    #   facts = extractor.extract("Paula works at Microsoft in Seattle")
+    #
     class RuleBasedExtractor < Base
-      # Date patterns for temporal extraction
+      # @return [Array<Regexp>] patterns for extracting start dates
       DATE_PATTERNS = [
         # "on January 10, 2024"
         /(?:on|since|from|as of|starting)\s+(\w+\s+\d{1,2},?\s+\d{4})/i,
@@ -15,13 +25,14 @@ module FactDb
         /(?:in|during)\s+(\d{4})\b/i
       ].freeze
 
+      # @return [Array<Regexp>] patterns for extracting end dates
       END_DATE_PATTERNS = [
         # "until January 10, 2024"
         /(?:until|through|to|ended|left)\s+(\w+\s+\d{1,2},?\s+\d{4})/i,
         /(?:until|through|to|ended|left)\s+(\d{4}-\d{2}-\d{2})/i
       ].freeze
 
-      # Employment patterns (use [ ]+ instead of \s+ to avoid matching newlines)
+      # @return [Array<Regexp>] patterns for employment facts
       EMPLOYMENT_PATTERNS = [
         # "Paula works at Microsoft"
         /(\b[A-Z][a-z]+(?:[ ]+[A-Z][a-z]+)*)\b[ ]+(?:works?|worked|is working)[ ]+(?:at|for)[ ]+(\b[A-Z][A-Za-z]+(?:[ ]+[A-Z][A-Za-z]+)*)\b/,
@@ -33,7 +44,7 @@ module FactDb
         /(\b[A-Z][a-z]+(?:[ ]+[A-Z][a-z]+)*)\b[ ]+(?:is|was|became)[ ]+(?:a[ ]+)?([A-Z][A-Za-z]+(?:[ ]+[A-Z][A-Za-z]+)*)[ ]+at[ ]+(\b[A-Z][A-Za-z]+(?:[ ]+[A-Z][A-Za-z]+)*)\b/
       ].freeze
 
-      # Relationship patterns (use [ ]+ instead of \s+ to avoid matching newlines)
+      # @return [Array<Regexp>] patterns for relationship facts
       RELATIONSHIP_PATTERNS = [
         # "Paula is married to John"
         /(\b[A-Z][a-z]+(?:[ ]+[A-Z][a-z]+)*)\b[ ]+(?:is|was)[ ]+(?:married to|engaged to|dating)[ ]+(\b[A-Z][a-z]+(?:[ ]+[A-Z][a-z]+)*)\b/,
@@ -41,8 +52,7 @@ module FactDb
         /(\b[A-Z][a-z]+(?:[ ]+[A-Z][a-z]+)*)\b[ ]+(?:is|was)[ ]+(?:the[ ]+)?(\w+(?:[ ]+\w+)*)[ ]+of[ ]+(\b[A-Z][A-Za-z]+(?:[ ]+[A-Z][A-Za-z]+)*)\b/
       ].freeze
 
-      # Location patterns (use [ ]+ instead of \s+ to avoid matching newlines)
-      # Location capture includes multi-word cities like "New York City", "San Francisco"
+      # @return [Array<Regexp>] patterns for location facts
       LOCATION_PATTERNS = [
         # "Paula lives in Seattle" or "Bob lives in New York City"
         /(\b[A-Z][a-z]+(?:[ ]+[A-Z][a-z]+)*)\b[ ]+(?:lives?|lived|is based|was based|relocated|moved)[ ]+(?:in|to)[ ]+(\b[A-Z][A-Za-z]+(?:[ ]+[A-Z][A-Za-z]+)*(?:,[ ]+[A-Z]{2})?)\b/,
@@ -50,6 +60,15 @@ module FactDb
         /(\b[A-Z][A-Za-z]+(?:[ ]+[A-Z][A-Za-z]+)*)\b[ ]+(?:is|was)[ ]+(?:headquartered|located|based)[ ]+in[ ]+(\b[A-Z][A-Za-z]+(?:[ ]+[A-Z][A-Za-z]+)*(?:,[ ]+[A-Z][A-Za-z]+)?)\b/
       ].freeze
 
+      # Extracts facts from text using regex patterns
+      #
+      # Applies employment, relationship, and location patterns to identify
+      # facts, with associated entity mentions and temporal information.
+      #
+      # @param text [String] raw text to extract from
+      # @param context [Hash] additional context
+      # @option context [Date, Time] :captured_at default timestamp for facts
+      # @return [Array<Hash>] array of fact hashes, deduplicated by text
       def extract(text, context = {})
         return [] if text.nil? || text.strip.empty?
 
@@ -67,6 +86,13 @@ module FactDb
         facts.uniq { |f| f[:text] }
       end
 
+      # Extracts entities from text using regex patterns
+      #
+      # Identifies person names, organization names, and locations using
+      # pattern matching. Filters out common words, job titles, and known phrases.
+      #
+      # @param text [String] raw text to extract from
+      # @return [Array<Hash>] array of entity hashes with :name and :kind
       def extract_entities(text)
         return [] if text.nil? || text.strip.empty?
 

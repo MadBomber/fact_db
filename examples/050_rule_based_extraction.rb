@@ -183,7 +183,7 @@ result.each do |fact_data|
   )
 
   # Link to source content
-  fact.add_source(content: content, kind: :primary, confidence: fact_data[:confidence])
+  fact.add_source(source: content, kind: :primary, confidence: fact_data[:confidence])
 
   puts "Saved fact: #{fact.text}"
   puts "  ID: #{fact.id}, Mentions: #{fact.entity_mentions.count}"
@@ -234,11 +234,11 @@ end
 
 demo_section("Section 5: Statistics")
 
-content_stats = facts.content_service.stats
+source_stats = facts.source_service.stats
 fact_stats = facts.fact_service.stats
-entity_stats = entity_service.stats
+entity_stats = facts.entity_service.stats
 
-puts "Content ingested: #{content_stats[:total]}"
+puts "Content ingested: #{source_stats[:total]}"
 puts "Entities created: #{entity_stats[:total]}"
 puts "Facts extracted: #{fact_stats[:total]}"
 

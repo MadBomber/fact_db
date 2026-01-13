@@ -114,8 +114,8 @@ puts "Fact: #{fact2.text}"
 puts "  Valid from: #{fact2.valid_at} to #{fact2.invalid_at}"
 
 # Link facts to source content (skip if already linked)
-fact1.add_source(content: content, kind: :primary, confidence: 1.0) rescue nil
-fact2.add_source(content: content, kind: :supporting, confidence: 0.8) rescue nil
+fact1.add_source(source: content, kind: :primary, confidence: 1.0) rescue nil
+fact2.add_source(source: content, kind: :supporting, confidence: 0.8) rescue nil
 
 demo_section("Step 4: Querying Facts")
 
@@ -143,8 +143,8 @@ end
 
 demo_section("Step 5: Statistics")
 
-puts "\nContent stats:"
-ap facts.content_service.stats
+puts "\nSource stats:"
+ap facts.source_service.stats
 
 puts "\nEntity stats:"
 ap entity_service.stats

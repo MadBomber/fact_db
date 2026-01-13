@@ -2,6 +2,22 @@
 
 module FactDb
   module Models
+    # Represents a temporal fact in the database
+    #
+    # Facts are the core data structure in FactDb, representing statements with
+    # temporal validity (valid_at/invalid_at), entity mentions, and source provenance.
+    # Facts can be canonical, superseded, or synthesized from other facts.
+    #
+    # @example Create a fact
+    #   fact = Fact.create!(
+    #     text: "John works at Acme Corp",
+    #     valid_at: Date.parse("2024-01-15"),
+    #     status: "canonical"
+    #   )
+    #
+    # @example Query currently valid facts
+    #   Fact.canonical.currently_valid
+    #
     class Fact < ActiveRecord::Base
       self.table_name = "fact_db_facts"
 
@@ -25,95 +41,191 @@ module FactDb
 
       before_validation :generate_digest, on: :create
 
-      # Fact statuses
+      # @return [Array<String>] valid fact statuses
       STATUSES = %w[canonical superseded corroborated synthesized].freeze
+
+      # @return [Array<String>] valid extraction methods
       EXTRACTION_METHODS = %w[manual llm rule_based].freeze
 
       validates :status, inclusion: { in: STATUSES }
       validates :extraction_method, inclusion: { in: EXTRACTION_METHODS }, allow_nil: true
 
-      # Core scopes
+      # @!group Scopes
+
+      # @!method canonical
+      #   Returns facts with canonical status
+      #   @return [ActiveRecord::Relation]
       scope :canonical, -> { where(status: "canonical") }
+
+      # @!method superseded
+      #   Returns facts that have been superseded
+      #   @return [ActiveRecord::Relation]
       scope :superseded, -> { where(status: "superseded") }
+
+      # @!method synthesized
+      #   Returns facts that were synthesized from other facts
+      #   @return [ActiveRecord::Relation]
       scope :synthesized, -> { where(status: "synthesized") }
 
-      # Temporal scopes - the heart of the Event Clock
+      # @!method currently_valid
+      #   Returns facts that are currently valid (no invalid_at date)
+      #   @return [ActiveRecord::Relation]
       scope :currently_valid, -> { where(invalid_at: nil) }
+
+      # @!method historical
+      #   Returns facts that have been invalidated
+      #   @return [ActiveRecord::Relation]
       scope :historical, -> { where.not(invalid_at: nil) }
 
+      # @!method valid_at(date)
+      #   Returns facts valid at a specific point in time
+      #   @param date [Date, Time] the point in time
+      #   @return [ActiveRecord::Relation]
       scope :valid_at, lambda { |date|
         where("valid_at <= ?", date)
           .where("invalid_at > ? OR invalid_at IS NULL", date)
       }
 
+      # @!method valid_between(from, to)
+      #   Returns facts valid during a date range
+      #   @param from [Date, Time] start of range
+      #   @param to [Date, Time] end of range
+      #   @return [ActiveRecord::Relation]
       scope :valid_between, lambda { |from, to|
         where("valid_at <= ? AND (invalid_at > ? OR invalid_at IS NULL)", to, from)
       }
 
+      # @!method became_valid_between(from, to)
+      #   Returns facts that became valid within a date range
+      #   @param from [Date, Time] start of range
+      #   @param to [Date, Time] end of range
+      #   @return [ActiveRecord::Relation]
       scope :became_valid_between, lambda { |from, to|
         where(valid_at: from..to)
       }
 
+      # @!method became_invalid_between(from, to)
+      #   Returns facts that became invalid within a date range
+      #   @param from [Date, Time] start of range
+      #   @param to [Date, Time] end of range
+      #   @return [ActiveRecord::Relation]
       scope :became_invalid_between, lambda { |from, to|
         where(invalid_at: from..to)
       }
 
-      # Entity filtering
+      # @!method mentioning_entity(entity_id)
+      #   Returns facts that mention a specific entity
+      #   @param entity_id [Integer] the entity ID
+      #   @return [ActiveRecord::Relation]
       scope :mentioning_entity, lambda { |entity_id|
         joins(:entity_mentions).where(fact_db_entity_mentions: { entity_id: entity_id }).distinct
       }
 
+      # @!method with_role(entity_id, role)
+      #   Returns facts where an entity has a specific role
+      #   @param entity_id [Integer] the entity ID
+      #   @param role [String, Symbol] the mention role (subject, object, etc.)
+      #   @return [ActiveRecord::Relation]
       scope :with_role, lambda { |entity_id, role|
         joins(:entity_mentions).where(
           fact_db_entity_mentions: { entity_id: entity_id, mention_role: role }
         ).distinct
       }
 
-      # Full-text search
+      # @!method search_text(query)
+      #   Full-text search on fact text using PostgreSQL tsvector
+      #   @param query [String] the search query
+      #   @return [ActiveRecord::Relation]
       scope :search_text, lambda { |query|
         where("to_tsvector('english', text) @@ plainto_tsquery('english', ?)", query)
       }
 
-      # Extraction method
+      # @!method extracted_by(method)
+      #   Returns facts extracted by a specific method
+      #   @param method [String, Symbol] extraction method (manual, llm, rule_based)
+      #   @return [ActiveRecord::Relation]
       scope :extracted_by, ->(method) { where(extraction_method: method) }
+
+      # @!method by_extraction_method(method)
+      #   Alias for extracted_by
+      #   @param method [String, Symbol] extraction method
+      #   @return [ActiveRecord::Relation]
       scope :by_extraction_method, ->(method) { where(extraction_method: method) }
 
-      # Confidence filtering
+      # @!method high_confidence
+      #   Returns facts with confidence >= 0.9
+      #   @return [ActiveRecord::Relation]
       scope :high_confidence, -> { where("confidence >= ?", 0.9) }
+
+      # @!method low_confidence
+      #   Returns facts with confidence < 0.5
+      #   @return [ActiveRecord::Relation]
       scope :low_confidence, -> { where("confidence < ?", 0.5) }
 
+      # @!endgroup
+
+      # Checks if the fact is currently valid
+      #
+      # @return [Boolean] true if the fact has no invalid_at date
       def currently_valid?
         invalid_at.nil?
       end
 
+      # Checks if the fact was valid at a specific date
+      #
+      # @param date [Date, Time] the point in time to check
+      # @return [Boolean] true if the fact was valid at the given date
       def valid_at?(date)
         valid_at <= date && (invalid_at.nil? || invalid_at > date)
       end
 
+      # Returns the duration the fact was valid
+      #
+      # @return [ActiveSupport::Duration, nil] duration or nil if still valid
       def duration
         return nil if invalid_at.nil?
 
         invalid_at - valid_at
       end
 
+      # Returns the duration in days the fact was valid
+      #
+      # @return [Integer, nil] number of days or nil if still valid
       def duration_days
         return nil if invalid_at.nil?
 
         (invalid_at.to_date - valid_at.to_date).to_i
       end
 
+      # Checks if this fact has been superseded
+      #
+      # @return [Boolean] true if status is "superseded"
       def superseded?
         status == "superseded"
       end
 
+      # Checks if this fact was synthesized from other facts
+      #
+      # @return [Boolean] true if status is "synthesized"
       def synthesized?
         status == "synthesized"
       end
 
+      # Invalidates this fact at a specific time
+      #
+      # @param at [Time] when the fact became invalid (defaults to now)
+      # @return [Boolean] true if update succeeded
       def invalidate!(at: Time.current)
         update!(invalid_at: at)
       end
 
+      # Supersedes this fact with new information
+      #
+      # Creates a new canonical fact and marks this one as superseded.
+      #
+      # @param new_text [String] the updated fact text
+      # @param valid_at [Date, Time] when the new fact became valid
+      # @return [FactDb::Models::Fact] the new fact
       def supersede_with!(new_text, valid_at:)
         transaction do
           new_fact = self.class.create!(
@@ -133,6 +245,13 @@ module FactDb
         end
       end
 
+      # Adds an entity mention to this fact
+      #
+      # @param entity [FactDb::Models::Entity] the entity being mentioned
+      # @param text [String] the mention text as it appears in the fact
+      # @param role [String, Symbol, nil] the role (subject, object, etc.)
+      # @param confidence [Float] confidence score (0.0 to 1.0)
+      # @return [FactDb::Models::EntityMention] the created or found mention
       def add_mention(entity:, text:, role: nil, confidence: 1.0)
         entity_mentions.find_or_create_by!(entity: entity, mention_text: text) do |m|
           m.mention_role = role
@@ -140,6 +259,13 @@ module FactDb
         end
       end
 
+      # Adds a source document to this fact
+      #
+      # @param source [FactDb::Models::Source] the source document
+      # @param kind [String] source kind (primary, corroborating, etc.)
+      # @param excerpt [String, nil] relevant excerpt from the source
+      # @param confidence [Float] confidence score (0.0 to 1.0)
+      # @return [FactDb::Models::FactSource] the created or found fact-source link
       def add_source(source:, kind: "primary", excerpt: nil, confidence: 1.0)
         fact_sources.find_or_create_by!(source: source) do |s|
           s.kind = kind
@@ -148,21 +274,29 @@ module FactDb
         end
       end
 
-      # Get source facts for synthesized facts
+      # Returns the source facts for synthesized facts
+      #
+      # @return [ActiveRecord::Relation] facts this one was derived from
       def source_facts
         return Fact.none unless derived_from_ids.any?
 
         Fact.where(id: derived_from_ids)
       end
 
-      # Get facts that corroborate this one
+      # Returns facts that corroborate this one
+      #
+      # @return [ActiveRecord::Relation] corroborating facts
       def corroborating_facts
         return Fact.none unless corroborated_by_ids.any?
 
         Fact.where(id: corroborated_by_ids)
       end
 
-      # Evidence chain - trace back to original sources
+      # Returns the complete evidence chain back to original sources
+      #
+      # Recursively traces through synthesized facts to find all original sources.
+      #
+      # @return [Array<FactDb::Models::Source>] unique source documents
       def evidence_chain
         evidence = sources.to_a
 
@@ -176,7 +310,21 @@ module FactDb
       end
 
       # Returns the original source lines from which this fact was derived
-      # Returns a hash with :full_section, :focused_lines, and :focused_line_numbers
+      #
+      # Uses line metadata to extract the relevant section from the source document
+      # and highlights lines containing key terms from the fact.
+      #
+      # @return [Hash, nil] hash with :full_section, :focused_lines, :focused_line_numbers, :key_terms
+      #   or nil if source/line metadata unavailable
+      #
+      # @example
+      #   fact.prove_it
+      #   # => {
+      #   #   full_section: "...",
+      #   #   focused_lines: "John joined Acme Corp...",
+      #   #   focused_line_numbers: [15, 16],
+      #   #   key_terms: ["John", "Acme Corp"]
+      #   # }
       def prove_it
         source = fact_sources.first&.source
         return nil unless source&.content
@@ -254,7 +402,11 @@ module FactDb
 
       public
 
-      # Vector similarity search
+      # Finds facts by vector similarity using pgvector
+      #
+      # @param embedding [Array<Float>] the embedding vector to search with
+      # @param limit [Integer] maximum number of results
+      # @return [ActiveRecord::Relation] facts ordered by similarity
       def self.nearest_neighbors(embedding, limit: 10)
         return none unless embedding
 

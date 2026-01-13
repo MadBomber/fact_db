@@ -4,7 +4,19 @@ require "json"
 
 module FactDb
   module Extractors
+    # LLM-based fact extractor using language models
+    #
+    # Uses a configured LLM client to extract atomic facts and entities from
+    # unstructured text. Parses JSON responses from the LLM and builds
+    # standardized fact/entity hashes.
+    #
+    # @example Extract facts using LLM
+    #   FactDb.configure { |c| c.llm_client = MyLLMClient.new }
+    #   extractor = LLMExtractor.new
+    #   facts = extractor.extract("Paula joined Microsoft on January 10, 2024...")
+    #
     class LLMExtractor < Base
+      # @return [String] prompt template for fact extraction
       FACT_EXTRACTION_PROMPT = <<~PROMPT
         Extract ATOMIC factual assertions from the following text. Break compound
         statements into individual, indivisible facts - one assertion per fact.
@@ -62,6 +74,7 @@ module FactDb
         Return only valid JSON, no additional text.
       PROMPT
 
+      # @return [String] prompt template for entity extraction
       ENTITY_EXTRACTION_PROMPT = <<~PROMPT
         Extract all named entities from the following text.
         For each entity:
@@ -89,6 +102,16 @@ module FactDb
         Return only valid JSON, no additional text.
       PROMPT
 
+      # Extracts atomic facts from text using the configured LLM
+      #
+      # Prompts the LLM to identify factual assertions, temporal information,
+      # entity mentions with roles, and confidence scores.
+      #
+      # @param text [String] raw text to extract from
+      # @param context [Hash] additional context
+      # @option context [Date, Time] :captured_at default timestamp for facts
+      # @return [Array<Hash>] array of fact hashes
+      # @raise [ConfigurationError] if no LLM client is configured
       def extract(text, context = {})
         return [] if text.nil? || text.strip.empty?
 
@@ -101,6 +124,14 @@ module FactDb
         parse_fact_response(response, context)
       end
 
+      # Extracts entities from text using the configured LLM
+      #
+      # Prompts the LLM to identify named entities, classify their types,
+      # and list any aliases or alternative names.
+      #
+      # @param text [String] raw text to extract from
+      # @return [Array<Hash>] array of entity hashes with :name, :kind, :aliases
+      # @raise [ConfigurationError] if no LLM client is configured
       def extract_entities(text)
         return [] if text.nil? || text.strip.empty?
 
