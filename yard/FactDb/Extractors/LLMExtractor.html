@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>
+  Class: FactDb::Extractors::LLMExtractor
+  
+    &mdash; Documentation by YARD 0.9.38
+  
+</title>
+
+  <link rel="stylesheet" href="../../css/style.css" type="text/css" />
+
+  <link rel="stylesheet" href="../../css/common.css" type="text/css" />
+
+<script type="text/javascript">
+  pathId = "FactDb::Extractors::LLMExtractor";
+  relpath = '../../';
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="../../js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="../../js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div class="nav_wrap">
+      <iframe id="nav" src="../../class_list.html?1"></iframe>
+      <div id="resizer"></div>
+    </div>
+
+    <div id="main" tabindex="-1">
+      <div id="header">
+        <div id="menu">
+  
+    <a href="../../_index.html">Index (L)</a> &raquo;
+    <span class='title'><span class='object_link'><a href="../../FactDb.html" title="FactDb (module)">FactDb</a></span></span> &raquo; <span class='title'><span class='object_link'><a href="../Extractors.html" title="FactDb::Extractors (module)">Extractors</a></span></span>
+     &raquo; 
+    <span class="title">LLMExtractor</span>
+  
+</div>
+
+        <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="../../class_list.html">
+
+        <svg width="24" height="24">
+          <rect x="0" y="4" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="12" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="20" width="24" height="4" rx="1" ry="1"></rect>
+        </svg>
+    </a>
+  
+</div>
+        <div class="clear"></div>
+      </div>
+
+      <div id="content"><h1>Class: FactDb::Extractors::LLMExtractor
+  
+  
+  
+</h1>
+<div class="box_info">
+  
+  <dl>
+    <dt>Inherits:</dt>
+    <dd>
+      <span class="inheritName"><span class='object_link'><a href="Base.html" title="FactDb::Extractors::Base (class)">Base</a></span></span>
+      
+        <ul class="fullTree">
+          <li>Object</li>
+          
+            <li class="next"><span class='object_link'><a href="Base.html" title="FactDb::Extractors::Base (class)">Base</a></span></li>
+          
+            <li class="next">FactDb::Extractors::LLMExtractor</li>
+          
+        </ul>
+        <a href="#" class="inheritanceTree">show all</a>
+      
+    </dd>
+  </dl>
+  
+
+  
+  
+  
+  
+  
+
+  
+
+  
+  <dl>
+    <dt>Defined in:</dt>
+    <dd>lib/fact_db/extractors/llm_extractor.rb</dd>
+  </dl>
+  
+</div>
+
+<h2>Overview</h2><div class="docstring">
+  <div class="discussion">
+    
+<p>LLM-based fact extractor using language models</p>
+
+<p>Uses a configured LLM client to extract atomic facts and entities from unstructured text. Parses JSON responses from the LLM and builds standardized fact/entity hashes.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="examples">
+    <h4 class="tag_title">Examples:</h4>
+    
+      
+        <h5 class="example_title"><div class='inline'>
+<p>Extract facts using LLM</p>
+</div></h5>
+      
+      <pre class="example code"><code><span class='const'><span class='object_link'><a href="../../FactDb.html" title="FactDb (module)">FactDb</a></span></span><span class='period'>.</span><span class='id identifier rubyid_configure'><span class='object_link'><a href="../../FactDb.html#configure-class_method" title="FactDb.configure (method)">configure</a></span></span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_c'>c</span><span class='op'>|</span> <span class='id identifier rubyid_c'>c</span><span class='period'>.</span><span class='id identifier rubyid_llm_client'>llm_client</span> <span class='op'>=</span> <span class='const'>MyLLMClient</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span> <span class='rbrace'>}</span>
+<span class='id identifier rubyid_extractor'>extractor</span> <span class='op'>=</span> <span class='const'>LLMExtractor</span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Base.html#initialize-instance_method" title="FactDb::Extractors::Base#initialize (method)">new</a></span></span>
+<span class='id identifier rubyid_facts'>facts</span> <span class='op'>=</span> <span class='id identifier rubyid_extractor'>extractor</span><span class='period'>.</span><span class='id identifier rubyid_extract'>extract</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Paula joined Microsoft on January 10, 2024...</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span></code></pre>
+    
+  </div>
+
+
+</div>
+  
+    <h2>
+      Constant Summary
+      <small><a href="#" class="constants_summary_toggle">collapse</a></small>
+    </h2>
+
+    <dl class="constants">
+      
+        <dt id="FACT_EXTRACTION_PROMPT-constant" class="">FACT_EXTRACTION_PROMPT =
+          <div class="docstring">
+  <div class="discussion">
+    
+<p>Returns prompt template for fact extraction.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>prompt template for fact extraction</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div>
+        </dt>
+        <dd><pre class="code"><span class='heredoc_beg'>&lt;&lt;~PROMPT</span>
+<span class='tstring_content'>  Extract ATOMIC factual assertions from the following text. Break compound
+</span><span class='tstring_content'>  statements into individual, indivisible facts - one assertion per fact.
+</span><span class='tstring_content'>
+</span><span class='tstring_content'>  For each atomic fact:
+</span><span class='tstring_content'>  1. State a single, indivisible assertion (not multiple facts combined)
+</span><span class='tstring_content'>  2. Identify when it became true (valid_at) if mentioned or inferable
+</span><span class='tstring_content'>  3. Identify when it stopped being true (invalid_at) if mentioned
+</span><span class='tstring_content'>  4. Identify entities mentioned (people, organizations, places, products)
+</span><span class='tstring_content'>  5. Assign a confidence score (0.0 to 1.0) based on how explicitly stated the fact is
+</span><span class='tstring_content'>  6. For each entity, include any aliases or alternative names used in the text
+</span><span class='tstring_content'>
+</span><span class='tstring_content'>  Text:
+</span><span class='tstring_content'>  %&lt;text&gt;s
+</span><span class='tstring_content'>
+</span><span class='tstring_content'>  Return as a JSON array with this structure:
+</span><span class='tstring_content'>  [
+</span><span class='tstring_content'>    {
+</span><span class='tstring_content'>      &quot;text&quot;: &quot;Paula works at Microsoft&quot;,
+</span><span class='tstring_content'>      &quot;valid_at&quot;: &quot;2024-01-10&quot;,
+</span><span class='tstring_content'>      &quot;invalid_at&quot;: null,
+</span><span class='tstring_content'>      &quot;confidence&quot;: 0.95,
+</span><span class='tstring_content'>      &quot;mentions&quot;: [
+</span><span class='tstring_content'>        {&quot;name&quot;: &quot;Paula Chen&quot;, &quot;type&quot;: &quot;person&quot;, &quot;role&quot;: &quot;subject&quot;, &quot;aliases&quot;: [&quot;Paula&quot;, &quot;P. Chen&quot;]},
+</span><span class='tstring_content'>        {&quot;name&quot;: &quot;Microsoft&quot;, &quot;type&quot;: &quot;organization&quot;, &quot;role&quot;: &quot;object&quot;, &quot;aliases&quot;: [&quot;MS&quot;, &quot;Microsoft Corporation&quot;]}
+</span><span class='tstring_content'>      ]
+</span><span class='tstring_content'>    },
+</span><span class='tstring_content'>    {
+</span><span class='tstring_content'>      &quot;text&quot;: &quot;Paula holds the title of Principal Engineer&quot;,
+</span><span class='tstring_content'>      &quot;valid_at&quot;: &quot;2024-01-10&quot;,
+</span><span class='tstring_content'>      &quot;invalid_at&quot;: null,
+</span><span class='tstring_content'>      &quot;confidence&quot;: 0.95,
+</span><span class='tstring_content'>      &quot;mentions&quot;: [
+</span><span class='tstring_content'>        {&quot;name&quot;: &quot;Paula Chen&quot;, &quot;type&quot;: &quot;person&quot;, &quot;role&quot;: &quot;subject&quot;, &quot;aliases&quot;: [&quot;Paula&quot;, &quot;P. Chen&quot;]}
+</span><span class='tstring_content'>      ]
+</span><span class='tstring_content'>    }
+</span><span class='tstring_content'>  ]
+</span><span class='tstring_content'>
+</span><span class='tstring_content'>  Rules:
+</span><span class='tstring_content'>  - ATOMIC FACTS: Break compound statements into smallest meaningful assertions
+</span><span class='tstring_content'>    - &quot;John and Mary married in Paris&quot; becomes TWO facts: &quot;John married Mary&quot; AND &quot;The marriage took place in Paris&quot;
+</span><span class='tstring_content'>    - &quot;She is a doctor at City Hospital&quot; becomes TWO facts: &quot;She is a doctor&quot; AND &quot;She works at City Hospital&quot;
+</span><span class='tstring_content'>  - Extract only factual assertions, not opinions or speculation
+</span><span class='tstring_content'>  - Use ISO 8601 date format (YYYY-MM-DD) when possible
+</span><span class='tstring_content'>  - Set invalid_at to null if the fact is still true or unknown
+</span><span class='tstring_content'>  - Set valid_at to null if the timing is not mentioned
+</span><span class='tstring_content'>  - Entity types: person, organization, place, product, event, concept
+</span><span class='tstring_content'>  - Roles: subject, object, location, temporal, instrument, beneficiary
+</span><span class='tstring_content'>  - For person entities, use the most complete/formal name as &quot;name&quot; and shorter/alternative forms as &quot;aliases&quot;
+</span><span class='tstring_content'>  - Common aliases include: nicknames, titles with name, name variations, abbreviations
+</span><span class='tstring_content'>  - NEVER include pronouns as aliases (he, she, him, her, they, them, his, her, their, it, we, you, I, me, my, etc.)
+</span><span class='tstring_content'>  - NEVER include generic terms as aliases (man, woman, person, husband, wife, the man, this person, etc.)
+</span><span class='tstring_content'>  - Only include proper names, nicknames, and formal variations as aliases
+</span><span class='tstring_content'>
+</span><span class='tstring_content'>  Return only valid JSON, no additional text.
+</span><span class='heredoc_end'>PROMPT</span></pre></dd>
+      
+        <dt id="ENTITY_EXTRACTION_PROMPT-constant" class="">ENTITY_EXTRACTION_PROMPT =
+          <div class="docstring">
+  <div class="discussion">
+    
+<p>Returns prompt template for entity extraction.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>prompt template for entity extraction</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div>
+        </dt>
+        <dd><pre class="code"><span class='heredoc_beg'>&lt;&lt;~PROMPT</span>
+<span class='tstring_content'>  Extract all named entities from the following text.
+</span><span class='tstring_content'>  For each entity:
+</span><span class='tstring_content'>  1. Identify the canonical name
+</span><span class='tstring_content'>  2. Classify the type (person, organization, place, product, event, concept)
+</span><span class='tstring_content'>  3. List any aliases or alternative names mentioned
+</span><span class='tstring_content'>
+</span><span class='tstring_content'>  Text:
+</span><span class='tstring_content'>  %&lt;text&gt;s
+</span><span class='tstring_content'>
+</span><span class='tstring_content'>  Return as a JSON array:
+</span><span class='tstring_content'>  [
+</span><span class='tstring_content'>    {
+</span><span class='tstring_content'>      &quot;name&quot;: &quot;Paula Chen&quot;,
+</span><span class='tstring_content'>      &quot;type&quot;: &quot;person&quot;,
+</span><span class='tstring_content'>      &quot;aliases&quot;: [&quot;Paula&quot;, &quot;P. Chen&quot;]
+</span><span class='tstring_content'>    }
+</span><span class='tstring_content'>  ]
+</span><span class='tstring_content'>
+</span><span class='tstring_content'>  Important rules for aliases:
+</span><span class='tstring_content'>  - NEVER include pronouns (he, she, him, her, they, them, his, her, their, it, we, you, I, me, my, etc.)
+</span><span class='tstring_content'>  - NEVER include generic terms (man, woman, person, husband, wife, the man, this person, believers, disciples, etc.)
+</span><span class='tstring_content'>  - Only include proper names, nicknames, titles, and formal name variations
+</span><span class='tstring_content'>
+</span><span class='tstring_content'>  Return only valid JSON, no additional text.
+</span><span class='heredoc_end'>PROMPT</span></pre></dd>
+      
+    </dl>
+  
+
+
+
+
+
+
+  <h2>Instance Attribute Summary</h2>
+  
+  <h3 class="inherited">Attributes inherited from <span class='object_link'><a href="Base.html" title="FactDb::Extractors::Base (class)">Base</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="Base.html#config-instance_method" title="FactDb::Extractors::Base#config (method)">#config</a></span></p>
+
+
+  
+    <h2>
+      Instance Method Summary
+      <small><a href="#" class="summary_toggle">collapse</a></small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#extract-instance_method" title="#extract (instance method)">#<strong>extract</strong>(text, context = {})  &#x21d2; Array&lt;Hash&gt; </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Extracts atomic facts from text using the configured LLM.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#extract_entities-instance_method" title="#extract_entities (instance method)">#<strong>extract_entities</strong>(text)  &#x21d2; Array&lt;Hash&gt; </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Extracts entities from text using the configured LLM.</p>
+</div></span>
+  
+</li>
+
+      
+    </ul>
+  
+
+
+  
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods inherited from <span class='object_link'><a href="Base.html" title="FactDb::Extractors::Base (class)">Base</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="Base.html#available_types-class_method" title="FactDb::Extractors::Base.available_types (method)">available_types</a></span>, <span class='object_link'><a href="Base.html#extraction_method-instance_method" title="FactDb::Extractors::Base#extraction_method (method)">#extraction_method</a></span>, <span class='object_link'><a href="Base.html#for-class_method" title="FactDb::Extractors::Base.for (method)">for</a></span>, <span class='object_link'><a href="Base.html#initialize-instance_method" title="FactDb::Extractors::Base#initialize (method)">#initialize</a></span></p>
+<div id="constructor_details" class="method_details_list">
+  <h2>Constructor Details</h2>
+  
+    <p class="notice">This class inherits a constructor from <span class='object_link'><a href="Base.html#initialize-instance_method" title="FactDb::Extractors::Base#initialize (method)">FactDb::Extractors::Base</a></span></p>
+  
+</div>
+
+
+  <div id="instance_method_details" class="method_details_list">
+    <h2>Instance Method Details</h2>
+
+    
+      <div class="method_details first">
+  <h3 class="signature first" id="extract-instance_method">
+  
+    #<strong>extract</strong>(text, context = {})  &#x21d2; <tt>Array&lt;Hash&gt;</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Extracts atomic facts from text using the configured LLM</p>
+
+<p>Prompts the LLM to identify factual assertions, temporal information, entity mentions with roles, and confidence scores.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>text</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>raw text to extract from</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>context</span>
+      
+      
+        <span class='type'>(<tt>Hash</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>{}</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>additional context</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+  
+    
+    
+    
+    
+    <p class="tag_title">Options Hash (<tt>context</tt>):</p>
+    <ul class="option">
+      
+        <li>
+          <span class="name">:captured_at</span>
+          <span class="type">(<tt>Date</tt>, <tt>Time</tt>)</span>
+          <span class="default">
+            
+          </span>
+          
+            &mdash; <div class='inline'>
+<p>default timestamp for facts</p>
+</div>
+          
+        </li>
+      
+    </ul>
+  
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Array&lt;Hash&gt;</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>array of fact hashes</p>
+</div>
+      
+    </li>
+  
+</ul>
+<p class="tag_title">Raises:</p>
+<ul class="raise">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../ConfigurationError.html" title="FactDb::ConfigurationError (class)">ConfigurationError</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>if no LLM client is configured</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/fact_db/extractors/llm_extractor.rb', line 115</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_extract'>extract</span><span class='lparen'>(</span><span class='id identifier rubyid_text'>text</span><span class='comma'>,</span> <span class='id identifier rubyid_context'>context</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
+  <span class='kw'>return</span> <span class='lbracket'>[</span><span class='rbracket'>]</span> <span class='kw'>if</span> <span class='id identifier rubyid_text'>text</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span> <span class='op'>||</span> <span class='id identifier rubyid_text'>text</span><span class='period'>.</span><span class='id identifier rubyid_strip'>strip</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span>
+
+  <span class='id identifier rubyid_client'>client</span> <span class='op'>=</span> <span class='id identifier rubyid_config'>config</span><span class='period'>.</span><span class='id identifier rubyid_llm_client'>llm_client</span>
+  <span class='id identifier rubyid_raise'>raise</span> <span class='const'><span class='object_link'><a href="../ConfigurationError.html" title="FactDb::ConfigurationError (class)">ConfigurationError</a></span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>LLM client not configured</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>unless</span> <span class='id identifier rubyid_client'>client</span>
+
+  <span class='id identifier rubyid_prompt'>prompt</span> <span class='op'>=</span> <span class='id identifier rubyid_format'>format</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="#FACT_EXTRACTION_PROMPT-constant" title="FactDb::Extractors::LLMExtractor::FACT_EXTRACTION_PROMPT (constant)">FACT_EXTRACTION_PROMPT</a></span></span><span class='comma'>,</span> <span class='label'>text:</span> <span class='id identifier rubyid_text'>text</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_response'>response</span> <span class='op'>=</span> <span class='id identifier rubyid_call_llm'>call_llm</span><span class='lparen'>(</span><span class='id identifier rubyid_client'>client</span><span class='comma'>,</span> <span class='id identifier rubyid_prompt'>prompt</span><span class='rparen'>)</span>
+
+  <span class='id identifier rubyid_parse_fact_response'>parse_fact_response</span><span class='lparen'>(</span><span class='id identifier rubyid_response'>response</span><span class='comma'>,</span> <span class='id identifier rubyid_context'>context</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="extract_entities-instance_method">
+  
+    #<strong>extract_entities</strong>(text)  &#x21d2; <tt>Array&lt;Hash&gt;</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Extracts entities from text using the configured LLM</p>
+
+<p>Prompts the LLM to identify named entities, classify their types, and list any aliases or alternative names.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>text</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>raw text to extract from</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Array&lt;Hash&gt;</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>array of entity hashes with :name, :kind, :aliases</p>
+</div>
+      
+    </li>
+  
+</ul>
+<p class="tag_title">Raises:</p>
+<ul class="raise">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../ConfigurationError.html" title="FactDb::ConfigurationError (class)">ConfigurationError</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>if no LLM client is configured</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/fact_db/extractors/llm_extractor.rb', line 135</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_extract_entities'>extract_entities</span><span class='lparen'>(</span><span class='id identifier rubyid_text'>text</span><span class='rparen'>)</span>
+  <span class='kw'>return</span> <span class='lbracket'>[</span><span class='rbracket'>]</span> <span class='kw'>if</span> <span class='id identifier rubyid_text'>text</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span> <span class='op'>||</span> <span class='id identifier rubyid_text'>text</span><span class='period'>.</span><span class='id identifier rubyid_strip'>strip</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span>
+
+  <span class='id identifier rubyid_client'>client</span> <span class='op'>=</span> <span class='id identifier rubyid_config'>config</span><span class='period'>.</span><span class='id identifier rubyid_llm_client'>llm_client</span>
+  <span class='id identifier rubyid_raise'>raise</span> <span class='const'><span class='object_link'><a href="../ConfigurationError.html" title="FactDb::ConfigurationError (class)">ConfigurationError</a></span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>LLM client not configured</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>unless</span> <span class='id identifier rubyid_client'>client</span>
+
+  <span class='id identifier rubyid_prompt'>prompt</span> <span class='op'>=</span> <span class='id identifier rubyid_format'>format</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="#ENTITY_EXTRACTION_PROMPT-constant" title="FactDb::Extractors::LLMExtractor::ENTITY_EXTRACTION_PROMPT (constant)">ENTITY_EXTRACTION_PROMPT</a></span></span><span class='comma'>,</span> <span class='label'>text:</span> <span class='id identifier rubyid_text'>text</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_response'>response</span> <span class='op'>=</span> <span class='id identifier rubyid_call_llm'>call_llm</span><span class='lparen'>(</span><span class='id identifier rubyid_client'>client</span><span class='comma'>,</span> <span class='id identifier rubyid_prompt'>prompt</span><span class='rparen'>)</span>
+
+  <span class='id identifier rubyid_parse_entity_response'>parse_entity_response</span><span class='lparen'>(</span><span class='id identifier rubyid_response'>response</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+</div>
+
+      <div id="footer">
+  Generated on Tue Jan 13 02:43:39 2026 by
+  <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.9.38 (ruby-3.3.10).
+</div>
+
+    </div>
+  </body>
+</html>

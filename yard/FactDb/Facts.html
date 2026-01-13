@@ -1,0 +1,2491 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>
+  Class: FactDb::Facts
+  
+    &mdash; Documentation by YARD 0.9.38
+  
+</title>
+
+  <link rel="stylesheet" href="../css/style.css" type="text/css" />
+
+  <link rel="stylesheet" href="../css/common.css" type="text/css" />
+
+<script type="text/javascript">
+  pathId = "FactDb::Facts";
+  relpath = '../';
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="../js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="../js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div class="nav_wrap">
+      <iframe id="nav" src="../class_list.html?1"></iframe>
+      <div id="resizer"></div>
+    </div>
+
+    <div id="main" tabindex="-1">
+      <div id="header">
+        <div id="menu">
+  
+    <a href="../_index.html">Index (F)</a> &raquo;
+    <span class='title'><span class='object_link'><a href="../FactDb.html" title="FactDb (module)">FactDb</a></span></span>
+     &raquo; 
+    <span class="title">Facts</span>
+  
+</div>
+
+        <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="../class_list.html">
+
+        <svg width="24" height="24">
+          <rect x="0" y="4" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="12" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="20" width="24" height="4" rx="1" ry="1"></rect>
+        </svg>
+    </a>
+  
+</div>
+        <div class="clear"></div>
+      </div>
+
+      <div id="content"><h1>Class: FactDb::Facts
+  
+  
+  
+</h1>
+<div class="box_info">
+  
+  <dl>
+    <dt>Inherits:</dt>
+    <dd>
+      <span class="inheritName">Object</span>
+      
+        <ul class="fullTree">
+          <li>Object</li>
+          
+            <li class="next">FactDb::Facts</li>
+          
+        </ul>
+        <a href="#" class="inheritanceTree">show all</a>
+      
+    </dd>
+  </dl>
+  
+
+  
+  
+  
+  
+  
+
+  
+
+  
+  <dl>
+    <dt>Defined in:</dt>
+    <dd>lib/fact_db.rb</dd>
+  </dl>
+  
+</div>
+
+
+  
+    <h2>
+      Constant Summary
+      <small><a href="#" class="constants_summary_toggle">collapse</a></small>
+    </h2>
+
+    <dl class="constants">
+      
+        <dt id="FORMATS-constant" class="">FORMATS =
+          <div class="docstring">
+  <div class="discussion">
+    
+<p>Available output formats for LLM consumption</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div>
+        </dt>
+        <dd><pre class="code"><span class='qsymbols_beg'>%i[</span><span class='tstring_content'>raw</span><span class='words_sep'> </span><span class='tstring_content'>json</span><span class='words_sep'> </span><span class='tstring_content'>triples</span><span class='words_sep'> </span><span class='tstring_content'>cypher</span><span class='words_sep'> </span><span class='tstring_content'>text</span><span class='tstring_end'>]</span></span><span class='period'>.</span><span class='id identifier rubyid_freeze'>freeze</span></pre></dd>
+      
+        <dt id="STRATEGIES-constant" class="">STRATEGIES =
+          <div class="docstring">
+  <div class="discussion">
+    
+<p>Available retrieval strategies</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div>
+        </dt>
+        <dd><pre class="code"><span class='qsymbols_beg'>%i[</span><span class='tstring_content'>auto</span><span class='words_sep'> </span><span class='tstring_content'>semantic</span><span class='words_sep'> </span><span class='tstring_content'>fulltext</span><span class='words_sep'> </span><span class='tstring_content'>graph</span><span class='words_sep'> </span><span class='tstring_content'>temporal</span><span class='words_sep'> </span><span class='tstring_content'>hybrid</span><span class='tstring_end'>]</span></span><span class='period'>.</span><span class='id identifier rubyid_freeze'>freeze</span></pre></dd>
+      
+    </dl>
+  
+
+
+
+
+  <h2>Instance Attribute Summary <small><a href="#" class="summary_toggle">collapse</a></small></h2>
+  <ul class="summary">
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#config-instance_method" title="#config (instance method)">#<strong>config</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+      <span class="note title readonly">readonly</span>
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Returns the value of attribute config.</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#entity_service-instance_method" title="#entity_service (instance method)">#<strong>entity_service</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+      <span class="note title readonly">readonly</span>
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Returns the value of attribute entity_service.</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#extraction_pipeline-instance_method" title="#extraction_pipeline (instance method)">#<strong>extraction_pipeline</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+      <span class="note title readonly">readonly</span>
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Returns the value of attribute extraction_pipeline.</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#fact_service-instance_method" title="#fact_service (instance method)">#<strong>fact_service</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+      <span class="note title readonly">readonly</span>
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Returns the value of attribute fact_service.</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#resolution_pipeline-instance_method" title="#resolution_pipeline (instance method)">#<strong>resolution_pipeline</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+      <span class="note title readonly">readonly</span>
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Returns the value of attribute resolution_pipeline.</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#source_service-instance_method" title="#source_service (instance method)">#<strong>source_service</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+      <span class="note title readonly">readonly</span>
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Returns the value of attribute source_service.</p>
+</div></span>
+  
+</li>
+
+    
+  </ul>
+
+
+
+
+  
+    <h2>
+      Instance Method Summary
+      <small><a href="#" class="summary_toggle">collapse</a></small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#at-instance_method" title="#at (instance method)">#<strong>at</strong>(date)  &#x21d2; Temporal::QueryBuilder </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Temporal query builder - query at a specific point in time.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#batch_extract-instance_method" title="#batch_extract (instance method)">#<strong>batch_extract</strong>(source_ids, extractor: @config.default_extractor, parallel: true)  &#x21d2; Array&lt;Hash&gt; </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Batch extract facts from multiple sources.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#batch_resolve_entities-instance_method" title="#batch_resolve_entities (instance method)">#<strong>batch_resolve_entities</strong>(names, kind: nil)  &#x21d2; Array&lt;Hash&gt; </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Batch resolve entity names.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#current_facts_for-instance_method" title="#current_facts_for (instance method)">#<strong>current_facts_for</strong>(entity_id, format: :json)  &#x21d2; Array, ... </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Get currently valid facts about an entity.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#detect_fact_conflicts-instance_method" title="#detect_fact_conflicts (instance method)">#<strong>detect_fact_conflicts</strong>(entity_ids)  &#x21d2; Array&lt;Hash&gt; </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Detect fact conflicts for multiple entities.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#diff-instance_method" title="#diff (instance method)">#<strong>diff</strong>(topic = nil, from:, to:)  &#x21d2; Hash </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Compare what changed between two dates.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#extract_facts-instance_method" title="#extract_facts (instance method)">#<strong>extract_facts</strong>(source_id, extractor: @config.default_extractor)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Extract facts from source.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#facts_at-instance_method" title="#facts_at (instance method)">#<strong>facts_at</strong>(at, entity: nil, topic: nil, format: :json)  &#x21d2; Array, ... </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Get facts valid at a specific point in time.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#ingest-instance_method" title="#ingest (instance method)">#<strong>ingest</strong>(content, kind:, captured_at: Time.current, metadata: {}, title: nil, source_uri: nil)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Ingest raw content.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>(config: nil)  &#x21d2; Facts </a>
+    
+
+    
+  </span>
+  
+  
+    <span class="note title constructor">constructor</span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>A new instance of Facts.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#introspect-instance_method" title="#introspect (instance method)">#<strong>introspect</strong>(topic = nil)  &#x21d2; Hash </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Introspect the schema - what does the layer know about?.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#query_facts-instance_method" title="#query_facts (instance method)">#<strong>query_facts</strong>(topic: nil, at: nil, entity: nil, status: :canonical, format: :json)  &#x21d2; Array, ... </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Query facts with temporal and entity filtering.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#resolve_entity-instance_method" title="#resolve_entity (instance method)">#<strong>resolve_entity</strong>(name, kind: nil)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Resolve a name to an entity.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#suggest_queries-instance_method" title="#suggest_queries (instance method)">#<strong>suggest_queries</strong>(topic)  &#x21d2; Array&lt;String&gt; </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Suggest queries based on what’s stored for a topic.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#suggest_strategies-instance_method" title="#suggest_strategies (instance method)">#<strong>suggest_strategies</strong>(query_text)  &#x21d2; Array&lt;Hash&gt; </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Suggest retrieval strategies for a query.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#timeline_for-instance_method" title="#timeline_for (instance method)">#<strong>timeline_for</strong>(entity_id, from: nil, to: nil)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Build a timeline for an entity.</p>
+</div></span>
+  
+</li>
+
+      
+    </ul>
+  
+
+<div id="constructor_details" class="method_details_list">
+  <h2>Constructor Details</h2>
+  
+    <div class="method_details first">
+  <h3 class="signature first" id="initialize-instance_method">
+  
+    #<strong>initialize</strong>(config: nil)  &#x21d2; <tt><span class='object_link'><a href="" title="FactDb::Facts (class)">Facts</a></span></tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Returns a new instance of Facts.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/fact_db.rb', line 71</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>config:</span> <span class='kw'>nil</span><span class='rparen'>)</span>
+  <span class='ivar'>@config</span> <span class='op'>=</span> <span class='id identifier rubyid_config'>config</span> <span class='op'>||</span> <span class='const'><span class='object_link'><a href="../FactDb.html" title="FactDb (module)">FactDb</a></span></span><span class='period'>.</span><span class='id identifier rubyid_config'><span class='object_link'><a href="../FactDb.html#config-class_method" title="FactDb.config (method)">config</a></span></span>
+  <span class='const'><span class='object_link'><a href="Database.html" title="FactDb::Database (module)">Database</a></span></span><span class='period'>.</span><span class='id identifier rubyid_establish_connection!'><span class='object_link'><a href="Database.html#establish_connection!-class_method" title="FactDb::Database.establish_connection! (method)">establish_connection!</a></span></span><span class='lparen'>(</span><span class='ivar'>@config</span><span class='rparen'>)</span>
+
+  <span class='ivar'>@source_service</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Services.html" title="FactDb::Services (module)">Services</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Services/SourceService.html" title="FactDb::Services::SourceService (class)">SourceService</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Services/SourceService.html#initialize-instance_method" title="FactDb::Services::SourceService#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='ivar'>@config</span><span class='rparen'>)</span>
+  <span class='ivar'>@entity_service</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Services.html" title="FactDb::Services (module)">Services</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Services/EntityService.html" title="FactDb::Services::EntityService (class)">EntityService</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Services/EntityService.html#initialize-instance_method" title="FactDb::Services::EntityService#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='ivar'>@config</span><span class='rparen'>)</span>
+  <span class='ivar'>@fact_service</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Services.html" title="FactDb::Services (module)">Services</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Services/FactService.html" title="FactDb::Services::FactService (class)">FactService</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Services/FactService.html#initialize-instance_method" title="FactDb::Services::FactService#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='ivar'>@config</span><span class='rparen'>)</span>
+  <span class='ivar'>@extraction_pipeline</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Pipeline.html" title="FactDb::Pipeline (module)">Pipeline</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Pipeline/ExtractionPipeline.html" title="FactDb::Pipeline::ExtractionPipeline (class)">ExtractionPipeline</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Pipeline/ExtractionPipeline.html#initialize-instance_method" title="FactDb::Pipeline::ExtractionPipeline#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='ivar'>@config</span><span class='rparen'>)</span>
+  <span class='ivar'>@resolution_pipeline</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Pipeline.html" title="FactDb::Pipeline (module)">Pipeline</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Pipeline/ResolutionPipeline.html" title="FactDb::Pipeline::ResolutionPipeline (class)">ResolutionPipeline</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Pipeline/ResolutionPipeline.html#initialize-instance_method" title="FactDb::Pipeline::ResolutionPipeline#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='ivar'>@config</span><span class='rparen'>)</span>
+  <span class='ivar'>@transformers</span> <span class='op'>=</span> <span class='id identifier rubyid_build_transformers'>build_transformers</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+  
+</div>
+
+  <div id="instance_attr_details" class="attr_details">
+    <h2>Instance Attribute Details</h2>
+    
+      
+      <span id=""></span>
+      <div class="method_details first">
+  <h3 class="signature first" id="config-instance_method">
+  
+    #<strong>config</strong>  &#x21d2; <tt>Object</tt>  <span class="extras">(readonly)</span>
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Returns the value of attribute config.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+68
+69
+70</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/fact_db.rb', line 68</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_config'>config</span>
+  <span class='ivar'>@config</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id=""></span>
+      <div class="method_details ">
+  <h3 class="signature " id="entity_service-instance_method">
+  
+    #<strong>entity_service</strong>  &#x21d2; <tt>Object</tt>  <span class="extras">(readonly)</span>
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Returns the value of attribute entity_service.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+68
+69
+70</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/fact_db.rb', line 68</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_entity_service'>entity_service</span>
+  <span class='ivar'>@entity_service</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id=""></span>
+      <div class="method_details ">
+  <h3 class="signature " id="extraction_pipeline-instance_method">
+  
+    #<strong>extraction_pipeline</strong>  &#x21d2; <tt>Object</tt>  <span class="extras">(readonly)</span>
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Returns the value of attribute extraction_pipeline.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+68
+69
+70</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/fact_db.rb', line 68</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_extraction_pipeline'>extraction_pipeline</span>
+  <span class='ivar'>@extraction_pipeline</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id=""></span>
+      <div class="method_details ">
+  <h3 class="signature " id="fact_service-instance_method">
+  
+    #<strong>fact_service</strong>  &#x21d2; <tt>Object</tt>  <span class="extras">(readonly)</span>
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Returns the value of attribute fact_service.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+68
+69
+70</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/fact_db.rb', line 68</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_fact_service'>fact_service</span>
+  <span class='ivar'>@fact_service</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id=""></span>
+      <div class="method_details ">
+  <h3 class="signature " id="resolution_pipeline-instance_method">
+  
+    #<strong>resolution_pipeline</strong>  &#x21d2; <tt>Object</tt>  <span class="extras">(readonly)</span>
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Returns the value of attribute resolution_pipeline.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+68
+69
+70</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/fact_db.rb', line 68</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_resolution_pipeline'>resolution_pipeline</span>
+  <span class='ivar'>@resolution_pipeline</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id=""></span>
+      <div class="method_details ">
+  <h3 class="signature " id="source_service-instance_method">
+  
+    #<strong>source_service</strong>  &#x21d2; <tt>Object</tt>  <span class="extras">(readonly)</span>
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Returns the value of attribute source_service.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+68
+69
+70</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/fact_db.rb', line 68</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_source_service'>source_service</span>
+  <span class='ivar'>@source_service</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+
+  <div id="instance_method_details" class="method_details_list">
+    <h2>Instance Method Details</h2>
+
+    
+      <div class="method_details first">
+  <h3 class="signature first" id="at-instance_method">
+  
+    #<strong>at</strong>(date)  &#x21d2; <tt><span class='object_link'><a href="Temporal/QueryBuilder.html" title="FactDb::Temporal::QueryBuilder (class)">Temporal::QueryBuilder</a></span></tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Temporal query builder - query at a specific point in time</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="examples">
+    <h4 class="tag_title">Examples:</h4>
+    
+      
+      <pre class="example code"><code><span class='id identifier rubyid_facts'>facts</span><span class='period'>.</span><span class='id identifier rubyid_at'>at</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>2024-01-15</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_query'>query</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Paula&#39;s role</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>format:</span> <span class='symbol'>:cypher</span><span class='rparen'>)</span>
+<span class='id identifier rubyid_facts'>facts</span><span class='period'>.</span><span class='id identifier rubyid_at'>at</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>2024-01-15</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_facts_for'>facts_for</span><span class='lparen'>(</span><span class='id identifier rubyid_entity_id'>entity_id</span><span class='rparen'>)</span>
+<span class='id identifier rubyid_facts'>facts</span><span class='period'>.</span><span class='id identifier rubyid_at'>at</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>2024-01-15</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_compare_to'>compare_to</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>2024-06-15</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span></code></pre>
+    
+  </div>
+<p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>date</span>
+      
+      
+        <span class='type'>(<tt>Date</tt>, <tt>Time</tt>, <tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>Point in time</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Temporal/QueryBuilder.html" title="FactDb::Temporal::QueryBuilder (class)">Temporal::QueryBuilder</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>Scoped query builder</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+154
+155
+156</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/fact_db.rb', line 154</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_at'>at</span><span class='lparen'>(</span><span class='id identifier rubyid_date'>date</span><span class='rparen'>)</span>
+  <span class='const'><span class='object_link'><a href="Temporal.html" title="FactDb::Temporal (module)">Temporal</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Temporal/QueryBuilder.html" title="FactDb::Temporal::QueryBuilder (class)">QueryBuilder</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Temporal/QueryBuilder.html#initialize-instance_method" title="FactDb::Temporal::QueryBuilder#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='kw'>self</span><span class='comma'>,</span> <span class='id identifier rubyid_parse_date'>parse_date</span><span class='lparen'>(</span><span class='id identifier rubyid_date'>date</span><span class='rparen'>)</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="batch_extract-instance_method">
+  
+    #<strong>batch_extract</strong>(source_ids, extractor: @config.default_extractor, parallel: true)  &#x21d2; <tt>Array&lt;Hash&gt;</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Batch extract facts from multiple sources</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>source_ids</span>
+      
+      
+        <span class='type'>(<tt>Array&lt;Integer&gt;</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>Source IDs to process</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>extractor</span>
+      
+      
+        <span class='type'>(<tt>Symbol</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>@config.default_extractor</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>Extractor type (:manual, :llm, :rule_based)</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>parallel</span>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>true</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>Whether to use parallel processing</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Array&lt;Hash&gt;</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>Results with extracted facts per source</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+254
+255
+256
+257
+258
+259
+260
+261</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/fact_db.rb', line 254</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_batch_extract'>batch_extract</span><span class='lparen'>(</span><span class='id identifier rubyid_source_ids'>source_ids</span><span class='comma'>,</span> <span class='label'>extractor:</span> <span class='ivar'>@config</span><span class='period'>.</span><span class='id identifier rubyid_default_extractor'>default_extractor</span><span class='comma'>,</span> <span class='label'>parallel:</span> <span class='kw'>true</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_sources'>sources</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Models.html" title="FactDb::Models (module)">Models</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Models/Source.html" title="FactDb::Models::Source (class)">Source</a></span></span><span class='period'>.</span><span class='id identifier rubyid_where'>where</span><span class='lparen'>(</span><span class='label'>id:</span> <span class='id identifier rubyid_source_ids'>source_ids</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_to_a'>to_a</span>
+  <span class='kw'>if</span> <span class='id identifier rubyid_parallel'>parallel</span>
+    <span class='ivar'>@extraction_pipeline</span><span class='period'>.</span><span class='id identifier rubyid_process_parallel'>process_parallel</span><span class='lparen'>(</span><span class='id identifier rubyid_sources'>sources</span><span class='comma'>,</span> <span class='label'>extractor:</span> <span class='id identifier rubyid_extractor'>extractor</span><span class='rparen'>)</span>
+  <span class='kw'>else</span>
+    <span class='ivar'>@extraction_pipeline</span><span class='period'>.</span><span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_sources'>sources</span><span class='comma'>,</span> <span class='label'>extractor:</span> <span class='id identifier rubyid_extractor'>extractor</span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="batch_resolve_entities-instance_method">
+  
+    #<strong>batch_resolve_entities</strong>(names, kind: nil)  &#x21d2; <tt>Array&lt;Hash&gt;</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Batch resolve entity names</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>names</span>
+      
+      
+        <span class='type'>(<tt>Array&lt;String&gt;</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>Entity names to resolve</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>kind</span>
+      
+      
+        <span class='type'>(<tt>Symbol</tt>, <tt>nil</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>Entity kind filter</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Array&lt;Hash&gt;</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>Resolution results</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+268
+269
+270</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/fact_db.rb', line 268</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_batch_resolve_entities'>batch_resolve_entities</span><span class='lparen'>(</span><span class='id identifier rubyid_names'>names</span><span class='comma'>,</span> <span class='label'>kind:</span> <span class='kw'>nil</span><span class='rparen'>)</span>
+  <span class='ivar'>@resolution_pipeline</span><span class='period'>.</span><span class='id identifier rubyid_resolve_entities'>resolve_entities</span><span class='lparen'>(</span><span class='id identifier rubyid_names'>names</span><span class='comma'>,</span> <span class='label'>kind:</span> <span class='id identifier rubyid_kind'>kind</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="current_facts_for-instance_method">
+  
+    #<strong>current_facts_for</strong>(entity_id, format: :json)  &#x21d2; <tt>Array</tt>, ... 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Get currently valid facts about an entity</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>entity_id</span>
+      
+      
+        <span class='type'>(<tt>Integer</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>Entity ID</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>format</span>
+      
+      
+        <span class='type'>(<tt>Symbol</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>:json</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>Output format</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Array</tt>, <tt>String</tt>, <tt>Hash</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>Results in requested format</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+128
+129
+130
+131</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/fact_db.rb', line 128</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_current_facts_for'>current_facts_for</span><span class='lparen'>(</span><span class='id identifier rubyid_entity_id'>entity_id</span><span class='comma'>,</span> <span class='label'>format:</span> <span class='symbol'>:json</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_results'>results</span> <span class='op'>=</span> <span class='ivar'>@fact_service</span><span class='period'>.</span><span class='id identifier rubyid_current_facts'>current_facts</span><span class='lparen'>(</span><span class='label'>entity:</span> <span class='id identifier rubyid_entity_id'>entity_id</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_transform_results'>transform_results</span><span class='lparen'>(</span><span class='id identifier rubyid_results'>results</span><span class='comma'>,</span> <span class='label'>topic:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>entity_</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_entity_id'>entity_id</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>format:</span> <span class='id identifier rubyid_format'>format</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="detect_fact_conflicts-instance_method">
+  
+    #<strong>detect_fact_conflicts</strong>(entity_ids)  &#x21d2; <tt>Array&lt;Hash&gt;</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Detect fact conflicts for multiple entities</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>entity_ids</span>
+      
+      
+        <span class='type'>(<tt>Array&lt;Integer&gt;</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>Entity IDs to check</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Array&lt;Hash&gt;</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>Conflict detection results</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+276
+277
+278</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/fact_db.rb', line 276</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_detect_fact_conflicts'>detect_fact_conflicts</span><span class='lparen'>(</span><span class='id identifier rubyid_entity_ids'>entity_ids</span><span class='rparen'>)</span>
+  <span class='ivar'>@resolution_pipeline</span><span class='period'>.</span><span class='id identifier rubyid_detect_conflicts'>detect_conflicts</span><span class='lparen'>(</span><span class='id identifier rubyid_entity_ids'>entity_ids</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="diff-instance_method">
+  
+    #<strong>diff</strong>(topic = nil, from:, to:)  &#x21d2; <tt>Hash</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Compare what changed between two dates</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>topic</span>
+      
+      
+        <span class='type'>(<tt>String</tt>, <tt>nil</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>Topic to compare (nil for all facts)</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>from</span>
+      
+      
+        <span class='type'>(<tt>Date</tt>, <tt>Time</tt>, <tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>Start date</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>to</span>
+      
+      
+        <span class='type'>(<tt>Date</tt>, <tt>Time</tt>, <tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>End date</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Hash</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>Differences with :added, :removed, :unchanged keys</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/fact_db.rb', line 164</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_diff'>diff</span><span class='lparen'>(</span><span class='id identifier rubyid_topic'>topic</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>from:</span><span class='comma'>,</span> <span class='label'>to:</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_from_date'>from_date</span> <span class='op'>=</span> <span class='id identifier rubyid_parse_date'>parse_date</span><span class='lparen'>(</span><span class='id identifier rubyid_from'>from</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_to_date'>to_date</span> <span class='op'>=</span> <span class='id identifier rubyid_parse_date'>parse_date</span><span class='lparen'>(</span><span class='id identifier rubyid_to'>to</span><span class='rparen'>)</span>
+
+  <span class='id identifier rubyid_from_results'>from_results</span> <span class='op'>=</span> <span class='ivar'>@fact_service</span><span class='period'>.</span><span class='id identifier rubyid_query'>query</span><span class='lparen'>(</span><span class='label'>topic:</span> <span class='id identifier rubyid_topic'>topic</span><span class='comma'>,</span> <span class='label'>at:</span> <span class='id identifier rubyid_from_date'>from_date</span><span class='comma'>,</span> <span class='label'>status:</span> <span class='symbol'>:canonical</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_to_results'>to_results</span> <span class='op'>=</span> <span class='ivar'>@fact_service</span><span class='period'>.</span><span class='id identifier rubyid_query'>query</span><span class='lparen'>(</span><span class='label'>topic:</span> <span class='id identifier rubyid_topic'>topic</span><span class='comma'>,</span> <span class='label'>at:</span> <span class='id identifier rubyid_to_date'>to_date</span><span class='comma'>,</span> <span class='label'>status:</span> <span class='symbol'>:canonical</span><span class='rparen'>)</span>
+
+  <span class='id identifier rubyid_from_set'>from_set</span> <span class='op'>=</span> <span class='id identifier rubyid_facts_to_comparable'>facts_to_comparable</span><span class='lparen'>(</span><span class='id identifier rubyid_from_results'>from_results</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_to_set'>to_set</span> <span class='op'>=</span> <span class='id identifier rubyid_facts_to_comparable'>facts_to_comparable</span><span class='lparen'>(</span><span class='id identifier rubyid_to_results'>to_results</span><span class='rparen'>)</span>
+
+  <span class='lbrace'>{</span>
+    <span class='label'>topic:</span> <span class='id identifier rubyid_topic'>topic</span><span class='comma'>,</span>
+    <span class='label'>from:</span> <span class='id identifier rubyid_from_date'>from_date</span><span class='comma'>,</span>
+    <span class='label'>to:</span> <span class='id identifier rubyid_to_date'>to_date</span><span class='comma'>,</span>
+    <span class='label'>added:</span> <span class='id identifier rubyid_to_results'>to_results</span><span class='period'>.</span><span class='id identifier rubyid_select'>select</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_f'>f</span><span class='op'>|</span> <span class='op'>!</span><span class='id identifier rubyid_from_set'>from_set</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='id identifier rubyid_comparable_key'>comparable_key</span><span class='lparen'>(</span><span class='id identifier rubyid_f'>f</span><span class='rparen'>)</span><span class='rparen'>)</span> <span class='rbrace'>}</span><span class='comma'>,</span>
+    <span class='label'>removed:</span> <span class='id identifier rubyid_from_results'>from_results</span><span class='period'>.</span><span class='id identifier rubyid_select'>select</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_f'>f</span><span class='op'>|</span> <span class='op'>!</span><span class='id identifier rubyid_to_set'>to_set</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='id identifier rubyid_comparable_key'>comparable_key</span><span class='lparen'>(</span><span class='id identifier rubyid_f'>f</span><span class='rparen'>)</span><span class='rparen'>)</span> <span class='rbrace'>}</span><span class='comma'>,</span>
+    <span class='label'>unchanged:</span> <span class='id identifier rubyid_from_results'>from_results</span><span class='period'>.</span><span class='id identifier rubyid_select'>select</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_f'>f</span><span class='op'>|</span> <span class='id identifier rubyid_to_set'>to_set</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='id identifier rubyid_comparable_key'>comparable_key</span><span class='lparen'>(</span><span class='id identifier rubyid_f'>f</span><span class='rparen'>)</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
+  <span class='rbrace'>}</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="extract_facts-instance_method">
+  
+    #<strong>extract_facts</strong>(source_id, extractor: @config.default_extractor)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Extract facts from source</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+96
+97
+98</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/fact_db.rb', line 96</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_extract_facts'>extract_facts</span><span class='lparen'>(</span><span class='id identifier rubyid_source_id'>source_id</span><span class='comma'>,</span> <span class='label'>extractor:</span> <span class='ivar'>@config</span><span class='period'>.</span><span class='id identifier rubyid_default_extractor'>default_extractor</span><span class='rparen'>)</span>
+  <span class='ivar'>@fact_service</span><span class='period'>.</span><span class='id identifier rubyid_extract_from_source'>extract_from_source</span><span class='lparen'>(</span><span class='id identifier rubyid_source_id'>source_id</span><span class='comma'>,</span> <span class='label'>extractor:</span> <span class='id identifier rubyid_extractor'>extractor</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="facts_at-instance_method">
+  
+    #<strong>facts_at</strong>(at, entity: nil, topic: nil, format: :json)  &#x21d2; <tt>Array</tt>, ... 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Get facts valid at a specific point in time</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>at</span>
+      
+      
+        <span class='type'>(<tt>Date</tt>, <tt>Time</tt>, <tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>Point in time</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>entity</span>
+      
+      
+        <span class='type'>(<tt>Integer</tt>, <tt>nil</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>Entity ID to filter by</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>topic</span>
+      
+      
+        <span class='type'>(<tt>String</tt>, <tt>nil</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>Topic to search for</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>format</span>
+      
+      
+        <span class='type'>(<tt>Symbol</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>:json</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>Output format</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Array</tt>, <tt>String</tt>, <tt>Hash</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>Results in requested format</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+140
+141
+142
+143</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/fact_db.rb', line 140</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_facts_at'>facts_at</span><span class='lparen'>(</span><span class='id identifier rubyid_at'>at</span><span class='comma'>,</span> <span class='label'>entity:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>topic:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>format:</span> <span class='symbol'>:json</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_results'>results</span> <span class='op'>=</span> <span class='ivar'>@fact_service</span><span class='period'>.</span><span class='id identifier rubyid_facts_at'>facts_at</span><span class='lparen'>(</span><span class='id identifier rubyid_at'>at</span><span class='comma'>,</span> <span class='label'>entity:</span> <span class='id identifier rubyid_entity'>entity</span><span class='comma'>,</span> <span class='label'>topic:</span> <span class='id identifier rubyid_topic'>topic</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_transform_results'>transform_results</span><span class='lparen'>(</span><span class='id identifier rubyid_results'>results</span><span class='comma'>,</span> <span class='label'>topic:</span> <span class='id identifier rubyid_topic'>topic</span> <span class='op'>||</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>facts_at_</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_at'>at</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>format:</span> <span class='id identifier rubyid_format'>format</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="ingest-instance_method">
+  
+    #<strong>ingest</strong>(content, kind:, captured_at: Time.current, metadata: {}, title: nil, source_uri: nil)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Ingest raw content</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/fact_db.rb', line 84</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_ingest'>ingest</span><span class='lparen'>(</span><span class='id identifier rubyid_content'>content</span><span class='comma'>,</span> <span class='label'>kind:</span><span class='comma'>,</span> <span class='label'>captured_at:</span> <span class='const'>Time</span><span class='period'>.</span><span class='id identifier rubyid_current'>current</span><span class='comma'>,</span> <span class='label'>metadata:</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='comma'>,</span> <span class='label'>title:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>source_uri:</span> <span class='kw'>nil</span><span class='rparen'>)</span>
+  <span class='ivar'>@source_service</span><span class='period'>.</span><span class='id identifier rubyid_create'>create</span><span class='lparen'>(</span>
+    <span class='id identifier rubyid_content'>content</span><span class='comma'>,</span>
+    <span class='label'>kind:</span> <span class='id identifier rubyid_kind'>kind</span><span class='comma'>,</span>
+    <span class='label'>captured_at:</span> <span class='id identifier rubyid_captured_at'>captured_at</span><span class='comma'>,</span>
+    <span class='label'>metadata:</span> <span class='id identifier rubyid_metadata'>metadata</span><span class='comma'>,</span>
+    <span class='label'>title:</span> <span class='id identifier rubyid_title'>title</span><span class='comma'>,</span>
+    <span class='label'>source_uri:</span> <span class='id identifier rubyid_source_uri'>source_uri</span>
+  <span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="introspect-instance_method">
+  
+    #<strong>introspect</strong>(topic = nil)  &#x21d2; <tt>Hash</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Introspect the schema - what does the layer know about?</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>topic</span>
+      
+      
+        <span class='type'>(<tt>String</tt>, <tt>nil</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>Optional topic to introspect specifically</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Hash</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>Schema information or topic-specific coverage</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+188
+189
+190</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/fact_db.rb', line 188</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_introspect'>introspect</span><span class='lparen'>(</span><span class='id identifier rubyid_topic'>topic</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_topic'>topic</span> <span class='op'>?</span> <span class='id identifier rubyid_introspect_topic'>introspect_topic</span><span class='lparen'>(</span><span class='id identifier rubyid_topic'>topic</span><span class='rparen'>)</span> <span class='op'>:</span> <span class='id identifier rubyid_introspect_schema'>introspect_schema</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="query_facts-instance_method">
+  
+    #<strong>query_facts</strong>(topic: nil, at: nil, entity: nil, status: :canonical, format: :json)  &#x21d2; <tt>Array</tt>, ... 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Query facts with temporal and entity filtering</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>topic</span>
+      
+      
+        <span class='type'>(<tt>String</tt>, <tt>nil</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>Topic to search for</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>at</span>
+      
+      
+        <span class='type'>(<tt>Date</tt>, <tt>Time</tt>, <tt>String</tt>, <tt>nil</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>Point in time for temporal query</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>entity</span>
+      
+      
+        <span class='type'>(<tt>Integer</tt>, <tt>nil</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>Entity ID to filter by</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>status</span>
+      
+      
+        <span class='type'>(<tt>Symbol</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>:canonical</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>Fact status (:canonical, :superseded, :synthesized, :all)</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>format</span>
+      
+      
+        <span class='type'>(<tt>Symbol</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>:json</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>Output format (:json, :triples, :cypher, :text, :prolog)</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Array</tt>, <tt>String</tt>, <tt>Hash</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>Results in requested format</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+108
+109
+110
+111</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/fact_db.rb', line 108</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_query_facts'>query_facts</span><span class='lparen'>(</span><span class='label'>topic:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>at:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>entity:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>status:</span> <span class='symbol'>:canonical</span><span class='comma'>,</span> <span class='label'>format:</span> <span class='symbol'>:json</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_results'>results</span> <span class='op'>=</span> <span class='ivar'>@fact_service</span><span class='period'>.</span><span class='id identifier rubyid_query'>query</span><span class='lparen'>(</span><span class='label'>topic:</span> <span class='id identifier rubyid_topic'>topic</span><span class='comma'>,</span> <span class='label'>at:</span> <span class='id identifier rubyid_at'>at</span><span class='comma'>,</span> <span class='label'>entity:</span> <span class='id identifier rubyid_entity'>entity</span><span class='comma'>,</span> <span class='label'>status:</span> <span class='id identifier rubyid_status'>status</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_transform_results'>transform_results</span><span class='lparen'>(</span><span class='id identifier rubyid_results'>results</span><span class='comma'>,</span> <span class='label'>topic:</span> <span class='id identifier rubyid_topic'>topic</span><span class='comma'>,</span> <span class='label'>format:</span> <span class='id identifier rubyid_format'>format</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="resolve_entity-instance_method">
+  
+    #<strong>resolve_entity</strong>(name, kind: nil)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Resolve a name to an entity</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+114
+115
+116</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/fact_db.rb', line 114</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_resolve_entity'>resolve_entity</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='label'>kind:</span> <span class='kw'>nil</span><span class='rparen'>)</span>
+  <span class='ivar'>@entity_service</span><span class='period'>.</span><span class='id identifier rubyid_resolve'>resolve</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='label'>kind:</span> <span class='id identifier rubyid_kind'>kind</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="suggest_queries-instance_method">
+  
+    #<strong>suggest_queries</strong>(topic)  &#x21d2; <tt>Array&lt;String&gt;</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Suggest queries based on what’s stored for a topic</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>topic</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>Topic to get suggestions for</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Array&lt;String&gt;</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>Suggested queries</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+196
+197
+198
+199
+200
+201
+202
+203
+204
+205
+206
+207
+208
+209
+210
+211
+212
+213
+214
+215
+216
+217
+218</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/fact_db.rb', line 196</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_suggest_queries'>suggest_queries</span><span class='lparen'>(</span><span class='id identifier rubyid_topic'>topic</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_resolved'>resolved</span> <span class='op'>=</span> <span class='id identifier rubyid_resolve_entity'>resolve_entity</span><span class='lparen'>(</span><span class='id identifier rubyid_topic'>topic</span><span class='rparen'>)</span>
+  <span class='kw'>return</span> <span class='lbracket'>[</span><span class='rbracket'>]</span> <span class='kw'>unless</span> <span class='id identifier rubyid_resolved'>resolved</span>
+
+  <span class='id identifier rubyid_entity'>entity</span> <span class='op'>=</span> <span class='id identifier rubyid_resolved'>resolved</span><span class='period'>.</span><span class='id identifier rubyid_respond_to?'>respond_to?</span><span class='lparen'>(</span><span class='symbol'>:entity</span><span class='rparen'>)</span> <span class='op'>?</span> <span class='id identifier rubyid_resolved'>resolved</span><span class='period'>.</span><span class='id identifier rubyid_entity'>entity</span> <span class='op'>:</span> <span class='id identifier rubyid_resolved'>resolved</span>
+  <span class='id identifier rubyid_suggestions'>suggestions</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
+
+  <span class='id identifier rubyid_entity_kind'>entity_kind</span> <span class='op'>=</span> <span class='id identifier rubyid_entity'>entity</span><span class='period'>.</span><span class='id identifier rubyid_respond_to?'>respond_to?</span><span class='lparen'>(</span><span class='symbol'>:kind</span><span class='rparen'>)</span> <span class='op'>?</span> <span class='id identifier rubyid_entity'>entity</span><span class='period'>.</span><span class='id identifier rubyid_kind'>kind</span> <span class='op'>:</span> <span class='kw'>nil</span>
+  <span class='id identifier rubyid_suggestions'>suggestions</span> <span class='op'>&lt;&lt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>current status</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='id identifier rubyid_entity_kind'>entity_kind</span> <span class='op'>==</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>person</span><span class='tstring_end'>&quot;</span></span>
+
+  <span class='comment'># Check relationships
+</span>  <span class='id identifier rubyid_relationships'>relationships</span> <span class='op'>=</span> <span class='ivar'>@entity_service</span><span class='period'>.</span><span class='id identifier rubyid_relationship_types_for'>relationship_types_for</span><span class='lparen'>(</span><span class='id identifier rubyid_entity'>entity</span><span class='period'>.</span><span class='id identifier rubyid_id'>id</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_suggestions'>suggestions</span> <span class='op'>&lt;&lt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>employment history</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='id identifier rubyid_relationships'>relationships</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='symbol'>:works_at</span><span class='rparen'>)</span> <span class='op'>||</span> <span class='id identifier rubyid_relationships'>relationships</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='symbol'>:object</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_suggestions'>suggestions</span> <span class='op'>&lt;&lt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>team members</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='id identifier rubyid_relationships'>relationships</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='symbol'>:works_with</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_suggestions'>suggestions</span> <span class='op'>&lt;&lt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>reporting chain</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='id identifier rubyid_relationships'>relationships</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='symbol'>:reports_to</span><span class='rparen'>)</span>
+
+  <span class='comment'># Check fact coverage
+</span>  <span class='id identifier rubyid_fact_stats'>fact_stats</span> <span class='op'>=</span> <span class='ivar'>@fact_service</span><span class='period'>.</span><span class='id identifier rubyid_fact_stats'>fact_stats</span><span class='lparen'>(</span><span class='id identifier rubyid_entity'>entity</span><span class='period'>.</span><span class='id identifier rubyid_id'>id</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_suggestions'>suggestions</span> <span class='op'>&lt;&lt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>timeline</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='id identifier rubyid_fact_stats'>fact_stats</span><span class='lbracket'>[</span><span class='symbol'>:canonical</span><span class='rbracket'>]</span><span class='op'>&amp;.</span><span class='id identifier rubyid_positive?'>positive?</span>
+  <span class='id identifier rubyid_suggestions'>suggestions</span> <span class='op'>&lt;&lt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>historical changes</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='id identifier rubyid_fact_stats'>fact_stats</span><span class='lbracket'>[</span><span class='symbol'>:superseded</span><span class='rbracket'>]</span><span class='op'>&amp;.</span><span class='id identifier rubyid_positive?'>positive?</span>
+
+  <span class='id identifier rubyid_suggestions'>suggestions</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="suggest_strategies-instance_method">
+  
+    #<strong>suggest_strategies</strong>(query_text)  &#x21d2; <tt>Array&lt;Hash&gt;</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Suggest retrieval strategies for a query</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>query_text</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>The query</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Array&lt;Hash&gt;</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>Strategy options with descriptions</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+224
+225
+226
+227
+228
+229
+230
+231
+232
+233
+234
+235
+236
+237
+238
+239
+240
+241
+242
+243
+244
+245
+246</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/fact_db.rb', line 224</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_suggest_strategies'>suggest_strategies</span><span class='lparen'>(</span><span class='id identifier rubyid_query_text'>query_text</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_strategies'>strategies</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
+
+  <span class='comment'># Check for temporal keywords
+</span>  <span class='kw'>if</span> <span class='id identifier rubyid_query_text'>query_text</span><span class='period'>.</span><span class='id identifier rubyid_match?'>match?</span><span class='lparen'>(</span><span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>\b(yesterday|last\s+week|last\s+month|ago|since|before|after|between)\b</span><span class='regexp_end'>/i</span></span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_strategies'>strategies</span> <span class='op'>&lt;&lt;</span> <span class='lbrace'>{</span> <span class='label'>strategy:</span> <span class='symbol'>:temporal</span><span class='comma'>,</span> <span class='label'>description:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Filter by date range</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span>
+  <span class='kw'>end</span>
+
+  <span class='comment'># Check for semantic intent
+</span>  <span class='kw'>if</span> <span class='id identifier rubyid_query_text'>query_text</span><span class='period'>.</span><span class='id identifier rubyid_match?'>match?</span><span class='lparen'>(</span><span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>\b(about|related|similar|like)\b</span><span class='regexp_end'>/i</span></span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_strategies'>strategies</span> <span class='op'>&lt;&lt;</span> <span class='lbrace'>{</span> <span class='label'>strategy:</span> <span class='symbol'>:semantic</span><span class='comma'>,</span> <span class='label'>description:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Search by semantic similarity</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span>
+  <span class='kw'>end</span>
+
+  <span class='comment'># Check for entity focus
+</span>  <span class='kw'>if</span> <span class='id identifier rubyid_query_text'>query_text</span><span class='period'>.</span><span class='id identifier rubyid_match?'>match?</span><span class='lparen'>(</span><span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>\b(who|what|where)\b</span><span class='regexp_end'>/i</span></span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_strategies'>strategies</span> <span class='op'>&lt;&lt;</span> <span class='lbrace'>{</span> <span class='label'>strategy:</span> <span class='symbol'>:graph</span><span class='comma'>,</span> <span class='label'>description:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Traverse from entity node</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span>
+  <span class='kw'>end</span>
+
+  <span class='comment'># Default: hybrid
+</span>  <span class='id identifier rubyid_strategies'>strategies</span> <span class='op'>&lt;&lt;</span> <span class='lbrace'>{</span> <span class='label'>strategy:</span> <span class='symbol'>:hybrid</span><span class='comma'>,</span> <span class='label'>description:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Combine multiple strategies</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span>
+
+  <span class='id identifier rubyid_strategies'>strategies</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="timeline_for-instance_method">
+  
+    #<strong>timeline_for</strong>(entity_id, from: nil, to: nil)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Build a timeline for an entity</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+119
+120
+121</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/fact_db.rb', line 119</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_timeline_for'>timeline_for</span><span class='lparen'>(</span><span class='id identifier rubyid_entity_id'>entity_id</span><span class='comma'>,</span> <span class='label'>from:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>to:</span> <span class='kw'>nil</span><span class='rparen'>)</span>
+  <span class='ivar'>@fact_service</span><span class='period'>.</span><span class='id identifier rubyid_timeline'>timeline</span><span class='lparen'>(</span><span class='label'>entity_id:</span> <span class='id identifier rubyid_entity_id'>entity_id</span><span class='comma'>,</span> <span class='label'>from:</span> <span class='id identifier rubyid_from'>from</span><span class='comma'>,</span> <span class='label'>to:</span> <span class='id identifier rubyid_to'>to</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+</div>
+
+      <div id="footer">
+  Generated on Tue Jan 13 02:43:36 2026 by
+  <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.9.38 (ruby-3.3.10).
+</div>
+
+    </div>
+  </body>
+</html>
