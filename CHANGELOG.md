@@ -8,10 +8,24 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [0.0.3] - Unreleased
+## [0.0.3] - 2026-01-12
 
 ### Added
 
+- **Rake Tasks** - New database and documentation tasks
+  - `db:dump` - Dump database to file with timestamped naming convention
+  - `db:restore` - Restore database from dump file with interactive selection
+  - `db:schema:dump` - Dump database schema to `db/schema.sql`
+  - `db:schema:load` - Load database schema from `db/schema.sql`
+  - `docs:mkdocs` - Build MkDocs documentation site
+  - `docs:yard` - Build YARD API documentation
+  - `docs:all` - Build all documentation
+- **YARD Documentation** - API documentation with GitHub Pages deployment
+  - Added `.yardopts` configuration
+  - Added GitHub Actions workflow for YARD deployment
+  - YARD docs available at `/yard` subdirectory on GitHub Pages
+- **Trigram Search** - Added pg_trgm extension for fuzzy text matching
+- **RAG Feedback Loop Example** - New example demonstrating retrieval-augmented generation patterns
 - **Output Transformers** - Transform query results into multiple formats optimized for LLM consumption
   - `RawTransformer` - Returns original ActiveRecord objects unchanged for direct database access
   - `JsonTransformer` - JSON-serializable hash format (default)
@@ -39,8 +53,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- **Configuration** - Replaced `anyway_config` with `myway_config` for configuration management
+  - Added environment-specific configuration support
 - `EntityService` now includes `relationship_types_for(entity_id)` and `timespan_for(entity_id)` methods
 - `FactService` now includes `fact_stats(entity_id)` for per-entity statistics
+
+### Breaking Changes
+
+- **Database Schema Renames** - Multiple columns and tables renamed for consistency
+  - Table: `contents` → `sources`
+  - Column: `content_type` → `type` (in sources)
+  - Column: `source_metadata` → `metadata` (in sources)
+  - Column: `entity_type` → `type` (in entities)
+  - Column: `canonical_name` → `name` (in entities)
+  - Column: `merged_into_id` → `canonical_id` (in entities)
+  - Column: `alias_text` → `name` (in entity_aliases)
+  - Column: `alias_type` → `type` (in entity_aliases)
+  - Column: `fact_text` → `text` (in facts)
+- **Terminology** - Replaced `type` with `kind` throughout the codebase for entity and content classification to avoid conflicts with Ruby's reserved `type` method
 
 ## [0.0.2] - 2025-01-08
 
