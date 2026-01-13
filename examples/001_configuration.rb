@@ -116,6 +116,11 @@ puts <<~DATABASE_CONFIG
     config.ranking.relationship_match_weight: #{config.ranking.relationship_match_weight}
     config.ranking.confidence_weight:         #{config.ranking.confidence_weight}
 
+  LLM Prompts (configurable templates for extraction):
+    config.prompts.fact_extraction:   #{config.prompts.fact_extraction.lines.first.strip.inspect}...
+    config.prompts.entity_extraction: #{config.prompts.entity_extraction.lines.first.strip.inspect}...
+    config.prompts.rag_system:        #{config.prompts.rag_system.lines.first.strip.inspect}...
+
   General settings:
     config.default_extractor:     #{config.default_extractor.inspect}
     config.fuzzy_match_threshold: #{config.fuzzy_match_threshold}
@@ -153,6 +158,11 @@ puts <<~ENV_VARS
     # Ranking weights
     export FDB_RANKING__TS_RANK_WEIGHT=0.30
     export FDB_RANKING__VECTOR_SIMILARITY_WEIGHT=0.25
+
+    # LLM Prompts (multi-line values work with heredocs in shell)
+    export FDB_PROMPTS__FACT_EXTRACTION="Your custom prompt..."
+    export FDB_PROMPTS__ENTITY_EXTRACTION="Your custom prompt..."
+    export FDB_PROMPTS__RAG_SYSTEM="Your custom system prompt..."
 
     # General settings
     export FDB_DEFAULT_EXTRACTOR=llm
@@ -259,6 +269,25 @@ puts <<~CONFIG_FILES
 
     database:
       password: my_local_password
+
+  Custom Prompts (in any config file):
+    ---
+    # Override LLM prompts for fact/entity extraction
+    # Prompts use %<text>s as placeholder for input text
+    prompts:
+      fact_extraction: |
+        Extract facts from the following text.
+        Text: %<text>s
+        Return JSON array of facts.
+
+      entity_extraction: |
+        Extract named entities from the text.
+        Text: %<text>s
+        Return JSON array of entities.
+
+      rag_system: |
+        You are a helpful assistant with access to a fact database.
+        Use the provided context to answer questions.
 CONFIG_FILES
 
 demo_section("Section 7: Database Configuration")
@@ -307,6 +336,10 @@ puts <<~REFERENCE
     config.llm                      - LLM configuration
     config.embedding                - Embedding configuration
     config.ranking                  - Ranking weights
+    config.prompts                  - LLM prompt templates
+    config.prompts.fact_extraction  - Fact extraction prompt
+    config.prompts.entity_extraction - Entity extraction prompt
+    config.prompts.rag_system       - RAG system prompt
 REFERENCE
 
 demo_footer("Configuration Demo Complete!")
