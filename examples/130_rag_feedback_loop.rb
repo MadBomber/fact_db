@@ -118,7 +118,7 @@ class RagFeedbackLoop
 
     FactDb.configure do |config|
       config.default_extractor = :llm
-      config.logger = Logger.new(log_path)
+      config.logger = Logger.new(File.open(log_path, 'w'))
 
       # Configure LLM client
       provider = ENV.fetch("FACT_DB_LLM_PROVIDER", "anthropic").to_sym

@@ -50,8 +50,8 @@ module FactDb
         return if name.blank?
 
         entity_name = entity&.name
-        unless Validation::AliasFilter.valid?(name, canonical_name: entity_name)
-          reason = Validation::AliasFilter.rejection_reason(name, canonical_name: entity_name)
+        unless Validation::AliasFilter.valid?(name, name: entity_name)
+          reason = Validation::AliasFilter.rejection_reason(name, name: entity_name)
           errors.add(:name, "is not a valid alias: #{reason}")
         end
       end

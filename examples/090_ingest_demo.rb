@@ -87,7 +87,7 @@ class IngestDemo
 
     FactDb.configure do |config|
       config.default_extractor = :llm
-      config.logger = Logger.new(log_path)
+      config.logger = Logger.new(File.open(log_path, 'w'))
 
       # Configure LLM client - uses environment variables by default
       # Supports: ANTHROPIC_API_KEY, OPENAI_API_KEY, GEMINI_API_KEY, etc.

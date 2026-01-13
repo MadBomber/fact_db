@@ -54,18 +54,18 @@ class AliasFilterTest < Minitest::Test
 
   def test_rejects_ambiguous_standalone_first_names
     # "Simon" alone should be rejected when the canonical name is different
-    refute FactDb::Validation::AliasFilter.valid?("Simon", canonical_name: "Jesus")
-    refute FactDb::Validation::AliasFilter.valid?("Peter", canonical_name: "Jesus")
-    refute FactDb::Validation::AliasFilter.valid?("John", canonical_name: "Jesus")
+    refute FactDb::Validation::AliasFilter.valid?("Simon", name: "Jesus")
+    refute FactDb::Validation::AliasFilter.valid?("Peter", name: "Jesus")
+    refute FactDb::Validation::AliasFilter.valid?("John", name: "Jesus")
   end
 
   def test_accepts_first_name_matching_canonical
     # "Simon" should be accepted if canonical name starts with Simon
-    assert FactDb::Validation::AliasFilter.valid?("Simon", canonical_name: "Simon Peter")
-    assert FactDb::Validation::AliasFilter.valid?("John", canonical_name: "John Mark")
+    assert FactDb::Validation::AliasFilter.valid?("Simon", name: "Simon Peter")
+    assert FactDb::Validation::AliasFilter.valid?("John", name: "John Mark")
 
     # "Peter" with canonical_name "Peter" is rejected because it matches canonical
-    refute FactDb::Validation::AliasFilter.valid?("Peter", canonical_name: "Peter")
+    refute FactDb::Validation::AliasFilter.valid?("Peter", name: "Peter")
   end
 
   def test_accepts_multi_word_names_with_common_first_names
@@ -107,7 +107,7 @@ class AliasFilterTest < Minitest::Test
   end
 
   def test_rejection_reason_for_ambiguous_name
-    reason = FactDb::Validation::AliasFilter.rejection_reason("Simon", canonical_name: "Jesus")
+    reason = FactDb::Validation::AliasFilter.rejection_reason("Simon", name: "Jesus")
     assert_equal "is an ambiguous standalone first name", reason
   end
 

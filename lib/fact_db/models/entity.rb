@@ -105,7 +105,7 @@ module FactDb
       # @return [EntityAlias, nil] the created alias or nil if validation failed
       def add_alias(text, kind: nil, confidence: 1.0)
         # Pre-validate before attempting to create
-        return nil unless Validation::AliasFilter.valid?(text, canonical_name: name)
+        return nil unless Validation::AliasFilter.valid?(text, name: name)
 
         aliases.find_or_create_by!(name: text) do |a|
           a.kind = kind

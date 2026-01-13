@@ -164,7 +164,7 @@ module FactDb
       # @return [Hash] standardized entity hash
       def build_entity(name:, kind:, aliases: [], attributes: {})
         canonical_name = name.strip
-        filtered_aliases = Validation::AliasFilter.filter(aliases, canonical_name: canonical_name)
+        filtered_aliases = Validation::AliasFilter.filter(aliases, name: canonical_name)
 
         {
           name: canonical_name,
@@ -187,7 +187,7 @@ module FactDb
       def build_mention(name:, kind:, role: nil, confidence: 1.0, aliases: [])
         canonical_name = name.strip
         raw_aliases = Array(aliases).map { |a| a.to_s.strip }.reject(&:empty?)
-        filtered_aliases = Validation::AliasFilter.filter(raw_aliases, canonical_name: canonical_name)
+        filtered_aliases = Validation::AliasFilter.filter(raw_aliases, name: canonical_name)
 
         {
           name: canonical_name,

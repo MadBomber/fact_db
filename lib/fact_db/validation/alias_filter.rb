@@ -63,9 +63,9 @@ module FactDb
       class << self
         # Check if a potential alias is valid
         # @param text [String] The alias text to validate
-        # @param canonical_name [String, nil] The entity's canonical name (for comparison)
+        # @param name [String, nil] The entity's name (for comparison)
         # @return [Boolean] true if the alias is valid
-        def valid?(text, canonical_name: nil)
+        def valid?(text, name: nil)
           return false if text.nil?
 
           normalized = text.to_s.strip.downcase
@@ -75,32 +75,32 @@ module FactDb
           return false if pronoun?(normalized)
           return false if generic_term?(normalized)
           return false if generic_role?(normalized)
-          return false if matches_canonical?(normalized, canonical_name)
+          return false if matches_canonical?(normalized, name)
           return false if only_articles_and_generic?(normalized)
-          return false if ambiguous_standalone_name?(normalized, canonical_name)
+          return false if ambiguous_standalone_name?(normalized, name)
 
           true
         end
 
         # Filter an array of aliases, returning only valid ones
         # @param aliases [Array<String>] Array of potential aliases
-        # @param canonical_name [String, nil] The entity's canonical name
+        # @param name [String, nil] The entity's name
         # @return [Array<String>] Array of valid aliases
-        def filter(aliases, canonical_name: nil)
+        def filter(aliases, name: nil)
           return [] unless aliases.is_a?(Array)
 
           aliases
             .map { |a| a.to_s.strip }
             .reject { |a| a.empty? }
-            .select { |a| valid?(a, canonical_name: canonical_name) }
+            .select { |a| valid?(a, name: name) }
             .uniq { |a| a.downcase }
         end
 
         # Get a human-readable reason why an alias was rejected
         # @param text [String] The alias text
-        # @param canonical_name [String, nil] The entity's canonical name
+        # @param name [String, nil] The entity's name
         # @return [String, nil] Rejection reason or nil if valid
-        def rejection_reason(text, canonical_name: nil)
+        def rejection_reason(text, name: nil)
           return "empty or nil" if text.nil? || text.to_s.strip.empty?
 
           normalized = text.to_s.strip.downcase
@@ -110,7 +110,7 @@ module FactDb
           return "is a generic term" if generic_term?(normalized)
           return "is a generic role reference" if generic_role?(normalized)
           return "contains only articles and generic words" if only_articles_and_generic?(normalized)
-          return "is an ambiguous standalone first name" if ambiguous_standalone_name?(normalized, canonical_name)
+          return "is an ambiguous standalone first name" if ambiguous_standalone_name?(normalized, name)
 
           nil
         end

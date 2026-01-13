@@ -110,11 +110,12 @@ module DemoUtilities
     end
 
     # Configure logging to a file based on demo filename
+    # Overwrites the log file on each run (does not append)
     def configure_logging(demo_file)
       log_path = File.join(File.dirname(demo_file), "#{File.basename(demo_file, '.rb')}.log")
 
       FactDb.configure do |config|
-        config.logger = Logger.new(log_path)
+        config.logger = Logger.new(File.open(log_path, 'w'))
       end
     end
 
