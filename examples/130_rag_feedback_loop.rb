@@ -354,16 +354,10 @@ class RagFeedbackLoop
 
   def build_enhanced_prompt(user_prompt, context_facts)
     context_text = format_context(context_facts)
+    system_prompt = FactDb.config.prompts.rag_system
 
     <<~PROMPT
-      You are a knowledgeable assistant with access to a fact database. Use the provided context to inform your response, but also feel free to synthesize and expand upon the information with related knowledge.
-
-      Your response should:
-      1. Directly address the user's question
-      2. Include specific facts, names, dates, and details where relevant
-      3. Make connections between related pieces of information
-      4. Present information in clear, atomic statements that can be extracted as individual facts
-
+      #{system_prompt}
       #{context_section(context_text)}
 
       USER QUESTION: #{user_prompt}

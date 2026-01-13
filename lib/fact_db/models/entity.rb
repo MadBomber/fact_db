@@ -37,7 +37,7 @@ module FactDb
       STATUSES = %w[unresolved resolved merged split].freeze
 
       # @return [Array<String>] valid entity kinds
-      ENTITY_KINDS = %w[person organization place product event concept].freeze
+      ENTITY_KINDS = %w[person organization place product event concept other].freeze
 
       validates :resolution_status, inclusion: { in: STATUSES }
       validates :kind, inclusion: { in: ENTITY_KINDS }

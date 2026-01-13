@@ -17,22 +17,23 @@
 #   ruby ingest_demo.rb --stats               # Show statistics only
 
 require_relative "utilities"
+require_relative "ingest_reporter"
 require "yaml"
 require "debug_me"
 include DebugMe
-require "ruby-progressbar"
 require "amazing_print"
 
 # Note: CLI tool - uses cli_setup! which does NOT reset database
 # Use --rebuild flag to explicitly reset
 
 class IngestDemo
-  def initialize(path:, rebuild: false, count: nil)
+  def initialize(path:, rebuild: false, count: nil, reporter: nil)
     @path = path
     @is_file = File.file?(@path)
     @directory = @is_file ? File.dirname(@path) : @path
     @rebuild = rebuild
     @count = count
+    @reporter = reporter || IngestReporter.new
     setup_factdb
   end
 
@@ -141,8 +142,6 @@ class IngestDemo
   end
 
   def process_markdown_files
-    puts "\n--- Processing Markdown Files ---\n"
-
     if @is_file
       all_files = [@path]
     else
@@ -153,38 +152,31 @@ class IngestDemo
     unprocessed_files = all_files.reject { |f| file_already_processed?(f) }
     already_processed = all_files.count - unprocessed_files.count
 
-    if @count
-      files = unprocessed_files.first(@count)
-      puts "Found #{all_files.count} markdown file(s) (#{already_processed} already processed)"
-      puts "Processing first #{@count} unprocessed file(s): #{files.count} to process\n\n"
-    else
-      files = unprocessed_files
-      puts "Found #{all_files.count} markdown file(s) (#{already_processed} already processed)"
-      puts "Processing #{files.count} unprocessed file(s)\n\n"
-    end
+    files = @count ? unprocessed_files.first(@count) : unprocessed_files
 
-    return if files.empty?
-
-    @files_progress = ProgressBar.create(
-      title: "Files",
-      total: files.count,
-      format: "%t: |%B| %c/%C %E",
-      output: $stdout
+    @reporter.start_ingestion(
+      total_files: files.count,
+      source_path: @is_file ? @path : @directory
     )
+    @reporter.report_already_processed(already_processed)
 
-    files.each do |file|
-      process_markdown_file(file)
-      @files_progress.increment
+    if files.empty?
+      @reporter.no_files_to_process
+      return
     end
 
-    @files_progress.finish
+    files.each_with_index do |file, index|
+      process_markdown_file(file, index + 1, files.count)
+    end
+
+    @reporter.finish_ingestion
   end
 
-  def process_markdown_file(file_path)
+  def process_markdown_file(file_path, file_index, total_files)
     filename = File.basename(file_path, ".md")
     content_text = File.read(file_path)
 
-    @files_progress.title = filename[0..20].ljust(21)
+    @reporter.file_started(filename, file_index, total_files)
 
     # Parse frontmatter and content
     frontmatter, body = parse_frontmatter(content_text)
@@ -196,7 +188,9 @@ class IngestDemo
     sections = parse_sections(body)
 
     # Process sections with LLM extraction
-    process_sections_with_extraction(filename, sections, source)
+    stats = process_sections_with_extraction(filename, sections, source)
+
+    @reporter.file_completed(**stats)
   end
 
   def parse_frontmatter(content)
@@ -262,39 +256,32 @@ class IngestDemo
   end
 
   def process_sections_with_extraction(filename, sections, source)
-    fact_count = 0
-    entity_count = 0
-    skipped_count = 0
-    error_count = 0
-
-    section_progress = ProgressBar.create(
-      title: "  Sections",
-      total: [sections.count, 1].max,
-      format: "%t: |%B| %c/%C (%p%%) %a",
-      output: $stdout
-    )
+    stats = { facts: 0, entities: 0, skipped: 0, errors: 0 }
+    total_sections = sections.count
 
     sections.each_with_index do |section, index|
       section_text = clean_text(section[:text])
       next if section_text.empty? || section_text.length < 10
 
       section_ref = section[:heading] || "Section #{index + 1}"
-      section_progress.title = "  #{section_ref[0..12].ljust(13)}"
+      @reporter.section_started(section_ref, index + 1, total_sections)
 
       # Skip if facts already exist for this section
       fact_identifier = "#{filename}: #{section_ref}"
       existing = FactDb::Models::Fact.where("metadata->>'section_ref' = ?", fact_identifier).first
       if existing
-        skipped_count += 1
-        section_progress.increment
+        stats[:skipped] += 1
+        @reporter.section_skipped(section_ref)
+        @reporter.section_completed
         next
       end
 
       begin
-        # Extract atomic facts from section text
-        extracted_facts = with_spinner("Extracting facts from: #{section_ref}...") do
-          @extractor.extract(section_text)
-        end
+        # Extract atomic facts from section text with progress feedback
+        extracted_facts = extract_with_progress(section_text)
+
+        section_facts = 0
+        section_entities = 0
 
         extracted_facts.each do |fact_data|
           # Resolve/create entities from mentions and build mention references
@@ -302,7 +289,7 @@ class IngestDemo
           (fact_data[:mentions] || []).each do |mention_data|
             entity = @entity_service.resolve_or_create(
               mention_data[:name],
-              kind: mention_data[:kind] || :concept,
+              kind: normalize_kind(mention_data[:kind]),
               aliases: mention_data[:aliases] || [],
               description: "Extracted from #{filename}"
             )
@@ -321,7 +308,7 @@ class IngestDemo
               role: mention_data[:role] || determine_role(mention_data[:type]),
               text: mention_data[:name]
             }
-            entity_count += 1
+            section_entities += 1
           end
 
           # Create the atomic fact
@@ -344,26 +331,43 @@ class IngestDemo
           )
 
           fact.add_source(source: source, kind: :primary, confidence: 1.0)
-          fact_count += 1
+          section_facts += 1
         end
+
+        @reporter.extraction_completed(facts_count: section_facts, entities_count: section_entities)
+        stats[:facts] += section_facts
+        stats[:entities] += section_entities
 
       rescue StandardError => e
         debug_me { [:section_ref, :e] }
-        error_count += 1
+        @reporter.error_occurred(e, context: section_ref)
+        stats[:errors] += 1
       end
 
-      section_progress.increment
+      @reporter.section_completed
     end
 
-    section_progress.finish
+    stats
+  end
 
-    # Summary for this file
-    summary_parts = ["#{fact_count} facts created"]
-    summary_parts << "#{skipped_count} sections skipped" if skipped_count > 0
-    summary_parts << "#{error_count} errors" if error_count > 0
-    summary_parts << "#{entity_count} entity mentions"
+  # Extract facts with periodic progress updates
+  def extract_with_progress(text)
+    @reporter.extraction_started
 
-    puts "  #{filename}: #{summary_parts.join(', ')}"
+    # Run extraction in a thread so we can update progress
+    result = nil
+    extraction_thread = Thread.new do
+      result = @extractor.extract(text)
+    end
+
+    # Update progress while extraction runs
+    while extraction_thread.alive?
+      @reporter.extraction_progress
+      sleep 0.15
+    end
+
+    extraction_thread.join
+    result
   end
 
   def clean_text(text)
@@ -387,31 +391,13 @@ class IngestDemo
     end
   end
 
-  def with_spinner(message)
-    spinner_chars = %w[⠋ ⠙ ⠹ ⠸ ⠼ ⠴ ⠦ ⠧ ⠇ ⠏]
-    spinning = true
-    result = nil
+  def normalize_kind(kind)
+    return :concept if kind.nil?
 
-    spinner_thread = Thread.new do
-      i = 0
-      while spinning
-        print "\r    #{spinner_chars[i % spinner_chars.length]} #{message}"
-        $stdout.flush
-        sleep 0.1
-        i += 1
-      end
-    end
+    kind_sym = kind.to_s.downcase.to_sym
+    valid_kinds = FactDb::Models::Entity::ENTITY_KINDS.map(&:to_sym)
 
-    begin
-      result = yield
-    ensure
-      spinning = false
-      spinner_thread.join
-      print "\r#{' ' * (message.length + 10)}\r"  # Clear spinner line
-      $stdout.flush
-    end
-
-    result
+    valid_kinds.include?(kind_sym) ? kind_sym : :other
   end
 
   def show_statistics
@@ -464,7 +450,7 @@ end
 
 # Main execution
 if __FILE__ == $PROGRAM_NAME
-  options = { rebuild: false, path: nil, count: nil }
+  options = { rebuild: false, path: nil, count: nil, reporter: nil }
 
   args = ARGV.dup
   while arg = args.shift
@@ -473,6 +459,10 @@ if __FILE__ == $PROGRAM_NAME
       options[:rebuild] = true
     when "--count"
       options[:count] = args.shift.to_i
+    when "--quiet", "-q"
+      options[:reporter] = QuietReporter.new
+    when "--verbose", "-v"
+      options[:reporter] = VerboseReporter.new
     when "--stats"
       IngestDemo.new(path: ".").show_statistics_only
       exit 0
@@ -490,6 +480,8 @@ if __FILE__ == $PROGRAM_NAME
         Options:
           --rebuild       Clear existing data and rebuild from scratch
           --count <n>     Process only the first n files (for testing, directory only)
+          --quiet, -q     Minimal output (good for scripts/CI)
+          --verbose, -v   Detailed output with section-level progress
           --stats         Show database statistics only
           --help, -h      Show this help message
 
@@ -502,6 +494,9 @@ if __FILE__ == $PROGRAM_NAME
         Accepts either a directory containing markdown (.md) files or a single
         markdown file. Files may optionally include YAML frontmatter between
         --- delimiters at the start of the file.
+
+        Reporter classes (IngestReporter, QuietReporter, VerboseReporter) can be
+        used directly in your own applications for custom progress handling.
       HELP
       exit 0
     else
