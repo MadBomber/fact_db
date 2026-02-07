@@ -133,11 +133,11 @@ module FactDb
       }
 
       # @!method search_text(query)
-      #   Full-text search on fact text using PostgreSQL tsvector
+      #   Full-text search on fact text using persisted tsvector column
       #   @param query [String] the search query
       #   @return [ActiveRecord::Relation]
       scope :search_text, lambda { |query|
-        where("to_tsvector('english', text) @@ plainto_tsquery('english', ?)", query)
+        where("text_vector @@ plainto_tsquery('english', ?)", query)
       }
 
       # @!method extracted_by(method)

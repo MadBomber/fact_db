@@ -8,6 +8,45 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.0] - Unreleased
+
+### Added
+
+- **Persistent TSVectors** - Precomputed `tsvector` columns for full-text search
+  - `text_vector` column on `fact_db_facts` replaces on-the-fly `to_tsvector()` computation
+  - `content_vector` column on `fact_db_sources` replaces on-the-fly `to_tsvector()` computation
+  - Database triggers automatically keep vectors in sync on INSERT/UPDATE
+  - GIN indexes created `CONCURRENTLY` for non-blocking deployment
+  - Migration backfills existing rows and drops redundant expression-based indexes
+- **Configurable LLM Prompts** - Extraction prompts moved to configuration
+  - `config.prompts.fact_extraction` - Customizable fact extraction prompt template
+  - `config.prompts.entity_extraction` - Customizable entity extraction prompt template
+  - `config.prompts.rag_system` - Customizable RAG system prompt
+  - Override via config files, environment variables (`FDB_PROMPTS__*`), or programmatic configuration
+- **Configuration Defaults File** - `lib/fact_db/config/defaults.yml` as single source of truth for all config schema and defaults
+- **Configuration Example** - New `examples/001_configuration.rb` demonstrating all configuration methods
+- **Ingest Reporter** - New `examples/ingest_reporter.rb` with structured reporting for markdown ingestion
+
+### Changed
+
+- **Full-text search scopes** now query persisted `tsvector` columns instead of computing them at query time
+  - `Fact.search_text` queries `text_vector` column directly
+  - `Source.search_text` queries `content_vector` column directly
+  - `ts_rank_cd()` calls in examples use persisted columns instead of recomputing
+- **LLM Extractor** - Removed hardcoded prompt constants; prompts now loaded from configuration
+- **Markdown ingestion** - Refactored with new reporter and reduced progress verbosity
+- Version bump from 0.0.4 to 0.1.0
+
+## [0.0.4] - 2026-01-12
+
+### Added
+
+- **LLM prompt configuration** - Prompts for fact/entity extraction are now configurable
+
+### Changed
+
+- Version bump from 0.0.3 to 0.0.4
+
 ## [0.0.3] - 2026-01-12
 
 ### Added

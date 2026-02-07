@@ -262,7 +262,7 @@ class RagFeedbackLoop
 
     sql = <<~SQL
       SELECT id,
-             ts_rank_cd(to_tsvector('english', text),
+             ts_rank_cd(text_vector,
                         plainto_tsquery('english', ?),
                         32) as rank
       FROM fact_db_facts

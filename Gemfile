@@ -12,6 +12,7 @@ group :development, :test do
   gem "minitest"
   gem "rake"
   gem "rubocop"
+  gem "webrick"
   gem "yard"
 end
 

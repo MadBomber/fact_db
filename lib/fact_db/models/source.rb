@@ -59,11 +59,11 @@ module FactDb
       scope :captured_before, ->(date) { where("captured_at <= ?", date) }
 
       # @!method search_text(query)
-      #   Full-text search on source content using PostgreSQL tsvector
+      #   Full-text search on source content using persisted tsvector column
       #   @param query [String] the search query
       #   @return [ActiveRecord::Relation]
       scope :search_text, lambda { |query|
-        where("to_tsvector('english', content) @@ plainto_tsquery('english', ?)", query)
+        where("content_vector @@ plainto_tsquery('english', ?)", query)
       }
 
       # Finds sources by vector similarity using pgvector

@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require "bundler/gem_tasks"
+require "fileutils"
 require "rake/testtask"
 
 Rake::TestTask.new(:test) do |t|
@@ -264,6 +265,15 @@ namespace :docs do
   task :yard do
     output_dir = File.expand_path("doc", __dir__)
     system("yard", "doc") || abort("yard doc failed")
+
+    # Create symlink for README.md image path (docs/assets -> assets)
+    # README.md references docs/assets/fact_db.jpg which needs to resolve in YARD output
+    docs_dir = File.join(output_dir, "docs")
+    FileUtils.mkdir_p(docs_dir)
+    symlink_path = File.join(docs_dir, "assets")
+    FileUtils.rm_f(symlink_path)
+    FileUtils.ln_sf("../assets", symlink_path)
+
     puts "YARD documentation built to #{output_dir}"
   end
 
