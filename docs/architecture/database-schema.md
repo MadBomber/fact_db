@@ -18,6 +18,7 @@ erDiagram
         string content_hash UK
         string type
         text content
+        tsvector content_vector
         string title
         string source_uri
         jsonb metadata
@@ -48,6 +49,7 @@ erDiagram
     facts {
         bigint id PK
         text text
+        tsvector text_vector
         string digest
         timestamptz valid_at
         timestamptz invalid_at
@@ -93,6 +95,7 @@ CREATE TABLE sources (
     content_hash VARCHAR(64) NOT NULL UNIQUE,
     type VARCHAR(50) NOT NULL,
     content TEXT NOT NULL,
+    content_vector TSVECTOR,
     title VARCHAR(255),
     source_uri TEXT,
     metadata JSONB NOT NULL DEFAULT '{}',
@@ -103,8 +106,14 @@ CREATE TABLE sources (
 
 CREATE INDEX idx_sources_type ON sources(type);
 CREATE INDEX idx_sources_captured ON sources(captured_at);
-CREATE INDEX idx_sources_text ON sources USING gin(to_tsvector('english', content));
+CREATE INDEX idx_sources_content_vector ON sources USING GIN(content_vector);
 CREATE INDEX idx_sources_embedding ON sources USING hnsw(embedding vector_cosine_ops);
+
+-- Trigger keeps content_vector in sync with content
+CREATE TRIGGER sources_content_vector_update
+    BEFORE INSERT OR UPDATE ON sources
+    FOR EACH ROW
+    EXECUTE FUNCTION tsvector_update_trigger(content_vector, 'pg_catalog.english', content);
 ```
 
 ### entities
@@ -155,6 +164,7 @@ Stores temporal assertions.
 CREATE TABLE facts (
     id BIGSERIAL PRIMARY KEY,
     text TEXT NOT NULL,
+    text_vector TSVECTOR,
     digest VARCHAR(64) NOT NULL,
     valid_at TIMESTAMPTZ NOT NULL,
     invalid_at TIMESTAMPTZ,
@@ -174,8 +184,14 @@ CREATE INDEX idx_facts_valid ON facts(valid_at);
 CREATE INDEX idx_facts_invalid ON facts(invalid_at);
 CREATE INDEX idx_facts_temporal ON facts(valid_at, invalid_at);
 CREATE INDEX idx_facts_method ON facts(extraction_method);
-CREATE INDEX idx_facts_text ON facts USING gin(to_tsvector('english', text));
+CREATE INDEX idx_facts_text_vector ON facts USING GIN(text_vector);
 CREATE INDEX idx_facts_embedding ON facts USING hnsw(embedding vector_cosine_ops);
+
+-- Trigger keeps text_vector in sync with text
+CREATE TRIGGER facts_text_vector_update
+    BEFORE INSERT OR UPDATE ON facts
+    FOR EACH ROW
+    EXECUTE FUNCTION tsvector_update_trigger(text_vector, 'pg_catalog.english', text);
 ```
 
 ### entity_mentions
