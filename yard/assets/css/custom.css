@@ -1,0 +1,137 @@
+/* EventClock Documentation Custom Styles */
+
+/* Code blocks */
+.highlight pre {
+  border-radius: 6px;
+}
+
+/* Tables */
+.md-typeset table:not([class]) {
+  font-size: 0.85rem;
+}
+
+.md-typeset table:not([class]) th {
+  background-color: var(--md-primary-fg-color);
+  color: var(--md-primary-bg-color);
+}
+
+/* Admonitions */
+.md-typeset .admonition {
+  border-radius: 6px;
+}
+
+/* Method signatures */
+.md-typeset code {
+  border-radius: 4px;
+}
+
+/* Navigation */
+.md-nav__link {
+  font-size: 0.85rem;
+}
+
+/* Mermaid diagrams */
+.mermaid {
+  text-align: center;
+  margin: 1.5rem 0;
+}
+
+/* API reference styling */
+.md-typeset h3 code {
+  background: transparent;
+  padding: 0;
+}
+
+/* Parameters table */
+.md-typeset table:not([class]) td:first-child code {
+  white-space: nowrap;
+}
+
+/* Example blocks */
+.md-typeset .example {
+  background-color: var(--md-code-bg-color);
+  border-left: 4px solid var(--md-accent-fg-color);
+  padding: 1rem;
+  margin: 1rem 0;
+  border-radius: 0 6px 6px 0;
+}
+
+/* Cards grid (for index pages) */
+.grid.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1rem;
+  margin: 1rem 0;
+}
+
+/* Method dividers */
+.md-typeset hr {
+  margin: 2rem 0;
+  border-top: 1px solid var(--md-default-fg-color--lightest);
+}
+
+/* Smaller font for long code blocks */
+.md-typeset pre > code {
+  font-size: 0.8rem;
+}
+
+/* Timeline styling */
+.timeline {
+  border-left: 2px solid var(--md-accent-fg-color);
+  padding-left: 1rem;
+  margin-left: 0.5rem;
+}
+
+.timeline-item {
+  position: relative;
+  padding-bottom: 1rem;
+}
+
+.timeline-item::before {
+  content: "";
+  position: absolute;
+  left: -1.4rem;
+  top: 0.5rem;
+  width: 10px;
+  height: 10px;
+  background: var(--md-accent-fg-color);
+  border-radius: 50%;
+}
+
+/* Status badges */
+.status-canonical {
+  background: #4caf50;
+  color: white;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 0.75rem;
+}
+
+.status-superseded {
+  background: #ff9800;
+  color: white;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 0.75rem;
+}
+
+.status-corroborated {
+  background: #2196f3;
+  color: white;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 0.75rem;
+}
+
+.status-synthesized {
+  background: #9c27b0;
+  color: white;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 0.75rem;
+}
+
+/* Dark mode adjustments */
+[data-md-color-scheme="slate"] .md-typeset table:not([class]) th {
+  background-color: var(--md-primary-fg-color--dark);
+}
