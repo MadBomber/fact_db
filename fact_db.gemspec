@@ -17,7 +17,7 @@ Gem::Specification.new do |spec|
   DESC
   spec.homepage = "https://github.com/MadBomber/fact_db"
   spec.license = "MIT"
-  spec.required_ruby_version = ">= 3.0.0"
+  spec.required_ruby_version = ">= 4.0"
 
   spec.metadata["homepage_uri"] = spec.homepage
   spec.metadata["source_code_uri"] = spec.homepage
