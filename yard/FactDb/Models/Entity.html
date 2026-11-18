@@ -6,13 +6,13 @@
 <title>
   Class: FactDb::Models::Entity
   
-    &mdash; Documentation by YARD 0.9.38
+    &mdash; Documentation by YARD 0.9.45
   
 </title>
 
-  <link rel="stylesheet" href="../../css/style.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/style.css" type="text/css">
 
-  <link rel="stylesheet" href="../../css/common.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/common.css" type="text/css">
 
 <script type="text/javascript">
   pathId = "FactDb::Models::Entity";
@@ -27,6 +27,8 @@
 
   </head>
   <body>
+    <div id="main_progress" aria-hidden="true"></div>
+
     <div class="nav_wrap">
       <iframe id="nav" src="../../class_list.html?1"></iframe>
       <div id="resizer"></div>
@@ -96,18 +98,18 @@
   
   <dl>
     <dt>Defined in:</dt>
-    <dd>lib/fact_db/models/entity.rb</dd>
+    <dd>lib/fact_db/models/entity.rb
+</dd>
   </dl>
   
 </div>
 
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
-    
-<p>Represents a named entity in the fact database</p>
-
-<p>Entities are real-world things like people, organizations, places, etc. that can be referenced in facts. Entities support aliases for name variations and can be merged to deduplicate records.</p>
-
+    <p>Represents a named entity in the fact database</p>
+<p>Entities are real-world things like people, organizations, places, etc.
+that can be referenced in facts. Entities support aliases for name variations
+and can be merged to deduplicate records.</p>
 
   </div>
 </div>
@@ -117,17 +119,13 @@
     <h4 class="tag_title">Examples:</h4>
     
       
-        <h5 class="example_title"><div class='inline'>
-<p>Create an entity with aliases</p>
-</div></h5>
+        <h5 class="example_title"><div class='inline'><p>Create an entity with aliases</p></div></h5>
       
       <pre class="example code"><code><span class='id identifier rubyid_entity'>entity</span> <span class='op'>=</span> <span class='const'>Entity</span><span class='period'>.</span><span class='id identifier rubyid_create!'>create!</span><span class='lparen'>(</span><span class='label'>name:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>John Smith</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>kind:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>person</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>resolution_status:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>resolved</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
 <span class='id identifier rubyid_entity'>entity</span><span class='period'>.</span><span class='id identifier rubyid_add_alias'>add_alias</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>J. Smith</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span></code></pre>
     
       
-        <h5 class="example_title"><div class='inline'>
-<p>Find entities by kind</p>
-</div></h5>
+        <h5 class="example_title"><div class='inline'><p>Find entities by kind</p></div></h5>
       
       <pre class="example code"><code><span class='id identifier rubyid_people'>people</span> <span class='op'>=</span> <span class='const'>Entity</span><span class='period'>.</span><span class='id identifier rubyid_by_kind'><span class='object_link'><a href="#by_kind-instance_method" title="FactDb::Models::Entity#by_kind (method)">by_kind</a></span></span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>person</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_not_merged'>not_merged</span></code></pre>
     
@@ -146,9 +144,7 @@
         <dt id="STATUSES-constant" class="">STATUSES =
           <div class="docstring">
   <div class="discussion">
-    
-<p>Returns valid resolution statuses.</p>
-
+    <p>Returns valid resolution statuses.</p>
 
   </div>
 </div>
@@ -165,9 +161,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>valid resolution statuses</p>
-</div>
+        <div class='inline'><p>valid resolution statuses</p></div>
       
     </li>
   
@@ -180,9 +174,7 @@
         <dt id="ENTITY_KINDS-constant" class="">ENTITY_KINDS =
           <div class="docstring">
   <div class="discussion">
-    
-<p>Returns valid entity kinds.</p>
-
+    <p>Returns valid entity kinds.</p>
 
   </div>
 </div>
@@ -199,9 +191,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>valid entity kinds</p>
-</div>
+        <div class='inline'><p>valid entity kinds</p></div>
       
     </li>
   
@@ -245,14 +235,13 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Finds entities by vector similarity using pgvector.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'><p>Finds entities by vector similarity using pgvector.</p></div></span>
   
 </li>
 
       
     </ul>
+    
   
     <h2>
       Instance Method Summary
@@ -278,9 +267,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Adds an alias to this entity.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'><p>Adds an alias to this entity.</p></div></span>
   
 </li>
 
@@ -302,9 +289,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Returns all alias names as an array of strings.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'><p>Returns all alias names as an array of strings.</p></div></span>
   
 </li>
 
@@ -326,9 +311,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Returns entities of a specific kind.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'><p>Returns entities of a specific kind.</p></div></span>
   
 </li>
 
@@ -350,9 +333,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Returns the canonical entity (follows merge chain).</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'><p>Returns the canonical entity (follows merge chain).</p></div></span>
   
 </li>
 
@@ -374,9 +355,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Returns currently valid canonical facts mentioning this entity.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'><p>Returns currently valid canonical facts mentioning this entity.</p></div></span>
   
 </li>
 
@@ -398,9 +377,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Returns facts valid at a specific date.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'><p>Returns facts valid at a specific date.</p></div></span>
   
 </li>
 
@@ -422,9 +399,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Checks if the entity matches a query (by name or alias).</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'><p>Checks if the entity matches a query (by name or alias).</p></div></span>
   
 </li>
 
@@ -446,9 +421,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Checks if the entity has been merged into another.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'><p>Checks if the entity has been merged into another.</p></div></span>
   
 </li>
 
@@ -470,9 +443,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Returns entities that have not been merged.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'><p>Returns entities that have not been merged.</p></div></span>
   
 </li>
 
@@ -494,9 +465,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Returns entities with “resolved” status.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'><p>Returns entities with &quot;resolved&quot; status.</p></div></span>
   
 </li>
 
@@ -518,9 +487,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Checks if the entity is resolved.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'><p>Checks if the entity is resolved.</p></div></span>
   
 </li>
 
@@ -542,14 +509,13 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Returns entities with “unresolved” status.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'><p>Returns entities with &quot;unresolved&quot; status.</p></div></span>
   
 </li>
 
       
     </ul>
+    
   
 
 
@@ -570,9 +536,7 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Finds entities by vector similarity using pgvector</p>
-
+    <p>Finds entities by vector similarity using pgvector</p>
 
   </div>
 </div>
@@ -590,9 +554,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>the embedding vector to search with</p>
-</div>
+        <div class='inline'><p>the embedding vector to search with</p></div>
       
     </li>
   
@@ -608,9 +570,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>maximum number of results</p>
-</div>
+        <div class='inline'><p>maximum number of results</p></div>
       
     </li>
   
@@ -627,9 +587,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>entities ordered by similarity</p>
-</div>
+        <div class='inline'><p>entities ordered by similarity</p></div>
       
     </li>
   
@@ -677,11 +635,9 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Adds an alias to this entity</p>
-
-<p>Validates the alias before creation using AliasFilter. Returns nil if validation fails.</p>
-
+    <p>Adds an alias to this entity</p>
+<p>Validates the alias before creation using AliasFilter.
+Returns nil if validation fails.</p>
 
   </div>
 </div>
@@ -699,9 +655,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>the alias text</p>
-</div>
+        <div class='inline'><p>the alias text</p></div>
       
     </li>
   
@@ -717,9 +671,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>alias kind (name, nickname, email, handle, abbreviation, title)</p>
-</div>
+        <div class='inline'><p>alias kind (name, nickname, email, handle, abbreviation, title)</p></div>
       
     </li>
   
@@ -735,9 +687,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>confidence score (0.0 to 1.0)</p>
-</div>
+        <div class='inline'><p>confidence score (0.0 to 1.0)</p></div>
       
     </li>
   
@@ -754,9 +704,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>the created alias or nil if validation failed</p>
-</div>
+        <div class='inline'><p>the created alias or nil if validation failed</p></div>
       
     </li>
   
@@ -812,9 +760,7 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Returns all alias names as an array of strings</p>
-
+    <p>Returns all alias names as an array of strings</p>
 
   </div>
 </div>
@@ -831,9 +777,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>alias names</p>
-</div>
+        <div class='inline'><p>alias names</p></div>
       
     </li>
   
@@ -871,9 +815,7 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Returns entities of a specific kind</p>
-
+    <p>Returns entities of a specific kind</p>
 
   </div>
 </div>
@@ -891,9 +833,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>the entity kind</p>
-</div>
+        <div class='inline'><p>the entity kind</p></div>
       
     </li>
   
@@ -941,11 +881,9 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Returns the canonical entity (follows merge chain)</p>
-
-<p>If this entity has been merged, recursively follows the canonical_id chain to find the ultimate canonical entity.</p>
-
+    <p>Returns the canonical entity (follows merge chain)</p>
+<p>If this entity has been merged, recursively follows the canonical_id
+chain to find the ultimate canonical entity.</p>
 
   </div>
 </div>
@@ -962,9 +900,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>the canonical entity or self if not merged</p>
-</div>
+        <div class='inline'><p>the canonical entity or self if not merged</p></div>
       
     </li>
   
@@ -1002,9 +938,7 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Returns currently valid canonical facts mentioning this entity</p>
-
+    <p>Returns currently valid canonical facts mentioning this entity</p>
 
   </div>
 </div>
@@ -1021,9 +955,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>currently valid facts</p>
-</div>
+        <div class='inline'><p>currently valid facts</p></div>
       
     </li>
   
@@ -1061,9 +993,7 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Returns facts valid at a specific date</p>
-
+    <p>Returns facts valid at a specific date</p>
 
   </div>
 </div>
@@ -1081,9 +1011,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>the point in time to query</p>
-</div>
+        <div class='inline'><p>the point in time to query</p></div>
       
     </li>
   
@@ -1100,9 +1028,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>facts valid at the given date</p>
-</div>
+        <div class='inline'><p>facts valid at the given date</p></div>
       
     </li>
   
@@ -1140,9 +1066,7 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Checks if the entity matches a query (by name or alias)</p>
-
+    <p>Checks if the entity matches a query (by name or alias)</p>
 
   </div>
 </div>
@@ -1160,9 +1084,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>the name to match (case-insensitive)</p>
-</div>
+        <div class='inline'><p>the name to match (case-insensitive)</p></div>
       
     </li>
   
@@ -1179,9 +1101,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>true if name or any alias matches</p>
-</div>
+        <div class='inline'><p>true if name or any alias matches</p></div>
       
     </li>
   
@@ -1223,9 +1143,7 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Checks if the entity has been merged into another</p>
-
+    <p>Checks if the entity has been merged into another</p>
 
   </div>
 </div>
@@ -1242,9 +1160,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>true if resolution_status is “merged”</p>
-</div>
+        <div class='inline'><p>true if resolution_status is &quot;merged&quot;</p></div>
       
     </li>
   
@@ -1282,9 +1198,7 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Returns entities that have not been merged</p>
-
+    <p>Returns entities that have not been merged</p>
 
   </div>
 </div>
@@ -1332,9 +1246,7 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Returns entities with “resolved” status</p>
-
+    <p>Returns entities with &quot;resolved&quot; status</p>
 
   </div>
 </div>
@@ -1382,9 +1294,7 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Checks if the entity is resolved</p>
-
+    <p>Checks if the entity is resolved</p>
 
   </div>
 </div>
@@ -1401,9 +1311,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>true if resolution_status is “resolved”</p>
-</div>
+        <div class='inline'><p>true if resolution_status is &quot;resolved&quot;</p></div>
       
     </li>
   
@@ -1441,9 +1349,7 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Returns entities with “unresolved” status</p>
-
+    <p>Returns entities with &quot;unresolved&quot; status</p>
 
   </div>
 </div>
@@ -1485,9 +1391,9 @@
 </div>
 
       <div id="footer">
-  Generated on Sat Feb  7 16:59:07 2026 by
+  Generated on Wed Nov 18 23:46:04 2026 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.38 (ruby-3.3.10).
+  0.9.45 (ruby-4.0.9).
 </div>
 
     </div>

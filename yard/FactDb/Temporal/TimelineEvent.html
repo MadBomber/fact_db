@@ -6,13 +6,13 @@
 <title>
   Class: FactDb::Temporal::TimelineEvent
   
-    &mdash; Documentation by YARD 0.9.38
+    &mdash; Documentation by YARD 0.9.45
   
 </title>
 
-  <link rel="stylesheet" href="../../css/style.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/style.css" type="text/css">
 
-  <link rel="stylesheet" href="../../css/common.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/common.css" type="text/css">
 
 <script type="text/javascript">
   pathId = "FactDb::Temporal::TimelineEvent";
@@ -27,6 +27,8 @@
 
   </head>
   <body>
+    <div id="main_progress" aria-hidden="true"></div>
+
     <div class="nav_wrap">
       <iframe id="nav" src="../../class_list.html?1"></iframe>
       <div id="resizer"></div>
@@ -94,18 +96,17 @@
   
   <dl>
     <dt>Defined in:</dt>
-    <dd>lib/fact_db/temporal/timeline.rb</dd>
+    <dd>lib/fact_db/temporal/timeline.rb
+</dd>
   </dl>
   
 </div>
 
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
-    
-<p>Wraps a Fact as a timeline event with convenience methods</p>
-
-<p>Provides a simplified interface for timeline operations, delegating most methods to the underlying fact.</p>
-
+    <p>Wraps a Fact as a timeline event with convenience methods</p>
+<p>Provides a simplified interface for timeline operations,
+delegating most methods to the underlying fact.</p>
 
   </div>
 </div>
@@ -141,9 +142,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>The underlying fact.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'><p>The underlying fact.</p></div></span>
   
 </li>
 
@@ -178,9 +177,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Compares events by valid_at date for sorting.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'><p>Compares events by valid_at date for sorting.</p></div></span>
   
 </li>
 
@@ -202,9 +199,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>True if fact is currently valid.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'><p>True if fact is currently valid.</p></div></span>
   
 </li>
 
@@ -226,9 +221,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Validity duration.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'><p>Validity duration.</p></div></span>
   
 </li>
 
@@ -250,9 +243,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Validity duration in days.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'><p>Validity duration in days.</p></div></span>
   
 </li>
 
@@ -274,9 +265,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Mentioned entities.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'><p>Mentioned entities.</p></div></span>
   
 </li>
 
@@ -298,9 +287,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>The fact ID.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'><p>The fact ID.</p></div></span>
   
 </li>
 
@@ -324,9 +311,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Initializes a new TimelineEvent.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'><p>Initializes a new TimelineEvent.</p></div></span>
   
 </li>
 
@@ -348,9 +333,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>When the fact became invalid.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'><p>When the fact became invalid.</p></div></span>
   
 </li>
 
@@ -372,9 +355,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Source documents.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'><p>Source documents.</p></div></span>
   
 </li>
 
@@ -396,9 +377,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>The fact status.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'><p>The fact status.</p></div></span>
   
 </li>
 
@@ -420,9 +399,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>The fact text.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'><p>The fact text.</p></div></span>
   
 </li>
 
@@ -444,9 +421,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Converts the event to a hash representation.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'><p>Converts the event to a hash representation.</p></div></span>
   
 </li>
 
@@ -468,9 +443,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>When the fact became valid.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'><p>When the fact became valid.</p></div></span>
   
 </li>
 
@@ -492,14 +465,13 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>True if valid at the given date.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'><p>True if valid at the given date.</p></div></span>
   
 </li>
 
       
     </ul>
+    
   
 
 <div id="constructor_details" class="method_details_list">
@@ -516,9 +488,7 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Initializes a new TimelineEvent</p>
-
+    <p>Initializes a new TimelineEvent</p>
 
   </div>
 </div>
@@ -536,9 +506,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>the fact to wrap</p>
-</div>
+        <div class='inline'><p>the fact to wrap</p></div>
       
     </li>
   
@@ -584,9 +552,7 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Returns the underlying fact.</p>
-
+    <p>Returns the underlying fact.</p>
 
   </div>
 </div>
@@ -603,9 +569,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>the underlying fact</p>
-</div>
+        <div class='inline'><p>the underlying fact</p></div>
       
     </li>
   
@@ -650,9 +614,7 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Compares events by valid_at date for sorting</p>
-
+    <p>Compares events by valid_at date for sorting</p>
 
   </div>
 </div>
@@ -670,9 +632,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>the event to compare with</p>
-</div>
+        <div class='inline'><p>the event to compare with</p></div>
       
     </li>
   
@@ -689,9 +649,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>-1, 0, or 1</p>
-</div>
+        <div class='inline'><p>-1, 0, or 1</p></div>
       
     </li>
   
@@ -729,9 +687,7 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Returns true if fact is currently valid.</p>
-
+    <p>Returns true if fact is currently valid.</p>
 
   </div>
 </div>
@@ -748,9 +704,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>true if fact is currently valid</p>
-</div>
+        <div class='inline'><p>true if fact is currently valid</p></div>
       
     </li>
   
@@ -788,9 +742,7 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Returns validity duration.</p>
-
+    <p>Returns validity duration.</p>
 
   </div>
 </div>
@@ -807,9 +759,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>validity duration</p>
-</div>
+        <div class='inline'><p>validity duration</p></div>
       
     </li>
   
@@ -847,9 +797,7 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Returns validity duration in days.</p>
-
+    <p>Returns validity duration in days.</p>
 
   </div>
 </div>
@@ -866,9 +814,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>validity duration in days</p>
-</div>
+        <div class='inline'><p>validity duration in days</p></div>
       
     </li>
   
@@ -906,9 +852,7 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Returns mentioned entities.</p>
-
+    <p>Returns mentioned entities.</p>
 
   </div>
 </div>
@@ -925,9 +869,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>mentioned entities</p>
-</div>
+        <div class='inline'><p>mentioned entities</p></div>
       
     </li>
   
@@ -965,9 +907,7 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Returns the fact ID.</p>
-
+    <p>Returns the fact ID.</p>
 
   </div>
 </div>
@@ -984,9 +924,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>the fact ID</p>
-</div>
+        <div class='inline'><p>the fact ID</p></div>
       
     </li>
   
@@ -1024,9 +962,7 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Returns when the fact became invalid.</p>
-
+    <p>Returns when the fact became invalid.</p>
 
   </div>
 </div>
@@ -1043,9 +979,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>when the fact became invalid</p>
-</div>
+        <div class='inline'><p>when the fact became invalid</p></div>
       
     </li>
   
@@ -1083,9 +1017,7 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Returns source documents.</p>
-
+    <p>Returns source documents.</p>
 
   </div>
 </div>
@@ -1102,9 +1034,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>source documents</p>
-</div>
+        <div class='inline'><p>source documents</p></div>
       
     </li>
   
@@ -1142,9 +1072,7 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Returns the fact status.</p>
-
+    <p>Returns the fact status.</p>
 
   </div>
 </div>
@@ -1161,9 +1089,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>the fact status</p>
-</div>
+        <div class='inline'><p>the fact status</p></div>
       
     </li>
   
@@ -1201,9 +1127,7 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Returns the fact text.</p>
-
+    <p>Returns the fact text.</p>
 
   </div>
 </div>
@@ -1220,9 +1144,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>the fact text</p>
-</div>
+        <div class='inline'><p>the fact text</p></div>
       
     </li>
   
@@ -1260,9 +1182,7 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Converts the event to a hash representation</p>
-
+    <p>Converts the event to a hash representation</p>
 
   </div>
 </div>
@@ -1279,9 +1199,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>hash with :id, :text, :valid_at, :invalid_at, :status, :duration_days, :entities</p>
-</div>
+        <div class='inline'><p>hash with :id, :text, :valid_at, :invalid_at, :status, :duration_days, :entities</p></div>
       
     </li>
   
@@ -1335,9 +1253,7 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Returns when the fact became valid.</p>
-
+    <p>Returns when the fact became valid.</p>
 
   </div>
 </div>
@@ -1354,9 +1270,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>when the fact became valid</p>
-</div>
+        <div class='inline'><p>when the fact became valid</p></div>
       
     </li>
   
@@ -1394,9 +1308,7 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Returns true if valid at the given date.</p>
-
+    <p>Returns true if valid at the given date.</p>
 
   </div>
 </div>
@@ -1414,9 +1326,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>the point in time</p>
-</div>
+        <div class='inline'><p>the point in time</p></div>
       
     </li>
   
@@ -1433,9 +1343,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>true if valid at the given date</p>
-</div>
+        <div class='inline'><p>true if valid at the given date</p></div>
       
     </li>
   
@@ -1467,9 +1375,9 @@
 </div>
 
       <div id="footer">
-  Generated on Sat Feb  7 16:59:08 2026 by
+  Generated on Wed Nov 18 23:46:05 2026 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.38 (ruby-3.3.10).
+  0.9.45 (ruby-4.0.9).
 </div>
 
     </div>

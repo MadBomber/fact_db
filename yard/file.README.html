@@ -6,13 +6,13 @@
 <title>
   File: README
   
-    &mdash; Documentation by YARD 0.9.38
+    &mdash; Documentation by YARD 0.9.45
   
 </title>
 
-  <link rel="stylesheet" href="css/style.css" type="text/css" />
+  <link rel="stylesheet" href="css/style.css" type="text/css">
 
-  <link rel="stylesheet" href="css/common.css" type="text/css" />
+  <link rel="stylesheet" href="css/common.css" type="text/css">
 
 <script type="text/javascript">
   pathId = "README";
@@ -27,6 +27,8 @@
 
   </head>
   <body>
+    <div id="main_progress" aria-hidden="true"></div>
+
     <div class="nav_wrap">
       <iframe id="nav" src="file_list.html?1"></iframe>
       <div id="resizer"></div>
@@ -57,11 +59,10 @@
         <div class="clear"></div>
       </div>
 
-      <div id="content"><div id='filecontents'>
-<h1 id="label-FactDb">FactDb</h1>
-
+      <div id="content"><div id='filecontents'><h1 id="FactDb">FactDb</h1>
 <blockquote>
-<p>[!CAUTION] This gem is under active development. APIs and features may change without notice. See the <a href="CHANGELOG_md.html">CHANGELOG</a> for details.</p>
+<p>[!CAUTION]
+This gem is under active development. APIs and features may change without notice. See the <a href="CHANGELOG.md">CHANGELOG</a> for details.</p>
 </blockquote>
 <table>
 <tr>
@@ -73,41 +74,33 @@
 <strong>Temporal fact tracking with entity resolution and audit trails for Ruby</strong><br><br>
 FactDb implements the Event Clock concept - capturing organizational knowledge through temporal facts with validity periods (<code>valid_at</code>/<code>invalid_at</code>), entity resolution, and audit trails back to source content.<br><br>
 <strong>Key Features</strong><br>
-    
-- <strong>Temporal Facts</strong> - Track facts with validity periods<br>
-- <strong>Entity Resolution</strong> - Resolve mentions to canonical entities<br>
-- <strong>Audit Trails</strong> - Every fact links back to source content<br>
-- <strong>Multiple Extractors</strong> - Extract facts manually, via LLM, or rule-based<br>
-- <strong>Semantic Search</strong> - PostgreSQL with pgvector<br>
-- <strong>Concurrent Processing</strong> - Batch process with parallel pipelines<br>
-- <strong>Output Formats</strong> - JSON, triples, Cypher, or text for LLM consumption<br>
-- <strong>Temporal Queries</strong> - Fluent API for point-in-time queries and diffs
+<ul>
+<li><strong>Temporal Facts</strong> - Track facts with validity periods<br></li>
+<li><strong>Entity Resolution</strong> - Resolve mentions to canonical entities<br></li>
+<li><strong>Audit Trails</strong> - Every fact links back to source content<br></li>
+<li><strong>Multiple Extractors</strong> - Extract facts manually, via LLM, or rule-based<br></li>
+<li><strong>Semantic Search</strong> - PostgreSQL with pgvector<br></li>
+<li><strong>Concurrent Processing</strong> - Batch process with parallel pipelines<br></li>
+<li><strong>Output Formats</strong> - JSON, triples, Cypher, or text for LLM consumption<br></li>
+<li><strong>Temporal Queries</strong> - Fluent API for point-in-time queries and diffs</li>
+</ul>
 </td>
 </tr>
 </table>
-<h2 id="label-Installation">Installation</h2>
-
+<h2 id="Installation">Installation</h2>
 <p>Add to your Gemfile:</p>
-
 <pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_gem'>gem</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>fact_db</span><span class='tstring_end'>&#39;</span></span>
 </code></pre>
-
 <p>Then run:</p>
-
-<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_bundle'>bundle</span> <span class='id identifier rubyid_install'>install</span>
+<pre class="code bash"><code class="bash">bundle install
 </code></pre>
-
-<h3 id="label-Requirements">Requirements</h3>
-<ul><li>
-<p>Ruby &gt;= 3.0</p>
-</li><li>
-<p>PostgreSQL with pgvector extension</p>
-</li><li>
-<p>Optional: ruby_llm gem for LLM-powered extraction</p>
-</li></ul>
-
-<h2 id="label-Getting+Started">Getting Started</h2>
-
+<h3 id="Requirements">Requirements</h3>
+<ul>
+<li>Ruby &gt;= 4.0</li>
+<li>PostgreSQL with pgvector extension</li>
+<li>Optional: ruby_llm gem for LLM-powered extraction</li>
+</ul>
+<h2 id="Getting_Started">Getting Started</h2>
 <pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_require'>require</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>fact_db</span><span class='tstring_end'>&#39;</span></span>
 
 <span class='comment'># Configure with a PostgreSQL database URL
@@ -123,16 +116,12 @@ FactDb implements the Event Clock concept - capturing organizational knowledge t
 <span class='comment'># Create a facts instance
 </span><span class='id identifier rubyid_facts'>facts</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="FactDb.html" title="FactDb (module)">FactDb</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="FactDb.html#new-class_method" title="FactDb.new (method)">new</a></span></span>
 </code></pre>
-
 <p>Configuration uses nested sections. You can also use environment variables:</p>
-
-<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_export'>export</span> <span class='const'>FDB_DATABASE__URL</span><span class='op'>=</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>postgresql://localhost/fact_db</span><span class='tstring_end'>&quot;</span></span>
-<span class='id identifier rubyid_export'>export</span> <span class='const'>FDB_LLM__PROVIDER</span><span class='op'>=</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>openai</span><span class='tstring_end'>&quot;</span></span>
-<span class='id identifier rubyid_export'>export</span> <span class='const'>FDB_LLM__API_KEY</span><span class='op'>=</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>sk-...</span><span class='tstring_end'>&quot;</span></span>
+<pre class="code bash"><code class="bash">export FDB_DATABASE__URL=&quot;postgresql://localhost/fact_db&quot;
+export FDB_LLM__PROVIDER=&quot;openai&quot;
+export FDB_LLM__API_KEY=&quot;sk-...&quot;
 </code></pre>
-
 <p>Once configured, you can ingest content and create facts:</p>
-
 <pre class="code ruby"><code class="ruby"><span class='comment'># Ingest content
 </span><span class='id identifier rubyid_content'>content</span> <span class='op'>=</span> <span class='id identifier rubyid_facts'>facts</span><span class='period'>.</span><span class='id identifier rubyid_ingest'>ingest</span><span class='lparen'>(</span>
   <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Paula Chen joined Microsoft as Principal Engineer on January 10, 2024.</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
@@ -154,9 +143,7 @@ FactDb implements the Event Clock concept - capturing organizational knowledge t
   <span class='rbracket'>]</span>
 <span class='rparen'>)</span>
 </code></pre>
-
 <p>Query facts temporally:</p>
-
 <pre class="code ruby"><code class="ruby"><span class='comment'># Query current facts about Paula
 </span><span class='id identifier rubyid_facts'>facts</span><span class='period'>.</span><span class='id identifier rubyid_current_facts_for'>current_facts_for</span><span class='lparen'>(</span><span class='id identifier rubyid_paula'>paula</span><span class='period'>.</span><span class='id identifier rubyid_id'>id</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_fact'>fact</span><span class='op'>|</span>
   <span class='id identifier rubyid_puts'>puts</span> <span class='id identifier rubyid_fact'>fact</span><span class='period'>.</span><span class='id identifier rubyid_text'>text</span>
@@ -165,11 +152,8 @@ FactDb implements the Event Clock concept - capturing organizational knowledge t
 <span class='comment'># Query facts at a point in time (before she joined)
 </span><span class='id identifier rubyid_facts'>facts</span><span class='period'>.</span><span class='id identifier rubyid_facts_at'>facts_at</span><span class='lparen'>(</span><span class='const'>Date</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='int'>2023</span><span class='comma'>,</span> <span class='int'>6</span><span class='comma'>,</span> <span class='int'>15</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='label'>entity:</span> <span class='id identifier rubyid_paula'>paula</span><span class='period'>.</span><span class='id identifier rubyid_id'>id</span><span class='rparen'>)</span>
 </code></pre>
-
-<h2 id="label-Output+Formats">Output Formats</h2>
-
+<h2 id="Output_Formats">Output Formats</h2>
 <p>Query results can be transformed into multiple formats for different use cases:</p>
-
 <pre class="code ruby"><code class="ruby"><span class='comment'># Raw - original ActiveRecord objects for direct database access
 </span><span class='id identifier rubyid_results'>results</span> <span class='op'>=</span> <span class='id identifier rubyid_facts'>facts</span><span class='period'>.</span><span class='id identifier rubyid_query_facts'>query_facts</span><span class='lparen'>(</span><span class='label'>topic:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Paula Chen</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>format:</span> <span class='symbol'>:raw</span><span class='rparen'>)</span>
 <span class='id identifier rubyid_results'>results</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_fact'>fact</span><span class='op'>|</span>
@@ -195,11 +179,8 @@ FactDb implements the Event Clock concept - capturing organizational knowledge t
 <span class='comment'># Text - human-readable markdown
 </span><span class='id identifier rubyid_facts'>facts</span><span class='period'>.</span><span class='id identifier rubyid_query_facts'>query_facts</span><span class='lparen'>(</span><span class='label'>topic:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Paula Chen</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>format:</span> <span class='symbol'>:text</span><span class='rparen'>)</span>
 </code></pre>
-
-<h2 id="label-Temporal+Query+Builder">Temporal Query Builder</h2>
-
+<h2 id="Temporal_Query_Builder">Temporal Query Builder</h2>
 <p>Use the fluent API for point-in-time queries:</p>
-
 <pre class="code ruby"><code class="ruby"><span class='comment'># Query at a specific date
 </span><span class='id identifier rubyid_facts'>facts</span><span class='period'>.</span><span class='id identifier rubyid_at'>at</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>2024-01-15</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_query'>query</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Paula&#39;s role</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>format:</span> <span class='symbol'>:cypher</span><span class='rparen'>)</span>
 
@@ -212,22 +193,16 @@ FactDb implements the Event Clock concept - capturing organizational knowledge t
 <span class='comment'># Compare what changed between two dates
 </span><span class='id identifier rubyid_facts'>facts</span><span class='period'>.</span><span class='id identifier rubyid_at'>at</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>2024-01-15</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_compare_to'>compare_to</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>2024-06-15</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
 </code></pre>
-
-<h2 id="label-Comparing+Changes+Over+Time">Comparing Changes Over Time</h2>
-
+<h2 id="Comparing_Changes_Over_Time">Comparing Changes Over Time</h2>
 <p>Track what changed between two points in time:</p>
-
 <pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_diff'>diff</span> <span class='op'>=</span> <span class='id identifier rubyid_facts'>facts</span><span class='period'>.</span><span class='id identifier rubyid_diff'>diff</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Paula Chen</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>from:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>2024-01-01</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>to:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>2024-06-01</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
 
 <span class='id identifier rubyid_diff'>diff</span><span class='lbracket'>[</span><span class='symbol'>:added</span><span class='rbracket'>]</span>     <span class='comment'># Facts that became valid
 </span><span class='id identifier rubyid_diff'>diff</span><span class='lbracket'>[</span><span class='symbol'>:removed</span><span class='rbracket'>]</span>   <span class='comment'># Facts that were superseded
 </span><span class='id identifier rubyid_diff'>diff</span><span class='lbracket'>[</span><span class='symbol'>:unchanged</span><span class='rbracket'>]</span> <span class='comment'># Facts that remained valid
 </span></code></pre>
-
-<h2 id="label-Introspection">Introspection</h2>
-
+<h2 id="Introspection">Introspection</h2>
 <p>Discover what the fact database knows about:</p>
-
 <pre class="code ruby"><code class="ruby"><span class='comment'># Get schema and capabilities
 </span><span class='id identifier rubyid_facts'>facts</span><span class='period'>.</span><span class='id identifier rubyid_introspect'>introspect</span>
 <span class='comment'># =&gt; { capabilities: [:temporal_query, :entity_resolution, ...],
@@ -248,37 +223,25 @@ FactDb implements the Event Clock concept - capturing organizational knowledge t
 </span><span class='id identifier rubyid_facts'>facts</span><span class='period'>.</span><span class='id identifier rubyid_suggest_strategies'>suggest_strategies</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>What happened last week?</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
 <span class='comment'># =&gt; [{ strategy: :temporal, description: &quot;Filter by date range&quot; }]
 </span></code></pre>
-
-<h2 id="label-Documentation">Documentation</h2>
-
-<p>Full documentation is available at <strong><a href="https://madbomber.github.io/fact_db" target="_parent" title="https://madbomber.github.io/fact_db">https://madbomber.github.io/fact_db</a>[https://madbomber.github.io/fact_db]</strong></p>
-
-<p>API documentation (YARD) is available at <strong><a href="https://madbomber.github.io/fact_db/yard" target="_parent" title="https://madbomber.github.io/fact_db/yard">https://madbomber.github.io/fact_db/yard</a>[https://madbomber.github.io/fact_db/yard]</strong></p>
-
-<h2 id="label-Examples">Examples</h2>
-
-<p>See the <a href="examples/README_md.html">examples directory</a> for runnable demo programs covering:</p>
-<ul><li>
-<p>Basic usage and fact creation</p>
-</li><li>
-<p>Entity management and resolution</p>
-</li><li>
-<p>Temporal queries and timelines</p>
-</li><li>
-<p>Rule-based fact extraction</p>
-</li><li>
-<p>A complete HR system example</p>
-</li></ul>
-
-<h2 id="label-License">License</h2>
-
-<p>MIT License - Copyright © 2025 Dewayne VanHoozer</p>
-</div></div>
+<h2 id="Documentation">Documentation</h2>
+<p>Full documentation is available at <strong><a href="https://madbomber.github.io/fact_db"><a href="https://madbomber.github.io/fact_db">https://madbomber.github.io/fact_db</a></a></strong></p>
+<p>API documentation (YARD) is available at <strong><a href="https://madbomber.github.io/fact_db/yard"><a href="https://madbomber.github.io/fact_db/yard">https://madbomber.github.io/fact_db/yard</a></a></strong></p>
+<h2 id="Examples">Examples</h2>
+<p>See the <a href="examples/README.md">examples directory</a> for runnable demo programs covering:</p>
+<ul>
+<li>Basic usage and fact creation</li>
+<li>Entity management and resolution</li>
+<li>Temporal queries and timelines</li>
+<li>Rule-based fact extraction</li>
+<li>A complete HR system example</li>
+</ul>
+<h2 id="License">License</h2>
+<p>MIT License - Copyright (c) 2025 Dewayne VanHoozer</p></div></div>
 
       <div id="footer">
-  Generated on Sat Feb  7 16:59:06 2026 by
+  Generated on Wed Nov 18 23:46:04 2026 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.38 (ruby-3.3.10).
+  0.9.45 (ruby-4.0.9).
 </div>
 
     </div>

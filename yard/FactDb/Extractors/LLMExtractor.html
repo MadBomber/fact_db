@@ -6,13 +6,13 @@
 <title>
   Class: FactDb::Extractors::LLMExtractor
   
-    &mdash; Documentation by YARD 0.9.38
+    &mdash; Documentation by YARD 0.9.45
   
 </title>
 
-  <link rel="stylesheet" href="../../css/style.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/style.css" type="text/css">
 
-  <link rel="stylesheet" href="../../css/common.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/common.css" type="text/css">
 
 <script type="text/javascript">
   pathId = "FactDb::Extractors::LLMExtractor";
@@ -27,6 +27,8 @@
 
   </head>
   <body>
+    <div id="main_progress" aria-hidden="true"></div>
+
     <div class="nav_wrap">
       <iframe id="nav" src="../../class_list.html?1"></iframe>
       <div id="resizer"></div>
@@ -96,18 +98,18 @@
   
   <dl>
     <dt>Defined in:</dt>
-    <dd>lib/fact_db/extractors/llm_extractor.rb</dd>
+    <dd>lib/fact_db/extractors/llm_extractor.rb
+</dd>
   </dl>
   
 </div>
 
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
-    
-<p>LLM-based fact extractor using language models</p>
-
-<p>Uses a configured LLM client to extract atomic facts and entities from unstructured text. Parses JSON responses from the LLM and builds standardized fact/entity hashes.</p>
-
+    <p>LLM-based fact extractor using language models</p>
+<p>Uses a configured LLM client to extract atomic facts and entities from
+unstructured text. Parses JSON responses from the LLM and builds
+standardized fact/entity hashes.</p>
 
   </div>
 </div>
@@ -117,9 +119,7 @@
     <h4 class="tag_title">Examples:</h4>
     
       
-        <h5 class="example_title"><div class='inline'>
-<p>Extract facts using LLM</p>
-</div></h5>
+        <h5 class="example_title"><div class='inline'><p>Extract facts using LLM</p></div></h5>
       
       <pre class="example code"><code><span class='const'><span class='object_link'><a href="../../FactDb.html" title="FactDb (module)">FactDb</a></span></span><span class='period'>.</span><span class='id identifier rubyid_configure'><span class='object_link'><a href="../../FactDb.html#configure-class_method" title="FactDb.configure (method)">configure</a></span></span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_c'>c</span><span class='op'>|</span> <span class='id identifier rubyid_c'>c</span><span class='period'>.</span><span class='id identifier rubyid_llm_client'>llm_client</span> <span class='op'>=</span> <span class='const'>MyLLMClient</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span> <span class='rbrace'>}</span>
 <span class='id identifier rubyid_extractor'>extractor</span> <span class='op'>=</span> <span class='const'>LLMExtractor</span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Base.html#initialize-instance_method" title="FactDb::Extractors::Base#initialize (method)">new</a></span></span>
@@ -165,9 +165,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Extracts atomic facts from text using the configured LLM.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'><p>Extracts atomic facts from text using the configured LLM.</p></div></span>
   
 </li>
 
@@ -189,17 +187,17 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Extracts entities from text using the configured LLM.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'><p>Extracts entities from text using the configured LLM.</p></div></span>
   
 </li>
 
       
     </ul>
+    
   
 
 
+  
   
   
   
@@ -233,11 +231,9 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Extracts atomic facts from text using the configured LLM</p>
-
-<p>Prompts the LLM to identify factual assertions, temporal information, entity mentions with roles, and confidence scores.</p>
-
+    <p>Extracts atomic facts from text using the configured LLM</p>
+<p>Prompts the LLM to identify factual assertions, temporal information,
+entity mentions with roles, and confidence scores.</p>
 
   </div>
 </div>
@@ -255,9 +251,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>raw text to extract from</p>
-</div>
+        <div class='inline'><p>raw text to extract from</p></div>
       
     </li>
   
@@ -273,9 +267,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>additional context</p>
-</div>
+        <div class='inline'><p>additional context</p></div>
       
     </li>
   
@@ -296,9 +288,7 @@
             
           </span>
           
-            &mdash; <div class='inline'>
-<p>default timestamp for facts</p>
-</div>
+            &mdash; <div class='inline'><p>default timestamp for facts</p></div>
           
         </li>
       
@@ -316,9 +306,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>array of fact hashes</p>
-</div>
+        <div class='inline'><p>array of fact hashes</p></div>
       
     </li>
   
@@ -334,9 +322,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>if no LLM client is configured</p>
-</div>
+        <div class='inline'><p>if no LLM client is configured</p></div>
       
     </li>
   
@@ -390,11 +376,9 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Extracts entities from text using the configured LLM</p>
-
-<p>Prompts the LLM to identify named entities, classify their types, and list any aliases or alternative names.</p>
-
+    <p>Extracts entities from text using the configured LLM</p>
+<p>Prompts the LLM to identify named entities, classify their types,
+and list any aliases or alternative names.</p>
 
   </div>
 </div>
@@ -412,9 +396,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>raw text to extract from</p>
-</div>
+        <div class='inline'><p>raw text to extract from</p></div>
       
     </li>
   
@@ -431,9 +413,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>array of entity hashes with :name, :kind, :aliases</p>
-</div>
+        <div class='inline'><p>array of entity hashes with :name, :kind, :aliases</p></div>
       
     </li>
   
@@ -449,9 +429,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>if no LLM client is configured</p>
-</div>
+        <div class='inline'><p>if no LLM client is configured</p></div>
       
     </li>
   
@@ -499,9 +477,9 @@
 </div>
 
       <div id="footer">
-  Generated on Sat Feb  7 16:59:09 2026 by
+  Generated on Wed Nov 18 23:46:05 2026 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.38 (ruby-3.3.10).
+  0.9.45 (ruby-4.0.9).
 </div>
 
     </div>

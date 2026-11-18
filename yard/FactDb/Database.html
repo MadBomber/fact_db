@@ -6,13 +6,13 @@
 <title>
   Module: FactDb::Database
   
-    &mdash; Documentation by YARD 0.9.38
+    &mdash; Documentation by YARD 0.9.45
   
 </title>
 
-  <link rel="stylesheet" href="../css/style.css" type="text/css" />
+  <link rel="stylesheet" href="../css/style.css" type="text/css">
 
-  <link rel="stylesheet" href="../css/common.css" type="text/css" />
+  <link rel="stylesheet" href="../css/common.css" type="text/css">
 
 <script type="text/javascript">
   pathId = "FactDb::Database";
@@ -27,6 +27,8 @@
 
   </head>
   <body>
+    <div id="main_progress" aria-hidden="true"></div>
+
     <div class="nav_wrap">
       <iframe id="nav" src="../class_list.html?1"></iframe>
       <div id="resizer"></div>
@@ -78,18 +80,17 @@
   
   <dl>
     <dt>Defined in:</dt>
-    <dd>lib/fact_db/database.rb</dd>
+    <dd>lib/fact_db/database.rb
+</dd>
   </dl>
   
 </div>
 
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
-    
-<p>Database management module for FactDb</p>
-
-<p>Provides class methods for establishing database connections, running migrations, and managing database lifecycle (create, drop, reset).</p>
-
+    <p>Database management module for FactDb</p>
+<p>Provides class methods for establishing database connections, running
+migrations, and managing database lifecycle (create, drop, reset).</p>
 
   </div>
 </div>
@@ -99,17 +100,13 @@
     <h4 class="tag_title">Examples:</h4>
     
       
-        <h5 class="example_title"><div class='inline'>
-<p>Establish connection and run migrations</p>
-</div></h5>
+        <h5 class="example_title"><div class='inline'><p>Establish connection and run migrations</p></div></h5>
       
       <pre class="example code"><code><span class='const'><span class='object_link'><a href="../FactDb.html" title="FactDb (module)">FactDb</a></span></span><span class='op'>::</span><span class='const'>Database</span><span class='period'>.</span><span class='id identifier rubyid_establish_connection!'><span class='object_link'><a href="#establish_connection!-class_method" title="FactDb::Database.establish_connection! (method)">establish_connection!</a></span></span>
 <span class='const'><span class='object_link'><a href="../FactDb.html" title="FactDb (module)">FactDb</a></span></span><span class='op'>::</span><span class='const'>Database</span><span class='period'>.</span><span class='id identifier rubyid_migrate!'><span class='object_link'><a href="#migrate!-class_method" title="FactDb::Database.migrate! (method)">migrate!</a></span></span></code></pre>
     
       
-        <h5 class="example_title"><div class='inline'>
-<p>Reset database for testing</p>
-</div></h5>
+        <h5 class="example_title"><div class='inline'><p>Reset database for testing</p></div></h5>
       
       <pre class="example code"><code><span class='const'><span class='object_link'><a href="../FactDb.html" title="FactDb (module)">FactDb</a></span></span><span class='op'>::</span><span class='const'>Database</span><span class='period'>.</span><span class='id identifier rubyid_reset!'><span class='object_link'><a href="#reset!-class_method" title="FactDb::Database.reset! (method)">reset!</a></span></span></code></pre>
     
@@ -148,9 +145,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Checks if a database connection is established.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'><p>Checks if a database connection is established.</p></div></span>
   
 </li>
 
@@ -172,9 +167,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Creates the database.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'><p>Creates the database.</p></div></span>
   
 </li>
 
@@ -196,9 +189,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Drops the database.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'><p>Drops the database.</p></div></span>
   
 </li>
 
@@ -220,9 +211,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Establishes an ActiveRecord database connection.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'><p>Establishes an ActiveRecord database connection.</p></div></span>
   
 </li>
 
@@ -244,9 +233,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Runs all pending migrations.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'><p>Runs all pending migrations.</p></div></span>
   
 </li>
 
@@ -268,9 +255,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Drops, creates, and migrates the database.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'><p>Drops, creates, and migrates the database.</p></div></span>
   
 </li>
 
@@ -292,9 +277,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Rolls back migrations.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'><p>Rolls back migrations.</p></div></span>
   
 </li>
 
@@ -316,14 +299,13 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Returns the current schema version.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'><p>Returns the current schema version.</p></div></span>
   
 </li>
 
       
     </ul>
+    
   
 
 
@@ -343,9 +325,7 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Checks if a database connection is established</p>
-
+    <p>Checks if a database connection is established</p>
 
   </div>
 </div>
@@ -362,9 +342,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>true if connected to database</p>
-</div>
+        <div class='inline'><p>true if connected to database</p></div>
       
     </li>
   
@@ -402,11 +380,8 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p class="note returns_void">This method returns an undefined value.</p>
-<p>Creates the database</p>
-
+    <p class="note returns_void">This method returns an undefined value.</p><p>Creates the database</p>
 <p>Connects to postgres maintenance database and creates the configured database.</p>
-
 
   </div>
 </div>
@@ -451,11 +426,9 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p class="note returns_void">This method returns an undefined value.</p>
-<p>Drops the database</p>
-
-<p>Disconnects from the current database, connects to postgres maintenance database, and drops the configured database.</p>
-
+    <p class="note returns_void">This method returns an undefined value.</p><p>Drops the database</p>
+<p>Disconnects from the current database, connects to postgres maintenance
+database, and drops the configured database.</p>
 
   </div>
 </div>
@@ -502,11 +475,9 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p class="note returns_void">This method returns an undefined value.</p>
-<p>Establishes an ActiveRecord database connection</p>
-
-<p>Uses configuration from FactDb.config by default. Sets up the logger if configured.</p>
-
+    <p class="note returns_void">This method returns an undefined value.</p><p>Establishes an ActiveRecord database connection</p>
+<p>Uses configuration from FactDb.config by default. Sets up the logger
+if configured.</p>
 
   </div>
 </div>
@@ -526,9 +497,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>configuration object (defaults to FactDb.config)</p>
-</div>
+        <div class='inline'><p>configuration object (defaults to FactDb.config)</p></div>
       
     </li>
   
@@ -571,11 +540,8 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p class="note returns_void">This method returns an undefined value.</p>
-<p>Runs all pending migrations</p>
-
+    <p class="note returns_void">This method returns an undefined value.</p><p>Runs all pending migrations</p>
 <p>Establishes connection if needed and runs migrations from db/migrate.</p>
-
 
   </div>
 </div>
@@ -618,11 +584,9 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p class="note returns_void">This method returns an undefined value.</p>
-<p>Drops, creates, and migrates the database</p>
-
-<p>Convenience method to completely reset the database to a clean state. Ignores errors when dropping (database may not exist).</p>
-
+    <p class="note returns_void">This method returns an undefined value.</p><p>Drops, creates, and migrates the database</p>
+<p>Convenience method to completely reset the database to a clean state.
+Ignores errors when dropping (database may not exist).</p>
 
   </div>
 </div>
@@ -665,9 +629,7 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p class="note returns_void">This method returns an undefined value.</p>
-<p>Rolls back migrations</p>
-
+    <p class="note returns_void">This method returns an undefined value.</p><p>Rolls back migrations</p>
 
   </div>
 </div>
@@ -687,9 +649,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>number of migrations to rollback (default: 1)</p>
-</div>
+        <div class='inline'><p>number of migrations to rollback (default: 1)</p></div>
       
     </li>
   
@@ -732,9 +692,7 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Returns the current schema version</p>
-
+    <p>Returns the current schema version</p>
 
   </div>
 </div>
@@ -751,9 +709,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>the latest migration version number, or 0 if no migrations</p>
-</div>
+        <div class='inline'><p>the latest migration version number, or 0 if no migrations</p></div>
       
     </li>
   
@@ -787,9 +743,9 @@
 </div>
 
       <div id="footer">
-  Generated on Sat Feb  7 16:59:06 2026 by
+  Generated on Wed Nov 18 23:46:04 2026 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.38 (ruby-3.3.10).
+  0.9.45 (ruby-4.0.9).
 </div>
 
     </div>

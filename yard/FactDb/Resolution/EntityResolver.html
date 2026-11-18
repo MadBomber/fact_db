@@ -6,13 +6,13 @@
 <title>
   Class: FactDb::Resolution::EntityResolver
   
-    &mdash; Documentation by YARD 0.9.38
+    &mdash; Documentation by YARD 0.9.45
   
 </title>
 
-  <link rel="stylesheet" href="../../css/style.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/style.css" type="text/css">
 
-  <link rel="stylesheet" href="../../css/common.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/common.css" type="text/css">
 
 <script type="text/javascript">
   pathId = "FactDb::Resolution::EntityResolver";
@@ -27,6 +27,8 @@
 
   </head>
   <body>
+    <div id="main_progress" aria-hidden="true"></div>
+
     <div class="nav_wrap">
       <iframe id="nav" src="../../class_list.html?1"></iframe>
       <div id="resizer"></div>
@@ -94,18 +96,18 @@
   
   <dl>
     <dt>Defined in:</dt>
-    <dd>lib/fact_db/resolution/entity_resolver.rb</dd>
+    <dd>lib/fact_db/resolution/entity_resolver.rb
+</dd>
   </dl>
   
 </div>
 
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
-    
-<p>Resolves entity names to canonical entities in the database</p>
-
-<p>Provides entity resolution through exact alias matching, canonical name matching, and fuzzy matching using Levenshtein distance. Also handles entity merging, splitting, and duplicate detection.</p>
-
+    <p>Resolves entity names to canonical entities in the database</p>
+<p>Provides entity resolution through exact alias matching, canonical name matching,
+and fuzzy matching using Levenshtein distance. Also handles entity merging,
+splitting, and duplicate detection.</p>
 
   </div>
 </div>
@@ -115,9 +117,7 @@
     <h4 class="tag_title">Examples:</h4>
     
       
-        <h5 class="example_title"><div class='inline'>
-<p>Basic usage</p>
-</div></h5>
+        <h5 class="example_title"><div class='inline'><p>Basic usage</p></div></h5>
       
       <pre class="example code"><code><span class='id identifier rubyid_resolver'>resolver</span> <span class='op'>=</span> <span class='const'>EntityResolver</span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="#initialize-instance_method" title="FactDb::Resolution::EntityResolver#initialize (method)">new</a></span></span>
 <span class='id identifier rubyid_resolved'>resolved</span> <span class='op'>=</span> <span class='id identifier rubyid_resolver'>resolver</span><span class='period'>.</span><span class='id identifier rubyid_resolve'>resolve</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>John Smith</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>kind:</span> <span class='symbol'>:person</span><span class='rparen'>)</span>
@@ -157,9 +157,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>The configuration object.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'><p>The configuration object.</p></div></span>
   
 </li>
 
@@ -194,9 +192,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Automatically merges high-confidence duplicates.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'><p>Automatically merges high-confidence duplicates.</p></div></span>
   
 </li>
 
@@ -218,9 +214,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Finds potential duplicate entities based on name similarity.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'><p>Finds potential duplicate entities based on name similarity.</p></div></span>
   
 </li>
 
@@ -244,9 +238,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Initializes a new EntityResolver instance.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'><p>Initializes a new EntityResolver instance.</p></div></span>
   
 </li>
 
@@ -268,9 +260,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Merges two entities, keeping one as canonical.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'><p>Merges two entities, keeping one as canonical.</p></div></span>
   
 </li>
 
@@ -292,9 +282,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Resolves a name to an existing entity.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'><p>Resolves a name to an existing entity.</p></div></span>
   
 </li>
 
@@ -316,9 +304,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Resolves a name to an entity, creating one if not found.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'><p>Resolves a name to an entity, creating one if not found.</p></div></span>
   
 </li>
 
@@ -340,14 +326,13 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Splits an entity into multiple new entities.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'><p>Splits an entity into multiple new entities.</p></div></span>
   
 </li>
 
       
     </ul>
+    
   
 
 <div id="constructor_details" class="method_details_list">
@@ -364,9 +349,7 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Initializes a new EntityResolver instance</p>
-
+    <p>Initializes a new EntityResolver instance</p>
 
   </div>
 </div>
@@ -386,9 +369,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>configuration object (defaults to FactDb.config)</p>
-</div>
+        <div class='inline'><p>configuration object (defaults to FactDb.config)</p></div>
       
     </li>
   
@@ -438,9 +419,7 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Returns the configuration object.</p>
-
+    <p>Returns the configuration object.</p>
 
   </div>
 </div>
@@ -457,9 +436,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>the configuration object</p>
-</div>
+        <div class='inline'><p>the configuration object</p></div>
       
     </li>
   
@@ -504,11 +481,8 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p class="note returns_void">This method returns an undefined value.</p>
-<p>Automatically merges high-confidence duplicates</p>
-
+    <p class="note returns_void">This method returns an undefined value.</p><p>Automatically merges high-confidence duplicates</p>
 <p>Uses the auto_merge_threshold from config and keeps the entity with more mentions.</p>
-
 
   </div>
 </div>
@@ -573,9 +547,7 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Finds potential duplicate entities based on name similarity</p>
-
+    <p>Finds potential duplicate entities based on name similarity</p>
 
   </div>
 </div>
@@ -585,9 +557,7 @@
     <h4 class="tag_title">Examples:</h4>
     
       
-        <h5 class="example_title"><div class='inline'>
-<p>Find duplicates with custom threshold</p>
-</div></h5>
+        <h5 class="example_title"><div class='inline'><p>Find duplicates with custom threshold</p></div></h5>
       
       <pre class="example code"><code><span class='id identifier rubyid_duplicates'>duplicates</span> <span class='op'>=</span> <span class='id identifier rubyid_resolver'>resolver</span><span class='period'>.</span><span class='id identifier rubyid_find_duplicates'>find_duplicates</span><span class='lparen'>(</span><span class='label'>threshold:</span> <span class='float'>0.85</span><span class='rparen'>)</span>
 <span class='id identifier rubyid_duplicates'>duplicates</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_d'>d</span><span class='op'>|</span> <span class='id identifier rubyid_puts'>puts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_d'>d</span><span class='lbracket'>[</span><span class='symbol'>:entity1</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='embexpr_end'>}</span><span class='tstring_content'> ~ </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_d'>d</span><span class='lbracket'>[</span><span class='symbol'>:entity2</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='embexpr_end'>}</span><span class='tstring_content'> (</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_d'>d</span><span class='lbracket'>[</span><span class='symbol'>:similarity</span><span class='rbracket'>]</span><span class='embexpr_end'>}</span><span class='tstring_content'>)</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span></code></pre>
@@ -608,9 +578,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>minimum similarity score (defaults to config threshold)</p>
-</div>
+        <div class='inline'><p>minimum similarity score (defaults to config threshold)</p></div>
       
     </li>
   
@@ -627,9 +595,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>array of hashes with :entity1, :entity2, :similarity keys</p>
-</div>
+        <div class='inline'><p>array of hashes with :entity1, :entity2, :similarity keys</p></div>
       
     </li>
   
@@ -703,11 +669,8 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Merges two entities, keeping one as canonical</p>
-
+    <p>Merges two entities, keeping one as canonical</p>
 <p>Transfers all aliases and mentions from the merged entity to the kept entity.</p>
-
 
   </div>
 </div>
@@ -717,9 +680,7 @@
     <h4 class="tag_title">Examples:</h4>
     
       
-        <h5 class="example_title"><div class='inline'>
-<p>Merge duplicate entities</p>
-</div></h5>
+        <h5 class="example_title"><div class='inline'><p>Merge duplicate entities</p></div></h5>
       
       <pre class="example code"><code><span class='id identifier rubyid_resolver'>resolver</span><span class='period'>.</span><span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='id identifier rubyid_primary_entity'>primary_entity</span><span class='period'>.</span><span class='id identifier rubyid_id'>id</span><span class='comma'>,</span> <span class='id identifier rubyid_duplicate_entity'>duplicate_entity</span><span class='period'>.</span><span class='id identifier rubyid_id'>id</span><span class='rparen'>)</span></code></pre>
     
@@ -737,9 +698,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>ID of the entity to keep</p>
-</div>
+        <div class='inline'><p>ID of the entity to keep</p></div>
       
     </li>
   
@@ -753,9 +712,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>ID of the entity to merge (will be marked as merged)</p>
-</div>
+        <div class='inline'><p>ID of the entity to merge (will be marked as merged)</p></div>
       
     </li>
   
@@ -772,9 +729,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>the kept entity with updated aliases</p>
-</div>
+        <div class='inline'><p>the kept entity with updated aliases</p></div>
       
     </li>
   
@@ -790,9 +745,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>if attempting to merge into itself or merge already merged entity</p>
-</div>
+        <div class='inline'><p>if attempting to merge into itself or merge already merged entity</p></div>
       
     </li>
   
@@ -892,11 +845,8 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Resolves a name to an existing entity</p>
-
+    <p>Resolves a name to an existing entity</p>
 <p>Tries resolution in order: exact alias match, canonical name match, fuzzy match.</p>
-
 
   </div>
 </div>
@@ -906,9 +856,7 @@
     <h4 class="tag_title">Examples:</h4>
     
       
-        <h5 class="example_title"><div class='inline'>
-<p>Resolve with kind filter</p>
-</div></h5>
+        <h5 class="example_title"><div class='inline'><p>Resolve with kind filter</p></div></h5>
       
       <pre class="example code"><code><span class='id identifier rubyid_resolver'>resolver</span><span class='period'>.</span><span class='id identifier rubyid_resolve'>resolve</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Acme</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>kind:</span> <span class='symbol'>:organization</span><span class='rparen'>)</span></code></pre>
     
@@ -926,9 +874,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>the name to resolve</p>
-</div>
+        <div class='inline'><p>the name to resolve</p></div>
       
     </li>
   
@@ -944,9 +890,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>optional entity kind filter (:person, :organization, etc.)</p>
-</div>
+        <div class='inline'><p>optional entity kind filter (:person, :organization, etc.)</p></div>
       
     </li>
   
@@ -963,9 +907,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>resolved entity with confidence score, or nil if not found</p>
-</div>
+        <div class='inline'><p>resolved entity with confidence score, or nil if not found</p></div>
       
     </li>
   
@@ -1033,9 +975,7 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Resolves a name to an entity, creating one if not found</p>
-
+    <p>Resolves a name to an entity, creating one if not found</p>
 
   </div>
 </div>
@@ -1045,9 +985,7 @@
     <h4 class="tag_title">Examples:</h4>
     
       
-        <h5 class="example_title"><div class='inline'>
-<p>Create with aliases</p>
-</div></h5>
+        <h5 class="example_title"><div class='inline'><p>Create with aliases</p></div></h5>
       
       <pre class="example code"><code><span class='id identifier rubyid_resolver'>resolver</span><span class='period'>.</span><span class='id identifier rubyid_resolve_or_create'>resolve_or_create</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>John Smith</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>kind:</span> <span class='symbol'>:person</span><span class='comma'>,</span> <span class='label'>aliases:</span> <span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>J. Smith</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Johnny</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='rparen'>)</span></code></pre>
     
@@ -1065,9 +1003,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>the name to resolve or create</p>
-</div>
+        <div class='inline'><p>the name to resolve or create</p></div>
       
     </li>
   
@@ -1081,9 +1017,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>the entity kind (required for creation)</p>
-</div>
+        <div class='inline'><p>the entity kind (required for creation)</p></div>
       
     </li>
   
@@ -1099,9 +1033,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>additional aliases to add</p>
-</div>
+        <div class='inline'><p>additional aliases to add</p></div>
       
     </li>
   
@@ -1117,9 +1049,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>additional attributes for new entity</p>
-</div>
+        <div class='inline'><p>additional attributes for new entity</p></div>
       
     </li>
   
@@ -1136,9 +1066,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>the resolved or created entity</p>
-</div>
+        <div class='inline'><p>the resolved or created entity</p></div>
       
     </li>
   
@@ -1182,11 +1110,8 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Splits an entity into multiple new entities</p>
-
+    <p>Splits an entity into multiple new entities</p>
 <p>Creates new entities based on the split configuration and marks the original as split.</p>
-
 
   </div>
 </div>
@@ -1196,9 +1121,7 @@
     <h4 class="tag_title">Examples:</h4>
     
       
-        <h5 class="example_title"><div class='inline'>
-<p>Split an ambiguous entity</p>
-</div></h5>
+        <h5 class="example_title"><div class='inline'><p>Split an ambiguous entity</p></div></h5>
       
       <pre class="example code"><code><span class='id identifier rubyid_resolver'>resolver</span><span class='period'>.</span><span class='id identifier rubyid_split'>split</span><span class='lparen'>(</span><span class='id identifier rubyid_entity'>entity</span><span class='period'>.</span><span class='id identifier rubyid_id'>id</span><span class='comma'>,</span> <span class='lbracket'>[</span>
   <span class='lbrace'>{</span> <span class='label'>name:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>John Smith (Sales)</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>kind:</span> <span class='symbol'>:person</span> <span class='rbrace'>}</span><span class='comma'>,</span>
@@ -1219,9 +1142,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>ID of the entity to split</p>
-</div>
+        <div class='inline'><p>ID of the entity to split</p></div>
       
     </li>
   
@@ -1235,9 +1156,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>array of hashes with :name, :kind, :aliases, :attributes</p>
-</div>
+        <div class='inline'><p>array of hashes with :name, :kind, :aliases, :attributes</p></div>
       
     </li>
   
@@ -1254,9 +1173,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>array of newly created entities</p>
-</div>
+        <div class='inline'><p>array of newly created entities</p></div>
       
     </li>
   
@@ -1318,9 +1235,9 @@
 </div>
 
       <div id="footer">
-  Generated on Sat Feb  7 16:59:09 2026 by
+  Generated on Wed Nov 18 23:46:05 2026 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.38 (ruby-3.3.10).
+  0.9.45 (ruby-4.0.9).
 </div>
 
     </div>

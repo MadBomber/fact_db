@@ -6,13 +6,13 @@
 <title>
   Class: FactDb::Extractors::Base
   
-    &mdash; Documentation by YARD 0.9.38
+    &mdash; Documentation by YARD 0.9.45
   
 </title>
 
-  <link rel="stylesheet" href="../../css/style.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/style.css" type="text/css">
 
-  <link rel="stylesheet" href="../../css/common.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/common.css" type="text/css">
 
 <script type="text/javascript">
   pathId = "FactDb::Extractors::Base";
@@ -27,6 +27,8 @@
 
   </head>
   <body>
+    <div id="main_progress" aria-hidden="true"></div>
+
     <div class="nav_wrap">
       <iframe id="nav" src="../../class_list.html?1"></iframe>
       <div id="resizer"></div>
@@ -94,7 +96,8 @@
   
   <dl>
     <dt>Defined in:</dt>
-    <dd>lib/fact_db/extractors/base.rb</dd>
+    <dd>lib/fact_db/extractors/base.rb
+</dd>
   </dl>
   
 </div>
@@ -103,15 +106,11 @@
   <div class="discussion">
     <div class="note abstract">
   <strong>This class is abstract.</strong>
-  <div class='inline'>
-<p>Subclass and override <span class='object_link'><a href="#extract-instance_method" title="FactDb::Extractors::Base#extract (method)">#extract</a></span> and <span class='object_link'><a href="#extract_entities-instance_method" title="FactDb::Extractors::Base#extract_entities (method)">#extract_entities</a></span> to implement.</p>
+  <div class='inline'><p>Subclass and override <span class='object_link'><a href="#extract-instance_method" title="FactDb::Extractors::Base#extract (method)">#extract</a></span> and <span class='object_link'><a href="#extract_entities-instance_method" title="FactDb::Extractors::Base#extract_entities (method)">#extract_entities</a></span> to implement.</p></div>
 </div>
-</div>
-
 <p>Abstract base class for fact extractors</p>
-
-<p>Provides common interface and helper methods for extracting facts and entities from text. Subclasses must implement #extract and #extract_entities.</p>
-
+<p>Provides common interface and helper methods for extracting facts and entities
+from text. Subclasses must implement #extract and #extract_entities.</p>
 
   </div>
 </div>
@@ -121,9 +120,7 @@
     <h4 class="tag_title">Examples:</h4>
     
       
-        <h5 class="example_title"><div class='inline'>
-<p>Create a custom extractor</p>
-</div></h5>
+        <h5 class="example_title"><div class='inline'><p>Create a custom extractor</p></div></h5>
       
       <pre class="example code"><code><span class='kw'>class</span> <span class='const'>MyExtractor</span> <span class='op'>&lt;</span> <span class='const'><span class='object_link'><a href="../../FactDb.html" title="FactDb (module)">FactDb</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Extractors.html" title="FactDb::Extractors (module)">Extractors</a></span></span><span class='op'>::</span><span class='const'>Base</span>
   <span class='kw'>def</span> <span class='id identifier rubyid_extract'>extract</span><span class='lparen'>(</span><span class='id identifier rubyid_text'>text</span><span class='comma'>,</span> <span class='id identifier rubyid_context'>context</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
@@ -171,9 +168,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>The configuration object.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'><p>The configuration object.</p></div></span>
   
 </li>
 
@@ -208,9 +203,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Returns list of available extractor types.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'><p>Returns list of available extractor types.</p></div></span>
   
 </li>
 
@@ -232,14 +225,13 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Factory method to create an extractor by type.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'><p>Factory method to create an extractor by type.</p></div></span>
   
 </li>
 
       
     </ul>
+    
   
     <h2>
       Instance Method Summary
@@ -265,9 +257,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Extracts facts from text.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'><p>Extracts facts from text.</p></div></span>
   
 </li>
 
@@ -289,9 +279,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Extracts entities from text.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'><p>Extracts entities from text.</p></div></span>
   
 </li>
 
@@ -313,9 +301,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Returns the extraction method name derived from class name.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'><p>Returns the extraction method name derived from class name.</p></div></span>
   
 </li>
 
@@ -339,14 +325,13 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Initializes a new extractor.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'><p>Initializes a new extractor.</p></div></span>
   
 </li>
 
       
     </ul>
+    
   
 
 <div id="constructor_details" class="method_details_list">
@@ -363,9 +348,7 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Initializes a new extractor</p>
-
+    <p>Initializes a new extractor</p>
 
   </div>
 </div>
@@ -385,9 +368,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>configuration object (defaults to FactDb.config)</p>
-</div>
+        <div class='inline'><p>configuration object (defaults to FactDb.config)</p></div>
       
     </li>
   
@@ -433,9 +414,7 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Returns the configuration object.</p>
-
+    <p>Returns the configuration object.</p>
 
   </div>
 </div>
@@ -452,9 +431,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>the configuration object</p>
-</div>
+        <div class='inline'><p>the configuration object</p></div>
       
     </li>
   
@@ -499,9 +476,7 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Returns list of available extractor types</p>
-
+    <p>Returns list of available extractor types</p>
 
   </div>
 </div>
@@ -518,9 +493,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>available extractor type symbols</p>
-</div>
+        <div class='inline'><p>available extractor type symbols</p></div>
       
     </li>
   
@@ -558,9 +531,7 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Factory method to create an extractor by type</p>
-
+    <p>Factory method to create an extractor by type</p>
 
   </div>
 </div>
@@ -586,9 +557,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>extractor type (:manual, :llm, :rule_based)</p>
-</div>
+        <div class='inline'><p>extractor type (:manual, :llm, :rule_based)</p></div>
       
     </li>
   
@@ -604,9 +573,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>configuration object</p>
-</div>
+        <div class='inline'><p>configuration object</p></div>
       
     </li>
   
@@ -623,9 +590,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>an extractor instance</p>
-</div>
+        <div class='inline'><p>an extractor instance</p></div>
       
     </li>
   
@@ -641,9 +606,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>if type is unknown</p>
-</div>
+        <div class='inline'><p>if type is unknown</p></div>
       
     </li>
   
@@ -707,13 +670,9 @@
   <div class="discussion">
     <div class="note abstract">
   <strong>This method is abstract.</strong>
-  <div class='inline'>
-<p>Subclass and override this method</p>
+  <div class='inline'><p>Subclass and override this method</p></div>
 </div>
-</div>
-
 <p>Extracts facts from text</p>
-
 
   </div>
 </div>
@@ -731,9 +690,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>raw text to extract from</p>
-</div>
+        <div class='inline'><p>raw text to extract from</p></div>
       
     </li>
   
@@ -749,9 +706,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>additional context (captured_at, source_uri, etc.)</p>
-</div>
+        <div class='inline'><p>additional context (captured_at, source_uri, etc.)</p></div>
       
     </li>
   
@@ -768,9 +723,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>array of fact data hashes</p>
-</div>
+        <div class='inline'><p>array of fact data hashes</p></div>
       
     </li>
   
@@ -786,9 +739,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>if not implemented by subclass</p>
-</div>
+        <div class='inline'><p>if not implemented by subclass</p></div>
       
     </li>
   
@@ -828,13 +779,9 @@
   <div class="discussion">
     <div class="note abstract">
   <strong>This method is abstract.</strong>
-  <div class='inline'>
-<p>Subclass and override this method</p>
+  <div class='inline'><p>Subclass and override this method</p></div>
 </div>
-</div>
-
 <p>Extracts entities from text</p>
-
 
   </div>
 </div>
@@ -852,9 +799,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>raw text to extract from</p>
-</div>
+        <div class='inline'><p>raw text to extract from</p></div>
       
     </li>
   
@@ -871,9 +816,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>array of entity hashes with :name, :kind, :aliases</p>
-</div>
+        <div class='inline'><p>array of entity hashes with :name, :kind, :aliases</p></div>
       
     </li>
   
@@ -889,9 +832,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>if not implemented by subclass</p>
-</div>
+        <div class='inline'><p>if not implemented by subclass</p></div>
       
     </li>
   
@@ -929,9 +870,7 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Returns the extraction method name derived from class name</p>
-
+    <p>Returns the extraction method name derived from class name</p>
 
   </div>
 </div>
@@ -948,9 +887,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>method name (e.g., “manual”, “llm”, “rule_based”)</p>
-</div>
+        <div class='inline'><p>method name (e.g., &quot;manual&quot;, &quot;llm&quot;, &quot;rule_based&quot;)</p></div>
       
     </li>
   
@@ -982,9 +919,9 @@
 </div>
 
       <div id="footer">
-  Generated on Sat Feb  7 16:59:07 2026 by
+  Generated on Wed Nov 18 23:46:04 2026 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.38 (ruby-3.3.10).
+  0.9.45 (ruby-4.0.9).
 </div>
 
     </div>

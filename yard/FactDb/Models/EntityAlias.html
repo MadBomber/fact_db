@@ -6,13 +6,13 @@
 <title>
   Class: FactDb::Models::EntityAlias
   
-    &mdash; Documentation by YARD 0.9.38
+    &mdash; Documentation by YARD 0.9.45
   
 </title>
 
-  <link rel="stylesheet" href="../../css/style.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/style.css" type="text/css">
 
-  <link rel="stylesheet" href="../../css/common.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/common.css" type="text/css">
 
 <script type="text/javascript">
   pathId = "FactDb::Models::EntityAlias";
@@ -27,6 +27,8 @@
 
   </head>
   <body>
+    <div id="main_progress" aria-hidden="true"></div>
+
     <div class="nav_wrap">
       <iframe id="nav" src="../../class_list.html?1"></iframe>
       <div id="resizer"></div>
@@ -96,18 +98,18 @@
   
   <dl>
     <dt>Defined in:</dt>
-    <dd>lib/fact_db/models/entity_alias.rb</dd>
+    <dd>lib/fact_db/models/entity_alias.rb
+</dd>
   </dl>
   
 </div>
 
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
-    
-<p>Represents an alternative name for an entity</p>
-
-<p>Aliases allow entities to be found by various name forms (nicknames, abbreviations, email handles, etc.). Validation prevents invalid aliases like pronouns or generic terms.</p>
-
+    <p>Represents an alternative name for an entity</p>
+<p>Aliases allow entities to be found by various name forms (nicknames,
+abbreviations, email handles, etc.). Validation prevents invalid aliases
+like pronouns or generic terms.</p>
 
   </div>
 </div>
@@ -117,9 +119,7 @@
     <h4 class="tag_title">Examples:</h4>
     
       
-        <h5 class="example_title"><div class='inline'>
-<p>Create an alias</p>
-</div></h5>
+        <h5 class="example_title"><div class='inline'><p>Create an alias</p></div></h5>
       
       <pre class="example code"><code>alias = EntityAlias.create!(entity: person, name: &quot;Johnny&quot;, kind: &quot;nickname&quot;)</code></pre>
     
@@ -138,9 +138,7 @@
         <dt id="KINDS-constant" class="">KINDS =
           <div class="docstring">
   <div class="discussion">
-    
-<p>Returns valid alias kinds.</p>
-
+    <p>Returns valid alias kinds.</p>
 
   </div>
 </div>
@@ -157,9 +155,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>valid alias kinds</p>
-</div>
+        <div class='inline'><p>valid alias kinds</p></div>
       
     </li>
   
@@ -203,14 +199,13 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Finds an entity by alias text (case-insensitive).</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'><p>Finds an entity by alias text (case-insensitive).</p></div></span>
   
 </li>
 
       
     </ul>
+    
   
     <h2>
       Instance Method Summary
@@ -236,9 +231,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Returns aliases of a specific kind.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'><p>Returns aliases of a specific kind.</p></div></span>
   
 </li>
 
@@ -260,14 +253,13 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Returns aliases with confidence &gt;= 0.9.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'><p>Returns aliases with confidence &gt;= 0.9.</p></div></span>
   
 </li>
 
       
     </ul>
+    
   
 
 
@@ -288,9 +280,7 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Finds an entity by alias text (case-insensitive)</p>
-
+    <p>Finds an entity by alias text (case-insensitive)</p>
 
   </div>
 </div>
@@ -308,9 +298,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>the alias text to search for</p>
-</div>
+        <div class='inline'><p>the alias text to search for</p></div>
       
     </li>
   
@@ -327,9 +315,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>the entity with this alias or nil</p>
-</div>
+        <div class='inline'><p>the entity with this alias or nil</p></div>
       
     </li>
   
@@ -373,9 +359,7 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Returns aliases of a specific kind</p>
-
+    <p>Returns aliases of a specific kind</p>
 
   </div>
 </div>
@@ -393,9 +377,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>the alias kind</p>
-</div>
+        <div class='inline'><p>the alias kind</p></div>
       
     </li>
   
@@ -443,9 +425,7 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Returns aliases with confidence &gt;= 0.9</p>
-
+    <p>Returns aliases with confidence &gt;= 0.9</p>
 
   </div>
 </div>
@@ -487,9 +467,9 @@
 </div>
 
       <div id="footer">
-  Generated on Sat Feb  7 16:59:08 2026 by
+  Generated on Wed Nov 18 23:46:05 2026 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.38 (ruby-3.3.10).
+  0.9.45 (ruby-4.0.9).
 </div>
 
     </div>

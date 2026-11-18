@@ -6,13 +6,13 @@
 <title>
   Class: FactDb::Temporal::Timeline
   
-    &mdash; Documentation by YARD 0.9.38
+    &mdash; Documentation by YARD 0.9.45
   
 </title>
 
-  <link rel="stylesheet" href="../../css/style.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/style.css" type="text/css">
 
-  <link rel="stylesheet" href="../../css/common.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/common.css" type="text/css">
 
 <script type="text/javascript">
   pathId = "FactDb::Temporal::Timeline";
@@ -27,6 +27,8 @@
 
   </head>
   <body>
+    <div id="main_progress" aria-hidden="true"></div>
+
     <div class="nav_wrap">
       <iframe id="nav" src="../../class_list.html?1"></iframe>
       <div id="resizer"></div>
@@ -99,18 +101,18 @@
   
   <dl>
     <dt>Defined in:</dt>
-    <dd>lib/fact_db/temporal/timeline.rb</dd>
+    <dd>lib/fact_db/temporal/timeline.rb
+</dd>
   </dl>
   
 </div>
 
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
-    
-<p>Builds and analyzes temporal timelines of facts for an entity</p>
-
-<p>Provides methods to view an entity’s history, group events by time periods, find overlapping facts, and compare states at different points in time. Includes Enumerable for easy iteration over timeline events.</p>
-
+    <p>Builds and analyzes temporal timelines of facts for an entity</p>
+<p>Provides methods to view an entity's history, group events by time periods,
+find overlapping facts, and compare states at different points in time.
+Includes Enumerable for easy iteration over timeline events.</p>
 
   </div>
 </div>
@@ -120,17 +122,13 @@
     <h4 class="tag_title">Examples:</h4>
     
       
-        <h5 class="example_title"><div class='inline'>
-<p>Build a timeline for an entity</p>
-</div></h5>
+        <h5 class="example_title"><div class='inline'><p>Build a timeline for an entity</p></div></h5>
       
       <pre class="example code"><code><span class='id identifier rubyid_timeline'>timeline</span> <span class='op'>=</span> <span class='const'>Timeline</span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="#initialize-instance_method" title="FactDb::Temporal::Timeline#initialize (method)">new</a></span></span><span class='period'>.</span><span class='id identifier rubyid_build'><span class='object_link'><a href="#build-instance_method" title="FactDb::Temporal::Timeline#build (method)">build</a></span></span><span class='lparen'>(</span><span class='label'>entity_id:</span> <span class='id identifier rubyid_person'>person</span><span class='period'>.</span><span class='id identifier rubyid_id'>id</span><span class='rparen'>)</span>
 <span class='id identifier rubyid_timeline'>timeline</span><span class='period'>.</span><span class='id identifier rubyid_by_year'>by_year</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_year'>year</span><span class='comma'>,</span> <span class='id identifier rubyid_events'>events</span><span class='op'>|</span> <span class='id identifier rubyid_puts'>puts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_year'>year</span><span class='embexpr_end'>}</span><span class='tstring_content'>: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_events'>events</span><span class='period'>.</span><span class='id identifier rubyid_count'>count</span><span class='embexpr_end'>}</span><span class='tstring_content'> events</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span></code></pre>
     
       
-        <h5 class="example_title"><div class='inline'>
-<p>Find currently active facts</p>
-</div></h5>
+        <h5 class="example_title"><div class='inline'><p>Find currently active facts</p></div></h5>
       
       <pre class="example code"><code><span class='id identifier rubyid_active_facts'>active_facts</span> <span class='op'>=</span> <span class='id identifier rubyid_timeline'>timeline</span><span class='period'>.</span><span class='id identifier rubyid_active'>active</span></code></pre>
     
@@ -166,9 +164,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>The timeline events.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'><p>The timeline events.</p></div></span>
   
 </li>
 
@@ -203,9 +199,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Returns currently active (valid) events.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'><p>Returns currently active (valid) events.</p></div></span>
   
 </li>
 
@@ -227,9 +221,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Returns events in a specific date range.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'><p>Returns events in a specific date range.</p></div></span>
   
 </li>
 
@@ -251,9 +243,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Builds a timeline of facts for an entity.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'><p>Builds a timeline of facts for an entity.</p></div></span>
   
 </li>
 
@@ -275,9 +265,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Groups events by month.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'><p>Groups events by month.</p></div></span>
   
 </li>
 
@@ -299,9 +287,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Groups events by year.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'><p>Groups events by year.</p></div></span>
   
 </li>
 
@@ -323,9 +309,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Generates a summary of changes between consecutive events.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'><p>Generates a summary of changes between consecutive events.</p></div></span>
   
 </li>
 
@@ -347,9 +331,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Iterates over timeline event hashes.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'><p>Iterates over timeline event hashes.</p></div></span>
   
 </li>
 
@@ -371,9 +353,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Returns historical (no longer valid) events.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'><p>Returns historical (no longer valid) events.</p></div></span>
   
 </li>
 
@@ -397,9 +377,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Initializes a new empty Timeline.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'><p>Initializes a new empty Timeline.</p></div></span>
   
 </li>
 
@@ -421,9 +399,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Finds pairs of overlapping events.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'><p>Finds pairs of overlapping events.</p></div></span>
   
 </li>
 
@@ -445,9 +421,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Returns the state (valid events) at a specific point in time.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'><p>Returns the state (valid events) at a specific point in time.</p></div></span>
   
 </li>
 
@@ -469,9 +443,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Returns events sorted by valid_at date.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'><p>Returns events sorted by valid_at date.</p></div></span>
   
 </li>
 
@@ -493,14 +465,13 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Returns events as an array of hashes.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'><p>Returns events as an array of hashes.</p></div></span>
   
 </li>
 
       
     </ul>
+    
   
 
 
@@ -518,9 +489,7 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Initializes a new empty Timeline</p>
-
+    <p>Initializes a new empty Timeline</p>
 
   </div>
 </div>
@@ -566,9 +535,7 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Returns the timeline events.</p>
-
+    <p>Returns the timeline events.</p>
 
   </div>
 </div>
@@ -585,9 +552,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>the timeline events</p>
-</div>
+        <div class='inline'><p>the timeline events</p></div>
       
     </li>
   
@@ -632,9 +597,7 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Returns currently active (valid) events</p>
-
+    <p>Returns currently active (valid) events</p>
 
   </div>
 </div>
@@ -651,9 +614,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>events with no invalid_at date</p>
-</div>
+        <div class='inline'><p>events with no invalid_at date</p></div>
       
     </li>
   
@@ -691,9 +652,7 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Returns events in a specific date range</p>
-
+    <p>Returns events in a specific date range</p>
 
   </div>
 </div>
@@ -711,9 +670,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>start of range (inclusive)</p>
-</div>
+        <div class='inline'><p>start of range (inclusive)</p></div>
       
     </li>
   
@@ -727,9 +684,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>end of range (inclusive)</p>
-</div>
+        <div class='inline'><p>end of range (inclusive)</p></div>
       
     </li>
   
@@ -746,9 +701,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>events within the range</p>
-</div>
+        <div class='inline'><p>events within the range</p></div>
       
     </li>
   
@@ -786,9 +739,7 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Builds a timeline of facts for an entity</p>
-
+    <p>Builds a timeline of facts for an entity</p>
 
   </div>
 </div>
@@ -806,9 +757,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>the entity to build timeline for</p>
-</div>
+        <div class='inline'><p>the entity to build timeline for</p></div>
       
     </li>
   
@@ -824,9 +773,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>start of date range (optional)</p>
-</div>
+        <div class='inline'><p>start of date range (optional)</p></div>
       
     </li>
   
@@ -842,9 +789,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>end of date range (optional)</p>
-</div>
+        <div class='inline'><p>end of date range (optional)</p></div>
       
     </li>
   
@@ -861,9 +806,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>self for method chaining</p>
-</div>
+        <div class='inline'><p>self for method chaining</p></div>
       
     </li>
   
@@ -905,9 +848,7 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Groups events by month</p>
-
+    <p>Groups events by month</p>
 
   </div>
 </div>
@@ -924,9 +865,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>events grouped by “YYYY-MM” key</p>
-</div>
+        <div class='inline'><p>events grouped by &quot;YYYY-MM&quot; key</p></div>
       
     </li>
   
@@ -964,9 +903,7 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Groups events by year</p>
-
+    <p>Groups events by year</p>
 
   </div>
 </div>
@@ -983,9 +920,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>events grouped by year</p>
-</div>
+        <div class='inline'><p>events grouped by year</p></div>
       
     </li>
   
@@ -1023,9 +958,7 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Generates a summary of changes between consecutive events</p>
-
+    <p>Generates a summary of changes between consecutive events</p>
 
   </div>
 </div>
@@ -1042,9 +975,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>array of hashes with :from, :to, and :gap_days keys</p>
-</div>
+        <div class='inline'><p>array of hashes with :from, :to, and :gap_days keys</p></div>
       
     </li>
   
@@ -1098,9 +1029,7 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Iterates over timeline event hashes</p>
-
+    <p>Iterates over timeline event hashes</p>
 
   </div>
 </div>
@@ -1117,9 +1046,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>each event as a hash</p>
-</div>
+        <div class='inline'><p>each event as a hash</p></div>
       
     </li>
   
@@ -1135,9 +1062,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>if no block given</p>
-</div>
+        <div class='inline'><p>if no block given</p></div>
       
     </li>
   
@@ -1175,9 +1100,7 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Returns historical (no longer valid) events</p>
-
+    <p>Returns historical (no longer valid) events</p>
 
   </div>
 </div>
@@ -1194,9 +1117,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>events that have been invalidated</p>
-</div>
+        <div class='inline'><p>events that have been invalidated</p></div>
       
     </li>
   
@@ -1234,11 +1155,8 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Finds pairs of overlapping events</p>
-
+    <p>Finds pairs of overlapping events</p>
 <p>Two events overlap if their validity periods intersect.</p>
-
 
   </div>
 </div>
@@ -1255,9 +1173,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>pairs of overlapping events</p>
-</div>
+        <div class='inline'><p>pairs of overlapping events</p></div>
       
     </li>
   
@@ -1313,9 +1229,7 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Returns the state (valid events) at a specific point in time</p>
-
+    <p>Returns the state (valid events) at a specific point in time</p>
 
   </div>
 </div>
@@ -1333,9 +1247,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>the point in time to query</p>
-</div>
+        <div class='inline'><p>the point in time to query</p></div>
       
     </li>
   
@@ -1352,9 +1264,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>events valid at the given date</p>
-</div>
+        <div class='inline'><p>events valid at the given date</p></div>
       
     </li>
   
@@ -1392,9 +1302,7 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Returns events sorted by valid_at date</p>
-
+    <p>Returns events sorted by valid_at date</p>
 
   </div>
 </div>
@@ -1411,9 +1319,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>sorted events</p>
-</div>
+        <div class='inline'><p>sorted events</p></div>
       
     </li>
   
@@ -1451,9 +1357,7 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Returns events as an array of hashes</p>
-
+    <p>Returns events as an array of hashes</p>
 
   </div>
 </div>
@@ -1470,9 +1374,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>events converted to hash format</p>
-</div>
+        <div class='inline'><p>events converted to hash format</p></div>
       
     </li>
   
@@ -1504,9 +1406,9 @@
 </div>
 
       <div id="footer">
-  Generated on Sat Feb  7 16:59:07 2026 by
+  Generated on Wed Nov 18 23:46:05 2026 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.38 (ruby-3.3.10).
+  0.9.45 (ruby-4.0.9).
 </div>
 
     </div>

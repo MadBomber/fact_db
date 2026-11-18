@@ -6,13 +6,13 @@
 <title>
   Class: FactDb::Pipeline::ExtractionPipeline
   
-    &mdash; Documentation by YARD 0.9.38
+    &mdash; Documentation by YARD 0.9.45
   
 </title>
 
-  <link rel="stylesheet" href="../../css/style.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/style.css" type="text/css">
 
-  <link rel="stylesheet" href="../../css/common.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/common.css" type="text/css">
 
 <script type="text/javascript">
   pathId = "FactDb::Pipeline::ExtractionPipeline";
@@ -27,6 +27,8 @@
 
   </head>
   <body>
+    <div id="main_progress" aria-hidden="true"></div>
+
     <div class="nav_wrap">
       <iframe id="nav" src="../../class_list.html?1"></iframe>
       <div id="resizer"></div>
@@ -94,16 +96,16 @@
   
   <dl>
     <dt>Defined in:</dt>
-    <dd>lib/fact_db/pipeline/extraction_pipeline.rb</dd>
+    <dd>lib/fact_db/pipeline/extraction_pipeline.rb
+</dd>
   </dl>
   
 </div>
 
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
-    
-<p>Pipeline for extracting facts from sources using SimpleFlow Supports parallel processing of multiple source items</p>
-
+    <p>Pipeline for extracting facts from sources using SimpleFlow
+Supports parallel processing of multiple source items</p>
 
   </div>
 </div>
@@ -113,17 +115,13 @@
     <h4 class="tag_title">Examples:</h4>
     
       
-        <h5 class="example_title"><div class='inline'>
-<p>Sequential extraction</p>
-</div></h5>
+        <h5 class="example_title"><div class='inline'><p>Sequential extraction</p></div></h5>
       
       <pre class="example code"><code><span class='id identifier rubyid_pipeline'>pipeline</span> <span class='op'>=</span> <span class='const'>ExtractionPipeline</span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="#initialize-instance_method" title="FactDb::Pipeline::ExtractionPipeline#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_config'>config</span><span class='rparen'>)</span>
 <span class='id identifier rubyid_results'>results</span> <span class='op'>=</span> <span class='id identifier rubyid_pipeline'>pipeline</span><span class='period'>.</span><span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='lbracket'>[</span><span class='id identifier rubyid_source1'>source1</span><span class='comma'>,</span> <span class='id identifier rubyid_source2'>source2</span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='label'>extractor:</span> <span class='symbol'>:llm</span><span class='rparen'>)</span></code></pre>
     
       
-        <h5 class="example_title"><div class='inline'>
-<p>Parallel extraction</p>
-</div></h5>
+        <h5 class="example_title"><div class='inline'><p>Parallel extraction</p></div></h5>
       
       <pre class="example code"><code><span class='id identifier rubyid_pipeline'>pipeline</span> <span class='op'>=</span> <span class='const'>ExtractionPipeline</span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="#initialize-instance_method" title="FactDb::Pipeline::ExtractionPipeline#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_config'>config</span><span class='rparen'>)</span>
 <span class='id identifier rubyid_results'>results</span> <span class='op'>=</span> <span class='id identifier rubyid_pipeline'>pipeline</span><span class='period'>.</span><span class='id identifier rubyid_process_parallel'>process_parallel</span><span class='lparen'>(</span><span class='lbracket'>[</span><span class='id identifier rubyid_source1'>source1</span><span class='comma'>,</span> <span class='id identifier rubyid_source2'>source2</span><span class='comma'>,</span> <span class='id identifier rubyid_source3'>source3</span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='label'>extractor:</span> <span class='symbol'>:llm</span><span class='rparen'>)</span></code></pre>
@@ -160,9 +158,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Returns the value of attribute config.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'><p>Returns the value of attribute config.</p></div></span>
   
 </li>
 
@@ -199,9 +195,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>A new instance of ExtractionPipeline.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'><p>A new instance of ExtractionPipeline.</p></div></span>
   
 </li>
 
@@ -223,9 +217,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Process multiple source items sequentially.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'><p>Process multiple source items sequentially.</p></div></span>
   
 </li>
 
@@ -247,14 +239,13 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Process multiple source items in parallel Uses SimpleFlow’s parallel execution capabilities.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'><p>Process multiple source items in parallel Uses SimpleFlow's parallel execution capabilities.</p></div></span>
   
 </li>
 
       
     </ul>
+    
   
 
 <div id="constructor_details" class="method_details_list">
@@ -271,9 +262,7 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Returns a new instance of ExtractionPipeline.</p>
-
+    <p>Returns a new instance of ExtractionPipeline.</p>
 
   </div>
 </div>
@@ -319,9 +308,7 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Returns the value of attribute config.</p>
-
+    <p>Returns the value of attribute config.</p>
 
   </div>
 </div>
@@ -367,9 +354,7 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Process multiple source items sequentially</p>
-
+    <p>Process multiple source items sequentially</p>
 
   </div>
 </div>
@@ -387,9 +372,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>Source records to process</p>
-</div>
+        <div class='inline'><p>Source records to process</p></div>
       
     </li>
   
@@ -405,9 +388,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>Extractor type (:manual, :llm, :rule_based)</p>
-</div>
+        <div class='inline'><p>Extractor type (:manual, :llm, :rule_based)</p></div>
       
     </li>
   
@@ -424,9 +405,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>Results with extracted facts per source</p>
-</div>
+        <div class='inline'><p>Results with extracted facts per source</p></div>
       
     </li>
   
@@ -482,9 +461,8 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Process multiple source items in parallel Uses SimpleFlow’s parallel execution capabilities</p>
-
+    <p>Process multiple source items in parallel
+Uses SimpleFlow's parallel execution capabilities</p>
 
   </div>
 </div>
@@ -502,9 +480,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>Source records to process</p>
-</div>
+        <div class='inline'><p>Source records to process</p></div>
       
     </li>
   
@@ -520,9 +496,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>Extractor type (:manual, :llm, :rule_based)</p>
-</div>
+        <div class='inline'><p>Extractor type (:manual, :llm, :rule_based)</p></div>
       
     </li>
   
@@ -539,9 +513,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>Results with extracted facts per source</p>
-</div>
+        <div class='inline'><p>Results with extracted facts per source</p></div>
       
     </li>
   
@@ -597,9 +569,9 @@
 </div>
 
       <div id="footer">
-  Generated on Sat Feb  7 16:59:09 2026 by
+  Generated on Wed Nov 18 23:46:05 2026 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.38 (ruby-3.3.10).
+  0.9.45 (ruby-4.0.9).
 </div>
 
     </div>

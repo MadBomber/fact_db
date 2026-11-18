@@ -6,13 +6,13 @@
 <title>
   Class: FactDb::Extractors::ManualExtractor
   
-    &mdash; Documentation by YARD 0.9.38
+    &mdash; Documentation by YARD 0.9.45
   
 </title>
 
-  <link rel="stylesheet" href="../../css/style.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/style.css" type="text/css">
 
-  <link rel="stylesheet" href="../../css/common.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/common.css" type="text/css">
 
 <script type="text/javascript">
   pathId = "FactDb::Extractors::ManualExtractor";
@@ -27,6 +27,8 @@
 
   </head>
   <body>
+    <div id="main_progress" aria-hidden="true"></div>
+
     <div class="nav_wrap">
       <iframe id="nav" src="../../class_list.html?1"></iframe>
       <div id="resizer"></div>
@@ -96,18 +98,18 @@
   
   <dl>
     <dt>Defined in:</dt>
-    <dd>lib/fact_db/extractors/manual_extractor.rb</dd>
+    <dd>lib/fact_db/extractors/manual_extractor.rb
+</dd>
   </dl>
   
 </div>
 
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
-    
-<p>Manual fact extractor for API-driven fact creation</p>
-
-<p>Passes through user-provided text as a single fact without any automated extraction. Used when the user provides fact text and metadata directly via the API.</p>
-
+    <p>Manual fact extractor for API-driven fact creation</p>
+<p>Passes through user-provided text as a single fact without any
+automated extraction. Used when the user provides fact text and
+metadata directly via the API.</p>
 
   </div>
 </div>
@@ -117,9 +119,7 @@
     <h4 class="tag_title">Examples:</h4>
     
       
-        <h5 class="example_title"><div class='inline'>
-<p>Extract a manual fact</p>
-</div></h5>
+        <h5 class="example_title"><div class='inline'><p>Extract a manual fact</p></div></h5>
       
       <pre class="example code"><code><span class='id identifier rubyid_extractor'>extractor</span> <span class='op'>=</span> <span class='const'>ManualExtractor</span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Base.html#initialize-instance_method" title="FactDb::Extractors::Base#initialize (method)">new</a></span></span>
 <span class='id identifier rubyid_facts'>facts</span> <span class='op'>=</span> <span class='id identifier rubyid_extractor'>extractor</span><span class='period'>.</span><span class='id identifier rubyid_extract'>extract</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>John works at Acme</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>valid_at:</span> <span class='const'>Date</span><span class='period'>.</span><span class='id identifier rubyid_today'>today</span><span class='rparen'>)</span></code></pre>
@@ -164,9 +164,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Creates an entity hash.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'><p>Creates an entity hash.</p></div></span>
   
 </li>
 
@@ -188,9 +186,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Creates a single fact with full control over all attributes.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'><p>Creates a single fact with full control over all attributes.</p></div></span>
   
 </li>
 
@@ -212,9 +208,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Extracts a single fact from the provided text.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'><p>Extracts a single fact from the provided text.</p></div></span>
   
 </li>
 
@@ -236,17 +230,17 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Returns empty array since manual extraction expects entities to be provided.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'><p>Returns empty array since manual extraction expects entities to be provided.</p></div></span>
   
 </li>
 
       
     </ul>
+    
   
 
 
+  
   
   
   
@@ -280,11 +274,8 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Creates an entity hash</p>
-
+    <p>Creates an entity hash</p>
 <p>Convenience method for building entity data manually.</p>
-
 
   </div>
 </div>
@@ -302,9 +293,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>the entity name</p>
-</div>
+        <div class='inline'><p>the entity name</p></div>
       
     </li>
   
@@ -318,9 +307,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>entity kind (person, organization, etc.)</p>
-</div>
+        <div class='inline'><p>entity kind (person, organization, etc.)</p></div>
       
     </li>
   
@@ -336,9 +323,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>alternative names</p>
-</div>
+        <div class='inline'><p>alternative names</p></div>
       
     </li>
   
@@ -354,9 +339,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>additional attributes</p>
-</div>
+        <div class='inline'><p>additional attributes</p></div>
       
     </li>
   
@@ -373,9 +356,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>the entity hash</p>
-</div>
+        <div class='inline'><p>the entity hash</p></div>
       
     </li>
   
@@ -423,11 +404,8 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Creates a single fact with full control over all attributes</p>
-
+    <p>Creates a single fact with full control over all attributes</p>
 <p>Convenience method that wraps #extract with named parameters.</p>
-
 
   </div>
 </div>
@@ -445,9 +423,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>the fact text</p>
-</div>
+        <div class='inline'><p>the fact text</p></div>
       
     </li>
   
@@ -461,9 +437,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>when the fact became valid</p>
-</div>
+        <div class='inline'><p>when the fact became valid</p></div>
       
     </li>
   
@@ -479,9 +453,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>when the fact became invalid</p>
-</div>
+        <div class='inline'><p>when the fact became invalid</p></div>
       
     </li>
   
@@ -497,9 +469,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>entity mentions</p>
-</div>
+        <div class='inline'><p>entity mentions</p></div>
       
     </li>
   
@@ -515,9 +485,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>confidence score (0.0 to 1.0)</p>
-</div>
+        <div class='inline'><p>confidence score (0.0 to 1.0)</p></div>
       
     </li>
   
@@ -533,9 +501,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>additional metadata</p>
-</div>
+        <div class='inline'><p>additional metadata</p></div>
       
     </li>
   
@@ -552,9 +518,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>the fact hash</p>
-</div>
+        <div class='inline'><p>the fact hash</p></div>
       
     </li>
   
@@ -604,11 +568,8 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Extracts a single fact from the provided text</p>
-
+    <p>Extracts a single fact from the provided text</p>
 <p>Returns the text as-is without parsing. All metadata comes from context.</p>
-
 
   </div>
 </div>
@@ -626,9 +587,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>the fact text</p>
-</div>
+        <div class='inline'><p>the fact text</p></div>
       
     </li>
   
@@ -644,9 +603,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>fact metadata</p>
-</div>
+        <div class='inline'><p>fact metadata</p></div>
       
     </li>
   
@@ -667,9 +624,7 @@
             
           </span>
           
-            &mdash; <div class='inline'>
-<p>when the fact became valid</p>
-</div>
+            &mdash; <div class='inline'><p>when the fact became valid</p></div>
           
         </li>
       
@@ -680,9 +635,7 @@
             
           </span>
           
-            &mdash; <div class='inline'>
-<p>when the fact became invalid</p>
-</div>
+            &mdash; <div class='inline'><p>when the fact became invalid</p></div>
           
         </li>
       
@@ -693,9 +646,7 @@
             
           </span>
           
-            &mdash; <div class='inline'>
-<p>entity mentions</p>
-</div>
+            &mdash; <div class='inline'><p>entity mentions</p></div>
           
         </li>
       
@@ -706,9 +657,7 @@
             
           </span>
           
-            &mdash; <div class='inline'>
-<p>confidence score</p>
-</div>
+            &mdash; <div class='inline'><p>confidence score</p></div>
           
         </li>
       
@@ -719,9 +668,7 @@
             
           </span>
           
-            &mdash; <div class='inline'>
-<p>additional metadata</p>
-</div>
+            &mdash; <div class='inline'><p>additional metadata</p></div>
           
         </li>
       
@@ -739,9 +686,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>array with single fact hash, or empty if text is blank</p>
-</div>
+        <div class='inline'><p>array with single fact hash, or empty if text is blank</p></div>
       
     </li>
   
@@ -805,9 +750,7 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Returns empty array since manual extraction expects entities to be provided</p>
-
+    <p>Returns empty array since manual extraction expects entities to be provided</p>
 
   </div>
 </div>
@@ -825,9 +768,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>ignored</p>
-</div>
+        <div class='inline'><p>ignored</p></div>
       
     </li>
   
@@ -844,9 +785,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>empty array</p>
-</div>
+        <div class='inline'><p>empty array</p></div>
       
     </li>
   
@@ -878,9 +817,9 @@
 </div>
 
       <div id="footer">
-  Generated on Sat Feb  7 16:59:09 2026 by
+  Generated on Wed Nov 18 23:46:05 2026 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.38 (ruby-3.3.10).
+  0.9.45 (ruby-4.0.9).
 </div>
 
     </div>

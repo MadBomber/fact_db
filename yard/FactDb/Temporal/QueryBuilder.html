@@ -6,13 +6,13 @@
 <title>
   Class: FactDb::Temporal::QueryBuilder
   
-    &mdash; Documentation by YARD 0.9.38
+    &mdash; Documentation by YARD 0.9.45
   
 </title>
 
-  <link rel="stylesheet" href="../../css/style.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/style.css" type="text/css">
 
-  <link rel="stylesheet" href="../../css/common.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/common.css" type="text/css">
 
 <script type="text/javascript">
   pathId = "FactDb::Temporal::QueryBuilder";
@@ -27,6 +27,8 @@
 
   </head>
   <body>
+    <div id="main_progress" aria-hidden="true"></div>
+
     <div class="nav_wrap">
       <iframe id="nav" src="../../class_list.html?1"></iframe>
       <div id="resizer"></div>
@@ -94,16 +96,16 @@
   
   <dl>
     <dt>Defined in:</dt>
-    <dd>lib/fact_db/temporal/query_builder.rb</dd>
+    <dd>lib/fact_db/temporal/query_builder.rb
+</dd>
   </dl>
   
 </div>
 
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
-    
-<p>A scoped query builder for temporal queries. Allows chaining: facts.at(“2024-01-15”).query(“Paula’s role”)</p>
-
+    <p>A scoped query builder for temporal queries.
+Allows chaining: facts.at(&quot;2024-01-15&quot;).query(&quot;Paula's role&quot;)</p>
 
   </div>
 </div>
@@ -113,9 +115,7 @@
     <h4 class="tag_title">Examples:</h4>
     
       
-        <h5 class="example_title"><div class='inline'>
-<p>Basic usage</p>
-</div></h5>
+        <h5 class="example_title"><div class='inline'><p>Basic usage</p></div></h5>
       
       <pre class="example code"><code><span class='id identifier rubyid_facts'>facts</span><span class='period'>.</span><span class='id identifier rubyid_at'>at</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>2024-01-15</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_query'>query</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Paula&#39;s role</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>format:</span> <span class='symbol'>:cypher</span><span class='rparen'>)</span>
 <span class='id identifier rubyid_facts'>facts</span><span class='period'>.</span><span class='id identifier rubyid_at'>at</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>2024-01-15</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_facts_for'>facts_for</span><span class='lparen'>(</span><span class='id identifier rubyid_entity_id'>entity_id</span><span class='rparen'>)</span>
@@ -153,9 +153,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Returns the value of attribute date.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'><p>Returns the value of attribute date.</p></div></span>
   
 </li>
 
@@ -190,9 +188,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Compare this date to another.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'><p>Compare this date to another.</p></div></span>
   
 </li>
 
@@ -214,9 +210,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Get all facts valid at this date.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'><p>Get all facts valid at this date.</p></div></span>
   
 </li>
 
@@ -238,9 +232,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Get facts for a specific entity at this date.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'><p>Get facts for a specific entity at this date.</p></div></span>
   
 </li>
 
@@ -264,9 +256,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Initialize with a Facts instance and date.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'><p>Initialize with a Facts instance and date.</p></div></span>
   
 </li>
 
@@ -288,9 +278,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Execute a query at this point in time.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'><p>Execute a query at this point in time.</p></div></span>
   
 </li>
 
@@ -312,14 +300,13 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Get the timeline state at this date.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'><p>Get the timeline state at this date.</p></div></span>
   
 </li>
 
       
     </ul>
+    
   
 
 <div id="constructor_details" class="method_details_list">
@@ -336,9 +323,7 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Initialize with a Facts instance and date</p>
-
+    <p>Initialize with a Facts instance and date</p>
 
   </div>
 </div>
@@ -356,9 +341,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>The Facts instance</p>
-</div>
+        <div class='inline'><p>The Facts instance</p></div>
       
     </li>
   
@@ -372,9 +355,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>The point in time</p>
-</div>
+        <div class='inline'><p>The point in time</p></div>
       
     </li>
   
@@ -422,9 +403,7 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Returns the value of attribute date.</p>
-
+    <p>Returns the value of attribute date.</p>
 
   </div>
 </div>
@@ -470,9 +449,7 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Compare this date to another</p>
-
+    <p>Compare this date to another</p>
 
   </div>
 </div>
@@ -490,9 +467,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>The date to compare to</p>
-</div>
+        <div class='inline'><p>The date to compare to</p></div>
       
     </li>
   
@@ -508,9 +483,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>Optional topic to compare</p>
-</div>
+        <div class='inline'><p>Optional topic to compare</p></div>
       
     </li>
   
@@ -527,9 +500,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>Differences with :added, :removed, :unchanged keys</p>
-</div>
+        <div class='inline'><p>Differences with :added, :removed, :unchanged keys</p></div>
       
     </li>
   
@@ -567,9 +538,7 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Get all facts valid at this date</p>
-
+    <p>Get all facts valid at this date</p>
 
   </div>
 </div>
@@ -589,9 +558,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>Output format</p>
-</div>
+        <div class='inline'><p>Output format</p></div>
       
     </li>
   
@@ -608,9 +575,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>Results</p>
-</div>
+        <div class='inline'><p>Results</p></div>
       
     </li>
   
@@ -648,9 +613,7 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Get facts for a specific entity at this date</p>
-
+    <p>Get facts for a specific entity at this date</p>
 
   </div>
 </div>
@@ -668,9 +631,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>Entity ID</p>
-</div>
+        <div class='inline'><p>Entity ID</p></div>
       
     </li>
   
@@ -686,9 +647,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>Output format</p>
-</div>
+        <div class='inline'><p>Output format</p></div>
       
     </li>
   
@@ -705,9 +664,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>Results</p>
-</div>
+        <div class='inline'><p>Results</p></div>
       
     </li>
   
@@ -745,9 +702,7 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Execute a query at this point in time</p>
-
+    <p>Execute a query at this point in time</p>
 
   </div>
 </div>
@@ -765,9 +720,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>The query topic</p>
-</div>
+        <div class='inline'><p>The query topic</p></div>
       
     </li>
   
@@ -783,9 +736,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>Output format (:json, :triples, :cypher, :text, :prolog)</p>
-</div>
+        <div class='inline'><p>Output format (:json, :triples, :cypher, :text, :prolog)</p></div>
       
     </li>
   
@@ -802,9 +753,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>Results at this point in time</p>
-</div>
+        <div class='inline'><p>Results at this point in time</p></div>
       
     </li>
   
@@ -842,9 +791,7 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Get the timeline state at this date</p>
-
+    <p>Get the timeline state at this date</p>
 
   </div>
 </div>
@@ -862,9 +809,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>Entity ID</p>
-</div>
+        <div class='inline'><p>Entity ID</p></div>
       
     </li>
   
@@ -881,9 +826,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>Facts valid at this date for the entity</p>
-</div>
+        <div class='inline'><p>Facts valid at this date for the entity</p></div>
       
     </li>
   
@@ -915,9 +858,9 @@
 </div>
 
       <div id="footer">
-  Generated on Sat Feb  7 16:59:08 2026 by
+  Generated on Wed Nov 18 23:46:05 2026 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.38 (ruby-3.3.10).
+  0.9.45 (ruby-4.0.9).
 </div>
 
     </div>

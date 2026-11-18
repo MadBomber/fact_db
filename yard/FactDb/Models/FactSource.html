@@ -6,13 +6,13 @@
 <title>
   Class: FactDb::Models::FactSource
   
-    &mdash; Documentation by YARD 0.9.38
+    &mdash; Documentation by YARD 0.9.45
   
 </title>
 
-  <link rel="stylesheet" href="../../css/style.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/style.css" type="text/css">
 
-  <link rel="stylesheet" href="../../css/common.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/common.css" type="text/css">
 
 <script type="text/javascript">
   pathId = "FactDb::Models::FactSource";
@@ -27,6 +27,8 @@
 
   </head>
   <body>
+    <div id="main_progress" aria-hidden="true"></div>
+
     <div class="nav_wrap">
       <iframe id="nav" src="../../class_list.html?1"></iframe>
       <div id="resizer"></div>
@@ -96,18 +98,18 @@
   
   <dl>
     <dt>Defined in:</dt>
-    <dd>lib/fact_db/models/fact_source.rb</dd>
+    <dd>lib/fact_db/models/fact_source.rb
+</dd>
   </dl>
   
 </div>
 
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
-    
-<p>Join model linking facts to source documents</p>
-
-<p>Represents the provenance relationship between a fact and the source document(s) it was extracted from, including the relationship type and an optional excerpt.</p>
-
+    <p>Join model linking facts to source documents</p>
+<p>Represents the provenance relationship between a fact and the source
+document(s) it was extracted from, including the relationship type
+and an optional excerpt.</p>
 
   </div>
 </div>
@@ -117,9 +119,7 @@
     <h4 class="tag_title">Examples:</h4>
     
       
-        <h5 class="example_title"><div class='inline'>
-<p>Link a fact to a source</p>
-</div></h5>
+        <h5 class="example_title"><div class='inline'><p>Link a fact to a source</p></div></h5>
       
       <pre class="example code"><code><span class='id identifier rubyid_fact_source'>fact_source</span> <span class='op'>=</span> <span class='const'>FactSource</span><span class='period'>.</span><span class='id identifier rubyid_create!'>create!</span><span class='lparen'>(</span>
   <span class='label'>fact:</span> <span class='id identifier rubyid_fact'>fact</span><span class='comma'>,</span> <span class='label'>source:</span> <span class='id identifier rubyid_document'>document</span><span class='comma'>,</span>
@@ -141,9 +141,7 @@
         <dt id="KINDS-constant" class="">KINDS =
           <div class="docstring">
   <div class="discussion">
-    
-<p>Returns valid source relationship kinds.</p>
-
+    <p>Returns valid source relationship kinds.</p>
 
   </div>
 </div>
@@ -160,9 +158,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>valid source relationship kinds</p>
-</div>
+        <div class='inline'><p>valid source relationship kinds</p></div>
       
     </li>
   
@@ -206,9 +202,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Returns corroborating source links.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'><p>Returns corroborating source links.</p></div></span>
   
 </li>
 
@@ -230,9 +224,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Returns a preview of the excerpt, truncated if needed.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'><p>Returns a preview of the excerpt, truncated if needed.</p></div></span>
   
 </li>
 
@@ -254,9 +246,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Returns source links with confidence &gt;= 0.9.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'><p>Returns source links with confidence &gt;= 0.9.</p></div></span>
   
 </li>
 
@@ -278,9 +268,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Returns primary source links.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'><p>Returns primary source links.</p></div></span>
   
 </li>
 
@@ -302,9 +290,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Checks if this is the primary source for the fact.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'><p>Checks if this is the primary source for the fact.</p></div></span>
   
 </li>
 
@@ -326,14 +312,13 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Returns supporting source links.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'><p>Returns supporting source links.</p></div></span>
   
 </li>
 
       
     </ul>
+    
   
 
 
@@ -354,9 +339,7 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Returns corroborating source links</p>
-
+    <p>Returns corroborating source links</p>
 
   </div>
 </div>
@@ -404,9 +387,7 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Returns a preview of the excerpt, truncated if needed</p>
-
+    <p>Returns a preview of the excerpt, truncated if needed</p>
 
   </div>
 </div>
@@ -426,9 +407,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>maximum length (default: 100)</p>
-</div>
+        <div class='inline'><p>maximum length (default: 100)</p></div>
       
     </li>
   
@@ -445,9 +424,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>excerpt preview with “…” if truncated, or nil if no excerpt</p>
-</div>
+        <div class='inline'><p>excerpt preview with &quot;...&quot; if truncated, or nil if no excerpt</p></div>
       
     </li>
   
@@ -491,9 +468,7 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Returns source links with confidence &gt;= 0.9</p>
-
+    <p>Returns source links with confidence &gt;= 0.9</p>
 
   </div>
 </div>
@@ -541,9 +516,7 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Returns primary source links</p>
-
+    <p>Returns primary source links</p>
 
   </div>
 </div>
@@ -591,9 +564,7 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Checks if this is the primary source for the fact</p>
-
+    <p>Checks if this is the primary source for the fact</p>
 
   </div>
 </div>
@@ -610,9 +581,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>true if kind is “primary”</p>
-</div>
+        <div class='inline'><p>true if kind is &quot;primary&quot;</p></div>
       
     </li>
   
@@ -650,9 +619,7 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Returns supporting source links</p>
-
+    <p>Returns supporting source links</p>
 
   </div>
 </div>
@@ -694,9 +661,9 @@
 </div>
 
       <div id="footer">
-  Generated on Sat Feb  7 16:59:08 2026 by
+  Generated on Wed Nov 18 23:46:05 2026 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.38 (ruby-3.3.10).
+  0.9.45 (ruby-4.0.9).
 </div>
 
     </div>

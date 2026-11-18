@@ -6,13 +6,13 @@
 <title>
   Class: FactDb::Services::SourceService
   
-    &mdash; Documentation by YARD 0.9.38
+    &mdash; Documentation by YARD 0.9.45
   
 </title>
 
-  <link rel="stylesheet" href="../../css/style.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/style.css" type="text/css">
 
-  <link rel="stylesheet" href="../../css/common.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/common.css" type="text/css">
 
 <script type="text/javascript">
   pathId = "FactDb::Services::SourceService";
@@ -27,6 +27,8 @@
 
   </head>
   <body>
+    <div id="main_progress" aria-hidden="true"></div>
+
     <div class="nav_wrap">
       <iframe id="nav" src="../../class_list.html?1"></iframe>
       <div id="resizer"></div>
@@ -94,18 +96,17 @@
   
   <dl>
     <dt>Defined in:</dt>
-    <dd>lib/fact_db/services/source_service.rb</dd>
+    <dd>lib/fact_db/services/source_service.rb
+</dd>
   </dl>
   
 </div>
 
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
-    
-<p>Service class for managing source documents in the database</p>
-
-<p>Provides methods for creating, searching, and retrieving source documents which are the original content from which facts are extracted.</p>
-
+    <p>Service class for managing source documents in the database</p>
+<p>Provides methods for creating, searching, and retrieving source documents
+which are the original content from which facts are extracted.</p>
 
   </div>
 </div>
@@ -115,9 +116,7 @@
     <h4 class="tag_title">Examples:</h4>
     
       
-        <h5 class="example_title"><div class='inline'>
-<p>Basic usage</p>
-</div></h5>
+        <h5 class="example_title"><div class='inline'><p>Basic usage</p></div></h5>
       
       <pre class="example code"><code><span class='id identifier rubyid_service'>service</span> <span class='op'>=</span> <span class='const'>SourceService</span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="#initialize-instance_method" title="FactDb::Services::SourceService#initialize (method)">new</a></span></span>
 <span class='id identifier rubyid_source'>source</span> <span class='op'>=</span> <span class='id identifier rubyid_service'>service</span><span class='period'>.</span><span class='id identifier rubyid_create'>create</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Meeting notes...</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>kind:</span> <span class='symbol'>:document</span><span class='rparen'>)</span></code></pre>
@@ -154,9 +153,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>The configuration object.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'><p>The configuration object.</p></div></span>
   
 </li>
 
@@ -191,9 +188,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Returns sources captured between two dates.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'><p>Returns sources captured between two dates.</p></div></span>
   
 </li>
 
@@ -215,9 +210,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Returns sources of a specific kind.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'><p>Returns sources of a specific kind.</p></div></span>
   
 </li>
 
@@ -239,9 +232,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Creates a new source document in the database.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'><p>Creates a new source document in the database.</p></div></span>
   
 </li>
 
@@ -263,9 +254,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Finds a source by ID.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'><p>Finds a source by ID.</p></div></span>
   
 </li>
 
@@ -287,9 +276,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Finds a source by content hash.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'><p>Finds a source by content hash.</p></div></span>
   
 </li>
 
@@ -313,9 +300,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Initializes a new SourceService instance.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'><p>Initializes a new SourceService instance.</p></div></span>
   
 </li>
 
@@ -337,9 +322,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Returns recently captured sources.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'><p>Returns recently captured sources.</p></div></span>
   
 </li>
 
@@ -361,9 +344,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Searches sources using full-text search with optional filters.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'><p>Searches sources using full-text search with optional filters.</p></div></span>
   
 </li>
 
@@ -385,9 +366,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Searches sources using semantic similarity (vector search).</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'><p>Searches sources using semantic similarity (vector search).</p></div></span>
   
 </li>
 
@@ -409,14 +388,13 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Returns aggregate statistics about sources.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'><p>Returns aggregate statistics about sources.</p></div></span>
   
 </li>
 
       
     </ul>
+    
   
 
 <div id="constructor_details" class="method_details_list">
@@ -433,9 +411,7 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Initializes a new SourceService instance</p>
-
+    <p>Initializes a new SourceService instance</p>
 
   </div>
 </div>
@@ -455,9 +431,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>configuration object (defaults to FactDb.config)</p>
-</div>
+        <div class='inline'><p>configuration object (defaults to FactDb.config)</p></div>
       
     </li>
   
@@ -503,9 +477,7 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Returns the configuration object.</p>
-
+    <p>Returns the configuration object.</p>
 
   </div>
 </div>
@@ -522,9 +494,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>the configuration object</p>
-</div>
+        <div class='inline'><p>the configuration object</p></div>
       
     </li>
   
@@ -569,9 +539,7 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Returns sources captured between two dates</p>
-
+    <p>Returns sources captured between two dates</p>
 
   </div>
 </div>
@@ -589,9 +557,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>start of range</p>
-</div>
+        <div class='inline'><p>start of range</p></div>
       
     </li>
   
@@ -605,9 +571,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>end of range</p>
-</div>
+        <div class='inline'><p>end of range</p></div>
       
     </li>
   
@@ -624,9 +588,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>sources in the date range</p>
-</div>
+        <div class='inline'><p>sources in the date range</p></div>
       
     </li>
   
@@ -664,9 +626,7 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Returns sources of a specific kind</p>
-
+    <p>Returns sources of a specific kind</p>
 
   </div>
 </div>
@@ -684,9 +644,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>the source kind</p>
-</div>
+        <div class='inline'><p>the source kind</p></div>
       
     </li>
   
@@ -702,9 +660,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>maximum number of results</p>
-</div>
+        <div class='inline'><p>maximum number of results</p></div>
       
     </li>
   
@@ -721,9 +677,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>sources of that kind</p>
-</div>
+        <div class='inline'><p>sources of that kind</p></div>
       
     </li>
   
@@ -765,11 +719,8 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Creates a new source document in the database</p>
-
+    <p>Creates a new source document in the database</p>
 <p>Automatically deduplicates by content hash - returns existing source if content matches.</p>
-
 
   </div>
 </div>
@@ -779,9 +730,7 @@
     <h4 class="tag_title">Examples:</h4>
     
       
-        <h5 class="example_title"><div class='inline'>
-<p>Create a source with metadata</p>
-</div></h5>
+        <h5 class="example_title"><div class='inline'><p>Create a source with metadata</p></div></h5>
       
       <pre class="example code"><code><span class='id identifier rubyid_service'>service</span><span class='period'>.</span><span class='id identifier rubyid_create'>create</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Email content...</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
   <span class='label'>kind:</span> <span class='symbol'>:email</span><span class='comma'>,</span>
@@ -802,9 +751,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>the source content text</p>
-</div>
+        <div class='inline'><p>the source content text</p></div>
       
     </li>
   
@@ -818,9 +765,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>source kind (:document, :email, :transcript, etc.)</p>
-</div>
+        <div class='inline'><p>source kind (:document, :email, :transcript, etc.)</p></div>
       
     </li>
   
@@ -836,9 +781,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>when the source was captured (defaults to now)</p>
-</div>
+        <div class='inline'><p>when the source was captured (defaults to now)</p></div>
       
     </li>
   
@@ -854,9 +797,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>additional metadata</p>
-</div>
+        <div class='inline'><p>additional metadata</p></div>
       
     </li>
   
@@ -872,9 +813,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>optional title</p>
-</div>
+        <div class='inline'><p>optional title</p></div>
       
     </li>
   
@@ -890,9 +829,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>optional URI of the original source</p>
-</div>
+        <div class='inline'><p>optional URI of the original source</p></div>
       
     </li>
   
@@ -909,9 +846,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>the created or existing source</p>
-</div>
+        <div class='inline'><p>the created or existing source</p></div>
       
     </li>
   
@@ -983,9 +918,7 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Finds a source by ID</p>
-
+    <p>Finds a source by ID</p>
 
   </div>
 </div>
@@ -1003,9 +936,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>the source ID</p>
-</div>
+        <div class='inline'><p>the source ID</p></div>
       
     </li>
   
@@ -1022,9 +953,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>the found source</p>
-</div>
+        <div class='inline'><p>the found source</p></div>
       
     </li>
   
@@ -1040,9 +969,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>if source not found</p>
-</div>
+        <div class='inline'><p>if source not found</p></div>
       
     </li>
   
@@ -1080,9 +1007,7 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Finds a source by content hash</p>
-
+    <p>Finds a source by content hash</p>
 
   </div>
 </div>
@@ -1100,9 +1025,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>the SHA256 content hash</p>
-</div>
+        <div class='inline'><p>the SHA256 content hash</p></div>
       
     </li>
   
@@ -1119,9 +1042,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>the found source or nil</p>
-</div>
+        <div class='inline'><p>the found source or nil</p></div>
       
     </li>
   
@@ -1159,9 +1080,7 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Returns recently captured sources</p>
-
+    <p>Returns recently captured sources</p>
 
   </div>
 </div>
@@ -1181,9 +1100,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>maximum number of results</p>
-</div>
+        <div class='inline'><p>maximum number of results</p></div>
       
     </li>
   
@@ -1200,9 +1117,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>recent sources ordered by capture date</p>
-</div>
+        <div class='inline'><p>recent sources ordered by capture date</p></div>
       
     </li>
   
@@ -1240,9 +1155,7 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Searches sources using full-text search with optional filters</p>
-
+    <p>Searches sources using full-text search with optional filters</p>
 
   </div>
 </div>
@@ -1260,9 +1173,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>the search query</p>
-</div>
+        <div class='inline'><p>the search query</p></div>
       
     </li>
   
@@ -1278,9 +1189,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>optional kind filter</p>
-</div>
+        <div class='inline'><p>optional kind filter</p></div>
       
     </li>
   
@@ -1296,9 +1205,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>captured after this date</p>
-</div>
+        <div class='inline'><p>captured after this date</p></div>
       
     </li>
   
@@ -1314,9 +1221,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>captured before this date</p>
-</div>
+        <div class='inline'><p>captured before this date</p></div>
       
     </li>
   
@@ -1332,9 +1237,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>maximum number of results</p>
-</div>
+        <div class='inline'><p>maximum number of results</p></div>
       
     </li>
   
@@ -1351,9 +1254,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>matching sources</p>
-</div>
+        <div class='inline'><p>matching sources</p></div>
       
     </li>
   
@@ -1399,11 +1300,8 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Searches sources using semantic similarity (vector search)</p>
-
+    <p>Searches sources using semantic similarity (vector search)</p>
 <p>Requires an embedding generator to be configured.</p>
-
 
   </div>
 </div>
@@ -1421,9 +1319,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>the search query</p>
-</div>
+        <div class='inline'><p>the search query</p></div>
       
     </li>
   
@@ -1439,9 +1335,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>maximum number of results</p>
-</div>
+        <div class='inline'><p>maximum number of results</p></div>
       
     </li>
   
@@ -1458,9 +1352,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>semantically similar sources</p>
-</div>
+        <div class='inline'><p>semantically similar sources</p></div>
       
     </li>
   
@@ -1504,9 +1396,7 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Returns aggregate statistics about sources</p>
-
+    <p>Returns aggregate statistics about sources</p>
 
   </div>
 </div>
@@ -1523,9 +1413,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>statistics including counts by kind and date range</p>
-</div>
+        <div class='inline'><p>statistics including counts by kind and date range</p></div>
       
     </li>
   
@@ -1571,9 +1459,9 @@
 </div>
 
       <div id="footer">
-  Generated on Sat Feb  7 16:59:09 2026 by
+  Generated on Wed Nov 18 23:46:05 2026 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.38 (ruby-3.3.10).
+  0.9.45 (ruby-4.0.9).
 </div>
 
     </div>

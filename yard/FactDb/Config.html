@@ -6,13 +6,13 @@
 <title>
   Class: FactDb::Config
   
-    &mdash; Documentation by YARD 0.9.38
+    &mdash; Documentation by YARD 0.9.45
   
 </title>
 
-  <link rel="stylesheet" href="../css/style.css" type="text/css" />
+  <link rel="stylesheet" href="../css/style.css" type="text/css">
 
-  <link rel="stylesheet" href="../css/common.css" type="text/css" />
+  <link rel="stylesheet" href="../css/common.css" type="text/css">
 
 <script type="text/javascript">
   pathId = "FactDb::Config";
@@ -27,6 +27,8 @@
 
   </head>
   <body>
+    <div id="main_progress" aria-hidden="true"></div>
+
     <div class="nav_wrap">
       <iframe id="nav" src="../class_list.html?1"></iframe>
       <div id="resizer"></div>
@@ -96,24 +98,43 @@
   
   <dl>
     <dt>Defined in:</dt>
-    <dd>lib/fact_db/config.rb</dd>
+    <dd>lib/fact_db/config.rb
+</dd>
   </dl>
   
 </div>
 
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
-    
-<p>FactDb Configuration using MywayConfig</p>
-
+    <p>FactDb Configuration using MywayConfig</p>
 <p>Schema is defined in lib/fact_db/config/defaults.yml (single source of truth)</p>
-
-<p>All config sections return ConfigSections with symbol keys: FactDb.config.database # =&gt; ConfigSection with “postgresql”, host: “localhost”, … FactDb.config.llm # =&gt; ConfigSection with :anthropic, model: “claude-…”, … FactDb.config.embedding # =&gt; ConfigSection with nil, dimensions: 1536 FactDb.config.ranking # =&gt; ConfigSection with 0.25, …</p>
-
-<p>Access values via hash keys or dot notation: <a href=":host">FactDb.config.database</a> FactDb.config.database.host <a href=":provider">FactDb.config.llm</a> FactDb.config.llm.provider</p>
-
-<p>Configuration sources (lowest to highest priority): 1. Bundled defaults: lib/fact_db/config/defaults.yml (ships with gem) 2. XDG user config: - ~/Library/Application Support/fact_db/fact_db.yml (macOS only) - ~/.config/fact_db/fact_db.yml (XDG default) - $XDG_CONFIG_HOME/fact_db/fact_db.yml (if XDG_CONFIG_HOME is set) 3. Project config: ./config/fact_db.yml (environment-specific) 4. Local overrides: ./config/fact_db.local.yml (gitignored) 5. Environment variables (FDB_*) 6. Explicit values passed to configure block</p>
-
+<p>All config sections return ConfigSections with symbol keys:</p>
+<pre class="code ruby"><code class="ruby"><span class='const'><span class='object_link'><a href="../FactDb.html" title="FactDb (module)">FactDb</a></span></span><span class='period'>.</span><span class='id identifier rubyid_config'><span class='object_link'><a href="../FactDb.html#config-class_method" title="FactDb.config (method)">config</a></span></span><span class='period'>.</span><span class='id identifier rubyid_database'>database</span>  <span class='comment'># =&gt; ConfigSection with {adapter: &quot;postgresql&quot;, host: &quot;localhost&quot;, ...}
+</span><span class='const'><span class='object_link'><a href="../FactDb.html" title="FactDb (module)">FactDb</a></span></span><span class='period'>.</span><span class='id identifier rubyid_config'><span class='object_link'><a href="../FactDb.html#config-class_method" title="FactDb.config (method)">config</a></span></span><span class='period'>.</span><span class='id identifier rubyid_llm'>llm</span>       <span class='comment'># =&gt; ConfigSection with {provider: :anthropic, model: &quot;claude-...&quot;, ...}
+</span><span class='const'><span class='object_link'><a href="../FactDb.html" title="FactDb (module)">FactDb</a></span></span><span class='period'>.</span><span class='id identifier rubyid_config'><span class='object_link'><a href="../FactDb.html#config-class_method" title="FactDb.config (method)">config</a></span></span><span class='period'>.</span><span class='id identifier rubyid_embedding'>embedding</span> <span class='comment'># =&gt; ConfigSection with {generator: nil, dimensions: 1536}
+</span><span class='const'><span class='object_link'><a href="../FactDb.html" title="FactDb (module)">FactDb</a></span></span><span class='period'>.</span><span class='id identifier rubyid_config'><span class='object_link'><a href="../FactDb.html#config-class_method" title="FactDb.config (method)">config</a></span></span><span class='period'>.</span><span class='id identifier rubyid_ranking'>ranking</span>   <span class='comment'># =&gt; ConfigSection with {ts_rank_weight: 0.25, ...}
+</span></code></pre>
+<p>Access values via hash keys or dot notation:</p>
+<pre class="code ruby"><code class="ruby"><span class='const'><span class='object_link'><a href="../FactDb.html" title="FactDb (module)">FactDb</a></span></span><span class='period'>.</span><span class='id identifier rubyid_config'><span class='object_link'><a href="../FactDb.html#config-class_method" title="FactDb.config (method)">config</a></span></span><span class='period'>.</span><span class='id identifier rubyid_database'>database</span><span class='lbracket'>[</span><span class='symbol'>:host</span><span class='rbracket'>]</span>
+<span class='const'><span class='object_link'><a href="../FactDb.html" title="FactDb (module)">FactDb</a></span></span><span class='period'>.</span><span class='id identifier rubyid_config'><span class='object_link'><a href="../FactDb.html#config-class_method" title="FactDb.config (method)">config</a></span></span><span class='period'>.</span><span class='id identifier rubyid_database'>database</span><span class='period'>.</span><span class='id identifier rubyid_host'>host</span>
+<span class='const'><span class='object_link'><a href="../FactDb.html" title="FactDb (module)">FactDb</a></span></span><span class='period'>.</span><span class='id identifier rubyid_config'><span class='object_link'><a href="../FactDb.html#config-class_method" title="FactDb.config (method)">config</a></span></span><span class='period'>.</span><span class='id identifier rubyid_llm'>llm</span><span class='lbracket'>[</span><span class='symbol'>:provider</span><span class='rbracket'>]</span>
+<span class='const'><span class='object_link'><a href="../FactDb.html" title="FactDb (module)">FactDb</a></span></span><span class='period'>.</span><span class='id identifier rubyid_config'><span class='object_link'><a href="../FactDb.html#config-class_method" title="FactDb.config (method)">config</a></span></span><span class='period'>.</span><span class='id identifier rubyid_llm'>llm</span><span class='period'>.</span><span class='id identifier rubyid_provider'>provider</span>
+</code></pre>
+<p>Configuration sources (lowest to highest priority):</p>
+<ol>
+<li>Bundled defaults: lib/fact_db/config/defaults.yml (ships with gem)</li>
+<li>XDG user config:
+<ul>
+<li>~/Library/Application Support/fact_db/fact_db.yml (macOS only)</li>
+<li>~/.config/fact_db/fact_db.yml (XDG default)</li>
+<li>$XDG_CONFIG_HOME/fact_db/fact_db.yml (if XDG_CONFIG_HOME is set)</li>
+</ul>
+</li>
+<li>Project config: ./config/fact_db.yml (environment-specific)</li>
+<li>Local overrides: ./config/fact_db.local.yml (gitignored)</li>
+<li>Environment variables (FDB_*)</li>
+<li>Explicit values passed to configure block</li>
+</ol>
 
   </div>
 </div>
@@ -123,18 +144,14 @@
     <h4 class="tag_title">Examples:</h4>
     
       
-        <h5 class="example_title"><div class='inline'>
-<p>Configure with environment variables</p>
-</div></h5>
+        <h5 class="example_title"><div class='inline'><p>Configure with environment variables</p></div></h5>
       
       <pre class="example code"><code>export FDB_DATABASE__URL=postgresql://localhost/fact_db_development
 export FDB_LLM__PROVIDER=openai
 export FDB_LLM__API_KEY=sk-xxx</code></pre>
     
       
-        <h5 class="example_title"><div class='inline'>
-<p>Configure with Ruby block</p>
-</div></h5>
+        <h5 class="example_title"><div class='inline'><p>Configure with Ruby block</p></div></h5>
       
       <pre class="example code"><code><span class='const'><span class='object_link'><a href="../FactDb.html" title="FactDb (module)">FactDb</a></span></span><span class='period'>.</span><span class='id identifier rubyid_configure'><span class='object_link'><a href="../FactDb.html#configure-class_method" title="FactDb.configure (method)">configure</a></span></span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_config'>config</span><span class='op'>|</span>
   <span class='id identifier rubyid_config'>config</span><span class='period'>.</span><span class='id identifier rubyid_llm'>llm</span><span class='lbracket'>[</span><span class='symbol'>:provider</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='symbol'>:openai</span>
@@ -171,9 +188,7 @@ export FDB_LLM__API_KEY=sk-xxx</code></pre>
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>========================================================================== Callable Accessors (not loaded from config sources) ==========================================================================.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'><h6 id="Callable_Accessors__not_loaded_from_config_sources_____________________________________________________________________________">Callable Accessors (not loaded from config sources) ==========================================================================.</h6></div></span>
   
 </li>
 
@@ -198,9 +213,7 @@ export FDB_LLM__API_KEY=sk-xxx</code></pre>
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>========================================================================== Callable Accessors (not loaded from config sources) ==========================================================================.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'><h6 id="Callable_Accessors__not_loaded_from_config_sources_____________________________________________________________________________">Callable Accessors (not loaded from config sources) ==========================================================================.</h6></div></span>
   
 </li>
 
@@ -225,9 +238,7 @@ export FDB_LLM__API_KEY=sk-xxx</code></pre>
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>========================================================================== Callable Accessors (not loaded from config sources) ==========================================================================.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'><h6 id="Callable_Accessors__not_loaded_from_config_sources_____________________________________________________________________________">Callable Accessors (not loaded from config sources) ==========================================================================.</h6></div></span>
   
 </li>
 
@@ -306,14 +317,13 @@ export FDB_LLM__API_KEY=sk-xxx</code></pre>
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>========================================================================== XDG Config Path Helpers ==========================================================================.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'><h6 id="XDG_Config_Path_Helpers____________________________________________________________________________">XDG Config Path Helpers ==========================================================================.</h6></div></span>
   
 </li>
 
       
     </ul>
+    
   
 
 
@@ -334,11 +344,8 @@ export FDB_LLM__API_KEY=sk-xxx</code></pre>
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>==========================================================================</p>
-
-<h1 id="label-Callable+Accessors+-28not+loaded+from+config+sources-29">Callable Accessors (not loaded from config sources)</h1>
-
+    <p>==========================================================================</p>
+<h1 id="Callable_Accessors__not_loaded_from_config_sources_">Callable Accessors (not loaded from config sources)</h1>
 
   </div>
 </div>
@@ -379,11 +386,8 @@ export FDB_LLM__API_KEY=sk-xxx</code></pre>
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>==========================================================================</p>
-
-<h1 id="label-Callable+Accessors+-28not+loaded+from+config+sources-29">Callable Accessors (not loaded from config sources)</h1>
-
+    <p>==========================================================================</p>
+<h1 id="Callable_Accessors__not_loaded_from_config_sources_">Callable Accessors (not loaded from config sources)</h1>
 
   </div>
 </div>
@@ -424,11 +428,8 @@ export FDB_LLM__API_KEY=sk-xxx</code></pre>
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>==========================================================================</p>
-
-<h1 id="label-Callable+Accessors+-28not+loaded+from+config+sources-29">Callable Accessors (not loaded from config sources)</h1>
-
+    <p>==========================================================================</p>
+<h1 id="Callable_Accessors__not_loaded_from_config_sources_">Callable Accessors (not loaded from config sources)</h1>
 
   </div>
 </div>
@@ -546,11 +547,8 @@ export FDB_LLM__API_KEY=sk-xxx</code></pre>
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>==========================================================================</p>
-
-<h1 id="label-XDG+Config+Path+Helpers">XDG Config Path Helpers</h1>
-
+    <p>==========================================================================</p>
+<h1 id="XDG_Config_Path_Helpers">XDG Config Path Helpers</h1>
 
   </div>
 </div>
@@ -583,9 +581,9 @@ export FDB_LLM__API_KEY=sk-xxx</code></pre>
 </div>
 
       <div id="footer">
-  Generated on Sat Feb  7 16:59:06 2026 by
+  Generated on Wed Nov 18 23:46:04 2026 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.38 (ruby-3.3.10).
+  0.9.45 (ruby-4.0.9).
 </div>
 
     </div>

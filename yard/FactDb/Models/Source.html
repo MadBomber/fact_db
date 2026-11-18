@@ -6,13 +6,13 @@
 <title>
   Class: FactDb::Models::Source
   
-    &mdash; Documentation by YARD 0.9.38
+    &mdash; Documentation by YARD 0.9.45
   
 </title>
 
-  <link rel="stylesheet" href="../../css/style.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/style.css" type="text/css">
 
-  <link rel="stylesheet" href="../../css/common.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/common.css" type="text/css">
 
 <script type="text/javascript">
   pathId = "FactDb::Models::Source";
@@ -27,6 +27,8 @@
 
   </head>
   <body>
+    <div id="main_progress" aria-hidden="true"></div>
+
     <div class="nav_wrap">
       <iframe id="nav" src="../../class_list.html?1"></iframe>
       <div id="resizer"></div>
@@ -96,18 +98,18 @@
   
   <dl>
     <dt>Defined in:</dt>
-    <dd>lib/fact_db/models/source.rb</dd>
+    <dd>lib/fact_db/models/source.rb
+</dd>
   </dl>
   
 </div>
 
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
-    
-<p>Represents a source document from which facts are extracted</p>
-
-<p>Sources are immutable content documents (emails, transcripts, documents, etc.) that serve as the provenance for extracted facts. Content is deduplicated by SHA256 hash.</p>
-
+    <p>Represents a source document from which facts are extracted</p>
+<p>Sources are immutable content documents (emails, transcripts, documents, etc.)
+that serve as the provenance for extracted facts. Content is deduplicated
+by SHA256 hash.</p>
 
   </div>
 </div>
@@ -117,16 +119,12 @@
     <h4 class="tag_title">Examples:</h4>
     
       
-        <h5 class="example_title"><div class='inline'>
-<p>Create a source</p>
-</div></h5>
+        <h5 class="example_title"><div class='inline'><p>Create a source</p></div></h5>
       
       <pre class="example code"><code><span class='id identifier rubyid_source'>source</span> <span class='op'>=</span> <span class='const'>Source</span><span class='period'>.</span><span class='id identifier rubyid_create!'>create!</span><span class='lparen'>(</span><span class='label'>content:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Meeting notes...</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>kind:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>meeting_notes</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>captured_at:</span> <span class='const'>Time</span><span class='period'>.</span><span class='id identifier rubyid_now'>now</span><span class='rparen'>)</span></code></pre>
     
       
-        <h5 class="example_title"><div class='inline'>
-<p>Search sources</p>
-</div></h5>
+        <h5 class="example_title"><div class='inline'><p>Search sources</p></div></h5>
       
       <pre class="example code"><code><span class='const'>Source</span><span class='period'>.</span><span class='id identifier rubyid_search_text'><span class='object_link'><a href="#search_text-instance_method" title="FactDb::Models::Source#search_text (method)">search_text</a></span></span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>quarterly report</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_by_kind'>by_kind</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>document</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span></code></pre>
     
@@ -145,9 +143,7 @@
         <dt id="KINDS-constant" class="">KINDS =
           <div class="docstring">
   <div class="discussion">
-    
-<p>Returns valid source content kinds.</p>
-
+    <p>Returns valid source content kinds.</p>
 
   </div>
 </div>
@@ -164,9 +160,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>valid source content kinds</p>
-</div>
+        <div class='inline'><p>valid source content kinds</p></div>
       
     </li>
   
@@ -210,14 +204,13 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Finds sources by vector similarity using pgvector.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'><p>Finds sources by vector similarity using pgvector.</p></div></span>
   
 </li>
 
       
     </ul>
+    
   
     <h2>
       Instance Method Summary
@@ -243,9 +236,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Returns sources of a specific kind.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'><p>Returns sources of a specific kind.</p></div></span>
   
 </li>
 
@@ -267,9 +258,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Returns sources captured after a date.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'><p>Returns sources captured after a date.</p></div></span>
   
 </li>
 
@@ -291,9 +280,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Returns sources captured before a date.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'><p>Returns sources captured before a date.</p></div></span>
   
 </li>
 
@@ -315,9 +302,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Returns sources captured within a date range.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'><p>Returns sources captured within a date range.</p></div></span>
   
 </li>
 
@@ -339,9 +324,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Returns whether the source content can be modified.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'><p>Returns whether the source content can be modified.</p></div></span>
   
 </li>
 
@@ -363,9 +346,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Returns a preview of the content, truncated if needed.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'><p>Returns a preview of the content, truncated if needed.</p></div></span>
   
 </li>
 
@@ -387,9 +368,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Full-text search on source content using persisted tsvector column.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'><p>Full-text search on source content using persisted tsvector column.</p></div></span>
   
 </li>
 
@@ -411,14 +390,13 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Returns the word count of the content.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'><p>Returns the word count of the content.</p></div></span>
   
 </li>
 
       
     </ul>
+    
   
 
 
@@ -439,9 +417,7 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Finds sources by vector similarity using pgvector</p>
-
+    <p>Finds sources by vector similarity using pgvector</p>
 
   </div>
 </div>
@@ -459,9 +435,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>the embedding vector to search with</p>
-</div>
+        <div class='inline'><p>the embedding vector to search with</p></div>
       
     </li>
   
@@ -477,9 +451,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>maximum number of results</p>
-</div>
+        <div class='inline'><p>maximum number of results</p></div>
       
     </li>
   
@@ -496,9 +468,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>sources ordered by similarity</p>
-</div>
+        <div class='inline'><p>sources ordered by similarity</p></div>
       
     </li>
   
@@ -546,9 +516,7 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Returns sources of a specific kind</p>
-
+    <p>Returns sources of a specific kind</p>
 
   </div>
 </div>
@@ -566,9 +534,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>the source kind</p>
-</div>
+        <div class='inline'><p>the source kind</p></div>
       
     </li>
   
@@ -616,9 +582,7 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Returns sources captured after a date</p>
-
+    <p>Returns sources captured after a date</p>
 
   </div>
 </div>
@@ -636,9 +600,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>the cutoff date</p>
-</div>
+        <div class='inline'><p>the cutoff date</p></div>
       
     </li>
   
@@ -686,9 +648,7 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Returns sources captured before a date</p>
-
+    <p>Returns sources captured before a date</p>
 
   </div>
 </div>
@@ -706,9 +666,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>the cutoff date</p>
-</div>
+        <div class='inline'><p>the cutoff date</p></div>
       
     </li>
   
@@ -756,9 +714,7 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Returns sources captured within a date range</p>
-
+    <p>Returns sources captured within a date range</p>
 
   </div>
 </div>
@@ -776,9 +732,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>start of range</p>
-</div>
+        <div class='inline'><p>start of range</p></div>
       
     </li>
   
@@ -792,9 +746,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>end of range</p>
-</div>
+        <div class='inline'><p>end of range</p></div>
       
     </li>
   
@@ -842,11 +794,8 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Returns whether the source content can be modified</p>
-
+    <p>Returns whether the source content can be modified</p>
 <p>Sources are always immutable to preserve provenance integrity.</p>
-
 
   </div>
 </div>
@@ -863,9 +812,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>always returns true</p>
-</div>
+        <div class='inline'><p>always returns true</p></div>
       
     </li>
   
@@ -903,9 +850,7 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Returns a preview of the content, truncated if needed</p>
-
+    <p>Returns a preview of the content, truncated if needed</p>
 
   </div>
 </div>
@@ -925,9 +870,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>maximum length (default: 200)</p>
-</div>
+        <div class='inline'><p>maximum length (default: 200)</p></div>
       
     </li>
   
@@ -944,9 +887,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>content preview with “…” if truncated</p>
-</div>
+        <div class='inline'><p>content preview with &quot;...&quot; if truncated</p></div>
       
     </li>
   
@@ -988,9 +929,7 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Full-text search on source content using persisted tsvector column</p>
-
+    <p>Full-text search on source content using persisted tsvector column</p>
 
   </div>
 </div>
@@ -1008,9 +947,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>the search query</p>
-</div>
+        <div class='inline'><p>the search query</p></div>
       
     </li>
   
@@ -1062,9 +999,7 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Returns the word count of the content</p>
-
+    <p>Returns the word count of the content</p>
 
   </div>
 </div>
@@ -1081,9 +1016,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>number of words in content</p>
-</div>
+        <div class='inline'><p>number of words in content</p></div>
       
     </li>
   
@@ -1115,9 +1048,9 @@
 </div>
 
       <div id="footer">
-  Generated on Sat Feb  7 16:59:07 2026 by
+  Generated on Wed Nov 18 23:46:04 2026 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.38 (ruby-3.3.10).
+  0.9.45 (ruby-4.0.9).
 </div>
 
     </div>

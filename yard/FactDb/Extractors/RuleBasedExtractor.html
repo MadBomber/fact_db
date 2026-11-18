@@ -6,13 +6,13 @@
 <title>
   Class: FactDb::Extractors::RuleBasedExtractor
   
-    &mdash; Documentation by YARD 0.9.38
+    &mdash; Documentation by YARD 0.9.45
   
 </title>
 
-  <link rel="stylesheet" href="../../css/style.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/style.css" type="text/css">
 
-  <link rel="stylesheet" href="../../css/common.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/common.css" type="text/css">
 
 <script type="text/javascript">
   pathId = "FactDb::Extractors::RuleBasedExtractor";
@@ -27,6 +27,8 @@
 
   </head>
   <body>
+    <div id="main_progress" aria-hidden="true"></div>
+
     <div class="nav_wrap">
       <iframe id="nav" src="../../class_list.html?1"></iframe>
       <div id="resizer"></div>
@@ -96,18 +98,18 @@
   
   <dl>
     <dt>Defined in:</dt>
-    <dd>lib/fact_db/extractors/rule_based_extractor.rb</dd>
+    <dd>lib/fact_db/extractors/rule_based_extractor.rb
+</dd>
   </dl>
   
 </div>
 
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
-    
-<p>Rule-based fact extractor using regex patterns</p>
-
-<p>Extracts facts from text using predefined regex patterns for common fact types like employment, relationships, and locations. Does not require an LLM but is limited to recognized patterns.</p>
-
+    <p>Rule-based fact extractor using regex patterns</p>
+<p>Extracts facts from text using predefined regex patterns for common
+fact types like employment, relationships, and locations. Does not
+require an LLM but is limited to recognized patterns.</p>
 
   </div>
 </div>
@@ -117,9 +119,7 @@
     <h4 class="tag_title">Examples:</h4>
     
       
-        <h5 class="example_title"><div class='inline'>
-<p>Extract facts using patterns</p>
-</div></h5>
+        <h5 class="example_title"><div class='inline'><p>Extract facts using patterns</p></div></h5>
       
       <pre class="example code"><code><span class='id identifier rubyid_extractor'>extractor</span> <span class='op'>=</span> <span class='const'>RuleBasedExtractor</span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Base.html#initialize-instance_method" title="FactDb::Extractors::Base#initialize (method)">new</a></span></span>
 <span class='id identifier rubyid_facts'>facts</span> <span class='op'>=</span> <span class='id identifier rubyid_extractor'>extractor</span><span class='period'>.</span><span class='id identifier rubyid_extract'>extract</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Paula works at Microsoft in Seattle</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span></code></pre>
@@ -139,9 +139,7 @@
         <dt id="DATE_PATTERNS-constant" class="">DATE_PATTERNS =
           <div class="docstring">
   <div class="discussion">
-    
-<p>Returns patterns for extracting start dates.</p>
-
+    <p>Returns patterns for extracting start dates.</p>
 
   </div>
 </div>
@@ -158,9 +156,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>patterns for extracting start dates</p>
-</div>
+        <div class='inline'><p>patterns for extracting start dates</p></div>
       
     </li>
   
@@ -182,9 +178,7 @@
         <dt id="END_DATE_PATTERNS-constant" class="">END_DATE_PATTERNS =
           <div class="docstring">
   <div class="discussion">
-    
-<p>Returns patterns for extracting end dates.</p>
-
+    <p>Returns patterns for extracting end dates.</p>
 
   </div>
 </div>
@@ -201,9 +195,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>patterns for extracting end dates</p>
-</div>
+        <div class='inline'><p>patterns for extracting end dates</p></div>
       
     </li>
   
@@ -220,9 +212,7 @@
         <dt id="EMPLOYMENT_PATTERNS-constant" class="">EMPLOYMENT_PATTERNS =
           <div class="docstring">
   <div class="discussion">
-    
-<p>Returns patterns for employment facts.</p>
-
+    <p>Returns patterns for employment facts.</p>
 
   </div>
 </div>
@@ -239,9 +229,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>patterns for employment facts</p>
-</div>
+        <div class='inline'><p>patterns for employment facts</p></div>
       
     </li>
   
@@ -263,9 +251,7 @@
         <dt id="RELATIONSHIP_PATTERNS-constant" class="">RELATIONSHIP_PATTERNS =
           <div class="docstring">
   <div class="discussion">
-    
-<p>Returns patterns for relationship facts.</p>
-
+    <p>Returns patterns for relationship facts.</p>
 
   </div>
 </div>
@@ -282,9 +268,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>patterns for relationship facts</p>
-</div>
+        <div class='inline'><p>patterns for relationship facts</p></div>
       
     </li>
   
@@ -302,9 +286,7 @@
         <dt id="LOCATION_PATTERNS-constant" class="">LOCATION_PATTERNS =
           <div class="docstring">
   <div class="discussion">
-    
-<p>Returns patterns for location facts.</p>
-
+    <p>Returns patterns for location facts.</p>
 
   </div>
 </div>
@@ -321,9 +303,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>patterns for location facts</p>
-</div>
+        <div class='inline'><p>patterns for location facts</p></div>
       
     </li>
   
@@ -377,9 +357,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Extracts facts from text using regex patterns.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'><p>Extracts facts from text using regex patterns.</p></div></span>
   
 </li>
 
@@ -401,17 +379,17 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Extracts entities from text using regex patterns.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'><p>Extracts entities from text using regex patterns.</p></div></span>
   
 </li>
 
       
     </ul>
+    
   
 
 
+  
   
   
   
@@ -445,11 +423,9 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Extracts facts from text using regex patterns</p>
-
-<p>Applies employment, relationship, and location patterns to identify facts, with associated entity mentions and temporal information.</p>
-
+    <p>Extracts facts from text using regex patterns</p>
+<p>Applies employment, relationship, and location patterns to identify
+facts, with associated entity mentions and temporal information.</p>
 
   </div>
 </div>
@@ -467,9 +443,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>raw text to extract from</p>
-</div>
+        <div class='inline'><p>raw text to extract from</p></div>
       
     </li>
   
@@ -485,9 +459,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>additional context</p>
-</div>
+        <div class='inline'><p>additional context</p></div>
       
     </li>
   
@@ -508,9 +480,7 @@
             
           </span>
           
-            &mdash; <div class='inline'>
-<p>default timestamp for facts</p>
-</div>
+            &mdash; <div class='inline'><p>default timestamp for facts</p></div>
           
         </li>
       
@@ -528,9 +498,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>array of fact hashes, deduplicated by text</p>
-</div>
+        <div class='inline'><p>array of fact hashes, deduplicated by text</p></div>
       
     </li>
   
@@ -594,11 +562,9 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Extracts entities from text using regex patterns</p>
-
-<p>Identifies person names, organization names, and locations using pattern matching. Filters out common words, job titles, and known phrases.</p>
-
+    <p>Extracts entities from text using regex patterns</p>
+<p>Identifies person names, organization names, and locations using
+pattern matching. Filters out common words, job titles, and known phrases.</p>
 
   </div>
 </div>
@@ -616,9 +582,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>raw text to extract from</p>
-</div>
+        <div class='inline'><p>raw text to extract from</p></div>
       
     </li>
   
@@ -635,9 +599,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>array of entity hashes with :name and :kind</p>
-</div>
+        <div class='inline'><p>array of entity hashes with :name and :kind</p></div>
       
     </li>
   
@@ -733,9 +695,9 @@
 </div>
 
       <div id="footer">
-  Generated on Sat Feb  7 16:59:09 2026 by
+  Generated on Wed Nov 18 23:46:05 2026 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.38 (ruby-3.3.10).
+  0.9.45 (ruby-4.0.9).
 </div>
 
     </div>

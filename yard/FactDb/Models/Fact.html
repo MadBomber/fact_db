@@ -6,13 +6,13 @@
 <title>
   Class: FactDb::Models::Fact
   
-    &mdash; Documentation by YARD 0.9.38
+    &mdash; Documentation by YARD 0.9.45
   
 </title>
 
-  <link rel="stylesheet" href="../../css/style.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/style.css" type="text/css">
 
-  <link rel="stylesheet" href="../../css/common.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/common.css" type="text/css">
 
 <script type="text/javascript">
   pathId = "FactDb::Models::Fact";
@@ -27,6 +27,8 @@
 
   </head>
   <body>
+    <div id="main_progress" aria-hidden="true"></div>
+
     <div class="nav_wrap">
       <iframe id="nav" src="../../class_list.html?1"></iframe>
       <div id="resizer"></div>
@@ -96,18 +98,18 @@
   
   <dl>
     <dt>Defined in:</dt>
-    <dd>lib/fact_db/models/fact.rb</dd>
+    <dd>lib/fact_db/models/fact.rb
+</dd>
   </dl>
   
 </div>
 
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
-    
-<p>Represents a temporal fact in the database</p>
-
-<p>Facts are the core data structure in FactDb, representing statements with temporal validity (valid_at/invalid_at), entity mentions, and source provenance. Facts can be canonical, superseded, or synthesized from other facts.</p>
-
+    <p>Represents a temporal fact in the database</p>
+<p>Facts are the core data structure in FactDb, representing statements with
+temporal validity (valid_at/invalid_at), entity mentions, and source provenance.
+Facts can be canonical, superseded, or synthesized from other facts.</p>
 
   </div>
 </div>
@@ -117,9 +119,7 @@
     <h4 class="tag_title">Examples:</h4>
     
       
-        <h5 class="example_title"><div class='inline'>
-<p>Create a fact</p>
-</div></h5>
+        <h5 class="example_title"><div class='inline'><p>Create a fact</p></div></h5>
       
       <pre class="example code"><code><span class='id identifier rubyid_fact'>fact</span> <span class='op'>=</span> <span class='const'>Fact</span><span class='period'>.</span><span class='id identifier rubyid_create!'>create!</span><span class='lparen'>(</span>
   <span class='label'>text:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>John works at Acme Corp</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
@@ -128,9 +128,7 @@
 <span class='rparen'>)</span></code></pre>
     
       
-        <h5 class="example_title"><div class='inline'>
-<p>Query currently valid facts</p>
-</div></h5>
+        <h5 class="example_title"><div class='inline'><p>Query currently valid facts</p></div></h5>
       
       <pre class="example code"><code><span class='const'>Fact</span><span class='period'>.</span><span class='id identifier rubyid_canonical'><span class='object_link'><a href="#canonical-instance_method" title="FactDb::Models::Fact#canonical (method)">canonical</a></span></span><span class='period'>.</span><span class='id identifier rubyid_currently_valid'>currently_valid</span></code></pre>
     
@@ -149,9 +147,7 @@
         <dt id="STATUSES-constant" class="">STATUSES =
           <div class="docstring">
   <div class="discussion">
-    
-<p>Returns valid fact statuses.</p>
-
+    <p>Returns valid fact statuses.</p>
 
   </div>
 </div>
@@ -168,9 +164,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>valid fact statuses</p>
-</div>
+        <div class='inline'><p>valid fact statuses</p></div>
       
     </li>
   
@@ -183,9 +177,7 @@
         <dt id="EXTRACTION_METHODS-constant" class="">EXTRACTION_METHODS =
           <div class="docstring">
   <div class="discussion">
-    
-<p>Returns valid extraction methods.</p>
-
+    <p>Returns valid extraction methods.</p>
 
   </div>
 </div>
@@ -202,9 +194,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>valid extraction methods</p>
-</div>
+        <div class='inline'><p>valid extraction methods</p></div>
       
     </li>
   
@@ -248,9 +238,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Returns facts that became invalid within a date range.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'><p>Returns facts that became invalid within a date range.</p></div></span>
   
 </li>
 
@@ -272,9 +260,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Returns facts that became valid within a date range.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'><p>Returns facts that became valid within a date range.</p></div></span>
   
 </li>
 
@@ -296,9 +282,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Alias for extracted_by.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'><p>Alias for extracted_by.</p></div></span>
   
 </li>
 
@@ -320,9 +304,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Returns facts with canonical status.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'><p>Returns facts with canonical status.</p></div></span>
   
 </li>
 
@@ -344,9 +326,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Returns facts that are currently valid (no invalid_at date).</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'><p>Returns facts that are currently valid (no invalid_at date).</p></div></span>
   
 </li>
 
@@ -368,9 +348,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Returns facts extracted by a specific method.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'><p>Returns facts extracted by a specific method.</p></div></span>
   
 </li>
 
@@ -392,9 +370,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Returns facts with confidence &gt;= 0.9.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'><p>Returns facts with confidence &gt;= 0.9.</p></div></span>
   
 </li>
 
@@ -416,9 +392,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Returns facts that have been invalidated.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'><p>Returns facts that have been invalidated.</p></div></span>
   
 </li>
 
@@ -440,9 +414,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Returns facts with confidence &lt; 0.5.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'><p>Returns facts with confidence &lt; 0.5.</p></div></span>
   
 </li>
 
@@ -464,9 +436,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Returns facts that mention a specific entity.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'><p>Returns facts that mention a specific entity.</p></div></span>
   
 </li>
 
@@ -488,9 +458,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Full-text search on fact text using persisted tsvector column.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'><p>Full-text search on fact text using persisted tsvector column.</p></div></span>
   
 </li>
 
@@ -512,9 +480,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Returns facts that have been superseded.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'><p>Returns facts that have been superseded.</p></div></span>
   
 </li>
 
@@ -536,9 +502,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Returns facts that were synthesized from other facts.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'><p>Returns facts that were synthesized from other facts.</p></div></span>
   
 </li>
 
@@ -560,9 +524,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Returns facts valid at a specific point in time.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'><p>Returns facts valid at a specific point in time.</p></div></span>
   
 </li>
 
@@ -584,9 +546,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Returns facts valid during a date range.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'><p>Returns facts valid during a date range.</p></div></span>
   
 </li>
 
@@ -608,14 +568,13 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Returns facts where an entity has a specific role.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'><p>Returns facts where an entity has a specific role.</p></div></span>
   
 </li>
 
       
     </ul>
+    
   
     <h2>
       Class Method Summary
@@ -641,14 +600,13 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Finds facts by vector similarity using pgvector.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'><p>Finds facts by vector similarity using pgvector.</p></div></span>
   
 </li>
 
       
     </ul>
+    
   
     <h2>
       Instance Method Summary
@@ -674,9 +632,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Adds an entity mention to this fact.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'><p>Adds an entity mention to this fact.</p></div></span>
   
 </li>
 
@@ -698,9 +654,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Adds a source document to this fact.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'><p>Adds a source document to this fact.</p></div></span>
   
 </li>
 
@@ -722,9 +676,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Returns facts that corroborate this one.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'><p>Returns facts that corroborate this one.</p></div></span>
   
 </li>
 
@@ -746,9 +698,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Checks if the fact is currently valid.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'><p>Checks if the fact is currently valid.</p></div></span>
   
 </li>
 
@@ -770,9 +720,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Returns the duration the fact was valid.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'><p>Returns the duration the fact was valid.</p></div></span>
   
 </li>
 
@@ -794,9 +742,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Returns the duration in days the fact was valid.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'><p>Returns the duration in days the fact was valid.</p></div></span>
   
 </li>
 
@@ -818,9 +764,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Returns the complete evidence chain back to original sources.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'><p>Returns the complete evidence chain back to original sources.</p></div></span>
   
 </li>
 
@@ -842,9 +786,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Invalidates this fact at a specific time.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'><p>Invalidates this fact at a specific time.</p></div></span>
   
 </li>
 
@@ -866,9 +808,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Returns the original source lines from which this fact was derived.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'><p>Returns the original source lines from which this fact was derived.</p></div></span>
   
 </li>
 
@@ -890,9 +830,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Returns the source facts for synthesized facts.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'><p>Returns the source facts for synthesized facts.</p></div></span>
   
 </li>
 
@@ -914,9 +852,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Supersedes this fact with new information.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'><p>Supersedes this fact with new information.</p></div></span>
   
 </li>
 
@@ -938,9 +874,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Checks if this fact has been superseded.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'><p>Checks if this fact has been superseded.</p></div></span>
   
 </li>
 
@@ -962,9 +896,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Checks if this fact was synthesized from other facts.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'><p>Checks if this fact was synthesized from other facts.</p></div></span>
   
 </li>
 
@@ -986,14 +918,13 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Checks if the fact was valid at a specific date.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'><p>Checks if the fact was valid at a specific date.</p></div></span>
   
 </li>
 
       
     </ul>
+    
   
 
 
@@ -1014,9 +945,7 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Finds facts by vector similarity using pgvector</p>
-
+    <p>Finds facts by vector similarity using pgvector</p>
 
   </div>
 </div>
@@ -1034,9 +963,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>the embedding vector to search with</p>
-</div>
+        <div class='inline'><p>the embedding vector to search with</p></div>
       
     </li>
   
@@ -1052,9 +979,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>maximum number of results</p>
-</div>
+        <div class='inline'><p>maximum number of results</p></div>
       
     </li>
   
@@ -1071,9 +996,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>facts ordered by similarity</p>
-</div>
+        <div class='inline'><p>facts ordered by similarity</p></div>
       
     </li>
   
@@ -1121,9 +1044,7 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Adds an entity mention to this fact</p>
-
+    <p>Adds an entity mention to this fact</p>
 
   </div>
 </div>
@@ -1141,9 +1062,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>the entity being mentioned</p>
-</div>
+        <div class='inline'><p>the entity being mentioned</p></div>
       
     </li>
   
@@ -1157,9 +1076,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>the mention text as it appears in the fact</p>
-</div>
+        <div class='inline'><p>the mention text as it appears in the fact</p></div>
       
     </li>
   
@@ -1175,9 +1092,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>the role (subject, object, etc.)</p>
-</div>
+        <div class='inline'><p>the role (subject, object, etc.)</p></div>
       
     </li>
   
@@ -1193,9 +1108,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>confidence score (0.0 to 1.0)</p>
-</div>
+        <div class='inline'><p>confidence score (0.0 to 1.0)</p></div>
       
     </li>
   
@@ -1212,9 +1125,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>the created or found mention</p>
-</div>
+        <div class='inline'><p>the created or found mention</p></div>
       
     </li>
   
@@ -1258,9 +1169,7 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Adds a source document to this fact</p>
-
+    <p>Adds a source document to this fact</p>
 
   </div>
 </div>
@@ -1278,9 +1187,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>the source document</p>
-</div>
+        <div class='inline'><p>the source document</p></div>
       
     </li>
   
@@ -1296,9 +1203,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>source kind (primary, corroborating, etc.)</p>
-</div>
+        <div class='inline'><p>source kind (primary, corroborating, etc.)</p></div>
       
     </li>
   
@@ -1314,9 +1219,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>relevant excerpt from the source</p>
-</div>
+        <div class='inline'><p>relevant excerpt from the source</p></div>
       
     </li>
   
@@ -1332,9 +1235,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>confidence score (0.0 to 1.0)</p>
-</div>
+        <div class='inline'><p>confidence score (0.0 to 1.0)</p></div>
       
     </li>
   
@@ -1351,9 +1252,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>the created or found fact-source link</p>
-</div>
+        <div class='inline'><p>the created or found fact-source link</p></div>
       
     </li>
   
@@ -1399,9 +1298,7 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Returns facts that became invalid within a date range</p>
-
+    <p>Returns facts that became invalid within a date range</p>
 
   </div>
 </div>
@@ -1419,9 +1316,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>start of range</p>
-</div>
+        <div class='inline'><p>start of range</p></div>
       
     </li>
   
@@ -1435,9 +1330,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>end of range</p>
-</div>
+        <div class='inline'><p>end of range</p></div>
       
     </li>
   
@@ -1489,9 +1382,7 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Returns facts that became valid within a date range</p>
-
+    <p>Returns facts that became valid within a date range</p>
 
   </div>
 </div>
@@ -1509,9 +1400,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>start of range</p>
-</div>
+        <div class='inline'><p>start of range</p></div>
       
     </li>
   
@@ -1525,9 +1414,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>end of range</p>
-</div>
+        <div class='inline'><p>end of range</p></div>
       
     </li>
   
@@ -1579,9 +1466,7 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Alias for extracted_by</p>
-
+    <p>Alias for extracted_by</p>
 
   </div>
 </div>
@@ -1599,9 +1484,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>extraction method</p>
-</div>
+        <div class='inline'><p>extraction method</p></div>
       
     </li>
   
@@ -1649,9 +1532,7 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Returns facts with canonical status</p>
-
+    <p>Returns facts with canonical status</p>
 
   </div>
 </div>
@@ -1699,9 +1580,7 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Returns facts that corroborate this one</p>
-
+    <p>Returns facts that corroborate this one</p>
 
   </div>
 </div>
@@ -1718,9 +1597,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>corroborating facts</p>
-</div>
+        <div class='inline'><p>corroborating facts</p></div>
       
     </li>
   
@@ -1762,9 +1639,7 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Returns facts that are currently valid (no invalid_at date)</p>
-
+    <p>Returns facts that are currently valid (no invalid_at date)</p>
 
   </div>
 </div>
@@ -1812,9 +1687,7 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Checks if the fact is currently valid</p>
-
+    <p>Checks if the fact is currently valid</p>
 
   </div>
 </div>
@@ -1831,9 +1704,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>true if the fact has no invalid_at date</p>
-</div>
+        <div class='inline'><p>true if the fact has no invalid_at date</p></div>
       
     </li>
   
@@ -1871,9 +1742,7 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Returns the duration the fact was valid</p>
-
+    <p>Returns the duration the fact was valid</p>
 
   </div>
 </div>
@@ -1890,9 +1759,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>duration or nil if still valid</p>
-</div>
+        <div class='inline'><p>duration or nil if still valid</p></div>
       
     </li>
   
@@ -1934,9 +1801,7 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Returns the duration in days the fact was valid</p>
-
+    <p>Returns the duration in days the fact was valid</p>
 
   </div>
 </div>
@@ -1953,9 +1818,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>number of days or nil if still valid</p>
-</div>
+        <div class='inline'><p>number of days or nil if still valid</p></div>
       
     </li>
   
@@ -1997,11 +1860,8 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Returns the complete evidence chain back to original sources</p>
-
+    <p>Returns the complete evidence chain back to original sources</p>
 <p>Recursively traces through synthesized facts to find all original sources.</p>
-
 
   </div>
 </div>
@@ -2018,9 +1878,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>unique source documents</p>
-</div>
+        <div class='inline'><p>unique source documents</p></div>
       
     </li>
   
@@ -2074,9 +1932,7 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Returns facts extracted by a specific method</p>
-
+    <p>Returns facts extracted by a specific method</p>
 
   </div>
 </div>
@@ -2094,9 +1950,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>extraction method (manual, llm, rule_based)</p>
-</div>
+        <div class='inline'><p>extraction method (manual, llm, rule_based)</p></div>
       
     </li>
   
@@ -2144,9 +1998,7 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Returns facts with confidence &gt;= 0.9</p>
-
+    <p>Returns facts with confidence &gt;= 0.9</p>
 
   </div>
 </div>
@@ -2194,9 +2046,7 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Returns facts that have been invalidated</p>
-
+    <p>Returns facts that have been invalidated</p>
 
   </div>
 </div>
@@ -2244,9 +2094,7 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Invalidates this fact at a specific time</p>
-
+    <p>Invalidates this fact at a specific time</p>
 
   </div>
 </div>
@@ -2266,9 +2114,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>when the fact became invalid (defaults to now)</p>
-</div>
+        <div class='inline'><p>when the fact became invalid (defaults to now)</p></div>
       
     </li>
   
@@ -2285,9 +2131,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>true if update succeeded</p>
-</div>
+        <div class='inline'><p>true if update succeeded</p></div>
       
     </li>
   
@@ -2325,9 +2169,7 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Returns facts with confidence &lt; 0.5</p>
-
+    <p>Returns facts with confidence &lt; 0.5</p>
 
   </div>
 </div>
@@ -2375,9 +2217,7 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Returns facts that mention a specific entity</p>
-
+    <p>Returns facts that mention a specific entity</p>
 
   </div>
 </div>
@@ -2395,9 +2235,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>the entity ID</p>
-</div>
+        <div class='inline'><p>the entity ID</p></div>
       
     </li>
   
@@ -2449,11 +2287,9 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Returns the original source lines from which this fact was derived</p>
-
-<p>Uses line metadata to extract the relevant section from the source document and highlights lines containing key terms from the fact.</p>
-
+    <p>Returns the original source lines from which this fact was derived</p>
+<p>Uses line metadata to extract the relevant section from the source document
+and highlights lines containing key terms from the fact.</p>
 
   </div>
 </div>
@@ -2484,9 +2320,8 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>hash with :full_section, :focused_lines, :focused_line_numbers, :key_terms or nil if source/line metadata unavailable</p>
-</div>
+        <div class='inline'><p>hash with :full_section, :focused_lines, :focused_line_numbers, :key_terms
+or nil if source/line metadata unavailable</p></div>
       
     </li>
   
@@ -2582,9 +2417,7 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Full-text search on fact text using persisted tsvector column</p>
-
+    <p>Full-text search on fact text using persisted tsvector column</p>
 
   </div>
 </div>
@@ -2602,9 +2435,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>the search query</p>
-</div>
+        <div class='inline'><p>the search query</p></div>
       
     </li>
   
@@ -2656,9 +2487,7 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Returns the source facts for synthesized facts</p>
-
+    <p>Returns the source facts for synthesized facts</p>
 
   </div>
 </div>
@@ -2675,9 +2504,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>facts this one was derived from</p>
-</div>
+        <div class='inline'><p>facts this one was derived from</p></div>
       
     </li>
   
@@ -2719,11 +2546,8 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Supersedes this fact with new information</p>
-
+    <p>Supersedes this fact with new information</p>
 <p>Creates a new canonical fact and marks this one as superseded.</p>
-
 
   </div>
 </div>
@@ -2741,9 +2565,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>the updated fact text</p>
-</div>
+        <div class='inline'><p>the updated fact text</p></div>
       
     </li>
   
@@ -2757,9 +2579,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>when the new fact became valid</p>
-</div>
+        <div class='inline'><p>when the new fact became valid</p></div>
       
     </li>
   
@@ -2776,9 +2596,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>the new fact</p>
-</div>
+        <div class='inline'><p>the new fact</p></div>
       
     </li>
   
@@ -2846,9 +2664,7 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Returns facts that have been superseded</p>
-
+    <p>Returns facts that have been superseded</p>
 
   </div>
 </div>
@@ -2896,9 +2712,7 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Checks if this fact has been superseded</p>
-
+    <p>Checks if this fact has been superseded</p>
 
   </div>
 </div>
@@ -2915,9 +2729,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>true if status is “superseded”</p>
-</div>
+        <div class='inline'><p>true if status is &quot;superseded&quot;</p></div>
       
     </li>
   
@@ -2955,9 +2767,7 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Returns facts that were synthesized from other facts</p>
-
+    <p>Returns facts that were synthesized from other facts</p>
 
   </div>
 </div>
@@ -3005,9 +2815,7 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Checks if this fact was synthesized from other facts</p>
-
+    <p>Checks if this fact was synthesized from other facts</p>
 
   </div>
 </div>
@@ -3024,9 +2832,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>true if status is “synthesized”</p>
-</div>
+        <div class='inline'><p>true if status is &quot;synthesized&quot;</p></div>
       
     </li>
   
@@ -3064,9 +2870,7 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Returns facts valid at a specific point in time</p>
-
+    <p>Returns facts valid at a specific point in time</p>
 
   </div>
 </div>
@@ -3084,9 +2888,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>the point in time</p>
-</div>
+        <div class='inline'><p>the point in time</p></div>
       
     </li>
   
@@ -3140,9 +2942,7 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Checks if the fact was valid at a specific date</p>
-
+    <p>Checks if the fact was valid at a specific date</p>
 
   </div>
 </div>
@@ -3160,9 +2960,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>the point in time to check</p>
-</div>
+        <div class='inline'><p>the point in time to check</p></div>
       
     </li>
   
@@ -3179,9 +2977,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>true if the fact was valid at the given date</p>
-</div>
+        <div class='inline'><p>true if the fact was valid at the given date</p></div>
       
     </li>
   
@@ -3219,9 +3015,7 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Returns facts valid during a date range</p>
-
+    <p>Returns facts valid during a date range</p>
 
   </div>
 </div>
@@ -3239,9 +3033,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>start of range</p>
-</div>
+        <div class='inline'><p>start of range</p></div>
       
     </li>
   
@@ -3255,9 +3047,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>end of range</p>
-</div>
+        <div class='inline'><p>end of range</p></div>
       
     </li>
   
@@ -3309,9 +3099,7 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Returns facts where an entity has a specific role</p>
-
+    <p>Returns facts where an entity has a specific role</p>
 
   </div>
 </div>
@@ -3329,9 +3117,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>the entity ID</p>
-</div>
+        <div class='inline'><p>the entity ID</p></div>
       
     </li>
   
@@ -3345,9 +3131,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>the mention role (subject, object, etc.)</p>
-</div>
+        <div class='inline'><p>the mention role (subject, object, etc.)</p></div>
       
     </li>
   
@@ -3397,9 +3181,9 @@
 </div>
 
       <div id="footer">
-  Generated on Sat Feb  7 16:59:07 2026 by
+  Generated on Wed Nov 18 23:46:04 2026 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.38 (ruby-3.3.10).
+  0.9.45 (ruby-4.0.9).
 </div>
 
     </div>

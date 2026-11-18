@@ -6,13 +6,13 @@
 <title>
   Class: FactDb::LLM::Adapter
   
-    &mdash; Documentation by YARD 0.9.38
+    &mdash; Documentation by YARD 0.9.45
   
 </title>
 
-  <link rel="stylesheet" href="../../css/style.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/style.css" type="text/css">
 
-  <link rel="stylesheet" href="../../css/common.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/common.css" type="text/css">
 
 <script type="text/javascript">
   pathId = "FactDb::LLM::Adapter";
@@ -27,6 +27,8 @@
 
   </head>
   <body>
+    <div id="main_progress" aria-hidden="true"></div>
+
     <div class="nav_wrap">
       <iframe id="nav" src="../../class_list.html?1"></iframe>
       <div id="resizer"></div>
@@ -94,16 +96,16 @@
   
   <dl>
     <dt>Defined in:</dt>
-    <dd>lib/fact_db/llm/adapter.rb</dd>
+    <dd>lib/fact_db/llm/adapter.rb
+</dd>
   </dl>
   
 </div>
 
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
-    
-<p>Adapter for ruby_llm gem Provides a unified interface for the LLM extractor</p>
-
+    <p>Adapter for ruby_llm gem
+Provides a unified interface for the LLM extractor</p>
 
   </div>
 </div>
@@ -113,9 +115,7 @@
     <h4 class="tag_title">Examples:</h4>
     
       
-        <h5 class="example_title"><div class='inline'>
-<p>Configure with OpenAI</p>
-</div></h5>
+        <h5 class="example_title"><div class='inline'><p>Configure with OpenAI</p></div></h5>
       
       <pre class="example code"><code><span class='const'><span class='object_link'><a href="../../FactDb.html" title="FactDb (module)">FactDb</a></span></span><span class='period'>.</span><span class='id identifier rubyid_configure'><span class='object_link'><a href="../../FactDb.html#configure-class_method" title="FactDb.configure (method)">configure</a></span></span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_config'>config</span><span class='op'>|</span>
   <span class='id identifier rubyid_config'>config</span><span class='period'>.</span><span class='id identifier rubyid_llm_client'>llm_client</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../../FactDb.html" title="FactDb (module)">FactDb</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../LLM.html" title="FactDb::LLM (module)">LLM</a></span></span><span class='op'>::</span><span class='const'>Adapter</span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="#initialize-instance_method" title="FactDb::LLM::Adapter#initialize (method)">new</a></span></span><span class='lparen'>(</span>
@@ -126,9 +126,7 @@
 <span class='kw'>end</span></code></pre>
     
       
-        <h5 class="example_title"><div class='inline'>
-<p>Configure with Anthropic</p>
-</div></h5>
+        <h5 class="example_title"><div class='inline'><p>Configure with Anthropic</p></div></h5>
       
       <pre class="example code"><code><span class='const'><span class='object_link'><a href="../../FactDb.html" title="FactDb (module)">FactDb</a></span></span><span class='period'>.</span><span class='id identifier rubyid_configure'><span class='object_link'><a href="../../FactDb.html#configure-class_method" title="FactDb.configure (method)">configure</a></span></span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_config'>config</span><span class='op'>|</span>
   <span class='id identifier rubyid_config'>config</span><span class='period'>.</span><span class='id identifier rubyid_llm_client'>llm_client</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../../FactDb.html" title="FactDb (module)">FactDb</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../LLM.html" title="FactDb::LLM (module)">LLM</a></span></span><span class='op'>::</span><span class='const'>Adapter</span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="#initialize-instance_method" title="FactDb::LLM::Adapter#initialize (method)">new</a></span></span><span class='lparen'>(</span>
@@ -139,18 +137,14 @@
 <span class='kw'>end</span></code></pre>
     
       
-        <h5 class="example_title"><div class='inline'>
-<p>Configure via YAML (config/fact_db.yml)</p>
-</div></h5>
+        <h5 class="example_title"><div class='inline'><p>Configure via YAML (config/fact_db.yml)</p></div></h5>
       
       <pre class="example code"><code><span class='comment'># llm_provider: anthropic
 </span><span class='comment'># llm_model: claude-sonnet-4-20250514
 </span><span class='comment'># llm_api_key: &lt;%= ENV[&quot;ANTHROPIC_API_KEY&quot;] %&gt;</span></code></pre>
     
       
-        <h5 class="example_title"><div class='inline'>
-<p>Configure via environment variables</p>
-</div></h5>
+        <h5 class="example_title"><div class='inline'><p>Configure via environment variables</p></div></h5>
       
       <pre class="example code"><code><span class='comment'># FACT_DB_LLM_PROVIDER=anthropic
 </span><span class='comment'># FACT_DB_LLM_MODEL=claude-sonnet-4-20250514
@@ -211,9 +205,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Returns the value of attribute model.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'><p>Returns the value of attribute model.</p></div></span>
   
 </li>
 
@@ -240,9 +232,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Returns the value of attribute provider.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'><p>Returns the value of attribute provider.</p></div></span>
   
 </li>
 
@@ -279,9 +269,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Send a prompt to the LLM and return the response text.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'><p>Send a prompt to the LLM and return the response text.</p></div></span>
   
 </li>
 
@@ -305,14 +293,13 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Create an adapter for a specific LLM provider.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'><p>Create an adapter for a specific LLM provider.</p></div></span>
   
 </li>
 
       
     </ul>
+    
   
 
 <div id="constructor_details" class="method_details_list">
@@ -329,9 +316,7 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Create an adapter for a specific LLM provider</p>
-
+    <p>Create an adapter for a specific LLM provider</p>
 
   </div>
 </div>
@@ -349,9 +334,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>:openai, :anthropic, :gemini, :ollama, :bedrock, :openrouter</p>
-</div>
+        <div class='inline'><p>:openai, :anthropic, :gemini, :ollama, :bedrock, :openrouter</p></div>
       
     </li>
   
@@ -367,9 +350,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>Model name (optional, uses provider default)</p>
-</div>
+        <div class='inline'><p>Model name (optional, uses provider default)</p></div>
       
     </li>
   
@@ -385,9 +366,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>API key (optional if set via ENV)</p>
-</div>
+        <div class='inline'><p>API key (optional if set via ENV)</p></div>
       
     </li>
   
@@ -401,9 +380,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>Additional options passed to RubyLLM</p>
-</div>
+        <div class='inline'><p>Additional options passed to RubyLLM</p></div>
       
     </li>
   
@@ -457,9 +434,7 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Returns the value of attribute model.</p>
-
+    <p>Returns the value of attribute model.</p>
 
   </div>
 </div>
@@ -500,9 +475,7 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Returns the value of attribute provider.</p>
-
+    <p>Returns the value of attribute provider.</p>
 
   </div>
 </div>
@@ -552,9 +525,7 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Send a prompt to the LLM and return the response text</p>
-
+    <p>Send a prompt to the LLM and return the response text</p>
 
   </div>
 </div>
@@ -572,9 +543,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>The prompt to send</p>
-</div>
+        <div class='inline'><p>The prompt to send</p></div>
       
     </li>
   
@@ -591,9 +560,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>The response text</p>
-</div>
+        <div class='inline'><p>The response text</p></div>
       
     </li>
   
@@ -629,9 +596,9 @@
 </div>
 
       <div id="footer">
-  Generated on Sat Feb  7 16:59:06 2026 by
+  Generated on Wed Nov 18 23:46:04 2026 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.38 (ruby-3.3.10).
+  0.9.45 (ruby-4.0.9).
 </div>
 
     </div>

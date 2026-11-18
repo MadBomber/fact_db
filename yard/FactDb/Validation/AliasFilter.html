@@ -6,13 +6,13 @@
 <title>
   Class: FactDb::Validation::AliasFilter
   
-    &mdash; Documentation by YARD 0.9.38
+    &mdash; Documentation by YARD 0.9.45
   
 </title>
 
-  <link rel="stylesheet" href="../../css/style.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/style.css" type="text/css">
 
-  <link rel="stylesheet" href="../../css/common.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/common.css" type="text/css">
 
 <script type="text/javascript">
   pathId = "FactDb::Validation::AliasFilter";
@@ -27,6 +27,8 @@
 
   </head>
   <body>
+    <div id="main_progress" aria-hidden="true"></div>
+
     <div class="nav_wrap">
       <iframe id="nav" src="../../class_list.html?1"></iframe>
       <div id="resizer"></div>
@@ -94,16 +96,16 @@
   
   <dl>
     <dt>Defined in:</dt>
-    <dd>lib/fact_db/validation/alias_filter.rb</dd>
+    <dd>lib/fact_db/validation/alias_filter.rb
+</dd>
   </dl>
   
 </div>
 
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
-    
-<p>Filters out invalid aliases such as pronouns, common terms, and generic references. Used by extractors, services, and models to ensure alias quality.</p>
-
+    <p>Filters out invalid aliases such as pronouns, common terms, and generic references.
+Used by extractors, services, and models to ensure alias quality.</p>
 
   </div>
 </div>
@@ -122,9 +124,7 @@
         <dt id="PRONOUNS-constant" class="">PRONOUNS =
           <div class="docstring">
   <div class="discussion">
-    
-<p>English pronouns (subject, object, possessive, reflexive)</p>
-
+    <p>English pronouns (subject, object, possessive, reflexive)</p>
 
   </div>
 </div>
@@ -152,9 +152,7 @@
         <dt id="GENERIC_TERMS-constant" class="">GENERIC_TERMS =
           <div class="docstring">
   <div class="discussion">
-    
-<p>Common generic terms that shouldn’t be aliases</p>
-
+    <p>Common generic terms that shouldn't be aliases</p>
 
   </div>
 </div>
@@ -180,9 +178,7 @@
         <dt id="GENERIC_ROLES-constant" class="">GENERIC_ROLES =
           <div class="docstring">
   <div class="discussion">
-    
-<p>Common role/title references that are too generic</p>
-
+    <p>Common role/title references that are too generic</p>
 
   </div>
 </div>
@@ -207,9 +203,8 @@
         <dt id="AMBIGUOUS_FIRST_NAMES-constant" class="">AMBIGUOUS_FIRST_NAMES =
           <div class="docstring">
   <div class="discussion">
-    
-<p>Common first names that are too ambiguous to use as standalone aliases These should only be valid when part of a fuller name</p>
-
+    <p>Common first names that are too ambiguous to use as standalone aliases
+These should only be valid when part of a fuller name</p>
 
   </div>
 </div>
@@ -259,9 +254,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Filter an array of aliases, returning only valid ones.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'><p>Filter an array of aliases, returning only valid ones.</p></div></span>
   
 </li>
 
@@ -283,9 +276,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Get a human-readable reason why an alias was rejected.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'><p>Get a human-readable reason why an alias was rejected.</p></div></span>
   
 </li>
 
@@ -307,14 +298,13 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Check if a potential alias is valid.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'><p>Check if a potential alias is valid.</p></div></span>
   
 </li>
 
       
     </ul>
+    
   
 
 
@@ -334,9 +324,7 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Filter an array of aliases, returning only valid ones</p>
-
+    <p>Filter an array of aliases, returning only valid ones</p>
 
   </div>
 </div>
@@ -354,9 +342,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>Array of potential aliases</p>
-</div>
+        <div class='inline'><p>Array of potential aliases</p></div>
       
     </li>
   
@@ -372,9 +358,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>The entity’s name</p>
-</div>
+        <div class='inline'><p>The entity's name</p></div>
       
     </li>
   
@@ -391,9 +375,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>Array of valid aliases</p>
-</div>
+        <div class='inline'><p>Array of valid aliases</p></div>
       
     </li>
   
@@ -443,9 +425,7 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Get a human-readable reason why an alias was rejected</p>
-
+    <p>Get a human-readable reason why an alias was rejected</p>
 
   </div>
 </div>
@@ -463,9 +443,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>The alias text</p>
-</div>
+        <div class='inline'><p>The alias text</p></div>
       
     </li>
   
@@ -481,9 +459,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>The entity’s name</p>
-</div>
+        <div class='inline'><p>The entity's name</p></div>
       
     </li>
   
@@ -500,9 +476,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>Rejection reason or nil if valid</p>
-</div>
+        <div class='inline'><p>Rejection reason or nil if valid</p></div>
       
     </li>
   
@@ -562,9 +536,7 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Check if a potential alias is valid</p>
-
+    <p>Check if a potential alias is valid</p>
 
   </div>
 </div>
@@ -582,9 +554,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>The alias text to validate</p>
-</div>
+        <div class='inline'><p>The alias text to validate</p></div>
       
     </li>
   
@@ -600,9 +570,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>The entity’s name (for comparison)</p>
-</div>
+        <div class='inline'><p>The entity's name (for comparison)</p></div>
       
     </li>
   
@@ -619,9 +587,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>true if the alias is valid</p>
-</div>
+        <div class='inline'><p>true if the alias is valid</p></div>
       
     </li>
   
@@ -679,9 +645,9 @@
 </div>
 
       <div id="footer">
-  Generated on Sat Feb  7 16:59:09 2026 by
+  Generated on Wed Nov 18 23:46:05 2026 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.38 (ruby-3.3.10).
+  0.9.45 (ruby-4.0.9).
 </div>
 
     </div>

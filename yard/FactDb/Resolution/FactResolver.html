@@ -6,13 +6,13 @@
 <title>
   Class: FactDb::Resolution::FactResolver
   
-    &mdash; Documentation by YARD 0.9.38
+    &mdash; Documentation by YARD 0.9.45
   
 </title>
 
-  <link rel="stylesheet" href="../../css/style.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/style.css" type="text/css">
 
-  <link rel="stylesheet" href="../../css/common.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/common.css" type="text/css">
 
 <script type="text/javascript">
   pathId = "FactDb::Resolution::FactResolver";
@@ -27,6 +27,8 @@
 
   </head>
   <body>
+    <div id="main_progress" aria-hidden="true"></div>
+
     <div class="nav_wrap">
       <iframe id="nav" src="../../class_list.html?1"></iframe>
       <div id="resizer"></div>
@@ -94,18 +96,18 @@
   
   <dl>
     <dt>Defined in:</dt>
-    <dd>lib/fact_db/resolution/fact_resolver.rb</dd>
+    <dd>lib/fact_db/resolution/fact_resolver.rb
+</dd>
   </dl>
   
 </div>
 
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
-    
-<p>Handles fact lifecycle operations including supersession, synthesis, and conflict resolution</p>
-
-<p>Provides methods for managing fact relationships: superseding outdated facts, synthesizing new facts from multiple sources, handling corroboration, and detecting/resolving conflicts.</p>
-
+    <p>Handles fact lifecycle operations including supersession, synthesis, and conflict resolution</p>
+<p>Provides methods for managing fact relationships: superseding outdated facts,
+synthesizing new facts from multiple sources, handling corroboration,
+and detecting/resolving conflicts.</p>
 
   </div>
 </div>
@@ -115,9 +117,7 @@
     <h4 class="tag_title">Examples:</h4>
     
       
-        <h5 class="example_title"><div class='inline'>
-<p>Supersede an outdated fact</p>
-</div></h5>
+        <h5 class="example_title"><div class='inline'><p>Supersede an outdated fact</p></div></h5>
       
       <pre class="example code"><code><span class='id identifier rubyid_resolver'>resolver</span> <span class='op'>=</span> <span class='const'>FactResolver</span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="#initialize-instance_method" title="FactDb::Resolution::FactResolver#initialize (method)">new</a></span></span>
 <span class='id identifier rubyid_new_fact'>new_fact</span> <span class='op'>=</span> <span class='id identifier rubyid_resolver'>resolver</span><span class='period'>.</span><span class='id identifier rubyid_supersede'>supersede</span><span class='lparen'>(</span><span class='id identifier rubyid_old_fact'>old_fact</span><span class='period'>.</span><span class='id identifier rubyid_id'>id</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Updated information</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>valid_at:</span> <span class='const'>Date</span><span class='period'>.</span><span class='id identifier rubyid_today'>today</span><span class='rparen'>)</span></code></pre>
@@ -154,9 +154,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>The configuration object.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'><p>The configuration object.</p></div></span>
   
 </li>
 
@@ -191,9 +189,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Builds a timeline fact from point-in-time facts for an entity.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'><p>Builds a timeline fact from point-in-time facts for an entity.</p></div></span>
   
 </li>
 
@@ -215,9 +211,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Marks a fact as corroborated by another fact.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'><p>Marks a fact as corroborated by another fact.</p></div></span>
   
 </li>
 
@@ -239,9 +233,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Finds potentially conflicting facts.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'><p>Finds potentially conflicting facts.</p></div></span>
   
 </li>
 
@@ -265,9 +257,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Initializes a new FactResolver instance.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'><p>Initializes a new FactResolver instance.</p></div></span>
   
 </li>
 
@@ -289,9 +279,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Invalidates a fact without replacement.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'><p>Invalidates a fact without replacement.</p></div></span>
   
 </li>
 
@@ -313,9 +301,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Resolves conflicts by keeping one fact and superseding others.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'><p>Resolves conflicts by keeping one fact and superseding others.</p></div></span>
   
 </li>
 
@@ -337,9 +323,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Supersedes an existing fact with a new one.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'><p>Supersedes an existing fact with a new one.</p></div></span>
   
 </li>
 
@@ -361,14 +345,13 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Synthesizes a new fact from multiple source facts.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'><p>Synthesizes a new fact from multiple source facts.</p></div></span>
   
 </li>
 
       
     </ul>
+    
   
 
 <div id="constructor_details" class="method_details_list">
@@ -385,9 +368,7 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Initializes a new FactResolver instance</p>
-
+    <p>Initializes a new FactResolver instance</p>
 
   </div>
 </div>
@@ -407,9 +388,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>configuration object (defaults to FactDb.config)</p>
-</div>
+        <div class='inline'><p>configuration object (defaults to FactDb.config)</p></div>
       
     </li>
   
@@ -455,9 +434,7 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Returns the configuration object.</p>
-
+    <p>Returns the configuration object.</p>
 
   </div>
 </div>
@@ -474,9 +451,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>the configuration object</p>
-</div>
+        <div class='inline'><p>the configuration object</p></div>
       
     </li>
   
@@ -521,11 +496,8 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Builds a timeline fact from point-in-time facts for an entity</p>
-
-<p>Creates a synthesized fact summarizing the entity’s history on a topic.</p>
-
+    <p>Builds a timeline fact from point-in-time facts for an entity</p>
+<p>Creates a synthesized fact summarizing the entity's history on a topic.</p>
 
   </div>
 </div>
@@ -543,9 +515,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>the entity ID</p>
-</div>
+        <div class='inline'><p>the entity ID</p></div>
       
     </li>
   
@@ -561,9 +531,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>optional topic filter</p>
-</div>
+        <div class='inline'><p>optional topic filter</p></div>
       
     </li>
   
@@ -580,9 +548,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>synthesized timeline fact or nil if no facts found</p>
-</div>
+        <div class='inline'><p>synthesized timeline fact or nil if no facts found</p></div>
       
     </li>
   
@@ -658,11 +624,9 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Marks a fact as corroborated by another fact</p>
-
-<p>Adds the corroborating fact ID to the corroborated_by_ids array. If 2+ facts corroborate, status changes to “corroborated”.</p>
-
+    <p>Marks a fact as corroborated by another fact</p>
+<p>Adds the corroborating fact ID to the corroborated_by_ids array.
+If 2+ facts corroborate, status changes to &quot;corroborated&quot;.</p>
 
   </div>
 </div>
@@ -680,9 +644,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>ID of the fact being corroborated</p>
-</div>
+        <div class='inline'><p>ID of the fact being corroborated</p></div>
       
     </li>
   
@@ -696,9 +658,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>ID of the supporting fact</p>
-</div>
+        <div class='inline'><p>ID of the supporting fact</p></div>
       
     </li>
   
@@ -715,9 +675,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>the updated fact</p>
-</div>
+        <div class='inline'><p>the updated fact</p></div>
       
     </li>
   
@@ -733,9 +691,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>if attempting to corroborate with the same fact</p>
-</div>
+        <div class='inline'><p>if attempting to corroborate with the same fact</p></div>
       
     </li>
   
@@ -797,11 +753,8 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Finds potentially conflicting facts</p>
-
+    <p>Finds potentially conflicting facts</p>
 <p>Identifies facts with similar text (50-95% similarity) that might be contradictory.</p>
-
 
   </div>
 </div>
@@ -821,9 +774,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>entity ID to filter by</p>
-</div>
+        <div class='inline'><p>entity ID to filter by</p></div>
       
     </li>
   
@@ -839,9 +790,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>topic to search for</p>
-</div>
+        <div class='inline'><p>topic to search for</p></div>
       
     </li>
   
@@ -858,9 +807,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>array of hashes with :fact1, :fact2, :similarity keys</p>
-</div>
+        <div class='inline'><p>array of hashes with :fact1, :fact2, :similarity keys</p></div>
       
     </li>
   
@@ -952,9 +899,7 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Invalidates a fact without replacement</p>
-
+    <p>Invalidates a fact without replacement</p>
 
   </div>
 </div>
@@ -972,9 +917,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>ID of the fact to invalidate</p>
-</div>
+        <div class='inline'><p>ID of the fact to invalidate</p></div>
       
     </li>
   
@@ -990,9 +933,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>when the fact became invalid (defaults to now)</p>
-</div>
+        <div class='inline'><p>when the fact became invalid (defaults to now)</p></div>
       
     </li>
   
@@ -1009,9 +950,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>the invalidated fact</p>
-</div>
+        <div class='inline'><p>the invalidated fact</p></div>
       
     </li>
   
@@ -1053,9 +992,7 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Resolves conflicts by keeping one fact and superseding others</p>
-
+    <p>Resolves conflicts by keeping one fact and superseding others</p>
 
   </div>
 </div>
@@ -1073,9 +1010,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>ID of the fact to keep as canonical</p>
-</div>
+        <div class='inline'><p>ID of the fact to keep as canonical</p></div>
       
     </li>
   
@@ -1089,9 +1024,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>IDs of facts to mark as superseded</p>
-</div>
+        <div class='inline'><p>IDs of facts to mark as superseded</p></div>
       
     </li>
   
@@ -1107,9 +1040,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>reason for the resolution (stored in metadata)</p>
-</div>
+        <div class='inline'><p>reason for the resolution (stored in metadata)</p></div>
       
     </li>
   
@@ -1126,9 +1057,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>the kept fact</p>
-</div>
+        <div class='inline'><p>the kept fact</p></div>
       
     </li>
   
@@ -1190,11 +1119,9 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Supersedes an existing fact with a new one</p>
-
-<p>Creates a new canonical fact and marks the old one as superseded. Copies mentions and sources from the old fact unless new mentions are provided.</p>
-
+    <p>Supersedes an existing fact with a new one</p>
+<p>Creates a new canonical fact and marks the old one as superseded.
+Copies mentions and sources from the old fact unless new mentions are provided.</p>
 
   </div>
 </div>
@@ -1204,9 +1131,7 @@
     <h4 class="tag_title">Examples:</h4>
     
       
-        <h5 class="example_title"><div class='inline'>
-<p>Supersede with new mentions</p>
-</div></h5>
+        <h5 class="example_title"><div class='inline'><p>Supersede with new mentions</p></div></h5>
       
       <pre class="example code"><code><span class='id identifier rubyid_resolver'>resolver</span><span class='period'>.</span><span class='id identifier rubyid_supersede'>supersede</span><span class='lparen'>(</span><span class='id identifier rubyid_fact'>fact</span><span class='period'>.</span><span class='id identifier rubyid_id'>id</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>John now works at NewCo</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
   <span class='label'>valid_at:</span> <span class='const'>Date</span><span class='period'>.</span><span class='id identifier rubyid_today'>today</span><span class='comma'>,</span>
@@ -1226,9 +1151,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>ID of the fact to supersede</p>
-</div>
+        <div class='inline'><p>ID of the fact to supersede</p></div>
       
     </li>
   
@@ -1242,9 +1165,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>the updated fact text</p>
-</div>
+        <div class='inline'><p>the updated fact text</p></div>
       
     </li>
   
@@ -1258,9 +1179,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>when the new fact became valid</p>
-</div>
+        <div class='inline'><p>when the new fact became valid</p></div>
       
     </li>
   
@@ -1276,9 +1195,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>optional entity mentions for the new fact</p>
-</div>
+        <div class='inline'><p>optional entity mentions for the new fact</p></div>
       
     </li>
   
@@ -1295,9 +1212,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>the new canonical fact</p>
-</div>
+        <div class='inline'><p>the new canonical fact</p></div>
       
     </li>
   
@@ -1313,9 +1228,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>if the fact is already superseded</p>
-</div>
+        <div class='inline'><p>if the fact is already superseded</p></div>
       
     </li>
   
@@ -1459,11 +1372,9 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Synthesizes a new fact from multiple source facts</p>
-
-<p>Creates a single synthesized fact that aggregates information from multiple facts. Automatically aggregates entity mentions and links to all source content.</p>
-
+    <p>Synthesizes a new fact from multiple source facts</p>
+<p>Creates a single synthesized fact that aggregates information from multiple facts.
+Automatically aggregates entity mentions and links to all source content.</p>
 
   </div>
 </div>
@@ -1473,9 +1384,7 @@
     <h4 class="tag_title">Examples:</h4>
     
       
-        <h5 class="example_title"><div class='inline'>
-<p>Synthesize multiple facts</p>
-</div></h5>
+        <h5 class="example_title"><div class='inline'><p>Synthesize multiple facts</p></div></h5>
       
       <pre class="example code"><code><span class='id identifier rubyid_resolver'>resolver</span><span class='period'>.</span><span class='id identifier rubyid_synthesize'>synthesize</span><span class='lparen'>(</span><span class='lbracket'>[</span><span class='id identifier rubyid_fact1'>fact1</span><span class='period'>.</span><span class='id identifier rubyid_id'>id</span><span class='comma'>,</span> <span class='id identifier rubyid_fact2'>fact2</span><span class='period'>.</span><span class='id identifier rubyid_id'>id</span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Summary of events</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>valid_at:</span> <span class='const'>Date</span><span class='period'>.</span><span class='id identifier rubyid_today'>today</span><span class='rparen'>)</span></code></pre>
     
@@ -1493,9 +1402,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>IDs of the source facts</p>
-</div>
+        <div class='inline'><p>IDs of the source facts</p></div>
       
     </li>
   
@@ -1509,9 +1416,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>the synthesized summary text</p>
-</div>
+        <div class='inline'><p>the synthesized summary text</p></div>
       
     </li>
   
@@ -1525,9 +1430,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>when the synthesis is valid from</p>
-</div>
+        <div class='inline'><p>when the synthesis is valid from</p></div>
       
     </li>
   
@@ -1543,9 +1446,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>when the synthesis becomes invalid</p>
-</div>
+        <div class='inline'><p>when the synthesis becomes invalid</p></div>
       
     </li>
   
@@ -1561,9 +1462,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>optional entity mentions (aggregated from sources if empty)</p>
-</div>
+        <div class='inline'><p>optional entity mentions (aggregated from sources if empty)</p></div>
       
     </li>
   
@@ -1580,9 +1479,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>the synthesized fact</p>
-</div>
+        <div class='inline'><p>the synthesized fact</p></div>
       
     </li>
   
@@ -1598,9 +1495,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>if no source facts are found</p>
-</div>
+        <div class='inline'><p>if no source facts are found</p></div>
       
     </li>
   
@@ -1722,9 +1617,9 @@
 </div>
 
       <div id="footer">
-  Generated on Sat Feb  7 16:59:09 2026 by
+  Generated on Wed Nov 18 23:46:05 2026 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.38 (ruby-3.3.10).
+  0.9.45 (ruby-4.0.9).
 </div>
 
     </div>
