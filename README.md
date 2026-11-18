@@ -42,7 +42,7 @@ bundle install
 
 ### Requirements
 
-- Ruby >= 3.0
+- Ruby >= 4.0
 - PostgreSQL with pgvector extension
 - Optional: ruby_llm gem for LLM-powered extraction
 
